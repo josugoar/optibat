@@ -1,0 +1,194 @@
+\cleardoublepage
+
+\chapter{Introducción}
+\label{makereference1}
+
+\begin{quotation}
+
+El calor aprieta y no puedes esperar a recostarte en el sofá a ver la televisión con el conveniente aire acondicionado a tope mientras tomas una refrescante bebida. Extrañamente en cambio, el aire acondicionado no responde, la nevera se mantiene inusualmente silenciosa y la televisión no se enciende. Toda esta confusión te causa hambre e instintivamente intentas preparar algo de comer, pero tu puntera cocina de inducción permanece apagada. Miras el móvil para darte cuenta de que apenas se mantiene con vida. Poco a poco se va haciendo de noche y tu casa se sume en la oscuridad.
+
+Por suerte, un tiempo más tarde, todo vuelve a la normalidad. Te enteras de la verdadera magnitud de lo sucedido y comprendes que no se trataba precisamente de un simple corte de luz en tu edificio, sino de un problema sistemático a gran escala. Piensas en como es que haya podido suceder algo así. Desde tú perspectiva, al fin y al cabo, basta con pagar la tarifa mensual para darle al interruptor y que se encienda la luz.
+
+No puedes evitar pensar en quienes lo han tenido que enfrentar en circunstancias más duras.
+
+\end{quotation}
+
+El sistema energético por detrás de absolutamente toda la generación, transporte y distribución de la electricidad se mantiene entendiblemente completamente transparente ante los ojos de los usuarios finales de dicha energía.
+
+Por un lado, existe un entramado de redes de transporte eléctrico que combina múltiples tecnologías para asegurar su funcionamiento, teniendo que disponer de una elevada complejidad con el fin de integrar las diversas características del entorno cambiante de los dispositivos energéticos.
+
+Por otro, las partes interesadas realmente compran y venden la energía en masa en el llamado mercado de la electricidad, en el cual se determina finalmente su precio puntual, dando lugar a dinámicas de arbitraje con el objetivo de generar beneficio económico al igual que con cualquier otro activo financiero.
+
+En la actualidad, existen multitud de soluciones energéticas con las que aprovisionar la red de energía y arbitrar en el mercado, como la generación fotovoltaica, eólica, hidráulica o ciclo combinado. Aunque todas ellas juegan un papel más que fundamental en el sistema energético, una de ellas destaca por encima del resto, especialmente por su creciente popularidad. Se trata de los sistemas de almacenamiento de energía en baterías.
+
+Precisamente, los sistemas de almacenamiento de energía en baterías son una novedosa tecnología energética de almacenamiento que permiten, como su nombre indica, almacenar electricidad para su uso posterior. Esto facilita enormemente la gestión de la demanda y, crucialmente, mejora la estabilidad y eficiencia de la infraestructura eléctrica, pudiendo regularla activamente gracias a la rápida capacidad de conmutación de las baterías. Coincidentemente, son una de las tecnologías energéticas más idóneas para evitar posibles desajustes en la red.
+
+Aún y todo, no sirve con disponer únicamente de las baterías, sino que, más que nada, es justamente imprescindible controlar la carga y descarga de estos dispositivos cuidadosamente para prolongar su vida útil y asegurar el correcto funcionamiento de los mismos, y maximizar el beneficio que generan arbitrando en el mercado eléctrico.
+
+Es entonces cuando surge la necesidad de la creación de un sistema de optimización de baterías en el mercado eléctrico basado en el internet de las cosas industrial, el cual gestione tanto la infraestructura operacional, el entorno de mercado, la modelización estructural y el comando y control, continuamente ciclando la batería incansablemente en busca de los mejores márgenes.
+
+De hecho, así es como nace \textbf{Optibat}, el sistema de optimización de baterías en el mercado eléctrico de desarrollo propio desplegado satisfactoriamente en múltiples instalaciones energéticas a lo largo del país, que mueve docenas de megavatios hora al día y genera millones de euros de ingresos previstos al año.
+
+Con esto, se detallan las decisiones de diseño relacionadas con la integración del sistema con los componentes de la arquitectura ya existente, desarrollo con respecto a la creación de todos los elementos propios a tener en cuenta, validación para asegurar la seguridad y correcto funcionamiento, despliegue en relación a la puesta en marcha en instalaciones a gran escala y la experimentación comparativa en busca del mejor modo de operación de Optibat.
+
+De esta forma, el sistema se divide en los apartados anteriormente mencionados de infraestructura operacional explicado en el apartado~\ref{makereference3} que gestiona la capa de interacción más baja disponible, el entorno de mercado especificado en el apartado~\ref{makereference4} sobre la información extraída de las instituciones regulatorias con las que se trabaja, la modelización estructura puntualizada en el apartado~\ref{makereference5} donde se habla de la lógica de negocio de las decisiones a tomar, y el comando y control precisado en el apartado~\ref{makereference6} para explicar el flujo de vuelta a los activos físicos y la interacción de los agentes de mercado y operadores de telecontrol con el sistema.
+
+\section{Objetivos}
+\label{makereference1.1}
+
+El objetivo principal no es otro que el diseño, desarrollo, validación y despliegue (excluyendo la experimentación) de un sistema de arbitraje de baterías en el mercado eléctrico, garantizando su integración con la infraestructura establecida y su habilitación para operar en el mercado eléctrico. Cabe destacar que, dado que la tecnología de almacenamiento de energía en baterías apenas se encuentra aún en su infancia, no existe una solución fácilmente integrable o de sencilla implementación sobre la infraestructura energética existente, aunque existan esfuerzos externos para mejorar la situación. Por ello, lo que primeramente se busca es establecer dicha base.
+
+A su vez, se definen varios objetivos secundarios complementarios con el principal.
+
+\begin{description}
+
+\item[Maximizar la rentabilidad] Más allá de hacer funcionar el sistema, obtener la mayor rentabilidad entre la energía comprada y vendida es lo primordial. El sistema debe ser capaz de analizar las previsiones de precios del mercado eléctrico para programar de forma óptima los ciclos de carga y descarga, asegurando la compra de energía en los periodos de menor coste y su venta en los de mayor precio, además de tener en cuanta factores externos al mercado. Lo más importante es diferenciar el beneficio neto en euros (\textit{€}) y la rentabilidad en euros por megavatio hora (\textit{€/MWh}), ya que esta última es la métrica verdaderamente usada para asegurar que se ganen los mayores beneficios teniendo en cuenta la energía disponible.
+
+\item[Minimizar el desgaste de las baterías] Se busca gestionar la operación del activo, principalmente la profundidad de descarga y el número de ciclos, de manera que se prolongue su vida útil y se minimice el desgaste físico del estado de salud. Esto busca el equilibrio entre la rentabilidad a corto plazo y la sostenibilidad de la inversión a largo plazo. La métrica usada para medir el desgaste se trata del número de ciclos de carga completos que, a diferencia del estado de salud, permite estimar la evolución del desgaste más fácilmente.
+
+\item[Cumplir con los requisitos regulatorios] Es sumamente aconsejable que todas las operaciones de carga y descarga propuestas por el sistema se adhieran estrictamente a los requisitos técnicos y normativos impuestos por tanto el operador de mercado como el operador del sistema. Esto incluye el respeto de los límites de potencia estructurales marcados por ley, los límites técnicos causados por indisponibilidades, etc. El cumplimiento se mide a través de la magnitud de la desviación final por periodo de mercado en megavatios hora (\textit{MWh}), es decir, la cantidad de energía que el sistema a pactado pero no ha sido capaz de cubrir.
+
+\item[Garantizar la seguridad de la operación] Se deben implementar múltiples niveles de validación para prevenir cualquier operación que pueda comprometer la integridad física del sistema de almacenamiento de energía en baterías o de la información misma. Aunque el control de bajo nivel es responsabilidad de los sistemas de control nativos de la batería, el sistema de optimización tiene la obligación de operar siempre dentro de un rango seguro predefinido. Además, la información tiene que fluir adecuándose correctamente al modelo Purdue de ciberseguridad en el entrono industrial. La seguridad de la operación se mide de forma empírica teniendo en cuenta el número de alarmas causadas en los sistemas de almacenamiento y alertas de ciberseguridad.
+
+\item[Generalizar el diseño] El diseño de una arquitectura modular y configurable resulta clave para permitir la adaptación del sistema a diferentes instalaciones con capacidades de almacenamiento y configuraciones variadas de planta. El objetivo es crear una solución escalable, no específica para una única instalación, facilitando su despliegue en futuras instalaciones con un esfuerzo de integración mínimo. La modularidad se analiza mediante el número íntegro de instalaciones soportadas por el sistema en el momento de su despliegue.
+
+\item[Facilitar la monitorización del sistema] Una interfaz de comando y control que permita a los operadores y agentes de mercado supervisar el estado del sistema en tiempo real ayuda a aumentar la confianza en el mismo. Esta interfaz debe proporcionar una visualización clara de las operaciones planificadas y ejecutadas y los resultados económicos obtenidos, garantizando la transparencia y la trazabilidad de las decisiones del sistema. Crucialmente, los operadores deben ser capaces de sobrescribir el comportamiento automático del sistema con indicaciones manuales ante situaciones de mercado no tomadas en cuenta o periodos de prueba.
+
+\item[Responder automáticamente ante fallos] Se dota al sistema de mecanismos de detección y gestión de fallos, tanto internos como, principalmente, externos, para asegurar su robustez y alta disponibilidad. Esto incluye la capacidad de gestionar interrupciones en la operación de la disponibilidad de los activos físicos o la pérdida o información incompleta de los datos del mercado, debiendo tener en cuenta dichas situaciones explícitamente de tal forma que el funcionamiento del sistema, más allá de dicha particularidad, no se vea afectado. Medido programáticamente mediante el número indisponibilidades causadas por el sistema, no factores externos.
+
+\item[Analizar la viabilidad económica] Utilizando los datos operativos y los resultados del sistema se pretende realizar un análisis de viabilidad económica posterior. El objetivo es validar el caso de negocio, cuantificar con precisión la rentabilidad obtenida y modelar el rendimiento financiero del activo bajo diferentes escenarios de mercado. Este análisis sirve para refinar las estrategias de operación y guiar futuras inversiones en los sistemas de almacenamiento de energía en baterías, intentando validar así la aparente predisposición al beneficio de las baterías como activo energético. Se mide en euros megavatio hora (\textit{€/MWh}) relativos.
+
+\end{description}
+
+\section{Alcance}
+\label{makereference1.2}
+
+El proyecto se centra exclusivamente en el desarrollo de un sistema de optimización de baterías en el mercado eléctrico integral, de extremo a extremo. Se compone de la infraestructura operacional con la que interactuar con los elementos físicos que forman parte del sistema, la adquisición de la información del entorno de mercado a través de las instituciones regulatorias correspondientes, la modelización estructural de la situación del ciclado de las baterías y de la instalación al completo para la resolución de la optimalidad y el comando y control para transmitir los resultados de vuelta a la batería, al mercado e informar a los agentes de mercado que supervisen los movimientos realizados por el sistema.
+
+En cambio, en orden de abstracción, el alcance no incluye el control físico de bajo nivel de las instalaciones, realizado por el sistema de control de baterías que viene incluido con los sistemas de almacenamiento de energía de baterías industriales y es implantado a gran escala por el integrador del sistema, debido a obvias consideraciones de seguridad y de acceso físico restringido.
+
+Tampoco se realiza el despliegue en sí del sistema de información de planta central, ya que otras tecnologías energéticas hacen uso del mismo más allá de las baterías. Es decir, aunque el sistema de control de planta ya exista de antes, el sistema desarrollado realiza la integración de los activos energéticos físicos mismos con él mediante su extensión, tan solo a diferencia de su despliegue.
+
+Finalmente, el proyecto debe considerar procesos externos del entrono en el que es desplegado, por lo que no hay otra opción que depender de la capa de indirección del almacenamiento de la información del entorno del mercado, del desglose de las posiciones negociadas previamente y mucho menos de la última etapa de la realización de las ofertas de mercado, la cual debe, por consideraciones legales, realizarse por la parte confiable de la entidad dueña de los activos energéticos.
+
+Con esto, la implementación de los apartados no confidenciales se encuentra a disposición privada bajo solicitud.
+
+\section{Plan de trabajo}
+\label{makereference1.3}
+
+El plan de trabajo consta de la distribución en tareas del desarrollo del proyecto en su conjunto. Se constituye de la división de los apartados en concordancia con los objetivos, desde el inicio hasta el final del proyecto integrado, y de la explicación de estos.
+
+\begin{figure}[h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{ganttchart}[hgrid,vgrid,x unit=20mm,time slot format=isodate,time slot unit=month]{2025-02-10}{2025-09-15}
+\gantttitlecalendar{month=name} \\
+\ganttgroup{Optibat}{2025-02-10}{2025-09-15} \\
+\ganttbar[name=análisis]{Análisis preliminar}{2025-02-10}{2025-03-09} \\
+\ganttbar[name=desarrollo]{Desarrollo}{2025-03-10}{2025-07-31} \\
+\ganttbar[name=experimentación]{Experimentación}{2025-07-01}{2025-08-04} \\
+\ganttbar[name=redacción]{Redacción del informe}{2025-07-01}{2025-09-15} \\
+\ganttlink{análisis}{desarrollo}
+\ganttlink{desarrollo}{experimentación}
+\ganttlink{experimentación}{redacción}
+\end{ganttchart}
+}
+\caption{Plan de trabajo}
+\label{fig:plan-trabajo}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{ganttchart}[hgrid,vgrid,time slot format=isodate,time slot unit=day]{2025-02-10}{2025-03-09}
+\gantttitlecalendar{month=name, day} \\
+\ganttgroup{Análisis preliminar}{2025-02-10}{2025-03-09} \\
+\ganttbar[name=normativa]{Estudio de la normativa}{2025-02-10}{2025-02-16} \\
+\ganttbar[name=mercado]{Formación en el mercado eléctrico}{2025-02-17}{2025-02-23} \\
+\ganttbar[name=baterias]{Formación en baterías}{2025-02-24}{2025-03-09} \\
+\ganttbar[name=herramientas]{Análisis de herramientas existentes}{2025-02-17}{2025-03-09} \\
+\ganttlink{normativa}{mercado}
+\ganttlink{mercado}{baterias}
+\end{ganttchart}
+}
+\caption{Plan de trabajo del análisis preliminar}
+\label{fig:plan-trabajo-análisis-preliminar}
+\end{figure}
+
+\begin{figure}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{ganttchart}[hgrid,vgrid,x unit=20mm,time slot format=isodate,time slot unit=month]{2025-03-10}{2025-07-31}
+\gantttitlecalendar{month=name} \\
+\ganttgroup{Desarrollo}{2025-03-10}{2025-07-31} \\
+\ganttbar[name=infraestructura]{Infraestructura operacional}{2025-03-10}{2025-07-31} \\
+\ganttbar[name=mercado]{Entorno de mercado}{2025-03-10}{2025-07-31} \\
+\ganttbar[name=modelizacion]{Modelización estructural}{2025-03-10}{2025-07-31} \\
+\ganttbar[name=consigna]{Consigna y control}{2025-03-10}{2025-07-31} \\
+\ganttlink{infraestructura}{modelizacion}
+\ganttlink{mercado}{modelizacion}
+\ganttlink{modelizacion}{consigna}
+\end{ganttchart}
+}
+\caption{Plan de trabajo del desarrollo}
+\label{fig:plan-trabajo-análisis-preliminar}
+\end{figure}
+
+\begin{figure}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{ganttchart}[hgrid,vgrid,time slot format=isodate,time slot unit=day]{2025-02-10}{2025-03-09}
+\gantttitlecalendar{month=name, day} \\
+\ganttgroup{Infraestructura operacional}{2025-02-10}{2025-03-09} \\
+\end{ganttchart}
+}
+\caption{Plan de trabajo de la infraestructura operacional}
+\label{fig:plan-trabajo-análisis-preliminar}
+\end{figure}
+
+\begin{figure}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{ganttchart}[hgrid,vgrid,time slot format=isodate,time slot unit=day]{2025-02-10}{2025-03-09}
+\gantttitlecalendar{month=name, day} \\
+\ganttgroup{Entorno de mercado}{2025-02-10}{2025-03-09} \\
+\end{ganttchart}
+}
+\caption{Plan de trabajo del entorno de mercado}
+\label{fig:plan-trabajo-entorno-mercado}
+\end{figure}
+
+\begin{figure}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{ganttchart}[hgrid,vgrid,time slot format=isodate,time slot unit=day]{2025-02-10}{2025-03-09}
+\gantttitlecalendar{month=name, day} \\
+\ganttgroup{Consigna y control}{2025-02-10}{2025-03-09} \\
+\end{ganttchart}
+}
+\caption{Plan de trabajo de la consigna y control}
+\label{fig:plan-trabajo-consigna y control}
+\end{figure}
+
+\begin{figure}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{ganttchart}[hgrid,vgrid,time slot format=isodate,time slot unit=day]{2025-07-01}{2025-08-04}
+\gantttitlecalendar{month=name, day} \\
+\ganttgroup{Experimentación}{2025-07-01}{2025-08-04} \\
+\ganttbar{Validación} \\
+\end{ganttchart}
+}
+\caption{Plan de trabajo de la experimentación}
+\label{fig:plan-trabajo-experimentación}
+\end{figure}
+
+\begin{enumerate}
+
+\item \textbf{Task 1} Lorem ipsum
+
+\item \textbf{Task 2} Lorem ipsum
+
+\item \textbf{Final Task} Lorem ipsum
+
+\end{enumerate}

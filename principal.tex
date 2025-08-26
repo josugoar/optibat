@@ -1,0 +1,100 @@
+\documentclass[final,12pt,oneside]{class_diss}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsxtra}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{latexsym}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{pgfgantt}
+
+\usepackage[sort&compress]{natbib}
+\bibpunct{}{}{,}{s}{}{}
+
+\usepackage[pdftex, plainpages=false, pdfpagelabels]{hyperref}
+\hypersetup{
+  linktocpage=true,
+  colorlinks=true,
+  citecolor=blue,
+  urlcolor=red,
+  linkcolor=Maroon,
+  citebordercolor={1 0 0},
+  urlbordercolor={1 0 0},
+  linkbordercolor={0.7 0.8 0.8},
+  breaklinks=true,
+}
+
+\usepackage[acronym, nonumberlist, numberedsection=nolabel]{glossaries}
+\makeglossaries
+\input{acronyms.tex}
+
+\topmargin = -0.56in
+\textheight = 8.60in
+\textwidth = 6.46in
+\oddsidemargin = 0.02in
+
+\begin{document}
+
+\section*{Todo}
+\begin{enumerate}
+  \item Elaborar diagrama Gantt de la sección plan de trabajo (1 día)
+  \item Completar ecuaciones (1 días)
+  \item Redactar capítulo estado de la cuestión (2 días)
+  \item Añadir referencias bibliográficas (1 día)
+  \item Completar figuras (2 días)
+\end{enumerate}
+
+\setcounter{page}{-1}
+
+\input{title.tex}
+\pdfbookmark[0]{Portada}{PDFPortadaPage}
+
+\input{autorizacion.tex}
+\pdfbookmark[0]{Autorización}{PDFAutorizacionPage}
+
+\input{resumen.tex}
+\pdfbookmark[0]{Resumen}{PDFResumenPage}
+
+\vfill
+
+\newpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Índice}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% \input{chapter1.tex}
+% \input{chapter2.tex}
+% \input{chapter3.tex}
+% \input{chapter4.tex}
+% \input{chapter5.tex}
+% \input{chapter6.tex}
+% \input{chapter7.tex}
+% \input{chapter8.tex}
+
+\bibliographystyle{styles/plain}
+\bibliography{references}
+\addcontentsline{toc}{chapter}{Bibliografía}
+
+\appendix
+\input{appendixA.tex}
+
+\end{document}
