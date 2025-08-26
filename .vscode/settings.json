@@ -1,10 +1,12 @@
 {
     "latex-workshop.latex.recipes": [
         {
-            "name": "pdflatex -> makeglossaries -> pdflatex",
+            "name": "pdflatex -> bibtex -> makeglossaries -> pdflatex * 2",
             "tools": [
                 "pdflatex",
+                "bibtex",
                 "makeglossaries",
+                "pdflatex",
                 "pdflatex"
             ]
         }
