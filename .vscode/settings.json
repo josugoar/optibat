@@ -1,4 +1,9 @@
 {
+    "[latex]": {
+        "editor.wordWrap": "wordWrapColumn"
+    },
+    "cSpell.language": "en,es",
+    "latex-workshop.formatting.latex": "tex-fmt",
     "latex-workshop.latex.recipes": [
         {
             "name": "pdflatex -> bibtex -> makeglossaries -> pdflatex * 2",
@@ -40,9 +45,6 @@
             "env": {}
         }
     ],
-    "latex-workshop.formatting.latex": "tex-fmt",
     "latex-workshop.linting.chktex.enabled": true,
-    "latex-workshop.linting.lacheck.enabled": true,
-    "cSpell.language": "en,es",
-    "editor.wordWrap": "wordWrapColumn"
+    "latex-workshop.linting.lacheck.enabled": true
 }
