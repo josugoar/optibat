@@ -1,26 +1,31 @@
 \documentclass[final,12pt,oneside]{class_diss}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
-
+\usepackage{algpseudocode}
 \usepackage{amsmath}
-\usepackage{amsxtra}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{latexsym}
-
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-
-\usepackage[dvipsnames]{xcolor}
+\usepackage{amsxtra}
+\usepackage[spanish]{babel}
+\usepackage[usenames]{color}
 \usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{latexsym}
+\usepackage[sort&compress]{natbib}
+\usepackage[pdftex, plainpages=false, pdfpagelabels]{hyperref}
+\usepackage{algorithm}
+\usepackage[T1]{fontenc}
+\usepackage[acronym, nonumberlist, numberedsection=nolabel]{glossaries}
+\usepackage{hypernat}
 \usepackage{pgfgantt}
 
-\usepackage[sort&compress]{natbib}
-\bibpunct{}{}{,}{a}{}{}
+\topmargin = -0.56in
+\textheight = 8.60in
+\textwidth = 6.46in
+\oddsidemargin = 0.02in
 
-\usepackage[pdftex, plainpages=false, pdfpagelabels]{hyperref}
+\definecolor{Pink}{rgb}{1.0, 0.5, 0.5}
+\definecolor{Maroon}{rgb}{0.8, 0.0, 0.0}
+
 \hypersetup{
   linktocpage=true,
   colorlinks=true,
@@ -33,14 +38,10 @@
   breaklinks=true,
 }
 
-\usepackage[acronym, nonumberlist, numberedsection=nolabel]{glossaries}
-\makeglossaries
-\input{acronyms.tex}
+\bibpunct{}{}{,}{a}{}{}
 
-\topmargin = -0.56in
-\textheight = 8.60in
-\textwidth = 6.46in
-\oddsidemargin = 0.02in
+\input{acronyms.tex}
+\makeglossaries
 
 \begin{document}
 
