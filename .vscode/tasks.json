@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Clean up auxiliary files",
+            "command": "rm -f *.acn *.acr *.alg *.aux *.bbl *.bcf *.blg *.fdb_latexmk *.fls *.glg *.glo *.gls *.ist *.lof *.log *.lot *.out *.run.xml *.synctex\\(busy\\) *.synctex.gz *.toc *.xdv",
+            "type": "shell",
+            "problemMatcher": []
+        }
+    ]
+}
