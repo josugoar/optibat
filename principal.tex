@@ -18,7 +18,7 @@
 \usepackage{pgfgantt}
 
 \usepackage[sort&compress]{natbib}
-\bibpunct{}{}{,}{s}{}{}
+\bibpunct{}{}{;}{a}{}{}
 
 \usepackage[pdftex, plainpages=false, pdfpagelabels]{hyperref}
 \hypersetup{
@@ -88,12 +88,15 @@
 % \input{chapter5.tex}
 % \input{chapter6.tex}
 % \input{chapter7.tex}
-% \input{chapter8.tex}
+\input{chapter8.tex}
 
+\nocite{*}
 \bibliographystyle{styles/plain}
+\bibdata{references}
 \bibliography{references}
 \addcontentsline{toc}{chapter}{Bibliografía}
 
+\glsaddall
 \appendix
 \input{appendixA.tex}
 
