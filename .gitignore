@@ -13,6 +13,6 @@
 *.lot
 *.out
 *.pdf
-*.synctex\\(busy\\)
+*.synctex(busy)
 *.synctex.gz
 *.toc
