@@ -43,5 +43,6 @@
     "latex-workshop.formatting.latex": "tex-fmt",
     "latex-workshop.linting.chktex.enabled": true,
     "latex-workshop.linting.lacheck.enabled": true,
-    "cSpell.language": "en,es"
+    "cSpell.language": "en,es",
+    "editor.wordWrap": "wordWrapColumn"
 }
