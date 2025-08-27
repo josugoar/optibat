@@ -76,6 +76,7 @@ def main():
         ("translator", "glossaries"),
         ("translator", "pgfgantt"),
         ("url", "hyperref"),
+        ("color", "svg"),
     ]
 
     all_packages_in_graph = set(p for constraint in all_constraints for p in constraint)

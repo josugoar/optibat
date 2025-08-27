@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "Clean up auxiliary files",
-            "command": "rm -f *.acn *.acr *.alg *.aux *.bbl *.blg *.glg *.glo *.gls *.ist *.lof *.log *.lot *.out *.pdf *.synctex\\(busy\\) *.synctex.gz *.toc",
+            "command": "rm -f *.acn *.acr *.alg *.aux *.bbl *.blg *.glg *.glo *.gls *.ist *.lof *.log *.lot *.out *.pdf *.synctex\\(busy\\) *.synctex.gz *.toc svg-inkscape/",
             "type": "shell",
             "problemMatcher": [],
             "presentation": {
