@@ -73,6 +73,8 @@ def main():
         ("url", "uri"),
         ("natbib", "hypernat"),
         ("hyperref", "hypernat"),
+        ("translator", "glossaries"),
+        ("translator", "pgfgantt"),
     ]
 
     all_packages_in_graph = set(p for constraint in all_constraints for p in constraint)
