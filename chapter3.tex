@@ -3,55 +3,59 @@
 
 El desarrollo de Optibat, visto desde una perspectiva \textit{bottom-up}, comienza con la capa de abstracción más baja, correspondiente con la infraestructura operacional.
 
-Esta infraestructura, mayormente relacionada con el apartado físico del paradigma del internet de las cosas industrial, integra el hardware de campo con el software de análisis y constituye el pilar fundamental del sistema. Actúa como la conexión indispensable entre los dispositivos y sensores físicos reales, la lógica abstracta del modelo de optimización matemática y la comunicación de vuelta con los resultados obtenidos.
+Esta infraestructura, mayormente relacionada con el apartado físico del paradigma del \gls{iiot}, integra el hardware de campo con el software de análisis y constituye el pilar fundamental del sistema. Actúa como la conexión indispensable entre los dispositivos y sensores físicos reales, la lógica abstracta del modelo de optimización matemática y la comunicación de vuelta con los resultados obtenidos.
 
-Como es entendible, el desarrollo ha hecho uso de la infraestructura operacional ya existente en cuanto a la red interna de las instalaciones a controlar. De cualquier otro modo, el despliegue real del sistema desarrollado no hubiera sido posible, ya que se necesitarían recursos a gran escala no comúnmente disponibles, pudiendo visualizar parte de los activos físicos en cuestión en la figura~\ref{fig:infraestructura-operacional}.
+Como es entendible, el desarrollo ha hecho uso de la infraestructura operacional ya existente en cuanto a la red interna de las instalaciones a controlar. De cualquier otro modo, el despliegue real del sistema desarrollado no hubiera sido posible, ya que se necesitarían recursos a gran escala no comúnmente disponibles, pudiendo visualizar el activo energético principal en cuestión en la figura~\ref{fig:diagrama-bess}.
 
 \begin{figure}
-\centering
-\includegraphics[width=0.5\linewidth]{figures/infraestructura-operacional.png}
-\caption{Instalación fotovoltaica y de almacenamiento similar a uno de los arquetipos usados en cuestión}
-\label{fig:infraestructura-operacional}
+  \centering
+  \includesvg[width=0.5\linewidth]{figures/diagrama-bess.svg}
+  \caption{Diagrama de interno de un \gls{bess}~\cite{iberdrola2024bess}}
+  \label{fig:diagrama-bess}
 \end{figure}
 
-Por ello, la principal contribución del apartado de la infraestructura operacional se ve reflejada en la configuración, securización, despliegue y validación de la herramienta de conexión entre los activos físicos y el historiador de información de las plantas, a través de los correspondientes protocolos de comunicación descritos. Se busca la integración estandarizada con los componentes ya existentes para el correcto funcionamiento de las instalaciones que alojan los sistemas de almacenamiento de energía en baterías, pero también, teniendo que tener en cuenta que tan solo son una pequeña parte de la red al completo.
+Por ello, la principal contribución del apartado de la infraestructura operacional se ve reflejada en la configuración, securización, despliegue y validación de la herramienta de conexión entre los activos físicos y del historiador del \gls{pis}, a través de los correspondientes protocolos de comunicación posteriormente descritos. Se busca la integración estandarizada con los componentes ya existentes, para el correcto funcionamiento de las instalaciones que alojan los \glspl{bess}, mientras se tiene en cuenta que los sistemas de almacenamiento apenas son una pequeña parte de la red al completo.
 
-De esta forma, es posible obtener una visión más completa a través del análisis realizado en el apartado~\ref{makereference3.1} , que define la arquitectura de la disposición de los activos energéticos y las múltiples restricciones operativas fundamentales tenidas en cuenta por el desarrollo. También se examinan los componentes físicos que forman parte de la infraestructura al completo, detallados en la sección~\ref{makereference3.2}, que actúan como la fuente primaria de la obtención de datos. Además, se explora la comunicación que unifica estos componentes en la sección~\ref{makereference3.3},  facilitando un intercambio de datos estandarizado. Con esto, se describe la gestión de la información obtenida en el apartado~\ref{makereference3.4} , detallando su rol en el almacenamiento, la gestión y la validación de los datos operativos. Junto a ello, se explica como los datos de la infraestructura obtenidos son transformados y consumidos en el apartado~\ref{makereference3.5}.
+De esta forma, es posible obtener una visión más completa a través del análisis realizado en la sección~\ref{makereference3.1}, que define la arquitectura de la disposición de los activos energéticos y las múltiples restricciones operativas fundamentales tenidas en cuenta por el desarrollo. También, se examinan los componentes físicos que forman parte de la infraestructura al completo, detallados en la sección~\ref{makereference3.2}, que actúan como la fuente primaria de la obtención de datos. Además, se explora la comunicación que unifica estos componentes en la sección~\ref{makereference3.3},  facilitando un intercambio de datos estandarizado. Con esto, se describe la gestión de la información obtenida en la sección~\ref{makereference3.4}, detallando su rol en el almacenamiento, la gestión y la validación de los datos operativos. Por último, se explica como los datos de la infraestructura obtenidos son transformados y consumidos en la sección~\ref{makereference3.5}.
 
 \section{Configuración topológica}
 \label{makereference3.1}
 
-Resulta que en los sistemas de almacenamiento de energía en baterías la efectividad operativa y la rentabilidad, esta última sobre todo, no dependen exclusivamente de la tecnología intrínseca utilizada o de la optimalidad de su operación, sino que están condicionadas fundamentalmente por su configuración topológica.
+Resulta que en los \glspl{bess}, la efectividad operativa y la rentabilidad, esta última sobre todo, no dependen exclusivamente de la tecnología intrínseca utilizada o de la optimalidad de su operación, sino que están condicionadas fundamentalmente por su configuración topológica.
 
-Esta disposición es absolutamente necesaria para llegar a comprender el funcionamiento posterior de la representación operacional de las plantas, ya que una de las principales motivaciones de desarrollo de sistema ha resultado ser la intención de aprovechar las ventajas de que brindan las topologías más avanzadas e integradas con el resto de activos, como lo es la híbrida aquí descrita. Posteriormente, en el apartado~\ref{makereference5} de modelización estructural se describe la implementación de la lógica topológica y en el apartado~\ref{makereference7} de resultados experimentales las diferencias en la operación de las topologías.
+Esta disposición es absolutamente necesaria para llegar a comprender el funcionamiento de la representación operacional de las plantas, ya que una de las principales motivaciones del desarrollo del sistema ha resultado ser la intención de aprovechar las ventajas de que brindan las topologías más avanzadas e integradas con el resto de activos, como lo es la topología híbrida aquí descrita. Posteriormente, en el apartado~\ref{makereference5} de modelización estructural se describe la implementación de la lógica topológica y en el apartado~\ref{makereference7} de resultados experimentales las diferencias en la operación de las topologías.
 
-Así, la topología de una instalación energética se refiere a la arquitectura física de conexión de los activos energéticos con la red eléctrica y otros elementos de generación o consumo dentro de la instalación misma en todo su conjunto.
+Así, la topología de una instalación energética se refiere a la arquitectura física de conexión de los activos energéticos con la red eléctrica y otros elementos de generación o consumo dentro de la instalación misma en todo su conjunto~\cite{parlikar2019topology}.
 
 Esta define los flujos energéticos posibles y, por ello, impone las restricciones estructurales que el modelo de optimización debe considerar como premisas inviolables para garantizar la validez física y económica de las soluciones.
 
-Precisamente, estos flujos energéticos son los que dictan los canales de importación y exportación de energía entre la red pública de alta tensión, controlada por la institución correspondiente, y la red interna de media tensión, manejadas las instalaciones de almacenamiento mismas por el control del sistema desarrollado, a través del llamado punto frontera.
+Precisamente, estos flujos energéticos son los que dictan los canales de importación y exportación de energía entre la red pública de alta tensión, controlada por el \gls{tso}, y la red interna de media tensión de la entidad energética, manejadas las instalaciones de almacenamiento mismas por el control del sistema desarrollado, a través del llamado \gls{pf}.
 
-De igual manera, es necesario subrayar la relevancia de los flujos energéticos nuevamente, ya que todas y cada una de las operaciones en el mercado se realizan a través ellos, cada uno poseyendo una identificación correspondiente al flujo energético pertinente, como se muestra en la tabla~\ref{tab:unidades-físicas}.
+De igual manera, es necesario subrayar la relevancia de los flujos energéticos nuevamente, ya que todas y cada una de las operaciones en el mercado se realizan a través ellos, cada uno poseyendo una identificación correspondiente al flujo energético pertinente, como se muestra en la tabla~\ref{tab:unidades-fisicas}.
 
 \begin{table}[ht]
-\centering
-\begin{tabular}[c]{|l|l|l|}
-\hline
-Código  & Descripción               & Tipo de producción \\
-\hline
-3PINOS  & 3PINOS - VELA             & Solar fotovoltaica  \\
-3VILLAS & PARQUE EÓLICO TRES VILLAS & Eólica terrestre   \\
-4CAM1   & CUATROCAMINO S1           & Solar fotovoltaica  \\
-4CAM2   & CUATROCAMINO S2           & Solar fotovoltaica  \\
-\hline
-\end{tabular}
-\caption{Listado de las identificaciones de los flujos energéticos de varios activos}
-\label{tab:unidades-físicas}
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    UFI     & UP      & UOF    & Descripción\\
+    \hline
+    BPLLANC & AFIBHFC & AFIBHFC & Batería Compra\\
+    BPLLANV & FBHIBHV & IBEVD22 & Batería Venta\\
+    PLLANO  & FBHIBHV & IBEVD22 & H.B. Puertollano II\\
+    BURKIC  & AFIBHEC & AFIBHEC & Batería Compra\\
+    BURKIV  & EBHIBHV & IBEVD24 & Batería Venta\\
+    ELGURKI & EBHIBHV & IBEVD24 & P.E. Elgea-Urkilla\\
+    \hline
+  \end{tabular}
+  \caption{Unidades físicas, de programación y de oferta de múltiples instalaciones}
+  \label{tab:unidades-fisicas}
 \end{table}
+
+Los flujos energéticos, o, mejor expresado, las interfaces correspondientes a los mismos, son conocidos como \gls{ufi}, mientras que la interfaz que oferta a mercado y engloba las \glspl{ufi} es llamada \gls{up} desde el punto de vista del \gls{tso} y \gls{uof} desde la perspectiva del \gls{mo}.
 
 El sistema desarrollado, por tanto, hace uso de la configuración topológica ya existente, es decir, no se encarga de la implantación física de los activos energéticos o de la conexión de los mismos con la red física, ya que eso queda bien fuera del alcance del diseño. En cambio, sí que hace uso de los diferentes componentes mediante sus correspondientes canales.
 
-De esta forma, en términos generales y en el ámbito del mercado eléctrico peninsular, como es el caso, las instalaciones que alojan baterías de escala industrial se pueden clasificar principalmente en dos grandes familias, la configuración aislada y la híbrida, basada la terminología en las definiciones oficiales del Estado.
+De esta forma, en términos generales y en el ámbito del mercado eléctrico peninsular, como es el caso, las instalaciones que alojan baterías de escala industrial se pueden clasificar principalmente en dos grandes familias, la configuración aislada y la híbrida, basada la terminología en las definiciones oficiales del Estado~\cite{cnmc202403resolucion}.
 
 \subsection{Topología aislada}
 \label{makereference3.1.1}
@@ -61,19 +65,19 @@ La configuración aislada o standalone representa el arquetipo más directo de d
 En esta topología, la batería es el único activo energético de la instalación y su principal propósito es interactuar con la red eléctrica pública de alta tensión, conectada a través del punto frontera a la red interna de media tensión, como se observa en la figura~\ref{fig:topologia-aislada}.
 
 \begin{figure}
-\centering
-\includegraphics[width=0.5\linewidth]{figures/topologia-aislada.png}
-\caption{Diagrama de una instalación aislada con su sistema de almacenamiento de energía en baterías y sus correspondientes flujos energéticos}
-\label{fig:topologia-aislada}
+  \centering
+  %   \includegraphics[width=0.5\linewidth]{figures/topologia-aislada.png}
+  \caption{Diagrama de una instalación aislada con su sistema de almacenamiento de energía en baterías y sus correspondientes flujos energéticos}
+  \label{fig:topologia-aislada}
 \end{figure}
 
 Esto significa que la operación de un sistema de almacenamiento de energía en baterías aislado se centra puramente en el intercambio de energía con la red, lo que tan solo permite definir dos interfaces de flujo energético.
 
 \begin{itemize}
 
-\item La interfaz de importación se corresponde al flujo de energía desde la red hacia el sistema de almacenamiento de energía en baterías. Este flujo comprende la única fuente de carga de la batería.
-          
-\item  La interfaz de exportación representa el flujo de energía desde el sistema de almacenamiento de energía en baterías hacia la red. En contrapunto, se corresponde con la descarga de la batería.
+  \item La interfaz de importación se corresponde al flujo de energía desde la red hacia el sistema de almacenamiento de energía en baterías. Este flujo comprende la única fuente de carga de la batería.
+
+  \item  La interfaz de exportación representa el flujo de energía desde el sistema de almacenamiento de energía en baterías hacia la red. En contrapunto, se corresponde con la descarga de la batería.
 
 \end{itemize}
 
@@ -81,7 +85,7 @@ De esta forma, esta topología es más común en las instalaciones energéticas 
 
 Precisamente, uno de los ejemplos más representativos de esta topología en la actualidad es el sistema de almacenamiento de energía en baterías de Abadiño, en donde el negocio principal se realiza en los mencionados mercados de ajuste.
 
-A pesar de su aparente simplicidad, los análisis de mercado han demostrado que la viabilidad económica de la topología aislada es limitada. 
+A pesar de su aparente simplicidad, los análisis de mercado han demostrado que la viabilidad económica de la topología aislada es limitada.
 
 El margen diferencial de precios, también conocido como \textit{spread}, entre las horas de bajo coste (valle) y alto coste (pico), a menudo resulta insuficiente para generar los ingresos necesarios que permitan amortizar la elevada inversión de capital y cubrir los costes de operación y mantenimiento, incluyendo la degradación.
 
@@ -99,19 +103,19 @@ Con el propósito de superar las limitaciones del modelo aislado y maximizar el 
 Estas topologías se definen por la llamada colocación de un sistema de almacenamiento de energía en baterías junto a un activo de generación, principalmente de generación renovable y generalmente fotovoltaica o eólica, como se muestra en la figura~\ref{fig:topologia-híbrida}.
 
 \begin{figure}
-\centering
-\includegraphics[width=0.5\linewidth]{figures/topologia-híbrida.png}
-\caption{Diagrama de una instalación híbrida con su sistema de almacenamiento de energía en baterías y fuente de generación y sus correspondientes flujos energéticos}
-\label{fig:topologia-híbrida}
+  \centering
+  %   \includegraphics[width=0.5\linewidth]{figures/topologia-híbrida.png}
+  \caption{Diagrama de una instalación híbrida con su sistema de almacenamiento de energía en baterías y fuente de generación y sus correspondientes flujos energéticos}
+  \label{fig:topologia-híbrida}
 \end{figure}
 
 Aunque los activos energéticos compartan ambos el mismo punto frontera, desde donde importan o exportan la energía al mercado eléctrico, la batería es capaz de operar mediante lo que se conoce como \textit{behind the meter}. Esto es porque el flujo energético se mantiene dentro de la red interna de media tensión, sin volcarse necesariamente a la red pública de alta tensión.
 
 \begin{itemize}
 
-\item Las interfaces de importación se corresponden tanto al flujo de energía desde la red hacia el sistema de almacenamiento de energía en baterías como al flujo energético desde la generación energética al sistema de almacenamiento de energía en baterías. Más allá de posibles restricciones estructurales u operativas, el sistema desarrollado debe ser capaz de diferenciar y seleccionar correctamente el canal de importación más adecuado según la situación analizada.
-          
-\item Las interfaces de exportación representan, por un lado, el flujo de energía desde el sistema de almacenamiento de energía en baterías hacia la red, y por el otro, el flujo de energía desde la generación energética a la red. Como se tratan de dos activos energéticos separados, el desarrollo debe tenerlos en cuenta a los dos a la hora de realizar el arbitraje y dar la opción de comunicar no solo los resultados de la batería, sino también los de la generación, al estar enlazados entre sí.
+  \item Las interfaces de importación se corresponden tanto al flujo de energía desde la red hacia el sistema de almacenamiento de energía en baterías como al flujo energético desde la generación energética al sistema de almacenamiento de energía en baterías. Más allá de posibles restricciones estructurales u operativas, el sistema desarrollado debe ser capaz de diferenciar y seleccionar correctamente el canal de importación más adecuado según la situación analizada.
+
+  \item Las interfaces de exportación representan, por un lado, el flujo de energía desde el sistema de almacenamiento de energía en baterías hacia la red, y por el otro, el flujo de energía desde la generación energética a la red. Como se tratan de dos activos energéticos separados, el desarrollo debe tenerlos en cuenta a los dos a la hora de realizar el arbitraje y dar la opción de comunicar no solo los resultados de la batería, sino también los de la generación, al estar enlazados entre sí.
 
 \end{itemize}
 
@@ -121,11 +125,11 @@ Por ello, la herramienta identifica y soporta de forma genérica las siguientes 
 
 \begin{description}
 
-\item[Híbrida flexible] La configuración más versátil. El sistema de control tiene total libertad para decidir la fuente de carga (red eléctrica o generación energética) basándose exclusivamente en el criterio óptimo del algoritmo de control, que principalmente se trata de la maximización del beneficio. La instalación híbrida fotovoltaica y de almacenamiento de Puertollano es un arquetipo de este modelo.
-          
-\item[Híbrida con prioridad de carga de generación] Opera bajo una restricción no económica, es decir, debe sacrificar beneficio para cumplir con las limitaciones del funcionamiento físico de la instalación. Una norma operativa de naturaleza física, aunque también pueda ser contractual o regulatoria, obliga al sistema de almacenamiento de energía en baterías a absorber toda la energía generada por la planta que no se pueda exportar, antes de poder cargar desde la red. El modelo de optimización debe satisfacer esta regla de forma prioritaria. La planta de híbrida eólica y de almacenamiento de Urkilla ejemplifica este tipo de limitación.
-          
-\item[Híbrida con carga aislada de la red] Representa el escenario más restrictivo. La interfaz de importación desde la red para la carga del sistema de almacenamiento de energía en baterías está física o lógicamente deshabilitada, siendo la planta renovable asociada la única fuente de carga. Este modelo limita la operación a estrategias de autoconsumo de la producción renovable, donde se puede llegar a reservar parte de la generación para la batería. La instalación híbrida fotovoltaica y de almacenamiento de Campo Arañuelo es un ejemplo de esta configuración.
+  \item[Híbrida flexible] La configuración más versátil. El sistema de control tiene total libertad para decidir la fuente de carga (red eléctrica o generación energética) basándose exclusivamente en el criterio óptimo del algoritmo de control, que principalmente se trata de la maximización del beneficio. La instalación híbrida fotovoltaica y de almacenamiento de Puertollano es un arquetipo de este modelo.
+
+  \item[Híbrida con prioridad de carga de generación] Opera bajo una restricción no económica, es decir, debe sacrificar beneficio para cumplir con las limitaciones del funcionamiento físico de la instalación. Una norma operativa de naturaleza física, aunque también pueda ser contractual o regulatoria, obliga al sistema de almacenamiento de energía en baterías a absorber toda la energía generada por la planta que no se pueda exportar, antes de poder cargar desde la red. El modelo de optimización debe satisfacer esta regla de forma prioritaria. La planta de híbrida eólica y de almacenamiento de Urkilla ejemplifica este tipo de limitación.
+
+  \item[Híbrida con carga aislada de la red] Representa el escenario más restrictivo. La interfaz de importación desde la red para la carga del sistema de almacenamiento de energía en baterías está física o lógicamente deshabilitada, siendo la planta renovable asociada la única fuente de carga. Este modelo limita la operación a estrategias de autoconsumo de la producción renovable, donde se puede llegar a reservar parte de la generación para la batería. La instalación híbrida fotovoltaica y de almacenamiento de Campo Arañuelo es un ejemplo de esta configuración.
 
 \end{description}
 
@@ -142,17 +146,17 @@ A partir dichos componentes, en forma de sistemas de control de baterías, siste
 
 \begin{description}
 
-\item[Estado de carga] Indica el porcentaje de energía en la batería. Es la variable más crítica para la toma de decisiones de carga y descarga. Expresado en porcentaje (\textit{\%}) y megavatios hora (\textit{MWh})\footnote{Dependiendo de la batería, aún todas siendo del mismo manufacturador, es expresado de un modo u otro, por alguna razón} y ofrecido por el sistema de control de baterías.
+  \item[Estado de carga] Indica el porcentaje de energía en la batería. Es la variable más crítica para la toma de decisiones de carga y descarga. Expresado en porcentaje (\textit{\%}) y megavatios hora (\textit{MWh})\footnote{Dependiendo de la batería, aún todas siendo del mismo manufacturador, es expresado de un modo u otro, por alguna razón} y ofrecido por el sistema de control de baterías.
 
-\item[Estado de salud] Representa la capacidad actual de la batería en comparación con su capacidad nominal, reflejando su nivel de degradación a lo largo del tiempo. Expresado en porcentaje (\textit{\%}) y megavatios hora (\textit{MWh})\footnotemark[\value{footnote}] y ofrecido por el sistema de control de baterías.
+  \item[Estado de salud] Representa la capacidad actual de la batería en comparación con su capacidad nominal, reflejando su nivel de degradación a lo largo del tiempo. Expresado en porcentaje (\textit{\%}) y megavatios hora (\textit{MWh})\footnotemark[\value{footnote}] y ofrecido por el sistema de control de baterías.
 
-\item[Límites de potencia de carga y descarga local] Potencia máxima que el sistema de almacenamiento de baterías puede admitir o entregar en un momento dado, la cual puede estar limitada por factores internos como la temperatura. Expresados en megavatios (\textit{MW}) y ofrecido por el sistema de control de baterías.
+  \item[Límites de potencia de carga y descarga local] Potencia máxima que el sistema de almacenamiento de baterías puede admitir o entregar en un momento dado, la cual puede estar limitada por factores internos como la temperatura. Expresados en megavatios (\textit{MW}) y ofrecido por el sistema de control de baterías.
 
-\item[Disponibilidad] Señalización de la disponibilidad del estado interno de la batería, en forma de la cantidad de módulos o conjunto de celdas de carga disponibles en un momento dado, dependiendo de posibles fallos en la operación del sistema de almacenamiento. Expresado en porcentaje (\textit{\%}) y ofrecido por el sistema de control de baterías.
+  \item[Disponibilidad] Señalización de la disponibilidad del estado interno de la batería, en forma de la cantidad de módulos o conjunto de celdas de carga disponibles en un momento dado, dependiendo de posibles fallos en la operación del sistema de almacenamiento. Expresado en porcentaje (\textit{\%}) y ofrecido por el sistema de control de baterías.
 
-\item[Programa] El valor de consigna que el sistema de control de baterías está intentando seguir actualmente. Expresado en megavatios (\textit{MW}) y ofrecido al sistema de control de baterías.
+  \item[Programa] El valor de consigna que el sistema de control de baterías está intentando seguir actualmente. Expresado en megavatios (\textit{MW}) y ofrecido al sistema de control de baterías.
 
-\item[Potencia activa de carga y descarga] Medida en tiempo real de la potencia neta que se está inyectando o absorbiendo de la red. Expresado en megavatios (\textit{MW}) y ofrecido por el sistema de conversión de potencia.
+  \item[Potencia activa de carga y descarga] Medida en tiempo real de la potencia neta que se está inyectando o absorbiendo de la red. Expresado en megavatios (\textit{MW}) y ofrecido por el sistema de conversión de potencia.
 
 \item[Potencia activa de importación y exportación)] La medición física de la potencia bruta que fluye a través del punto frontera, siempre dentro de la red de media tensión. Expresado en megavatios (\textit{MW}) y ofrecido por los transformadores de medida.
 
@@ -179,7 +183,7 @@ Esa es la razón de la exposición de múltiples protocolos, y es que la comunic
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/instrumentación-de-campo.png}
+% \includegraphics[width=0.5\linewidth]{figures/instrumentación-de-campo.png}
 \caption{Diagrama de la interacción entre los dispositivos y sensores físicos de campo}
 \label{fig:instrumentación-de-campo}
 \end{figure}
@@ -208,7 +212,7 @@ IEC 60870-5-104 también permite enviar señalizaciones de calidad correspondien
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/overflow-soc.png}
+% \includegraphics[width=0.5\linewidth]{figures/overflow-soc.png}
 \caption{Los valores del estado de carga excedente con respecto al limite operativo son registrados como inválidos en el protocolo}
 \label{fig:overflow-soc}
 \end{figure}
@@ -224,21 +228,21 @@ Ellos detallan el uso del protocolo para garantizar la respuesta con respecto al
 \begin{table}[ht]
 \centering
 \begin{tabular}{|l|p{7.5cm}|l|l|}
-\hline
-Tipo & Descripción                                                & Mnemónico  & Prioridad \\
-\hline
-147  & Programa de consumo                                        & M\_PC\_AA  & Baja      \\
-148  & Certificado digital                                        & M\_CD\_AA  & Baja      \\
-149  & Datos de tiempo real (Consumo)                             & M\_TR\_AA  & Baja      \\
-150  & Lista de órdenes de reducción de potencia activas          & M\_LI\_AA  & Baja      \\
-151  & Programa de parada/mantenimiento                           & M\_PM\_AA  & Baja      \\
-152  & Datos generales EMCC servicio interrumpibilidad de demanda & M\_DG\_AK  & Baja      \\
-153  & Estado orden de reducción de potencia                      & M\_EI\_AK  & Baja      \\
-154  & Archivo orden reducción de potencia                        & M\_AI\_AK  & Baja      \\
-155  & Datos de tiempo real (Generación)                          & M\_TR\_GN  & Baja      \\
-156  & Envío a SGES de estado comunicaciones SG--SCECI -- EMCC    & M\_EC\_AA  & Baja      \\
-158  & Envío a SGES de Programa de consumo                        & M\_PC\_AB  & Baja      \\
-\hline
+  \hline
+  Tipo & Descripción                                                & Mnemónico  & Prioridad \\
+  \hline
+  147  & Programa de consumo                                        & M\_PC\_AA  & Baja      \\
+  148  & Certificado digital                                        & M\_CD\_AA  & Baja      \\
+  149  & Datos de tiempo real (Consumo)                             & M\_TR\_AA  & Baja      \\
+  150  & Lista de órdenes de reducción de potencia activas          & M\_LI\_AA  & Baja      \\
+  151  & Programa de parada/mantenimiento                           & M\_PM\_AA  & Baja      \\
+  152  & Datos generales EMCC servicio interrumpibilidad de demanda & M\_DG\_AK  & Baja      \\
+  153  & Estado orden de reducción de potencia                      & M\_EI\_AK  & Baja      \\
+  154  & Archivo orden reducción de potencia                        & M\_AI\_AK  & Baja      \\
+  155  & Datos de tiempo real (Generación)                          & M\_TR\_GN  & Baja      \\
+  156  & Envío a SGES de estado comunicaciones SG--SCECI -- EMCC    & M\_EC\_AA  & Baja      \\
+  158  & Envío a SGES de Programa de consumo                        & M\_PC\_AB  & Baja      \\
+  \hline
 \end{tabular}
 \caption{Extracto de las funciones de aplicación asociadas definidas por el operador de red}
 \label{tab:funciones-de-aplicación-red}
@@ -266,7 +270,7 @@ Por lo tanto, una contribución fundamental resulta ser el diseño, la implantac
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/sistema-de-información-de-planta.png}
+% \includegraphics[width=0.5\linewidth]{figures/sistema-de-información-de-planta.png}
 \caption{Arquitectura de los canales de comunicación del sistema de información de planta}
 \label{fig:sistema-de-información-de-planta}
 \end{figure}
@@ -288,7 +292,7 @@ De esta forma, se observa que, en concreto, el despliegue del conector, actuando
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/modelo-purdue.png}
+% \includegraphics[width=0.5\linewidth]{figures/modelo-purdue.png}
 \caption{Modelo Purdue para la seguridad de los sistemas de control industrial}
 \label{fig:modelo-purdue}
 \end{figure}
@@ -300,7 +304,7 @@ La parametrización del conector, junto con la especificación de la lógica de 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/administador-del-conector.png}
+% \includegraphics[width=0.5\linewidth]{figures/administador-del-conector.png}
 \caption{Interfaz del administrador del conector mostrando el descubrimiento de señales del dispositivo subordinado}
 \label{fig:administador-del-conector}
 \end{figure}
@@ -327,7 +331,7 @@ Se seleccionan únicamente las variables críticas para la operación de la bate
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/visualización-industrial-de-batería.png}
+% \includegraphics[width=0.5\linewidth]{figures/visualización-industrial-de-batería.png}
 \caption{Visualización industrial de las señales de una batería}
 \label{fig:visualización-industrial-de-batería}
 \end{figure}
@@ -336,7 +340,7 @@ Como no se hace uso de PI Asset Framework para modelizar la planta de forma jer�
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/puntos-batería.png}
+% \includegraphics[width=0.5\linewidth]{figures/puntos-batería.png}
 \caption{Colección de puntos de una batería}
 \label{fig:puntos-batería}
 \end{figure}
@@ -347,7 +351,7 @@ Con ello, la validación del sistema se realiza comparando en tiempo real los va
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/programa-batería.png}
+% \includegraphics[width=0.5\linewidth]{figures/programa-batería.png}
 \caption{Programa de ciclado de batería en comparación con su evolución del estado de carga}
 \label{fig:programa-batería}
 \end{figure}
@@ -376,7 +380,7 @@ Las ecuaciones de rendimiento o PI Performance Equations son una solución efica
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/ecuaciones-de-rendimiento.png}
+% \includegraphics[width=0.5\linewidth]{figures/ecuaciones-de-rendimiento.png}
 \caption{Ejemplo de creación de una ecuación de rendimiento}
 \label{fig:ecuaciones-de-rendimiento}
 \end{figure}
@@ -386,7 +390,7 @@ Mediante las ecuaciones de rendimiento se detallan los siguientes puntos.
 \begin{itemize}
 
 \item El rendimiento de carga, que afecta a la energía importada y define la cantidad de energía perdida durante la carga de la batería. Su razón de ser es el ajuste de los posibles desvíos a la hora de comprar energía que surgirían si no se tuvieran en cuenta las perdidas. El rendimiento de carga es calculado mediante la simple relación entre la energía importada y energía cargada \(E_{imp} / E_c\).
-      
+
 \item El rendimiento de descarga, que afecta a la energía exportada y define la cantidad de energía perdida durante la descarga de la batería. Es necesaria para el ajuste de los posibles desvíos a la hora de vender energía si no se tuvieran en cuenta las perdidas. El rendimiento de carga es calculado mediante la simple relación entre la energía importada y energía cargada \(E_{exp} / E_d\).
 
 \end{itemize}
@@ -400,7 +404,7 @@ Para ello, existen múltiples enfoques que tomar, aunque el elegido a sido hacer
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{figures/integración-programática.png}
+% \includegraphics[width=0.5\linewidth]{figures/integración-programática.png}
 \caption{Diagrama de componentes entre plataformas}
 \label{fig:integración-programática}
 \end{figure}
