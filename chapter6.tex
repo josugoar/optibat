@@ -42,13 +42,13 @@ Para transformar la posición de mercado de energía a potencia es necesario con
   P_{t} = E_{t} \cdot \frac{1}{\Delta t \cdot \frac{\SI{1}{\hour}}{\SI{60}{\minute}}}
 \end{equation}
 
-donde:
+donde
 
 \begin{itemize}
 
-  \item \( P_{t} \) es el perfil de potencia a mantener durante un periodo para ciclar una cantidad de energía en \si{\mega\watt},
+  \item \( P_{t} \) es el perfil de potencia a mantener durante el periodo \( t \) para ciclar una cantidad de energía en \si{\mega\watt}.
 
-  \item \( E_{t} \) es la energía a ciclar en un periodo en \si{{\mega\watt\hour}},
+  \item \( E_{t} \) es la energía a ciclar en el periodo \( t \) en \si{{\mega\watt\hour}},
 
   \item \( \Delta t \) es la granularidad mínima de los mercados analizados en \si{\minute}.
 
@@ -71,20 +71,20 @@ Por ejemplo, una situación en la que una carga y descarga simultanea podría su
   \centering
   \begin{tabular}{|l|S[table-format=4.1]|S[table-format=4.1]|S[table-format=4.1]|S[table-format=4.2]|}
     \hline
-    Periodo & {Batería [\si{\mega\watt}]} & {Generación [\si{\mega\watt}]} & {Instalación [\si{\mega\watt}]}  & {Precio [\si{\mega\watt}]}\\
+    Periodo & {Batería [\si{\mega\watt}]}  & {Generación [\si{\mega\watt}]}  & {Instalación [\si{\mega\watt}]}  & {Precio [\si{\text{\euro}\per\mega\watt}]} \\
     \hline
-    H20Q1   & 5.5                       & 32.5                         & 32.5                           & -5.00\\
-    H20Q2   & 5.5                       & 32.5                         & 32.5                           & 20.00\\
-    H20Q3   & 0.0                       &  0.0                         &  0.0                           & 53.86\\
-    H20Q4   & 0.0                       &  0.0                         &  0.0                           & 89.64\\
-    H21Q1   & 5.5                       &  0.0                         & 32.5                           & 37.24\\
-    H21Q2   & 5.5                       &  0.0                         & 32.5                           & 69.00\\
-    H21Q3   & 5.5                       &  0.0                         & 32.5                           & 85.42\\
-    H21Q4   & 5.5                       &  0.0                         & 32.5                           & 93.80\\
-    H22Q1   & 5.5                       &  0.0                         & 32.5                           & 71.00\\
-    H22Q2   & 5.5                       & 32.5                         & 32.5                           & 69.00\\
-    H22Q3   & 5.5                       & 32.5                         & 32.5                           & 69.00\\
-    H22Q4   & 5.5                       & 32.5                         & 32.5                           & 73.00\\
+    H20Q1   & 5.5                          & 32.5                            & 32.5                             & -5.00                                      \\
+    H20Q2   & 5.5                          & 32.5                            & 32.5                             & 20.00                                      \\
+    H20Q3   & 0.0                          & 0.0                             & 0.0                              & 53.86                                      \\
+    H20Q4   & 0.0                          & 0.0                             & 0.0                              & 89.64                                      \\
+    H21Q1   & 5.5                          & 0.0                             & 32.5                             & 37.24                                      \\
+    H21Q2   & 5.5                          & 0.0                             & 32.5                             & 69.00                                      \\
+    H21Q3   & 5.5                          & 0.0                             & 32.5                             & 85.42                                      \\
+    H21Q4   & 5.5                          & 0.0                             & 32.5                             & 93.80                                      \\
+    H22Q1   & 5.5                          & 0.0                             & 32.5                             & 71.00                                      \\
+    H22Q2   & 5.5                          & 32.5                            & 32.5                             & 69.00                                      \\
+    H22Q3   & 5.5                          & 32.5                            & 32.5                             & 69.00                                      \\
+    H22Q4   & 5.5                          & 32.5                            & 32.5                             & 73.00                                      \\
     \hline
   \end{tabular}
   \caption{Restricciones técnicas en donde, desde el periodo H21Q1 al H22Q1, la exportación de la generación está limitada mientras que la batería es capaz de exportar libremente, pudiendo causar conflictos entre la carga de aprovechamiento de la generación y la descarga de la venta en precios altos}
@@ -122,23 +122,54 @@ En un primer momento, precisamente a los inicios de desarrollo de la emisión de
 
 \begin{equation}
   \label{eq:emisión-directa}
+  \lambda^{O}_{BESS, t} = \lambda^{M}_{t}
 \end{equation}
 
-Dicho comportamiento dispone de un fallo inaceptable en el funcionamiento del ciclado de la batería. Como el mercado eléctrico es marginalista, si existe un desvío del precio de casación a la dirección opuesta de la oferta en comparación a la predicción de precio empleada durante la operación, la oferta nunca tendrá la capacidad de casar en el mercado, resultando en un desvío de programa que, muy probablemente no podrá ser recuperado por la misma razón.
+donde
 
-Un sencillo arreglo al previo comportamiento, empleado como evolución de la lógica de emisión de ofertas del sistema, es incluir una tolerancia de oferta en el calculo del precio. La tolerancia aumenta o disminuye el precio de oferta en la dirección opuesta al beneficio en la compra o venta, buscando la casación en el mercado, ecuación~\ref{eq:emisión-tolerancia}. Este comportamiento funciona ya que permite cubrirse ante pequeños desvíos de precio y sigue sin afectar a la disminución del beneficio si el desvío de precio es favorable. El nuevo problema, en cambio, es doble.
+\begin{itemize}
+
+  \item \( \lambda^{O}_{BESS, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt}.
+
+  \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \), en \si{\text{\euro}\per\mega\watt}.
+
+\end{itemize}
+
+Dicho comportamiento dispone de un fallo inaceptable en el funcionamiento del ciclado de la batería. Como el mercado eléctrico es marginalista, si existe un desvío del precio de casación a la dirección opuesta de la oferta en comparación a la predicción de precio empleada durante la operación, la oferta nunca tendrá la capacidad de casar en el mercado, resultando en un desvío de programa que, muy probablemente no podrá ser recuperado por la misma razón en los mercados posteriores.
+
+Un sencillo arreglo al previo comportamiento, empleado como evolución de la lógica de emisión de ofertas del sistema, es incluir una tolerancia de oferta en el calculo del precio. La tolerancia aumenta o disminuye el precio de oferta en la dirección opuesta al beneficio en la compra o venta, buscando la casación en el mercado, ecuación~\ref{eq:emisión-tolerancia}. Este comportamiento funciona ya que permite cubrirse ante pequeños desvíos de precio y sigue sin afectar a la disminución del beneficio si el desvío de precio es favorable. En cambio, esta solución introduce un problema doble.
 
 \begin{equation}
   \label{eq:emisión-tolerancia}
+  \lambda^{O}_{BESS, t} =
+  \begin{cases}
+    \lambda^{M}_{t} + \Delta \lambda & \text{si } P_{t} < 0 \quad (\text{carga})               \\
+    \lambda^{M}_{t} - \Delta \lambda & \text{si } P_{t} > 0 \quad (\text{descarga})            \\
+    0                                & \text{si } P_{t} = 0 \quad (\text{estado estacionario}) \\
+  \end{cases}
 \end{equation}
 
-Primero, el uso de una tolerancia absoluta implica que el sistema solo puede defenderse ante desvíos de precio menores pero, cuando mayor es el precio de mercado, mayores suelen ser los desvíos de precio\footnote{Si la predicción del precio de mercado supera los 100 euros megavatio hora (\textit{€/MWh}), es más probable que el precio de casación termine en un rango de 80 a 120 euros megavatio hora (\textit{€/MWh}) aproximadamente, con un desvío de precio de 20 euros megavatio hora (\textit{€/MWh}). Si la predicción es de 0 euros megavatio hora (\textit{€/MWh}), lo normal es que fluctúe en un rango de -5 a 5 euros megavatio hora (\textit{€/MWh}) o menos, un desvío de precio de 5 euros megavatio hora (\textit{€/MWh}), mucho menor}. Es complicado, por no decir imposible y poco intuitivo, seleccionar dinámicamente entre una tolerancia absoluta o relativa.
+donde
 
-Segundo, si una de las ofertas no casa, ocurre la llamada casación parcial, en donde la batería mantiene un ciclo incompleto. Si el mercado acepta solo algunos de los periodos el estado de carga resultante puede no permitir completar el ciclo previsto o cumplir con compromisos posteriores.
+\begin{itemize}
 
-Para evitar estos problemas, el sistema finalmente hace uso del algoritmo de emisión de oferta por semiciclo de carga propuesto.
+  \item \( \lambda^{O}_{BESS, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt}.
 
-Lo que se busca es agrupar los semiciclos de carga y descarga y obtener sus precios límites de compra y venta. Primeramente, se calcula la diferencia entre el estado de carga de un periodo y el anterior en la ecuación~\ref{eq:diferencia-soc}.
+  \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \), en \si{\text{\euro}\per\mega\watt}.
+
+  \item \( P_{t} \) es el perfil de potencia a mantener durante el periodo \( t \) en \si{\mega\watt}.
+
+  \item \( \Delta \lambda \) es la tolerancia de oferta en \si{\text{\euro}\per\mega\watt}.
+
+\end{itemize}
+
+Primero, el uso de una tolerancia absoluta implica que el sistema solo puede defenderse ante desvíos de precio según su magnitud, pero, cuando mayor es el precio de mercado, mayores suelen ser los desvíos de precio\footnote{Si la predicción del precio de mercado supera los \SI{100}{\text{\euro}\per\mega\watt}, es más probable que el precio de casación termine en un rango de \SI{80}{\text{\euro}\per\mega\watt} a \SI{120}{\text{\euro}\per\mega\watt} aproximadamente, con un desvío de precio de \SI{20}{\text{\euro}\per\mega\watt}. Si la predicción es de \SI{0}{\text{\euro}\per\mega\watt}, lo normal es que fluctúe en un rango de \SI{-5}{\text{\euro}\per\mega\watt} a \SI{5}{\text{\euro}\per\mega\watt} o menos, un desvío de precio de \SI{5}{\text{\euro}\per\mega\watt}, mucho menor}. Es complicado, por no decir imposible y poco intuitivo, seleccionar dinámicamente entre una tolerancia absoluta o relativa.
+
+Segundo, si una de las ofertas no casa, ocurre la llamada casación parcial~\cite{cnmc2024mercados}, en donde la batería mantiene un ciclo incompleto. Si el mercado acepta solo algunos de los periodos el estado de carga resultante puede no permitir completar el ciclo previsto o cumplir con compromisos posteriores.
+
+Para evitar estos problemas, el sistema finalmente propone y hace uso del algoritmo de emisión de oferta por semiciclo de carga.
+
+Como lo que se busca es agrupar los semiciclos de carga y descarga y obtener sus precios límites de compra y venta, inicialmente se calcula la diferencia entre el estado de carga de un periodo y el anterior en la ecuación~\ref{eq:diferencia-soc}.
 
 \begin{equation}
   \label{eq:diferencia-soc}
@@ -290,6 +321,9 @@ La emisión de oferta por semiciclo de carga evita aceptaciones parciales e, imp
 Entendiblemente, es inevitable generar desvíos si el bloque no casa pero, inteligentemente, estos desvíos no se ven afectados por los subsecuentes movimientos en los mercados posteriores. Intentar solucionar el desvió no puede aumentarlo si se hace de esta estrategia, a diferencia de las anteriores.
 
 Finalmente, la oferta se comunica con la herramienta externa de resolución de ofertas de la entidad energética en el formato adecuado\footnote{La emisión de ofertas del sistema soporta múltiples formatos, pero solo se muestra el usado en producción}, véase la tabla~\ref{tab:formato-oferta}. Si no es modificada, entrará automáticamente a mercado.
+
+% TODO
+% Oferta RES
 
 \begin{table}[ht]
   \centering
