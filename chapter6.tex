@@ -37,22 +37,26 @@ Con esto, las mayores ventajas de las baterías son su capacidad de rápida conm
 
 Para transformar la posición de mercado de energía a potencia es necesario conocer el periodo o granularidad del mercado y realizar la transformación a través de la simple ecuación~\ref{eq:energia-a-potencia}. Las limitaciones de potencia ya se han tenido en cuenta en las etapas anteriores.
 
-\begin{equation}
-  \label{eq:energia-a-potencia}
-  P_{t} = E_{t} \cdot \frac{1}{\Delta t \cdot \frac{\SI{1}{\hour}}{\SI{60}{\minute}}}
-\end{equation}
+\begin{samepage}
 
-donde
+  \begin{equation}
+    \label{eq:energia-a-potencia}
+    P_{t} = E_{t} \cdot \frac{1}{\Delta t \cdot \frac{\SI{1}{\hour}}{\SI{60}{\minute}}}
+  \end{equation}
 
-\begin{itemize}
+  donde
 
-  \item \( P_{t} \) es el perfil de potencia a mantener durante el periodo \( t \) para ciclar una cantidad de energía en \si{\mega\watt}.
+  \begin{itemize}
 
-  \item \( E_{t} \) es la energía a ciclar en el periodo \( t \) en \si{{\mega\watt\hour}},
+    \item \( P_{t} \) es la potencia a mantener durante el periodo \( t \) para ciclar una cantidad de energía en \si{\mega\watt}.
 
-  \item \( \Delta t \) es la granularidad mínima de los mercados analizados en \si{\minute}.
+    \item \( E_{t} \) es la energía a ciclar en el periodo \( t \) en \si{{\mega\watt\hour}},
 
-\end{itemize}
+    \item \( \Delta t \) es la granularidad mínima de los mercados analizados en \si{\minute}.
+
+  \end{itemize}
+
+\end{samepage}
 
 Aún habiendo convertido las unidades, se continua teniendo un problema, explicado por el ciclado de la batería a nivel físico. El ciclado de la batería, en su formato más reductivo, está controlado por dos señales correspondientes a las fuentes de carga y descarga por el \gls{bms}, como se observa en la figura~\ref{fig:carga-descarga}. Cuando una de las señales esta activa el circuito de carga se abre, cuando la otra está activa es el de descarga el que se activa y cuando no está activa ninguna no hay flujo energético\footnote{Existen otros tipos de \gls{bms} en donde los puertos de carga y descarga son comunes, pero la restricción del control de la carga y descarga se sigue aplicando de igual manera por razones físicas para manejar la batería de ion-litio en sí, que solo observa la conexión de energía de entrada o de salida, al fin y al cabo}.
 
@@ -69,22 +73,22 @@ Por ejemplo, una situación en la que una carga y descarga simultanea podría su
 
 \begin{table}[ht]
   \centering
-  \begin{tabular}{|l|S[table-format=4.1]|S[table-format=4.1]|S[table-format=4.1]|S[table-format=4.2]|}
+  \begin{tabular}{|l|S|S|S|S|}
     \hline
-    Periodo & {Batería [\si{\mega\watt}]}  & {Generación [\si{\mega\watt}]}  & {Instalación [\si{\mega\watt}]}  & {Precio [\si{\text{\euro}\per\mega\watt}]} \\
+    Periodo & {Batería [\si{\mega\watt}]}  & {Generación [\si{\mega\watt}]}  & {Instalación [\si{\mega\watt}]}  & {Precio [\si{\text{\euro}\per\mega\watt\hour}]} \\
     \hline
-    H20Q1   & 5.5                          & 32.5                            & 32.5                             & -5.00                                      \\
-    H20Q2   & 5.5                          & 32.5                            & 32.5                             & 20.00                                      \\
-    H20Q3   & 0.0                          & 0.0                             & 0.0                              & 53.86                                      \\
-    H20Q4   & 0.0                          & 0.0                             & 0.0                              & 89.64                                      \\
-    H21Q1   & 5.5                          & 0.0                             & 32.5                             & 37.24                                      \\
-    H21Q2   & 5.5                          & 0.0                             & 32.5                             & 69.00                                      \\
-    H21Q3   & 5.5                          & 0.0                             & 32.5                             & 85.42                                      \\
-    H21Q4   & 5.5                          & 0.0                             & 32.5                             & 93.80                                      \\
-    H22Q1   & 5.5                          & 0.0                             & 32.5                             & 71.00                                      \\
-    H22Q2   & 5.5                          & 32.5                            & 32.5                             & 69.00                                      \\
-    H22Q3   & 5.5                          & 32.5                            & 32.5                             & 69.00                                      \\
-    H22Q4   & 5.5                          & 32.5                            & 32.5                             & 73.00                                      \\
+    H20Q1   & 5.5                          & 32.5                            & 32.5                             & -5.00                                           \\
+    H20Q2   & 5.5                          & 32.5                            & 32.5                             & 20.00                                           \\
+    H20Q3   & 0.0                          &  0.0                            &  0.0                             & 53.86                                           \\
+    H20Q4   & 0.0                          &  0.0                            &  0.0                             & 89.64                                           \\
+    H21Q1   & 5.5                          &  0.0                            & 32.5                             & 37.24                                           \\
+    H21Q2   & 5.5                          &  0.0                            & 32.5                             & 69.00                                           \\
+    H21Q3   & 5.5                          &  0.0                            & 32.5                             & 85.42                                           \\
+    H21Q4   & 5.5                          &  0.0                            & 32.5                             & 93.80                                           \\
+    H22Q1   & 5.5                          &  0.0                            & 32.5                             & 71.00                                           \\
+    H22Q2   & 5.5                          & 32.5                            & 32.5                             & 69.00                                           \\
+    H22Q3   & 5.5                          & 32.5                            & 32.5                             & 69.00                                           \\
+    H22Q4   & 5.5                          & 32.5                            & 32.5                             & 73.00                                           \\
     \hline
   \end{tabular}
   \caption{Restricciones técnicas en donde, desde el periodo H21Q1 al H22Q1, la exportación de la generación está limitada mientras que la batería es capaz de exportar libremente, pudiendo causar conflictos entre la carga de aprovechamiento de la generación y la descarga de la venta en precios altos.}
@@ -99,7 +103,7 @@ Con las posiciones transformadas en potencia, solo se toman en cuenta los cambio
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/diferencia-perfil-potencia.png}
-  \caption{Diferencias correspondientes al perfil de potencia final.}
+  \caption{Perfil de potencia diferencial.}
   \label{fig:diferencia-perfil-potencia}
 \end{figure}
 
@@ -116,54 +120,62 @@ Dicha situación subraya la importancia de disponer de herramientas de observabi
 \subsection{Emisión de ofertas}
 \label{makereference6.1.2}
 
-Para emitir la oferta al mercado, es necesario calcular el precio al que ofertar la posición de la batería. Para ello se emplea un algoritmo de desarrollo propio que permite agrupar las ofertas por ciclos.
+Para emitir la oferta al mercado, es necesario calcular el precio al que ofertar la posición de la batería\footnote{La oferta del activo de generación se configura de forma manual un valor fijo, generalmente siendo \SI{0}{\text{\euro}\per\mega\watt\hour} para asegurar su casación, ya que su energía no puede ser almacenada más que en la batería misma}. Para ello se emplea un algoritmo de desarrollo propio que permite agrupar las ofertas por ciclos.
 
 En un primer momento, precisamente a los inicios de desarrollo de la emisión de la oferta, el precio de oferta se correspondía directamente al precio de mercado, como en la ecuación~\ref{eq:emisión-directa}.
 
-\begin{equation}
-  \label{eq:emisión-directa}
-  \lambda^{O}_{BESS, t} = \lambda^{M}_{t}
-\end{equation}
+\begin{samepage}
 
-donde
+  \begin{equation}
+    \label{eq:emisión-directa}
+    \lambda^{O}_{BESS, t} = \lambda^{M}_{t}
+  \end{equation}
 
-\begin{itemize}
+  donde
 
-  \item \( \lambda^{O}_{BESS, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt}.
+  \begin{itemize}
 
-  \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \), en \si{\text{\euro}\per\mega\watt}.
+    \item \( \lambda^{O}_{BESS, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-\end{itemize}
+    \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \end{itemize}
+
+\end{samepage}
 
 Dicho comportamiento dispone de un fallo inaceptable en el funcionamiento del ciclado de la batería. Como el mercado eléctrico es marginalista, si existe un desvío del precio de casación a la dirección opuesta de la oferta en comparación a la predicción de precio empleada durante la operación, la oferta nunca tendrá la capacidad de casar en el mercado, resultando en un desvío de programa que, muy probablemente no podrá ser recuperado por la misma razón en los mercados posteriores.
 
 Un sencillo arreglo al previo comportamiento, empleado como evolución de la lógica de emisión de ofertas del sistema, es incluir una tolerancia de oferta en el calculo del precio. La tolerancia aumenta o disminuye el precio de oferta en la dirección opuesta al beneficio en la compra o venta, buscando la casación en el mercado, ecuación~\ref{eq:emisión-tolerancia}. Este comportamiento funciona ya que permite cubrirse ante pequeños desvíos de precio y sigue sin afectar a la disminución del beneficio si el desvío de precio es favorable. En cambio, esta solución introduce un problema doble.
 
-\begin{equation}
-  \label{eq:emisión-tolerancia}
-  \lambda^{O}_{BESS, t} =
-  \begin{cases}
-    \lambda^{M}_{t} + \Delta \lambda & \text{si } P_{t} < 0 \quad (\text{carga})               \\
-    \lambda^{M}_{t} - \Delta \lambda & \text{si } P_{t} > 0 \quad (\text{descarga})            \\
-    0                                & \text{si } P_{t} = 0 \quad (\text{estado estacionario}) \\
-  \end{cases}
-\end{equation}
+\begin{samepage}
 
-donde
+  \begin{equation}
+    \label{eq:emisión-tolerancia}
+    \lambda^{O}_{BESS, t} =
+    \begin{cases}
+      \lambda^{M}_{t} + \Delta \lambda & \text{si } P_{t} < 0 \quad (\text{carga})       \\
+      \lambda^{M}_{t} - \Delta \lambda & \text{si } P_{t} > 0 \quad (\text{descarga})    \\
+      0                                & \text{si } P_{t} = 0 \quad (\text{estado estacionario}) \\
+    \end{cases}
+  \end{equation}
 
-\begin{itemize}
+  donde
 
-  \item \( \lambda^{O}_{BESS, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt}.
+  \begin{itemize}
 
-  \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \), en \si{\text{\euro}\per\mega\watt}.
+    \item \( \lambda^{O}_{BESS, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( P_{t} \) es el perfil de potencia a mantener durante el periodo \( t \) en \si{\mega\watt}.
+    \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \Delta \lambda \) es la tolerancia de oferta en \si{\text{\euro}\per\mega\watt}.
+    \item \( P_{t} \) es la potencia a mantener durante el periodo \( t \) en \si{\mega\watt}.
 
-\end{itemize}
+    \item \( \Delta \lambda \) es la tolerancia de oferta en \si{\text{\euro}\per\mega\watt\hour}.
 
-Primero, el uso de una tolerancia absoluta implica que el sistema solo puede defenderse ante desvíos de precio según su magnitud, pero, cuando mayor es el precio de mercado, mayores suelen ser los desvíos de precio\footnote{Si la predicción del precio de mercado supera los \SI{100}{\text{\euro}\per\mega\watt}, es más probable que el precio de casación termine en un rango de \SI{80}{\text{\euro}\per\mega\watt} a \SI{120}{\text{\euro}\per\mega\watt} aproximadamente, con un desvío de precio de \SI{20}{\text{\euro}\per\mega\watt}. Si la predicción es de \SI{0}{\text{\euro}\per\mega\watt}, lo normal es que fluctúe en un rango de \SI{-5}{\text{\euro}\per\mega\watt} a \SI{5}{\text{\euro}\per\mega\watt} o menos, un desvío de precio de \SI{5}{\text{\euro}\per\mega\watt}, mucho menor}. Es complicado, por no decir imposible y poco intuitivo, seleccionar dinámicamente entre una tolerancia absoluta o relativa.
+  \end{itemize}
+
+\end{samepage}
+
+Primero, el uso de una tolerancia absoluta implica que el sistema solo puede defenderse ante desvíos de precio según su magnitud, pero, cuando mayor es el precio de mercado, mayores suelen ser los desvíos de precio\footnote{Si la predicción del precio de mercado supera los \SI{100}{\text{\euro}\per\mega\watt\hour}, es más probable que el precio de casación termine en un rango de \SI{80}{\text{\euro}\per\mega\watt\hour} a \SI{120}{\text{\euro}\per\mega\watt\hour} aproximadamente, con un desvío de precio de \SI{20}{\text{\euro}\per\mega\watt\hour}. Si la predicción es de \SI{0}{\text{\euro}\per\mega\watt\hour}, lo normal es que fluctúe en un rango de \SI{-5}{\text{\euro}\per\mega\watt\hour} a \SI{5}{\text{\euro}\per\mega\watt\hour} o menos, un desvío de precio de \SI{5}{\text{\euro}\per\mega\watt\hour}, mucho menor}. Es complicado, por no decir imposible y poco intuitivo, seleccionar dinámicamente entre una tolerancia absoluta o relativa.
 
 Segundo, si una de las ofertas no casa, ocurre la llamada casación parcial~\cite{cnmc2024mercados}, en donde la batería mantiene un ciclo incompleto. Si el mercado acepta solo algunos de los periodos el estado de carga resultante puede no permitir completar el ciclo previsto o cumplir con compromisos posteriores.
 
@@ -171,169 +183,293 @@ Para evitar estos problemas, el sistema finalmente propone y hace uso del algori
 
 Como lo que se busca es agrupar los semiciclos de carga y descarga y obtener sus precios límites de compra y venta, inicialmente se calcula la diferencia entre el estado de carga de un periodo y el anterior en la ecuación~\ref{eq:diferencia-soc}.
 
-\begin{equation}
-  \label{eq:diferencia-soc}
-  \Delta \mathrm{SoC}_{t}~[\text{MWh}] = \mathrm{SoC}_{t}~[\text{MWh}] - \mathrm{SoC}_{t-1}~[\text{MWh}]
-\end{equation}
+\begin{samepage}
 
-Con ello, es posible calcular la dirección de cambio del estado de carga de la batería. Es decir, determinar si la batería se esta cargando, descargando o en estado estacionario, ecuación~\ref{eq:sigma-carga}. Cabe destacar que el uso del estado de carga es necesario, a diferencia del resto de resultados de la optimización, ya que este representa el \textit{source of truth} del sistema.
+  \begin{equation}
+    \label{eq:diferencia-soc}
+    \Delta \mathrm{SoC}_{t} =
+    \begin{cases}
+      \mathrm{SoC}_{t} - \mathrm{SoC}_{t-1} & \text{si } t > 0 \quad (\text{horizonte de optimización}) \\
+      \mathrm{SoC}_{0}                      & \text{si } t = 0 \quad (\text{periodo inicial})           \\
+    \end{cases}
+  \end{equation}
 
-\begin{equation}
-  \label{eq:sigma-carga}
-  \sigma_{t} =
-  \begin{cases}
-    +1 & \text{si } \Delta\mathrm{SoC}_{t} > 0 \quad (\text{carga})\\
-    -1 & \text{si } \Delta\mathrm{SoC}_{t} < 0 \quad (\text{descarga})\\
-    0  & \text{si } \Delta\mathrm{SoC}_{t} = 0 \quad (\text{estado estacionario})
-  \end{cases}
-\end{equation}
+  donde
 
-A continuación, se calculan los llamados puntos álgidos, inferiores en este caso, en la ecuación~\ref{eq:puntos-álgidos-inf}. Los puntos álgidos representan los baremos de consideración de los semiciclos. La razón de su existencia es simple, y es que es relativamente común encontrarse con situaciones en las que la batería realiza un semiciclo sin llegar tocar estrictamente el estado de carga lleno o el máximo operacional.
+  \begin{itemize}
 
-Es extremadamente importante que el sistema se defienda ante situaciones de ciclado apenas completo, ya que puede que existan parámetros que no se correspondan estrictamente al comportamiento físico de la instalación, debido a diferencias en los decimales. Además, permite aumentar el control de la consideración de los ciclos desde el punto de vista de los operarios de telecontrol.
+    \item \( \mathrm{SoC}_{t} \) es el \gls{soc} de la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
 
-\begin{equation}
-  \label{eq:puntos-álgidos-inf}
-  B_{\text{inf}, t} = \mathrm{SoC}_{t}~[\text{MWh}] \le \left( \frac{\mathrm{SoC}_{\text{min}}~[\text{\%}]}{100} + \frac{\mathrm{SoC}_{\text{tol}}~[\text{\%}]}{100} \right) \cdot E_{\text{cap}}~[\text{MWh}]
-\end{equation}
+    \item \( \Delta \mathrm{SoC}_{t} \) es la diferencia del \gls{soc} de la batería entre periodos contiguos en \si{{\mega\watt\hour}}.
 
-Como no se desea contar múltiples ciclos cuando sucedan múltiples periodos contiguos que sobrepasen un punto álgido, solo se tienen en cuenta las entradas para cada la carga y descarga. Todo ello se encuentra representado en la ecuación~\ref{eq:entrada-inf}.
+  \end{itemize}
 
-\begin{equation}
-  \label{eq:entrada-inf}
-  B_{\text{inf}, t} =
-  \begin{cases}
-    0                                                & \text{si } t = 0\\
-    B_{\text{inf}, t} \land \neg B_{\text{inf}, t+1} & \text{si } t > 0
-  \end{cases}
-\end{equation}
+\end{samepage}
 
-Se realizan los mismos cálculos para los puntos álgidos superiores en la ecuación~\ref{eq:puntos-álgidos-inf} y la ecuación~\ref{eq:entrada-sup}, teniendo en cuenta también los límites operacionales.
+Con ello, es posible calcular la dirección de cambio del \gls{soc} de la batería. Es decir, determinar si la batería se esta cargando, descargando o en estado estacionario, ecuación~\ref{eq:sigma-carga}. Cabe destacar que el uso del \gls{soc} es necesario, a diferencia del resto de resultados de la optimización (como la posición), ya que, entendiblemente, este representa el \textit{source of truth} del sistema.
 
-\begin{equation}
-  \label{eq:puntos-álgidos-sup}
-  B_{\text{sup}, t} = \mathrm{SoC}_{t}~[\text{MWh}] \ge \left( \min\left(\frac{\mathrm{SoC}_{\text{max}}~[\text{\%}]}{100}, \frac{A~[\text{\%}]}{100}\right) - \frac{\mathrm{SoC}_{\text{tol}}~[\text{\%}]}{100} \right) \cdot E_{\text{cap}}~[\text{MWh}]
-\end{equation}
+\begin{samepage}
 
-\begin{equation}
-  \label{eq:entrada-sup}
-  B_{\text{sup}, t} =
-  \begin{cases}
-    0                                                & \text{si } t = 0\\
-    B_{\text{sup}, t} \land \neg B_{\text{sup}, t+1} & \text{si } t > 0
-  \end{cases}
-\end{equation}
+  \begin{equation}
+    \label{eq:sigma-carga}
+    \sigma_{t} =
+    \begin{cases}
+      +1 & \text{si } \Delta\mathrm{SoC}_{t} > 0 \quad (\text{carga})               \\
+      -1 & \text{si } \Delta\mathrm{SoC}_{t} < 0 \quad (\text{descarga})            \\
+      0  & \text{si } \Delta\mathrm{SoC}_{t} = 0 \quad (\text{estado estacionario}) \\
+    \end{cases}
+  \end{equation}
 
-A continuación, se toman juntan los puntos álgidos inferiores y superiores en la ecuación~\ref{eq:puntos-álgidos}. La razón de realizar las operaciones por separado es impedir situaciones de cargas o descargas muy rápidas, donde se sobrepasen puntos álgidos diferentes en periodos contiguos. Dentro del funcionamiento normal de las baterías, no es precisamente una situación que ocurra muy a menudo, pero es técnicamente posible que suceda.
+  donde
 
-\begin{equation}
-  \label{eq:puntos-álgidos}
-  B_{t} = B_{\text{inf}, t} \lor B_{\text{sup}, t}
-\end{equation}
+  \begin{itemize}
 
-Junto a ello, se mueven los puntos un periodo en el tiempo para resolver problemas causados por el primer periodo. Se representa en la ecuación~\ref{eq:puntos-álgidos-shift}.
+    \item \( \Delta \mathrm{SoC}_{t} \) es la diferencia del \gls{soc} de la batería entre periodos contiguos en \si{{\mega\watt\hour}}.
 
-\begin{equation}
-  \label{eq:puntos-álgidos-shift}
-  B_t =
-  \begin{cases}
-    0       & \text{si } t = 0\\
-    B_{t+1} & \text{si } t > 0
-  \end{cases}
-\end{equation}
+    \item \( \sigma_{t} \) es el indicador de la dirección de ciclado de la batería.
 
-Con los puntos álgidos correctamente identificados, se toma una cuenta acumulativo de los mismos. Cada número de la cuenta proporciona indirectamente un identificador unívoco sucesivo del semiciclo realizado en la ecuación~\ref{eq:conteo-ciclos}.
+  \end{itemize}
 
-\begin{equation}
-  \label{eq:conteo-ciclos}
-  N_{\text{acc}, t} = 1 + \sum_{j=0}^{t-1} B_{j}
-\end{equation}
+\end{samepage}
 
-Tan solo es dista multiplicar el conteo de los semiciclos, correspondiente con sus identificadores, con la dirección en la que operan en la ecuación~\ref{eq:conteo-ciclos-signo}. De esta forma, a cada semiciclo se le corresponde un identificador y el signo del identificador indica el tipo de ciclo, carga, descarga o estado estacionario (obtenido este último al incluir la dirección del ciclo).
+A continuación, se calculan los llamados puntos álgidos en la ecuación~\ref{eq:puntos-algidos-inf-sup}, tanto para el \gls{soc} límite superior o inferior. Los puntos álgidos representan los baremos de consideración de los semiciclos. La razón de su existencia es simple, y es que es relativamente común encontrarse con situaciones en las que la batería realiza un semiciclo sin llegar marcar un valor exactamente correspondiente con el \gls{soc} límite.
 
-\begin{equation}
-  \label{eq:conteo-ciclos-signo}
-  C_{t} = \sigma_{t} \cdot N_{\text{acc}, t}
-\end{equation}
+Es extremadamente importante que el sistema se defienda ante situaciones de ciclado apenas completo, ya que puede que existan parámetros que no se correspondan estrictamente al comportamiento físico de la instalación, debido a diferencias en los decimales\footnote{En la sección~\ref{makereference5.5} se detalla el ajuste de la resolución numérica, lo que comúnmente genera ciclados incompletos, aunque la diferencia sea mínima}. Además, permite aumentar el control de la consideración de los ciclos desde el punto de vista de los operarios de telecontrol.
+
+\begin{samepage}
+
+  \begin{subequations}
+    \label{eq:puntos-algidos-inf-sup}
+
+    \begin{equation}
+      B_{\text{inf}, t} = \mathrm{SoC}_{t} \le \left( \frac{\mathrm{SoC}_{\text{min}}}{100} + \frac{\mathrm{SoC}_{\text{tol}}}{100} \right) \cdot E_{\text{cap}}
+    \end{equation}
+
+    \begin{equation}
+      B_{\text{sup}, t} = \mathrm{SoC}_{t} \ge \left( \min\left(\frac{\mathrm{SoC}_{\text{max}}}{100}, \frac{D}{100}\right) - \frac{\mathrm{SoC}_{\text{tol}}}{100} \right) \cdot E_{\text{cap}}
+    \end{equation}
+
+  \end{subequations}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( \mathrm{SoC}_{t} \) es el \gls{soc} de la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
+
+    \item \( \mathrm{SoC}_{\text{min}} \) y \( \mathrm{SoC}_{\text{max}} \) son los límites mínimo y máximo del \gls{soc} de la batería en porcentaje (\%).
+
+    \item \( E_{\text{cap}} \) es la capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
+
+    \item \( D \) es la disponibilidad de la batería en porcentaje (\%).
+
+    \item \( \mathrm{SoC}_{\text{tol}} \) es la tolerancia del punto álgido en porcentaje (\%).
+
+    \item \( B_{\text{inf}, t} \) y \( B_{\text{sup}, t} \) son los indicadores de los punto álgidos inferior y superiores en el periodo \( t \).
+
+  \end{itemize}
+
+\end{samepage}
+
+Como no se desea contar múltiples ciclos cuando sucedan múltiples periodos contiguos que sobrepasen un punto álgido, solo se tienen en cuenta las entradas para cada la carga y descarga. Todo ello se encuentra representado en la ecuación~\ref{eq:puntos-algidos-desplazados}.
+
+\begin{samepage}
+
+  \begin{subequations}
+    \label{eq:puntos-algidos-desplazados}
+
+    \begin{equation}
+      B_{\text{inf}, t} =
+      \begin{cases}
+        0                                                & \text{si } t = 0 \\
+        B_{\text{inf}, t} \land \neg B_{\text{inf}, t+1} & \text{si } t > 0 \\
+      \end{cases}
+    \end{equation}
+
+    \begin{equation}
+      B_{\text{sup}, t} =
+      \begin{cases}
+        0                                                & \text{si } t = 0 \\
+        B_{\text{sup}, t} \land \neg B_{\text{sup}, t+1} & \text{si } t > 0 \\
+      \end{cases}
+    \end{equation}
+
+  \end{subequations}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( B_{\text{inf}, t} \) y \( B_{\text{sup}, t} \) son los indicadores de los punto álgidos inferior y superiores en el periodo \( t \).
+
+  \end{itemize}
+
+\end{samepage}
+
+A continuación, se toman juntan los puntos álgidos inferiores y superiores en la ecuación~\ref{eq:puntos-algidos}. La razón de realizar las operaciones por separado es impedir situaciones de cargas o descargas muy rápidas, donde se sobrepasen puntos álgidos distintos (a diferencia de la ecuación~\ref{eq:puntos-algidos-desplazados}) en periodos contiguos. Dentro del funcionamiento normal de las baterías, no es precisamente una situación que ocurra muy a menudo, pero es técnicamente posible que suceda, sobre todo en mercados de menor granularidad.
+
+\begin{samepage}
+
+  \begin{equation}
+    \label{eq:puntos-algidos}
+    B_{t} = B_{\text{inf}, t} \lor B_{\text{sup}, t}
+  \end{equation}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( B_{\text{inf}, t} \) y \( B_{\text{sup}, t} \) son los indicadores de los punto álgidos inferior y superiores en el periodo \( t \).
+
+    \item \( B_{t} \) es el indicador de punto álgido en el periodo \( t \).
+
+  \end{itemize}
+
+\end{samepage}
+
+Junto a ello, se desplazan los puntos un periodo en el tiempo para resolver problemas causados por \textit{off-by-one errors}. Se representa en la ecuación~\ref{eq:puntos-algidos-shift}.
+
+\begin{samepage}
+
+  \begin{equation}
+    \label{eq:puntos-algidos-shift}
+    B_t =
+    \begin{cases}
+      0       & \text{si } t = 0 \\
+      B_{t+1} & \text{si } t > 0 \\
+    \end{cases}
+  \end{equation}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( B_{t} \) es el indicador de punto álgido en el periodo \( t \).
+
+  \end{itemize}
+
+\end{samepage}
+
+Con los puntos álgidos correctamente identificados, se toma una cuenta acumulativa de los mismos. Cada número de la cuenta proporciona indirectamente un identificador unívoco sucesivo del semiciclo realizado (semiciclo 1, semiciclo 2, \ldots), en la ecuación~\ref{eq:conteo-ciclos}.
+
+\begin{samepage}
+
+  \begin{equation}
+    \label{eq:conteo-ciclos}
+    N_{t} = 1 + \sum_{i=0}^{t-1} B_{i}
+  \end{equation}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( B_{i} \) es el indicador de punto álgido en el periodo \( i \).
+
+    \item \( N_{t} \) es el contador acumulado de semiciclos en el periodo \( t \).
+
+  \end{itemize}
+
+\end{samepage}
+
+Tan solo dista multiplicar el conteo de los semiciclos, correspondiente con sus identificadores, con la dirección en la que operan en la ecuación~\ref{eq:conteo-ciclos-signo}. De esta forma, a cada semiciclo se le corresponde un identificador y el signo del identificador indica el tipo de ciclo, carga, descarga o estado estacionario (positivo, negativo y cero, respectivamente).
+
+\begin{samepage}
+
+  \begin{equation}
+    \label{eq:conteo-ciclos-signo}
+    C_{t} = \sigma_{t} \cdot N_{t}
+  \end{equation}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( \sigma_{t} \) es el indicador de la dirección de ciclado de la batería.
+
+    \item \( N_{t} \) es el contador acumulado de semiciclos en el periodo \( t \).
+
+    \item \( C_{t} \) es el identificador del semiciclo con signo en el periodo \( t \).
+
+  \end{itemize}
+
+\end{samepage}
 
 Finalmente, se agrupan los precios de mercado por los periodos correspondientes a cada semiciclo, ecuación~\ref{eq:agrupado-periodos}.
 
-\begin{equation}
-  \label{eq:agrupado-periodos}
-  G_{i} = { P_{\text{mercado}, t} \mid C_{t} = i }
-\end{equation}
+\begin{samepage}
+
+  \begin{equation}
+    \label{eq:agrupado-periodos}
+    G_{c} = \{ \lambda^{M}_{t} \mid C_{t} = c \}
+  \end{equation}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( C_{t} \) es el identificador del semiciclo con signo en el periodo \( t \).
+
+    \item \( c \) es un identificador específico de semiciclo.
+
+    \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+
+    \item \( G_{c} \) es el conjunto de todos los precios de mercado \( \lambda^{M}_{t} \) que pertenecen a un mismo semiciclo con identificador \( c \).
+
+  \end{itemize}
+
+\end{samepage}
 
 Con ello, por cada grupo, se toma el precio más bajo entre los periodos de descarga y el más alto entre los de carga, añadiendo una tolerancia absoluta en la dirección opuesta al beneficio de la oferta. Esto significa que todos los periodos de un mismo semiciclo de descarga tendrán el precio menor de venta del mercado durante dicho semiciclo, mientra que exactamente lo opuesto para la carga.
 
-\begin{equation}
-  P_{\text{BESS}, i} =
-  \begin{cases}
-    \min(G_{i}) - T_{\text{venta}}  & \text{si } i < 0 \quad (\text{descarga})\\
-    \max(G_{i}) + T_{\text{compra}} & \text{si } i > 0 \quad (\text{carga})\\
-    0                               & \text{si } i = 0 \quad (\text{estado estacionario})
-  \end{cases}
-\end{equation}
+\begin{samepage}
 
-donde:
+  \begin{equation}
+    \lambda^{O}_{BESS, t} =
+    \begin{cases}
+      \max(G_{c}) + \Delta \lambda & \text{si } c > 0 \quad (\text{carga})\\
+      \min(G_{c}) - \Delta \lambda & \text{si } c < 0 \quad (\text{descarga})\\
+      0                            & \text{si } c = 0 \quad (\text{estado estacionario})
+    \end{cases}
+  \end{equation}
 
-\begin{itemize}
+  donde
 
-  \item \( \mathrm{SoC}_{t} \) es el estado de carga de la batería en el periodo \( t \), en megavatios hora (\textit{MWh}).
+  \begin{itemize}
 
-  \item \( \mathrm{SoC}_{t-1} \) es el estado de carga de la batería en el periodo anterior (\( t-1 \)), en megavatios hora (\textit{MWh}).
+    \item \( G_{c} \) es el conjunto de todos los precios de mercado \( \lambda^{M}_{t} \) que pertenecen a un mismo semiciclo con identificador \( c \).
 
-  \item \( \Delta \mathrm{SoC}_{t} \) es la diferencia del estado de carga en el periodo \( t \), en megavatios hora (\textit{MWh}).
+    \item \( \lambda^{O}_{BESS, t} \) es el precio de oferta de referencia calculado para el semiciclo \( c \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \sigma_{t} \) es la dirección del flujo de energía, un indicador adimensional que toma valor \(+1\) en carga, \(-1\) en descarga o \(0\) en estado estacionario.
+    \item \( \Delta \lambda \) es la tolerancia de precio para las ofertas en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( E_{\text{cap}} \) es la capacidad energética nominal de la batería, en megavatios hora (\textit{MWh}).
+  \end{itemize}
 
-  \item \( \mathrm{SoC}_{\text{min}} \) y \( \mathrm{SoC}_{\text{max}} \) son los porcentajes mínimo y máximo del estado de carga operacional, en porcentaje (\textit{\%}).
-
-  \item \( \mathrm{SoC}_{\text{tol}} \) es la tolerancia del estado de carga para la detección de semiciclos, en porcentaje (\textit{\%}).
-
-  \item \( A \) es la disponibilidad de la batería, en porcentaje (\textit{\%}).
-
-  \item \( B_{\text{inf}, t} \) y \( B_{\text{sup}, t} \) son las condiciones booleanas que indican si se ha alcanzado un punto álgido inferior o superior, respectivamente.
-
-  \item \( B_{t} \) es la condición booleana unificada que indica si se ha completado un semiciclo en el periodo \( t \).
-
-  \item \( N_{\text{acc}, t} \) es el contador acumulado de semiciclos, que actúa como identificador numérico del semiciclo en curso.
-
-  \item \( C_{t} \) es el identificador del semiciclo con signo en el periodo \( t \).
-
-  \item \( P_{\text{mercado}, t} \) es el precio del mercado eléctrico en el periodo \( t \), en euros por megavatio-hora (\textit{€/MWh}).
-
-  \item \( G_{j} \) es el conjunto de todos los precios de mercado (\( P_{\text{mercado}, t} \)) que pertenecen a un mismo semiciclo con signo \( j \).
-
-  \item \( P_{\text{BESS}, j} \) es el precio de oferta de referencia calculado para el semiciclo \( j \), en euros por megavatio-hora (\textit{€/MWh}).
-
-  \item \( T_{\text{venta}} \) y \( T_{\text{compra}} \) son las tolerancias de precio para las ofertas de venta y compra, en euros por megavatio-hora (\textit{€/MWh}).
-
-  \item \( t \) es el índice que representa el periodo de mercado.
-
-  \item \( i \) es un índice que representa un valor único de un semiciclo, el grupo al que pertenece.
-
-\end{itemize}
+\end{samepage}
 
 La emisión de oferta por semiciclo de carga evita aceptaciones parciales e, importantemente, refleja las restricciones intertemporales y costes de oportunidad de la batería en forma de todo o nada. Es decir, se hace uso del comportamiento más agresivo en busca de la casación en todo momento, los bloques de ofertas por semiciclo casan en todos a la vez o ninguno, siendo esta la clave.
 
-Entendiblemente, es inevitable generar desvíos si el bloque no casa pero, inteligentemente, estos desvíos no se ven afectados por los subsecuentes movimientos en los mercados posteriores. Intentar solucionar el desvió no puede aumentarlo si se hace de esta estrategia, a diferencia de las anteriores.
+Entendiblemente, es inevitable generar desvíos si el bloque no casa pero, inteligentemente, estos desvíos no se ven afectados por los subsecuentes movimientos en los mercados posteriores. Intentar solucionar el desvió no puede aumentarlo si se hace uso de esta estrategia, a diferencia de las anteriores.
 
 Finalmente, la oferta se comunica con la herramienta externa de resolución de ofertas de la entidad energética en el formato adecuado\footnote{La emisión de ofertas del sistema soporta múltiples formatos, pero solo se muestra el usado en producción}, véase la tabla~\ref{tab:formato-oferta}. Si no es modificada, entrará automáticamente a mercado.
 
-% TODO
-% Oferta RES
-
 \begin{table}[ht]
   \centering
-  \begin{tabular}{|c|c|c|c|}
-    \hline
-    Tipo & Descripción         & Mnemónico & Prioridad\\
-    \hline
-    147  & Programa de consumo & M\_PC\_AA & Baja     \\
-    \hline
-  \end{tabular}
+  \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c|c|c|l|S|S|S|}
+      \hline
+      FECHA      & PERIODO & COD\_RESOLUCION & BLOQUE & UFI   & {ENERGIA} & {POTENCIA} & {PRECIO} \\
+      \hline
+      15/09/2025 & 29      & 15M             & 1      & ABADC & -1.3      & -5.2       &  4.92    \\
+      15/09/2025 & 30      & 15M             & 1      & ABADC & -1.3      & -5.2       &  4.92    \\
+      15/09/2025 & 31      & 15M             & 1      & ABADC & -1.3      & -5.2       &  4.92    \\
+      15/09/2025 & 32      & 15M             & 1      & ABADC & -1.1      & -4.4       &  4.92    \\
+      15/09/2025 & 85      & 15M             & 1      & ABADV &  1.3      &  5.2       & 80.40    \\
+      15/09/2025 & 86      & 15M             & 1      & ABADV &  1.3      &  5.2       & 80.40    \\
+      15/09/2025 & 87      & 15M             & 1      & ABADV &  1.3      &  5.2       & 80.40    \\
+      15/09/2025 & 88      & 15M             & 1      & ABADV &  1.1      &  4.4       & 80.40    \\
+      \hline
+    \end{tabular}
+  }
   \caption{Formato de oferta de mercado.}
   \label{tab:formato-oferta}
 \end{table}
@@ -341,26 +477,24 @@ Finalmente, la oferta se comunica con la herramienta externa de resolución de o
 \section{Cuadro de mando}
 \label{makereference6.2}
 
-Aunque el sistema desarrollado sea completamente agnóstico de ningún tipo de intervención manual, significando que no es esta no es requerida para poder arbitrar en el mercado, en algunas ocasiones el sistema no es capaz de tener en cuenta todos los factores que afectan a la operación de todos los componentes involucrados en el mismo.
+Aunque el sistema desarrollado sea completamente agnóstico de ningún tipo de intervención manual para su operación, en algunas ocasiones no es capaz de tener en cuenta todos los factores que afectan a la totalidad de los componentes involucrados, conocidos por los agentes de mercado.
 
-De hecho, uno de las situaciones más comunes encontradas a la hora de realizar el despliegue del sistema se corresponden con las indisponibilidades de la batería. Estas indiponibilidades no son causadas precisamente por las señales integradas de disponibilidad de los sistemas de almacenamiento descritas anteriormente, sino por pruebas de integración del sistema correspondientes con el funcionamiento físico de las baterías. Resulta que, al necesitar el departamento de telecontrol cerciorarse del correcto ciclado de las baterías de manera modular, es entendiblemente necesario comprobar que la consignación operativa de la sección anterior es ejecutada satisfactoriamente.
+Además, una de las situaciones problemáticas más comunes, encontradas a la hora de realizar el despliegue, se corresponde con las indisponibilidades manuales o programadas de la batería. Estas indiponibilidades no son causadas precisamente por las señales integradas de disponibilidad de los \glspl{bess}, descritas anteriormente en la sección~\ref{makereference3.2}, sino por pruebas de integración del sistema. Por ello, los operadores de telecontrol necesitan cerciorarse de algún modo que la batería siga las consignas dadas.
 
-Principalmente motivado por dicho propósito y con el objetivo de facilitar las pruebas de la infraestructura, se desarrolla un cuadro de mando, como se ve en la figura~\ref{fig:cuadro-de-mando}, que permite introducir las consignas operativas manualmente, interactuando con la infraestructura operativa y el entorno de mercado, pero sorteando la modelización  estructural.
+Principalmente motivado por dicho propósito y con el objetivo de facilitar la observabilidad de la infraestructura, se desarrolla un cuadro de mando, como se ve en la figura~\ref{fig:cuadro-de-mando}, para la unificación completa del control de la operación del sistema, desde la simulación de las operaciones, la consignación manual y asistida, la modificación de los parámetros operativos y la priorización de programas.
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/cuadro-de-mando.png}
+  \includegraphics[width=0.75\linewidth]{figures/cuadro-de-mando.png}
   \caption{Cuadro de mando del sistema.}
   \label{fig:cuadro-de-mando}
 \end{figure}
 
-Por ello, al comprobar la utilidad de la herramienta, la natural evolución de la misma resulta ser la unificación completa del control de la operación del sistema, desde la simulación de las operaciones, la consignación manual y asistida, la modificación de los parámetros operativos y la anteposición de programas.
+De esta forma, el cuadro de mando del sistema es la pieza cable mediante la cual los agentes de mercado y operadores de telecontrol son capaces de interactuar con las baterías, en tiempo real, con el objeto de modificar su comportamiento como les convenga. A los agentes de mercado se les da la posibilidad de cambiar las posiciones en busca de una mejor oportunidad de arbitraje, impulsada por factores externos que escapen al control del sistema, y los operadores de telecontrol pueden realizar pruebas de ciclado de las baterías, sin tener que interactuar con el \gls{rtu} y los protocolos de comunicación correspondientes. En ello reside el valor principal del desarrollo del cuadro de mandos.
 
-De esta forma, el cuadro de mando del sistema es la pieza cable mediante la cual los agentes de mercado y operadores de telecontrol son capaces de interactuar al mismo tiempo con el objeto de modificar el arbitraje como les convenga. A los agentes de mercado se les da la posibilidad de cambiar las posiciones en busca de una mejor oportunidad de arbitraje impulsada por factores externos que escapan al control del sistema, y los operadores de telecontrol pueden realizar pruebas de ciclado de las baterías sin tener que interactuar con el sistema de gestión de planta y los protocolos de comunicación correspondientes. En ello reside el valor principal del desarrollo del cuadro de mandos.
+Cabe destacar que, más allá del cuadro de mando del comando y control orientado a los agentes de mercado y operadores de telecontrol, cada componente del sistema también es capaz de ser configurado mediante canales no interactivos si es necesario, estando estos orientadas a los operadores de telecontrol para la configuración de la infraestructura operativa, al personal de sistemas para el entorno de mercado, y a los agentes de mercado para la modelización estructural.
 
-Más allá del cuadro de mando del comando y control orientado a los agentes de mercado y operadores de telecontrol, el sistema también es capaz de ser configurado mediante fuentes no interactivas si es necesario, estando estas orientadas a operadores de telecontrol para la configuración de la infraestructura operativa, personal de sistemas para el entorno de mercado, y agentes de mercado para la modelización estructural.
-
-\subsection{Experiencia de usuario}
+\subsection{Funcionalidad principal}
 \label{makereference6.2.1}
 
 El cuadro de mando ha sido desarrollado en la misma tecnología principal utilizada en la mayoria de los otros componentes, Python. Esta vez, se hace uso de Streamlit, un componente para construir herramientas interactivas.
@@ -369,6 +503,7 @@ Tras pasar por un servicio de autenticación que únicamente permite el acceso a
 
 En ella, es posible modificar la configuración operativa de cada una de las instalaciones, establecer la situación de mercado concreta a tener en cuenta y cambiar la fuente de los precios marginales explicados en la sección~\ref{makereference4.1.1}, entre otras acciones mostradas en la figura~\ref{fig:configuración-sistema}.
 
+% TODO
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/configuración-sistema.png}
@@ -376,14 +511,15 @@ En ella, es posible modificar la configuración operativa de cada una de las ins
   \label{fig:configuración-sistema}
 \end{figure}
 
-Todo esto permite realizar simulaciones (por el momento) tanto a pasado y a futuro del comportamiento del sistema y de la evolución del mismo a lo largo del ciclo de vida de los mercados. Es decir, un agente de mercado es capaz de comprender fácilmente no solo lo que va a suceder el día de mañana en el mercado diario, sino también en los subsecuentes mercado intradiarios e incluso en las sesiones del mercado intradiario continuo y ver la evolución de las posiciones.
+Todo esto permite realizar simulaciones tanto a pasado y a futuro del comportamiento del sistema y de la evolución del mismo a lo largo del ciclo de vida de los mercados. Es decir, un agente de mercado es capaz de comprender fácilmente no solo lo que va a suceder el día de mañana en el mercado diario, sino también en los subsecuentes mercado intradiarios e incluso en las sesiones del mercado intradiario continuo, y ver la evolución de las posiciones.
 
-Junto a ello, se permite importar datos del mercado localmente y obviar todo el apartado~\ref{makereference3} del entorno de mercado, con el propósito de permitir el uso del cuadro de mandos en situaciones en donde no estén disponibles o se quieran modificar manualmente. Precisamente, en sinergia con la característica de exportar la información del entorno de mercado una vez obtenida, es posible realizar simulaciones más avanzadas donde todos los aspectos de entrada al sistema (incluso las señales de la infraestructura a través de la configuración de las instalaciones) sean capaces de ser modificadas.
+Junto a ello, se permite importar datos del mercado localmente y obviar todo el capítulo~\ref{makereference3} del entorno de mercado, con el propósito de permitir el uso del cuadro de mandos en situaciones en donde la información no esté disponible o se quiera modificar manualmente. Precisamente, en sinergia con la característica de exportar la información del entorno de mercado una vez obtenida, es posible realizar simulaciones más avanzadas donde todos los aspectos de entrada al sistema (incluso las señales de la infraestructura a través de la configuración de las instalaciones) sean capaces de ser modificadas.
 
 Además, el entorno de mercado no es la única información capaz de ser exportada. Los resultados del programa óptimo de la batería, obtenido tras realizar todo el proceso, pueden ser descargados en un formato CSV con el fin de inspeccionarlos detalladamente, o incluso modificarlos (aunque resulte más intuitivo realizar cualquier modificación a través del cuadro de mandos directamente).
 
-También se permite especificar un programa manual, en donde se asegura el seguimiento del programa mismo y la solución del modelado estructural se desactiva, y la introducción de un objetivo de estado de carga, en donde el sistema cumple con las indicaciones de estado de carga en los periodos determinados pero sigue realizando la tarea de optimización, representado en la figura~\ref{fig:soc-manual}. Crucialmente, todo el resto de validaciones siguen en funcionamiento, por lo que no es posible introducir un programa invalido de ningún modo. Se puede observar como la inclusión del objetivo de la modularización del sistema resulta más que beneficiosa antes situaciones como la descrita.
+También se permite especificar tanto un programa, en donde se realize el seguimiento del programa mismo y la solución del modelado estructural del capítulo~\ref{makereference4} se desactive, como un objetivo de \gls{soc}, en donde el sistema cumpla con las indicaciones en los periodos determinados pero siga realizando la tarea de optimización, representado en la figura~\ref{fig:soc-manual}. Crucialmente, todo el resto de validaciones siguen en funcionamiento, por lo que no es posible introducir un programa invalido de ningún modo. Con esto, se observa como la inclusión del objetivo de la modularización del sistema resulta más que beneficiosa ante dichas situaciones.
 
+% TODO
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/soc-manual.png}
@@ -391,41 +527,41 @@ También se permite especificar un programa manual, en donde se asegura el segui
   \label{fig:soc-manual}
 \end{figure}
 
-En colación, es posible activar o desactivar el modo de funcionamiento manual y sustituirlo por un modo de funcionamiento automático, característica más que relevante para asegurar el cumplimiento de un programa concreto ante fallos o pruebas. Desactivado, el sistema hace caso del programa manual guardado mediante el cuadro de mandos, activado en cambio, lo sobrescribe.
+En colación, es posible activar o desactivar el modo de funcionamiento automático y sustituirlo por un modo de funcionamiento manual, característica más que relevante para asegurar el cumplimiento de un programa concreto ante fallos o pruebas. Desactivado, el sistema hace caso de los programas manuales obtenidos mediante el cuadro de mandos, activado en cambio, lo sobrescribe.
 
-Finalmente, se presentan los KPI en forma de los ingresos obtenidos por energía vendida, los ingresos totales y los ciclos realizado en diferentes unidades, dirigidos a los agentes de mercado, figura~\ref{fig:kpi-sistema}. También se muestra el perfil de generación para las instalaciones híbridas, figura~\ref{fig:perfil-generación}, junto a el programa óptimo de la batería, figura~\ref{fig:programa-óptimo}, su estado de carga a lo largo del horizonte de optimización, figura, y las limitaciones técnicas si son aplicables, figura~\ref{fig:limitaciones-técnicas}.
+Finalmente, se presentan los \gls{kpi} en forma de los ingresos obtenidos por energía vendida, los ingresos totales y los ciclos realizado en diferentes unidades, dirigidos a los agentes de mercado, figura~\ref{fig:kpi-sistema}. También se muestra el perfil de generación para las instalaciones híbridas, figura~\ref{fig:perfil-generacion}, junto al programa óptimo de la batería, figura~\ref{fig:programa-optimo}, su \gls{soc} a lo largo del horizonte de optimización, figura~\ref{fig:soc-bess}, y las limitaciones técnicas si son aplicables, figura~\ref{fig:limitaciones-tecnicas}.
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/kpi-sistema.png}
-  \caption{Métricas del sistema.}
+  \includegraphics[width=0.75\linewidth]{figures/kpi-sistema.png}
+  \caption{Indicadores de rendimiento.}
   \label{fig:kpi-sistema}
 \end{figure}
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/perfil-generación.png}
+  \includegraphics[width=0.75\linewidth]{figures/perfil-generacion.png}
   \caption{Perfil de generación.}
-  \label{fig:perfil-generación}
+  \label{fig:perfil-generacion}
 \end{figure}
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/programa-óptimo.png}
+  \includegraphics[width=0.75\linewidth]{figures/programa-optimo.png}
   \caption{Programa óptimo de la batería.}
-  \label{fig:programa-óptimo}
+  \label{fig:programa-optimo}
 \end{figure}
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/soc-bess.png}
+  \includegraphics[width=0.75\linewidth]{figures/soc-bess.png}
   \caption{Estado de carga de la batería.}
   \label{fig:soc-bess}
 \end{figure}
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/limitaciones-técnicas.png}
+  \includegraphics[width=0.75\linewidth]{figures/limitaciones-tecnicas.png}
   \caption{Limitaciones técnicas de la instalación.}
-  \label{fig:limitaciones-técnicas}
+  \label{fig:limitaciones-tecnicas}
 \end{figure}
