@@ -4,18 +4,44 @@
     },
     "cSpell.language": "en,es",
     "latex-workshop.formatting.latex": "tex-fmt",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "pdflatex -> bibtex -> makeglossaries -> pdflatex * 2",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "makeglossaries",
+                "pdflatex",
+                "pdflatex"
+            ]
+        }
+    ],
     "latex-workshop.latex.tools": [
         {
-            "name": "latexmk",
-            "command": "latexmk",
+            "name": "pdflatex",
+            "command": "pdflatex",
             "args": [
                 "-shell-escape",
                 "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
-                "-pdf",
-                "-outdir=%OUTDIR%",
                 "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "makeglossaries",
+            "command": "makeglossaries",
+            "args": [
+                "%DOCFILE%"
             ],
             "env": {}
         }
