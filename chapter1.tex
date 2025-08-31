@@ -76,7 +76,6 @@ Tampoco se realiza el despliegue en sí del \gls{pis} central, ya que otras tecn
 
 Finalmente, el proyecto debe considerar procesos externos del entorno en el que es desplegado, por lo que no hay otra opción que depender de la capa de indirección del almacenamiento de la información del entorno de mercado (el \gls{dw}), del desglose de las posiciones negociadas previamente consultadas en servicios internos, y de la última etapa de la realización de las ofertas de mercado, la cual debe, por consideraciones legales, realizarse por la parte confiable de la entidad energética dueña de los activos energéticos.
 
-% TODO
 \section{Plan de trabajo}
 \label{makereference1.3}
 
@@ -85,27 +84,110 @@ El plan de trabajo consta de la distribución en tareas del desarrollo del proye
 \begin{figure}[h]
   \centering
   \resizebox{\textwidth}{!}{
-    \begin{ganttchart}[x unit=1mm, time slot format=isodate, time slot unit=day]{2025-02-10}{2025-09-15}
+    \begin{ganttchart}[link bulge = 1.3, link/.style={-to, rounded corners = 3pt}, milestone/.append style={xscale=5}, time slot format=isodate, time slot unit=day, x unit=1mm]{2025-02-10}{2025-09-15}
       \gantttitlecalendar{month=shortname}\\
-      \ganttgroup[name=análisis]{Análisis preliminar}{2025-02-10}{2025-03-09}\\
+      \ganttgroup[name=analisis]{Análisis preliminar}{2025-02-10}{2025-03-05}\\
+      \ganttbar[name=normativa]{Estudio de la normativa}{2025-02-10}{2025-02-16}\\
+      \ganttbar[name=mercado]{Formación en el mercado eléctrico}{2025-02-17}{2025-02-23}\\
+      \ganttbar[name=baterias]{Formación en baterías}{2025-02-24}{2025-03-05}\\
+      \ganttbar[name=herramientas]{Evaluación de las herramientas}{2025-02-17}{2025-03-05}\\
       \ganttgroup[name=desarrollo]{Desarrollo}{2025-03-10}{2025-07-31}\\
-      \ganttgroup[name=experimentación]{Experimentación}{2025-07-01}{2025-08-04}\\
-      \ganttgroup[name=redacción]{Redacción del informe}{2025-07-01}{2025-09-15}\\
-      \ganttlink{análisis}{desarrollo}
-      \ganttlink{desarrollo}{experimentación}
-      \ganttlink{experimentación}{redacción}
+      \ganttbar[name=diseño]{Diseño del optimizador}{2025-03-10}{2025-04-06}\\
+      \ganttbar[name=cuartohorario]{Adaptación a mercados cuartohorarios}{2025-03-10}{2025-03-23}\\
+      \ganttmilestone[name=aislado]{Topología aislada}{2025-04-07}\\
+      \ganttbar[name=generacion]{Colocación renovable}{2025-04-08}{2025-05-29}\\
+      \ganttmilestone[name=hibrido]{Topología híbrida}{2025-05-30}\\
+      \ganttbar[name=conector]{Incorporación del sistema de información de planta}{2025-04-08}{2025-05-15}\\
+      \ganttbar[name=señales]{Pruebas unitarias de señalización}{2025-05-16}{2025-05-29}\\
+      \ganttbar[name=entorno]{Consideración parcial del entorno de mercado}{2025-05-16}{2025-05-29}\\
+      \ganttmilestone[name=pruebas]{Despliegue en preproducción}{2025-06-03}\\
+      \ganttbar[name=control]{Consignación y licitaciones}{2025-06-04}{2025-06-30}\\
+      \ganttbar[name=mo]{Obtención de datos del operador de mercado}{2025-06-04}{2025-06-13}\\
+      \ganttbar[name=tso]{Obtención de datos del operador del sistema}{2025-06-14}{2025-06-26}\\
+      \ganttmilestone[name=produccion]{Despliegue en producción}{2025-07-01}\\
+      \ganttbar[name=mandos]{Cuadro de mando}{2025-06-14}{2025-07-17}\\
+      \ganttbar[name=incidencias]{Resolución de incidencias}{2025-06-04}{2025-07-31}\\
+      \ganttgroup[name=experimentacion]{Experimentación}{2025-07-01}{2025-08-17}\\
+      \ganttbar[name=rendimiento]{Pruebas de integración de rendimiento}{2025-07-01}{2025-07-31}\\
+      \ganttbar[name=comparaciones]{Análisis comparativos locales}{2025-08-01}{2025-08-17}\\
+      \ganttgroup[name=redaccion]{Redacción del informe}{2025-07-01}{2025-09-15}\\
+      \ganttbar[name=estructuracion]{Estructuración de los apartados}{2025-07-01}{2025-7-21}\\
+      \ganttbar[name=typesetting]{Composición tipográfica}{2025-07-15}{2025-8-31}\\
+      \ganttbar[name=contenido]{Elaboración del contenido}{2025-07-15}{2025-8-31}\\
+      \ganttbar[name=revision]{Revisión y edición}{2025-08-25}{2025-9-15}\\
+      \ganttlink{normativa}{mercado}
+      \ganttlink{mercado}{baterias}
+      \ganttlink[link type=s-s]{typesetting}{contenido}
+      \ganttlink[link type=s-s]{diseño}{cuartohorario}
+      \ganttlink{diseño}{aislado}
+      \ganttlink{aislado}{generacion}
+      \ganttlink{generacion}{hibrido}
+      \ganttlink{conector}{señales}
+      \ganttlink{hibrido}{pruebas}
+      \ganttlink{señales}{pruebas}
+      \ganttlink{entorno}{pruebas}
+      \ganttlink{pruebas}{control}
+      \ganttlink{mo}{tso}
+      \ganttlink{tso}{produccion}
+      \ganttlink{control}{produccion}
+      \ganttlink{rendimiento}{comparaciones}
     \end{ganttchart}
   }
   \caption{Diagrama Gantt del plan de trabajo.}
   \label{fig:plan-trabajo}
 \end{figure}
 
+% TODO
 \begin{description}
 
-  \item[Task 1] Lorem ipsum
+  \item[Estudio de la normativa] Investigación de la regulación del mercado eléctrico.
 
-  \item[Task 2] Lorem ipsum
+  \item[Formación en el mercado eléctrico] Formación sobre el funcionamiento y los procesos del mercado eléctrico.
 
-  \item[Final Task] Lorem ipsum
+  \item[Formación en baterías] Estudio de las características técnicas de los \gls{bess}.
+
+  \item[Evaluación de las herramientas] Análisis de las herramientas existentes y elección de las tecnologías.
+
+  \item[Diseño del optimizador] Diseño de la arquitectura de la optimización exclusivamente centrada en el comportamiento de las baterías.
+
+  \item[Adaptación a mercados cuartohorarios] Adaptación del sistema para su operación en los nuevos mercados cuartohorarios, diario, intradiarios y continuo.
+
+  \item[Topología aislada] Habilitación de la optimización para topologías aisladas.
+
+  \item[Colocación renovable] Desarrollo de la lógica para gestionar baterías junto a una planta de generación renovable colocadas.
+
+  \item[Topología híbrida] Habilitación de la optimización para topologías híbridas.
+
+  \item[Incorporación del sistema de información de planta] Despliegue y configuración de las conexiones con los activos energéticos del \gls{pis}.
+
+  \item[Pruebas unitarias de señalización] Verificación independiente de la correcta comunicación de lectura y señalización de consignas del \gls{pis}.
+
+  \item[Consideración parcial del entorno de mercado] Realización de la primera integración parcial con datos de mercado no programáticos.
+
+  \item[Despliegue en preproducción] Instalación del sistema en un entorno de pruebas sin acceso a licitaciones en el mercado.
+
+  \item[Consignación y licitaciones] Desarrollo de la capacidad de enviar órdenes a las baterías y ofertas al mercado.
+
+  \item[Obtención de datos del operador de mercado] Automatización de la obtención de información relevante publicada por el \gls{mo}.
+
+  \item[Obtención de datos del operador del sistema] Implementación de la recepción de datos técnicos y de red del \gls{tso}.
+
+  \item[Despliegue en producción] Puesta en marcha del sistema en instalaciones reales para su operación comercial.
+
+  \item[Cuadro de mando] Creación del cuadro de mandos para la monitorización y el control del sistema.
+
+  \item[Resolución de incidencias] Corrección continua de los errores y problemas que surgen durante la operación del sistema.
+
+  \item[Pruebas de integración de rendimiento] Medición del rendimiento global (en terminos monetarios) con todos sus componentes.
+
+  \item[Análisis comparativos locales] Evaluación y comparación de diferentes estrategias de operación.
+
+  \item[Estructuración de los apartados] Organización del contenido y definición de la estructura del informe final del proyecto.
+
+  \item[Composición tipográfica] Maquetación y formateo del documento.
+
+  \item[Elaboración del contenido] Redacción del cuerpo principal del informe describiendo todo el trabajo realizado.
+
+  \item[Revisión y edición] Realización de la corrección final del documento para pulir el texto y eliminar errores.
 
 \end{description}
