@@ -208,10 +208,9 @@ A diferencia de Modbus, este protocolo permite una comunicación orientada a eve
 
 IEC 60870-5-104 también permite enviar señalizaciones de calidad correspondientes a un valor, de hecho, es relativamente común ver señales sobrepasando los limites operacionales, como el estado de carga de una batería obtenido a mediante el protocolo observado en la figura~\ref{fig:overflow-soc}. Por suerte, estas señalizaciones de calidad permiten identificarlas, junto a valores inválidos, no actualizados, manuales, bloqueados o erróneos.
 
-% TODO
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/overflow-soc.png}
+  \includegraphics[width=0.5\linewidth]{figures/overflow-soc.png}
   \caption{Los valores del estado de carga excedente con respecto al limite operativo son registrados como inválidos por el protocolo.}
   \label{fig:overflow-soc}
 \end{figure}
@@ -331,21 +330,19 @@ De esta forma y una vez establecido el enlace de comunicación, el conector proc
 
 Se seleccionan únicamente las variables críticas para la operación de la batería y la planta de generación asociada, correspondientes a las señales de los sensores anteriormente descritos en la sección~\ref{makereference3.2}. Posteriormente, se debe realizar un mapeo explícito de cada \gls{ioa} seleccionada a un elemento de datos en el PI Server. Para cada señal, se crea un PI Point correspondiente en el PI Data Archive, definiendo sus atributos como tipo de dato (\texttt{Float32} para mediciones continuas, \texttt{Digital} para descripciones de estado), unidades de ingeniería (\si{\percent}, \si{\mega\watt}, \si{\mega\watt\hour}), un descriptor textual claro y el identificador correspondiente (\texttt{BT SOC Real}, etc.). Es posible visualizar el resultado en la figura~\ref{fig:visualizacion-industrial-de-batería}.
 
-% TODO
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/visualizacion-industrial-de-bateria.png}
-  \caption{Visualización industrial de las señales de una batería.}
+  \includegraphics[width=0.75\linewidth]{figures/visualizacion-industrial-de-bateria.png}
+  \caption{Visualización industrial de varias señales de una instalación.}
   \label{fig:visualizacion-industrial-de-bateria}
 \end{figure}
 
 Como no se hace uso de PI Asset Framework para modelizar la planta de forma jerárquica, se definen los identificadores de cada punto según sus características. Los valores analógicos (analog value) siguen el formato \texttt{M:06X.AV}, las calidades analógicas (analog quality) \texttt{M:06X.AQ}, los valores de las consignas (setpoint value) \texttt{M:06X.SV} y las calidades de las consignas (setpoint quality) \texttt{M:06X.SQ}. Se muestra una colección de los mismos en la tabla~\ref{fig:puntos-bateria}.
 
-% TODO
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/puntos-bateria.png}
-  \caption{Colección de puntos o \textit{tags} de una batería.}
+  \includegraphics[width=0.75\linewidth]{figures/puntos-bateria.png}
+  \caption{Colección de puntos de una batería.}
   \label{fig:puntos-bateria}
 \end{figure}
 
@@ -353,11 +350,10 @@ Los valores, como su nombre indica, se corresponden con el contenido de las señ
 
 Con ello, la validación del sistema se realiza comparando en tiempo real los valores registrados en el PI Data Archive con las lecturas directas en la interfaz SCADA de los controlador de planta en la respectiva sala de control securizada, y forzando cambios en los activos para verificar la correcta transmisión y registro de eventos. De esta forma, es posible comparar el programa de carga y descarga de las baterías con los movimientos verdaderamente efectuados y comprobar su corrección, como se muestra en la figura~\ref{fig:programa-bateria}.
 
-% TODO
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/programa-bateria.png}
-  \caption{Programa de ciclado de batería en comparación con su evolución del estado de carga.}
+  \includegraphics[width=0.75\linewidth]{figures/programa-bateria.png}
+  \caption{Programa de ciclado de una batería en comparación con su evolución del estado de carga.}
   \label{fig:programa-bateria}
 \end{figure}
 
