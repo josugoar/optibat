@@ -21,7 +21,7 @@ Todo modelado estructural debe contar inicialmente con un conjunto de parámetro
 \subsection{Periodos del mercado}
 \label{makereference5.1.1}
 
-El mercado eléctrico peninsular opera en etapas discreta temporales con una granularidad establecida. Los mercados spot, de los que se encarga el sistema en la actualidad, disponen de una granularidad horaria para el mercado diario\footnote{La granularidad del mercado diario se encuentra en proceso de actualización a cuartohoraria} y cuartohoraria para los mercados intradiarios y el mercado intradiario continuo. En el resto de mercados de Europa, como Nord Pool, la granularidad de los mercados spot es similar, existiendo también granularidades incluso de 30 minutos.
+El mercado eléctrico peninsular opera en etapas discreta temporales con una granularidad establecida. Los mercados spot, de los que se encarga el sistema en la actualidad, disponen de una granularidad horaria para el mercado diario\footnote{La granularidad del mercado diario se encuentra en proceso de actualización a cuartohoraria.} y cuartohoraria para los mercados intradiarios y el mercado intradiario continuo. En el resto de mercados de Europa, como Nord Pool, la granularidad de los mercados spot es similar, existiendo también granularidades incluso de 30 minutos.
 
 La variabilidad de la granularidad exige representar el mercado en múltiples periodos categóricos de tamaño proporcional. De esta forma, el sistema representa el mercado mismo mediante la ecuación~\ref{eq:set-mercado}.
 
@@ -36,42 +36,67 @@ La variabilidad de la granularidad exige representar el mercado en múltiples pe
 
   \begin{itemize}
 
-    \item \( T \) es el conjunto de todos los períodos de tiempo discretos.
+    \item \( T \) es el conjunto de todos los períodos de mercado discretos.
 
-    \item \( t_0 \) es el tiempo inicial del conjunto.
+    \item \( t_{0} \) es el periodo inicial de optimización.
 
-    \item \( k \) es el contador de pasos, que es un número natural (incluido el cero), \( k \in \{ 0, 1, 2, 3, \dots \} \).
+    \item \( k \) es el contador de periodos de mercado.
 
-    \item \( \Delta t \) es la granularidad o el tamaño del paso de tiempo entre un período y el siguiente.
+    \item \( \Delta t \) es la granularidad mínima de todos los mercados tenidos en cuenta en el horizonte de optimización.
 
-    \item \( H \) es el horizonte de optimización, que marca el límite superior o el tiempo final de la serie temporal.
+    \item \( H \) es el horizonte de optimización correspondiente al número de días de mercado a tener en cuenta.
 
   \end{itemize}
 
 \end{samepage}
 
-Es necesario tener en cuenta los usos horarios a la hora de calcular el tamaño del mercado, ya que los mercados siempre y en todo momento hacen uso del uso horario local, a diferencia de UTC. Esto significa que en los día de cambio de hora, los mercados del día tendrán más o menos periodos y el mercado intradiario continuo tendrá más o menos sesiones, dependiendo de si se añaden o restan horas. El operador del mercado lo detalla en la tabla~\ref{tab:cambio-hora}.
+La representación del mercado durante la optimización realmente incluye multiples posibles mercados futuros más allá del más proximo, es decir, el sistema tiene en cuenta un horizonte de optimización de varios mercados y, por lo tanto, varios periodos a lo largo de múltiples días de mercado. La razón de lo cual reside en facilitar a la optimización la mayor información posible: si un día de mercado no cumple con las condiciones de actuación mientras que otro día de mercado las dobla, es posible no arbitrar uno de los días y ofertar el doble el otro, en vez de perder la oportunidad, representado en la figura~\ref{fig:horizonte-de-optimizacióno}.
 
-\begin{table}[ht]
-  \centering
-  \begin{tabular}[c]{|l|l|l|}
-    \hline
-    Código & Descripción & Tipo de producción\\
-    \hline
-    \hline
-  \end{tabular}
-  \caption[Ajustes del mercado en cambios de hora.]{Ajustes del mercado en cambios de hora.}
-  \label{tab:cambio-hora}
-\end{table}
-
-La representación del mercado durante la optimización realmente incluye multiples posibles mercados futuros más allá del más proximo, es decir, el sistema tiene en cuenta un horizonte de optimización de varios mercados y, por lo tanto, varios periodos a lo largo de múltiples días de mercado. La razón de lo cual reside en facilitar la mayor información posible: si un día de mercado no cumple con las condiciones de actuación mientras que otro día de mercado las dobla, es posible no arbitrar uno de los días y ofertar el doble el otro, en vez de perder la oportunidad, representado en la figura~\ref{fig:horizonte-de-optimizacióno}.
-
+% TODO
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/horizonte-de-optimizacióno.jpg}
   \caption[Representación del horizonte de optimización.]{Representación del horizonte de optimización.}
   \label{fig:horizonte-de-optimizacióno}
 \end{figure}
+
+Es necesario tener en cuenta los usos horarios a la hora de calcular el tamaño del mercado, ya que los mercados hacen uso del uso horario local en todo momento, a diferencia de UTC, subrayado anteriormente en la sección~\ref{makereference4.4}. Esto significa que en los días de cambio de hora, los mercados  tendrán más o menos periodos e incluso el mercado intradiario continuo tendrá más o menos sesiones, dependiendo de si se añaden o restan horas. El \gls{mo} lo detalla en verano en la tabla~\ref{tab:cambio-hora-verano} e invierno en la tabla~\ref{tab:cambio-hora-invierno}.
+
+\begin{table}[ht]
+  \centering
+  \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|c|c|c|}
+      \hline
+      & Sesión 1ª & Sesión 2ª & Sesión 3ª \\
+      \hline
+      Apertura de sesión                            & 14:00               & 21:00               & 09:00               \\
+      Cierre de sesión                              & 15:00               & 22:00               & 10:00               \\
+      Casación y publicación                        & 15:20               & 22:20               & 10:20               \\
+      Horizonte de programación (periodos horarios) & 23 horas (1-23 D+1) & 23 horas (1-23 D+1) & 12 horas (12-23 D)  \\
+      \hline
+    \end{tabular}
+  }
+  \caption[Ajustes del mercado intradiario en cambios de hora de verano.]{Ajustes del mercado intradiario en cambios de hora de verano.}
+  \label{tab:cambio-hora-verano}
+\end{table}
+
+\begin{table}[ht]
+  \centering
+  \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|c|c|c|}
+      \hline
+      & Sesión 1ª & Sesión 2ª & Sesión 3ª \\
+      \hline
+      Apertura de sesión                            & 14:00               & 21:00               & 09:00               \\
+      Cierre de sesión                              & 15:00               & 22:00               & 10:00               \\
+      Casación y publicación                        & 15:20               & 22:20               & 10:20               \\
+      Horizonte de programación (periodos horarios) & 25 horas (1-25 D+1) & 25 horas (1-25 D+1) & 12 horas (14-25 D)  \\
+      \hline
+    \end{tabular}
+  }
+  \caption[Ajustes del mercado intradiario en cambios de hora de invierno.]{Ajustes del mercado intradiario en cambios de hora de invierno.}
+  \label{tab:cambio-hora-invierno}
+\end{table}
 
 \subsection{Flujos energéticos}
 \label{makereference5.1.2}
@@ -291,39 +316,46 @@ Dentro de la formulación, esta preferencia de las posiciones más cercanas en e
 
 De esta forma, tras realizar el llamado test de factibilidad básica e identificar las variables básicas\footnote{Las variables básicas son las que marcan los puntos extremos de las soluciones, pero no tienen por que encontrarse en su límite, lo cual resultó ser fuente de confusión en el análisis de factibilidad} y sus propiedades, se determina la estrictez de la formulación.
 
-\section{Optimización lexicográfica}
+\subsection{Optimización lexicográfica}
 \label{makereference5.4.1}
 
-Aunque el uso de una función de decrecimiento incorpore distinga correctamente las soluciones de forma determinista, técnicamente es posible, dependiendo de los parámetros de configuración, que la solución obtenida por el solucionador sea la óptima según el criterio de desempeño definido, pero no la que el sistema busca. Esto sucede debido a que parámetros de decisión incorrectamente seleccionados pueden priorizar una posición que mejore el objetivo de la preferencia temporal y no el del beneficio.
+Aunque el uso de una función de decrecimiento exponencial distinga correctamente las soluciones de forma determinista, es posible, dependiendo de los parámetros de configuración, que la solución obtenida por el solucionador sea entendiblemente la óptima según el criterio de desempeño definido, pero no la que el sistema busca. Esto sucede debido a que parámetros de decisión incorrectamente seleccionados pueden priorizar una posición que mejore el objetivo de la preferencia temporal y no el del beneficio.
 
-La metodología anterior de juntar los dos objetivos se conoce como optimización multiobjetivo ponderada, donde el coeficiente de ponderación es el calculado mediante la \textit{decay function} exponencial. Aún así, existe una técnica de optimización multiobjetivo más avanzada que evita conflictos entre ellos gracias a una metodología de priorización de objetivos, llamada optimización lexicográfica.
+La metodología anterior de juntar los dos objetivos se conoce como optimización multiobjetivo ponderada, donde el coeficiente de ponderación es el calculado mediante la \textit{decay function} exponencial. Aún así, existe una técnica de optimización multiobjetivo más avanzada que evita conflictos entre ellos gracias a una metodología de priorización de objetivos, llamada optimización lexicográfica. Resulta usada esporádicamente incluso en el contexto de los \gls{bess}~\cite{karimi2019multi}.
 
-De esta forma, se desarrolla el algoritmo~\ref{alg:optimización-lexicográfica} de optimización lexicográfica multiobjetivo por encima del lenguaje de modelado abstracto para asegurar la priorización de los objetivos de la modelización, ya que la herramienta de modelado utilizada no soporta solucionar múltiples objetivos al mismo tiempo.
+De esta forma, se desarrolla el algoritmo~\ref{alg:optimizacion-lexicografica} de optimización lexicográfica multiobjetivo por encima del lenguaje de modelado abstracto para asegurar la priorización de los objetivos de la modelización, ya que la herramienta de modelado utilizada no soporta solucionar múltiples objetivos al mismo tiempo.
 
 \begin{algorithm}
-  \caption{Optimización lexicográfica.}
-  \label{alg:optimización-lexicográfica}
+  \caption{Algoritmo de optimización lexicográfica}
+  \label{alg:optimizacion-lexicografica}
   \begin{algorithmic}
-    \State $i \gets 10$
-    \If{$i\geq 5$}
-    \State $i \gets i-1$
-    \Else
-    \If{$i\leq 3$}
-    \State $i \gets i+2$
+    \Require Funciones objetivo \( f_{1}, \dots, f_{n} \) ordenadas por importancia decreciente.
+    \Require Variables de decisión \( x \).
+    \Require Conjunto de valores posibles \( X \).
+    \For{\( i \gets 1 \text{ to } n \)}
+    \State Resolver el problema de optimización de objetivo único \( P_{i} \):
+    \Statex \hspace{\algorithmicindent} \( \max \quad f_{i}(x) \)
+    \Statex \hspace{\algorithmicindent} \( \text{sujeto a} \quad x \in X \)
+    \Statex \hspace{\algorithmicindent} \( \phantom{\text{sujeto a} \quad} f_{j}(x) \geq z_k^* \quad \forall j \in \{1, \dots, i - 1\} \)
+    \If{la solución no es factible}
+    \State \Return \( \emptyset \)
     \EndIf
-    \EndIf
+    \State Sea \( x^{*}_{i} \) una solución óptima para \( P_{i} \).
+    \State \( z^{*}_{i} \gets f_t(x^{*}_{i}) \) \Comment{Se guarda el valor óptimo para la siguiente iteración.}
+    \EndFor
+    \State \Return \( x^{*}_{n} \)
   \end{algorithmic}
 \end{algorithm}
 
-Con esto, el objetivo principal se trata de la maximización del beneficio y el objetivo secundario la priorización temporal (porque se sigue necesitando obtener una única solución). El sistema permite definir otros objetivos secundarios de menor prioridad, como la maximización del estado de carga final para aprovechar situaciones de carga gratuita en las que la energía no es vendida.
+Con esto, el objetivo principal se trata de la maximización del beneficio y el objetivo secundario la priorización temporal, porque se sigue necesitando obtener una única solución. El sistema permite definir otros objetivos secundarios de menor prioridad, como la maximización del \gls{soc} final para aprovechar situaciones de carga gratuita en las que la energía no es vendida.
 
-Aunque se solucionen los problemas de posiciones posiblemente no óptimas, la optimización lexicográfica tiene un menor rendimiento, por lo que no es factible usarla para mercados con una granularidad muy pequeña, como los de disponibilida. En cambio, funciona adecuadamente para los mercados spot en los que se centra el despliegue realizado del sistema.
+Aunque se solucionen los problemas de posiciones posiblemente no óptimas, la optimización lexicográfica tiene un menor rendimiento, por lo que no es factible usarla para mercados con una granularidad muy pequeña, como los de disponibilida. En cambio, funciona adecuadamente para los mercados spot, en los que se centra el despliegue realizado del sistema.
 
 \section{Resolución numérica}
 \label{makereference5.5}
 
-Otro aspecto a tener en cuenta es la precisión numérica de los resultados. De hecho la institución regulatoria del mercado eléctrico correspondiente, el operador del mercado mismo, define las regulaciones de la precisión numérica aceptada para el arbitraje.
+Otro aspecto a tener en cuenta es la precisión numérica de los resultados. De hecho, la institución regulatoria del mercado eléctrico correspondiente, el \gls{mo} mismo, define las regulaciones de la precisión numérica aceptada para el arbitraje.
 
-Tanto la energía como la potencia son expresados con una precisión de un solo decimal, siendo su granularidad una décima de megavatio y megavatio hora. El precio de oferta, en cambio, se expresa con dos decimales
+Tanto la energía como la potencia son expresados con una precisión de un solo decimal, siendo su granularidad una décima de megavatio y megavatio hora. El precio de oferta, en cambio, se expresa con dos decimales, correspondientes a los céntimos.
 
-Irónicamente, las minúsculas diferencias entre los resultados reales correspondientes al estado de la batería y las ofertas de arbitraje sí que son capaces de generar desvíos en el mercado. Por suerte, el sistema no tiene por que encargarse de dicha discrepancia debido a que los desvíos son comparativamente tan bajos, menores a 50 kilovatios hora (\textit{kWh}) de media, que la red eléctrica misma es capaz de absorber sin absolutamente ningún problema. Además, como los desvíos resultan tanto a subir como bajar, generalmente se contrarrestan entre sí.
+Irónicamente, las minúsculas diferencias entre los resultados reales correspondientes al estado de la batería y las ofertas de arbitraje sí que son capaces de generar desvíos en el mercado. Por suerte, el sistema no tiene por que encargarse de dicha discrepancia debido a que los desvíos son comparativamente tan bajos, menores a \SI{50}{{\kilo\watt\hour}} de media, que la red eléctrica misma es capaz de absorber sin absolutamente ningún problema. Además, como los desvíos resultan tanto a subir como bajar, generalmente se contrarrestan entre sí.
