@@ -69,7 +69,7 @@ Aún habiendo convertido las unidades, se continua teniendo un problema, explica
 
 ¿Qué sucede entonces cuando las dos señales se activan a la vez? La activación simultanea resulta en un bloqueo mutuo donde ocurre un cortocircuito, el cual podría causar daños físicos internos a las celdas de la batería (en la practica el \gls{bms} lo impide), por esta razón la misión del sistema de control de baterías es evitar esta situación. Para ello, limita las consignas a una única señal en donde los valores positivos indican carga, los negativos descarga y cero la inactividad.
 
-Por ejemplo, una situación en la que una carga y descarga simultanea podría suceder, de no ser por las limitaciones físicas de las baterías, es cuando existe recurso de generación limitado por restricciones técnicas para un periodo beneficioso de venta, en donde la batería querría tomarlo y venderlo directamente en el mismo periodo. Visualizado en la tabla~\ref{tab:carga-descarga-simultanea}.
+Por ejemplo, una situación en la que una carga y descarga simultanea podría suceder, de no ser por las limitaciones físicas de las baterías, es cuando existe recurso de generación limitado por los límites de programa para un periodo beneficioso de venta, en donde la batería querría tomarlo y venderlo directamente en el mismo periodo. Visualizado en la tabla~\ref{tab:carga-descarga-simultanea}.
 
 \begin{table}[ht]
   \centering
@@ -91,7 +91,7 @@ Por ejemplo, una situación en la que una carga y descarga simultanea podría su
     H22Q4   & 5.5                          & 32.5                            & 32.5                             & 73.00                                           \\
     \hline
   \end{tabular}
-  \caption{Restricciones técnicas en donde, desde el periodo H21Q1 al H22Q1, la exportación de la generación está limitada mientras que la batería es capaz de exportar libremente, pudiendo causar conflictos entre la carga de aprovechamiento de la generación y la descarga de la venta en precios altos.}
+  \caption{Límite de programa donde, desde el periodo H21Q1 al H22Q1, la exportación de la generación está limitada mientras que la batería es capaz de exportar libremente, pudiendo causar conflictos entre la carga de aprovechamiento de la generación y la descarga de la venta en precios altos.}
   \label{tab:carga-descarga-simultanea}
 \end{table}
 
@@ -459,14 +459,14 @@ Finalmente, la oferta se comunica con la herramienta externa de resolución de o
       \hline
       FECHA      & PERIODO & COD\_RESOLUCION & BLOQUE & UFI   & {ENERGIA} & {POTENCIA} & {PRECIO} \\
       \hline
-      15/09/2025 & 29      & 15M             & 1      & ABADC & -1.3      & -5.2       &  4.92    \\
-      15/09/2025 & 30      & 15M             & 1      & ABADC & -1.3      & -5.2       &  4.92    \\
-      15/09/2025 & 31      & 15M             & 1      & ABADC & -1.3      & -5.2       &  4.92    \\
-      15/09/2025 & 32      & 15M             & 1      & ABADC & -1.1      & -4.4       &  4.92    \\
-      15/09/2025 & 85      & 15M             & 1      & ABADV &  1.3      &  5.2       & 80.40    \\
-      15/09/2025 & 86      & 15M             & 1      & ABADV &  1.3      &  5.2       & 80.40    \\
-      15/09/2025 & 87      & 15M             & 1      & ABADV &  1.3      &  5.2       & 80.40    \\
-      15/09/2025 & 88      & 15M             & 1      & ABADV &  1.1      &  4.4       & 80.40    \\
+      05/09/2025 & 29      & 15M             & 1      & ABADC & -1.3      & -5.2       &  4.92    \\
+      05/09/2025 & 30      & 15M             & 1      & ABADC & -1.3      & -5.2       &  4.92    \\
+      05/09/2025 & 31      & 15M             & 1      & ABADC & -1.3      & -5.2       &  4.92    \\
+      05/09/2025 & 32      & 15M             & 1      & ABADC & -1.1      & -4.4       &  4.92    \\
+      05/09/2025 & 85      & 15M             & 1      & ABADV &  1.3      &  5.2       & 80.40    \\
+      05/09/2025 & 86      & 15M             & 1      & ABADV &  1.3      &  5.2       & 80.40    \\
+      05/09/2025 & 87      & 15M             & 1      & ABADV &  1.3      &  5.2       & 80.40    \\
+      05/09/2025 & 88      & 15M             & 1      & ABADV &  1.1      &  4.4       & 80.40    \\
       \hline
     \end{tabular}
   }

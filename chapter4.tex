@@ -57,7 +57,7 @@ Por ello, para obtener esta previsión, el sistema desarrollado adopta un enfoqu
 
 \end{description}
 
-Afortunadamente, la información de precios de casación es de carácter público. \Gls{omie} la publica en ficheros con una nomenclatura estandarizada, siendo el fichero \gls{marginalpdbc} para el mercado diario y los ficheros marginales \gls{marginalpibci} para los mercados intradiarios.
+Afortunadamente, la información de precios de casación es de carácter público. \Gls{omie} la publica en ficheros con una nomenclatura estandarizada, siendo el fichero \gls{marginalpdbc} para el mercado diario y los ficheros marginales \gls{marginalpibci} para los mercados intradiarios~\cite{cnmc2025resolucion}.
 
 \subsection{Energía negociada}
 \label{makereference4.1.2}
@@ -72,70 +72,64 @@ Además, es un requisito indispensable para la gestión de los desvíos y la reo
 
 Precisamente, esta discrepancia entre lo ofertado y lo casado puede deberse a múltiples factores, como que el precio de oferta no resulte competitivo y la oferta sea rechazada en su totalidad, o que se produzca una casación parcial en la que solo una fracción de la energía ofertada es aceptada por el mercado. Esta es la razón de la necesidad de tener que consultar con \gls{omie} y no poder fiarse de la posición optima obtenida del sistema.
 
-Pero, a diferencia de los precios, la información de energía casada es de naturaleza confidencial. Para proteger las estrategias comerciales de los participantes en el mercado, \gls{omie} la publica desglosada por \gls{up}, y cada entidad solo tiene acceso a la información de sus propias unidades. Los ficheros que contienen esta información son el \gls{pdbf} para el mercado diario y el \gls{pibca} para los mercados intradiarios.
+Pero, a diferencia de los precios, la información de energía casada es de naturaleza confidencial. Para proteger las estrategias comerciales de los participantes en el mercado, \gls{omie} la publica desglosada por \gls{up}, y cada entidad solo tiene acceso a la información de sus propias unidades. Los ficheros que contienen esta información son el \gls{pdbf} para el mercado diario y el \gls{pibca} para los mercados intradiarios~\cite{cnmc2025resolucion}.
 
 \section{Operador del sistema}
 \label{makereference4.2}
 
-Mientras que OMIE gestiona el componente económico del mercado, la responsabilidad de garantizar la seguridad y la estabilidad física del sistema eléctrico en tiempo real recae sobre Red Eléctrica Española. Como operador del sistema de transporte, REE tiene el rol fundamental de balancear constantemente la generación con la demanda y de operar la red de transporte de alta tensión de manera segura, evitando sobrecargas o colapsos.
+Mientras que \gls{omie} gestiona el componente económico del mercado, la responsabilidad de garantizar la seguridad y estabilidad física del sistema eléctrico en tiempo real recae sobre \gls{ree}. Como \gls{tso}, \gls{ree} tiene el rol fundamental de balancear constantemente la generación con la demanda y de operar la red de transporte de alta tensión de manera segura, evitando sobrecargas o colapsos.
 
-\begin{figure}
-  \centering
-  % \includegraphics[width=0.5\linewidth]{figures/ree.jpg}
-  \caption{Red Eléctrica Española.}
-  \label{fig:ree}
-\end{figure}
-
-Para cumplir con esta misión crítica, el resultado puramente económico de la casación del mercado gestionado por OMIE debe ser supervisado y, en ocasiones, modificado por REE. Esto se debe a que un programa de producción económicamente óptimo podría no ser físicamente viable debido a las limitaciones de la red. Por esta razón, REE emite consignas operativas de cumplimiento necesario que se aplican sobre el resultado del mercado, conocidas como limitaciones de programa.
+Para cumplir con esta misión crítica, el resultado puramente económico de la casación del mercado gestionado por \gls{omie} debe ser supervisado y, en ocasiones, modificado por \gls{ree}. Esto se debe a que un programa de producción económicamente óptimo podría no ser físicamente viable debido a las limitaciones de la red. Por esta razón, \gls{ree} emite consignas operativas de cumplimiento necesario que se aplican sobre el resultado del mercado, conocidas como limitaciones de programa.
 
 \subsection{Limitaciones de programa}
 \label{makereference4.2.1}
 
-Las limitaciones de programa son limitaciones de potencia impuestas por REE a los participantes del mercado para resolver congestiones en la red o garantizar la seguridad del suministro en tiempo real. Estas limitaciones representan un límite superior inviolable a la operación de los activos energéticos y, por tanto, constituyen una entrada fundamental para el sistema de optimización.
+Las limitaciones de programa son limitaciones de potencia impuestas por \gls{ree} a los participantes del mercado para resolver congestiones en la red o garantizar la seguridad del suministro en tiempo real. Estas limitaciones representan un límite superior inviolable a la operación de los activos energéticos y, por tanto, constituyen una entrada fundamental para el sistema de optimización.
 
-La necesidad de estas limitaciones surge cuando el programa de energía resultante del mercado provocaría una sobrecarga en alguna línea de la red de transporte o comprometería la estabilidad del sistema. En tales casos, REE interviene emitiendo una consigna que reduce la potencia máxima que una o varias instalaciones pueden exportar a la red.
+La necesidad de estas limitaciones surge cuando el programa de energía resultante del mercado provocaría una sobrecarga en alguna línea de la red de transporte o comprometería la estabilidad del sistema. En tales casos, \gls{ree} interviene emitiendo una consigna que reduce la potencia máxima que una o varias instalaciones pueden exportar a la red.
 
-Es importante tener en cuenta que, si bien las restricciones de las limitaciones de programa son altamente criticas, existen medios externos para garantizar que no se sobrepasan si ocurre algún error en la operación del sistema desarrollado, por lo que la estabilidad de la red nunca podrá verse afectada por un fallo del mismo.
+Es importante tener en cuenta que, si bien las restricciones de las limitaciones de programa son altamente criticas, existen medios externos para garantizar que no se sobrepasan si ocurre algún error en la operación del sistema desarrollado, por lo que la estabilidad de la red nunca podrá verse afectada por un simple incumplimiento de las consignas por parte del sistema.
 
-Aunque la información de estas limitaciones se publica con una granularidad minutal, como entre mercados apenas existe una diferencia de una hora, no es estrictamente necesario consultar las limitaciones constantemente en la situación pertinente. Si se trabajara en los mercados de ajuste, en cambio, sí que sería necesario.
+Con esto, la información de estas limitaciones se publica (o no) con ``antelación suficiente al cierre de mercado''~\cite{mte2019resolucion}. Como entre sesiones de mercado apenas existe una diferencia de una hora, no es estrictamente necesario consultar las limitaciones constantemente, sino tan solo antes de realizar la optimización.
 
 Las limitaciones son desglosadas según diferentes identificadores.
 
 \begin{itemize}
 
-  \item Una limitación a nivel de unidad física de instalación aplica un límite de exportación de potencia a un activo de generación o almacenamiento específico e individual. Por ejemplo, podría limitar la producción de una planta fotovoltaica concreta dentro de un complejo más grande.
+  \item Una limitación a nivel de \gls{ufi} de ls instalación aplica un límite de exportación de potencia a un activo de generación o almacenamiento específico e individual. Por ejemplo, podría limitar la producción de una planta fotovoltaica concreta dentro de un complejo más grande.
 
-  \item Una limitación a nivel de unidad de programación impone un límite de exportación al conjunto de activos que conforman dicha unidad de programación. En una instalación híbrida, esto significa que la suma de la potencia neta exportada por la planta de generación y el sistema de almacenamiento de energía en baterías no puede superar el umbral dictado por REE.
+  \item Una limitación a nivel de \gls{up} impone un límite de exportación al conjunto de activos que conforman dicha \gls{up}. En una instalación híbrida, esto significa que la suma de la potencia neta exportada por la planta de generación y el \gls{bess} no puede superar el umbral dictado.
 
 \end{itemize}
 
-Por tanto, el sistema de optimización desarrollado debe consultar la existencia de estas limitaciones de programa de la misma forma que la información anterior. Si se recibe una limitación, el modelo debe considerarla como una restricción máxima en sus cálculos, ajustando la consigna de operación de la batería para asegurar que la exportación total de la unidad de programación se mantenga siempre por debajo del límite impuesto por Red Eléctrica Española.
+Por tanto, el sistema de optimización desarrollado debe consultar la existencia de estas limitaciones de programa, de la misma forma que la información anterior. Si se recibe una limitación, el modelo debe considerarla como una restricción máxima en sus cálculos, ajustando la consigna de operación de la batería para asegurar que la exportación total de las unidades se mantengan siempre por debajo del límite impuesto por \gls{ree}. El fichero de limitaciones de programa se conoce como \gls{limitacionsuj}.
 
 \section{Situación meteorológica}
 \label{makereference4.3}
 
-Además de las señales económicas de OMIE y las operativas de REE, existe una tercera fuente de datos externos que resulta indispensable para el sistema de optimización, especialmente en el caso de las topologías híbridas. Esta se trata de la previsión de la generación eléctrica que producen los activos de energía renovable (generalmente fotovoltaicos o eólicos) asociados a los sistemas de almacenamiento, dependientes de la situación meteorológica.
+Además de las señales económicas de \gls{omie} y las operativas de \gls{ree}, existe una tercera fuente de datos externos que resulta indispensable para el sistema de optimización, concretamente en el caso de las topologías híbridas. Esta se trata de la previsión de la generación eléctrica que producen los activos de de generación (generalmente renovable) asociados a los sistemas de almacenamiento, dependientes de la situación meteorológica.
 
-La necesidad de esta información es bastante directa para que el sistema de optimización pueda tomar una decisión informada sobre si cargar la batería desde la red o desde el activo renovable. Por ello debe conocer con antelación cuánta energía renovable estará disponible en cada periodo. Sin esta previsión, la capacidad de la batería para aprovechar la energía generada localmente, uno de los principales beneficios económicos de la hibridación, sería nula.
+La necesidad de esta información es bastante directa, facilitando al sistema de optimización la toma de decisiones informadas sobre si cargar la batería desde la red o desde la generación. Por ello debe conocer con antelación cuánta de generación estará disponible en cada periodo. Sin esta previsión, la capacidad de la batería para aprovechar la energía generada localmente, uno de los principales beneficios económicos de la hibridación, sería nula.
 
-Este proceso de previsión es una tarea externa al sistema desarrollado. Se basa en modelos especializados que toman como entrada previsiones meteorológicas (como la irradiancia solar, la nubosidad, la temperatura o la velocidad del viento) y las traducen en una previsión de potencia para cada periodo del horizonte de optimización.
+Este proceso de previsión es una tarea externa al sistema desarrollado. Se basa en modelos especializados que toman como entrada previsiones meteorológicas (como la irradiancia solar, nubosidad, temperatura o velocidad del viento) y las traducen en una previsión de potencia para cada periodo del horizonte de optimización.
 
+% TODO
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/prevision-renovable.png}
-  \caption{Ejemplo de una previsión de generación de un activo renovable.}
+  \caption{Ejemplo de una previsión de generación de un activo de generación.}
   \label{fig:prevision-renovable}
 \end{figure}
 
-El sistema de optimización consume esta previsión de generación como un dato de entrada más. Con ello, se le permite al modelo tener en cuenta múltiples factores.
+El sistema de optimización consume esta previsión de generación como un dato de entrada más. Las previsiones de generación permiten al sistema tener en cuenta tres aspectos fundamentales para el funcionamiento homogéneo de la instalación al completo.
 
 \begin{itemize}
 
-  \item Determinar los periodos en los que habrá un excedente de energía renovable que puede ser almacenado en la batería.
+  \item Determinar los periodos en los que habrá un excedente de energía de generación que pueda ser almacenado en la batería.
 
   \item Evaluar el coste de oportunidad de almacenar esa energía frente a venderla directamente al mercado.
 
-  \item Planificar la carga de la batería para maximizar el aprovechamiento de la energía renovable, evitando así los peajes y cargos asociados a la carga desde la red eléctrica pública.
+  \item Planificar la carga de la batería para maximizar el aprovechamiento de la energía generada, evitando así los peajes y cargos asociados a la carga desde la red eléctrica pública.
 
 \end{itemize}
 
@@ -144,14 +138,15 @@ Por tanto, aunque el cálculo de la previsión es ajeno, su consumo es una parte
 \section{Consolidación de información}
 \label{makereference4.4}
 
-Una vez identificadas las fuentes de datos de mercado (OMIE y REE), el desafío fundamental reside en la adquisición programática, el procesamiento y la unificación de esta información para que pueda ser consumida por el sistema de optimización.
+Una vez identificadas las fuentes de datos de mercado (\gls{omie} y \gls{ree} en este caso), el desafío fundamental reside en la adquisición programática, el procesamiento y la unificación de esta información para que pueda ser consumida por el sistema de optimización.
 
-De esta forma, la contribución principal del sistema desarrollado en este ámbito es el diseño y la implementación del software que actúa como el puente entre estas fuentes de datos heterogéneas y la lógica de negocio, constituyendo las fases de Extracción y Transformación de un pipeline de datos ETL.
+De esta forma, la contribución principal del sistema desarrollado en este ámbito es el diseño y la implementación de las herramientas que actúan como el puente entre estas fuentes de datos heterogéneas y la lógica de negocio, de forma paralela a las fases de extracción y transformación de un \textit{pipeline} de datos \gls{etl}.
 
-Por lo tanto, la arquitectura elegida para esta integración es desacoplada. Los programas desarrollados se encargan de obtener los ficheros brutos, procesarlos y generar ficheros CSV estandarizados que depositan en una ruta de intercambio de ficheros. Posteriormente, un programa externo y preexistente, ajeno a este desarrollo y equivalente a una herramienta de integración de datos como Talend, monitoriza los eventos de escritura en dicha ruta y es el responsable de ejecutar la carga final de los datos en el data warehouse utilizado, basado en tecnología Oracle.
+Por lo tanto, la arquitectura elegida para esta integración es desacoplada. Los programas desarrollados se encargan de obtener los ficheros brutos, procesarlos y generar ficheros CSV estandarizados que se depositan en una ruta de intercambio de ficheros. Posteriormente, un programa externo y preexistente, ajeno a este desarrollo y equivalente a una herramienta de integración de datos como Talend~\cite{talend2025modern}, monitoriza los eventos de escritura en dicha ruta y es el responsable de ejecutar la carga final de los datos en el \gls{dw} utilizado, basado en tecnología Oracle.
 
 Desde la perspectiva del sistema desarrollado, la fuente de datos meteorológicos es la única ya disponible directamente en la base de datos, a diferencia de la información resultante proveniente del operador del mercado y del operador del sistema que debe ser introducida en ella.
 
+% TODO
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/arquitectura-mercado.png}
@@ -159,100 +154,109 @@ Desde la perspectiva del sistema desarrollado, la fuente de datos meteorológico
   \label{fig:arquitectura-mercado}
 \end{figure}
 
-Esta arquitectura resulta ser un requisito para integrarse con herramientas internas ya existentes y, como ventaja adicional, proporciona una gran robustez frente a incidencias en las fuentes de datos.
+Esta arquitectura resulta ser un requisito para integrarse con herramientas internas ya existentes y, como ventaja adicional, proporciona una gran robustez frente a incidencias por parte de las fuentes de datos.
 
-Se han desarrollado dos programas principales en Python, uno para cada fuente de datos, que se ejecutan de forma periódica según los horarios de publicación de los ficheros de cada mercado según el cierre de los mismos para el que obtener los datos, si es aplicable.
+Se han desarrollado dos programas principales en Python, uno para cada fuente de datos, que se ejecutan de forma periódica según los horarios de publicación de los ficheros de cada mercado con respecto al el cierre de los mismos, si es aplicable, representado en la figura~\ref{fig:horarios-publicacion}.
 
-La adquisición de datos de OMIE, aunque dispone de una interfaz web, no es apta para una integración automatizada. Por ello, la comunicación se realiza a través del servidor FTP que OMIE proporciona a los agentes de mercado registrados, ya que la API que la web pública usa no ofrece los datos en tiempo real debido a un periodo de confidencialidad.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\linewidth]{figures/horarios-publicacion.png}
+  \caption{Horarios de publicación de los mercados intradiarios.}
+  \label{fig:horarios-publicacion}
+\end{figure}
 
-El programa utiliza la librería Paramiko para establecer una conexión segura mediante SSH File Transfer Protocol con usuario y contraseña. Una vez conectado, el programa implementa una lógica para asegurar que siempre se obtiene la versión más reciente de cada fichero.
+La adquisición de datos de \gls{omie}, aunque dispone de una interfaz web, no es apta para una integración automatizada. Por ello, la comunicación se realiza a través del servidor FTP que \gls{omie} proporciona a los agentes de mercado registrados, ya que la \gls{api} que la web pública~\cite{omie2025acceso} usa no ofrece los datos en tiempo real debido a un periodo de confidencialidad.
 
-OMIE utiliza la nomenclatura \texttt{xxxxx\_aaaammdd[ss].v}, donde \texttt{xxxxx} es el nombre del fichero, \texttt{aaaa} es el año, \texttt{mm} es el mes, \texttt{dd} es el día y \texttt{ss} es la sesión del mercado, si es aplicable, y \texttt{v} es la versión del fichero.
+El programa utiliza la librería Paramiko para establecer una conexión segura mediante SFTP con usuario y contraseña. Una vez conectado, el programa implementa una lógica para asegurar que siempre se obtiene la versión más reciente de cada fichero.
 
-Como se incluye una versión al final, el programa debe listar los ficheros para una fecha concreta, \textit{parsear} los nombres para identificar las versiones y descarga únicamente la más alta, ya que OMIE puede publicar correcciones o actualizaciones.
+\Gls{omie} utiliza la nomenclatura \texttt{xxxxx\_aaaammdd[ss].v}, donde \texttt{xxxxx} es el nombre del fichero, \texttt{aaaa} es el año, \texttt{mm} es el mes, \texttt{dd} es el día y \texttt{ss} es la sesión del mercado, si es aplicable, y \texttt{v} es la versión del fichero.
 
-Para obtener las limitaciones de programa de Red Eléctrica, el enfoque es similar. Se debe utilizar la API privada de ESIOS (participa.esios), exclusiva para agentes de mercado, pues la API pública no proporciona la información en tiempo real. La comunicación se realiza mediante peticiones HTTP a través de la librería requests, utilizando autenticación de tipo Bearer con un token de acceso.
+Como se incluye una versión al final, el programa debe listar los ficheros para una fecha concreta, procesar los nombres para identificar las versiones y descargar únicamente la más alta, ya que \gls{omie} puede publicar correcciones o actualizaciones.
+
+Para obtener las limitaciones de programa de \gls{ree}, el enfoque es similar. Se debe utilizar la \gls{api} privada de ESIOS\footnote{\url{https://participa.esios.ree.es}}, exclusiva para agentes de mercado~\cite{red2025esios}, pues la \gls{api} pública tan solo proporciona la información tras un periodo de confidencialidad. La comunicación se realiza mediante peticiones HTTP a través de la librería requests, utilizando autenticación OAuth con un token de acceso tipo \textit{bearer}.
 
 Una vez obtenidos los ficheros, que se presentan en formatos CSV específicos, la librería pandas se encarga de la transformación. El resultado es un fichero CSV cuyo formato se corresponde directamente con las filas a insertar en la base de datos de destino.
 
-El formato de los datos de precios contiene las columnas fecha, hora y precio en euros por megavatio hora, pero es importante destacar que la columna hora representa el periodo de mercado porque anteriormente la granularidad de los mercados era exclusivamente horaria, según la tabla~\ref{tab:descripción-precio} y el contenido de la figura~\ref{fig:contenido-precio}.
+El formato de los datos de precios contiene las columnas fecha, hora y precio en euros por megavatio hora\footnote{Es importante destacar que el campo de hora representa el periodo de mercado, porque anteriormente la granularidad de los mercados era exclusivamente horaria}, según la tabla~\ref{tab:descripción-precio} y el contenido de la figura~\ref{fig:contenido-precio}.
 
 \begin{table}[ht]
   \centering
   \begin{tabular}{|l|p{7.5cm}|l|}
     \hline
-    Campo & Descripción & Valores válidos\\
+    Campo      & Descripción                     & Valores válidos        \\
     \hline
-    Año & Año & I4 -- 20XX\\
-    Mes & Mes & I2 -- 1 a 12\\
-    Día & Día & I2 -- 1 a 31\\
-    Hora & Hora & I2 -- 1 a 25\\
-    MarginalPT & Precio marginal zona Portuguesa & F8.2 -- 0.0 a 99999.99\\
-    MarginalES & Precio marginal zona Española & F8.2 -- 0.0 a 99999.99\\
+    Año        & Año                             & I4 -- 20XX             \\
+    Mes        & Mes                             & I2 -- 1 a 12           \\
+    Día        & Día                             & I2 -- 1 a 31           \\
+    Hora       & Hora                            & I2 -- 1 a 25           \\
+    MarginalPT & Precio marginal zona Portuguesa & F8.2 -- 0.0 a 99999.99 \\
+    MarginalES & Precio marginal zona Española   & F8.2 -- 0.0 a 99999.99 \\
     \hline
   \end{tabular}
-  \caption{Descripción del formato de precios.}
+  \caption{Descripción del formato de precios~\cite{omie2025modelo}.}
   \label{tab:descripción-precio}
 \end{table}
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/contenido-precio.png}
+  \includegraphics[width=0.5\linewidth]{figures/contenido-precio.png}
   \caption{Ejemplificación del contenido de los ficheros de precio.}
   \label{fig:contenido-precio}
 \end{figure}
 
-El desarrollo gestiona correctamente los husos horarios (horario local), ya que el mercado diario suele tener 24 periodos (granularidad horaria), pero puede tener 23 o 25 en días con cambio de hora. Análogamente, los mercados intradiarios, con granularidad cuartohoraria, tienen por lo general 96 periodos. Esto es debido a que el funcionamiento de los mercados siempre se realiza en horario local, sin excepción, por lo que no existen conflictos de solapamiento entre ellos.
+El desarrollo gestiona correctamente los husos horarios en horario local, ya que el mercado diario dispone de 24 periodos de granularidad horaria, pero puede tener 23 o 25 en días con cambio de hora\footnote{El mercado diario está en proceso de ser actualizado a una granularidad cuartohoraria}. Análogamente, los mercados intradiarios, con granularidad cuartohoraria, tienen por lo general 96 periodos, con opción de 92 y 100. Esto es debido a que el funcionamiento de los mercados siempre se realiza en horario local, sin excepción, para que no existan conflictos de solapamiento entre ellos~\cite{omie2025reglas}.
 
-El fichero de energía negociada contiene las columnas UP, fecha, hora y energía en megavatios hora. La presencia de la unidad programación es la razón fundamental del carácter confidencial de estos datos. Si un agente conociera los movimientos de las unidades que no controla, podría adaptar su estrategia en detrimento de la libre competencia, según la tabla~\ref{tab:descripción-energia} y el contenido de la figura~\ref{fig:contenido-energia}.
+El fichero de energía negociada contiene las columnas UP, fecha, hora y energía en megavatios hora. De esta forma, la presencia de la \gls{up} es la razón fundamental del carácter confidencial de estos datos. Si un agente conociera los movimientos de las unidades que no controla, podría adaptar su estrategia en detrimento de la libre competencia, según la tabla~\ref{tab:descripción-energia} y el contenido de la figura~\ref{fig:contenido-energia}.
 
 \begin{table}[ht]
   \centering
   \begin{tabular}{|l|p{5cm}|l|}
     \hline
-    Campo & Descripción & Valores válidos\\
+    Campo             & Descripción                                                                                       & Valores válidos               \\
     \hline
-    Año & Año & I4 -- 20XX\\
-    Mes & Mes & I2 -- 1 a 12\\
-    Día & Día & I2 -- 1 a 31\\
-    Hora & Hora & I2 -- 1 a 25\\
-    Código & Código de la unidad ofertante & A7\\
-    Energía asignada & Energía asignada (MWh) & F7.1 – -99999.9 a 99999.9\\
-    IdCBF & Identificador del Cont. Bilateral & I8 Vacío cuando es una oferta\\
-    Tipo de oferta & Indicará que tipo de oferta es & I2 – 0 a 99\\
-    NumOf & Indicará el número de oferta ó el de ejecución del contrato bilateral físico asociado a la unidad & I8 – -1 a 99999999\\
+    Año               & Año                                                                                               & I4 -- 20XX                    \\
+    Mes               & Mes                                                                                               & I2 -- 1 a 12                  \\
+    Día               & Día                                                                                               & I2 -- 1 a 31                  \\
+    Hora              & Hora                                                                                              & I2 -- 1 a 25                  \\
+    Código            & Código de la unidad (UP) ofertante                                                                & A7                            \\
+    Energía asignada  & Energía asignada (MWh)                                                                            & F7.1 -- -99999.9 a 99999.9     \\
+    IdCBF             & Identificador del Cont. Bilateral                                                                 & I8 Vacío cuando es una oferta \\
+    Tipo de oferta    & Indicará que tipo de oferta es                                                                    & I2 -- 0 a 99                   \\
+    NumOf             & Indicará el número de oferta ó el de ejecución del contrato bilateral físico asociado a la unidad & I8 -- -1 a 99999999            \\
     \hline
   \end{tabular}
-  \caption{Descripción del formato de energía negociada.}
+  \caption{Descripción del formato de energía negociada~\cite{omie2025modelo}.}
   \label{tab:descripción-energia}
 \end{table}
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/contenido-energia.png}
+  \includegraphics[width=0.5\linewidth]{figures/contenido-energia.png}
   \caption{Ejemplificación del contenido de los ficheros de energía.}
   \label{fig:contenido-energia}
 \end{figure}
 
-Aún con todo, existe un enorme problema que impide el uso de los resultados de la energía casada de forma directa. Esto se debe a que el sistema desarrollado necesita la información de la energía casada no por unidad de programación, sino por unidades físicas, de tal forma que se pueda arbitrar de forma independiente.
+Aún con todo, existe un enorme problema que impide el uso de los resultados de la energía casada de forma directa. Esto se debe a que el sistema desarrollado necesita la información de la energía casada no por \gls{up}, sino por \gls{ufi}, de tal forma que se pueda arbitrar de forma independiente.
 
-Para resolver este problema, se hace uso de una herramienta propietaria externa al desarrollo que es capaz de calcular los desgloses de la energía, convirtiendo la energía casada por unidad de programación a energía casada por unidad física. Para llevarlo a cabo debe hacer uso de información no disponible por el desarrollo, por lo la existencia de una herramienta del estilo es necesaria.
+Para resolver este problema, se hace uso de una herramienta propietaria externa al desarrollo, que es capaz de calcular los desgloses de la energía, convirtiendo la energía casada por \gls{up} a energía casada por \gls{ufi}. Para llevarlo a cabo, debe hacer uso de información no disponible por el desarrollo, por lo que la existencia de una herramienta del estilo es necesaria.
+
+Junto a ello, el fichero de limitaciones de programa se estructura con las columnas fecha, hora, \gls{up}, \gls{ufi} y valor, según la tabla~\ref{tab:descripción-limitaciones} y el contenido de la figura~\ref{fig:contenido-limitaciones}. La lógica es que si el código es un \gls{ufi}, la limitación aplica exclusivamente a ese activo físico, si es un \gls{up}, se aplica a la totalidad de la instalación.
 
 \begin{table}[ht]
   \centering
   \begin{tabular}{|l|p{5cm}|l|}
     \hline
-    Campo & Descripción & Valores válidos\\
+    Campo            & Descripción                                                                                       & Valores válidos               \\
     \hline
-    Año & Año & I4 -- 20XX\\
-    Mes & Mes & I2 -- 1 a 12\\
-    Día & Día & I2 -- 1 a 31\\
-    Hora & Hora & I2 -- 1 a 25\\
-    Código & Código de la unidad ofertante & A7\\
-    Energía asignada & Energía asignada (MWh) & F7.1 – -99999.9 a 99999.9\\
-    IdCBF & Identificador del Cont. Bilateral & I8 Vacío cuando es una oferta\\
-    Tipo de oferta & Indicará que tipo de oferta es & I2 – 0 a 99\\
-    NumOf & Indicará el número de oferta ó el de ejecución del contrato bilateral físico asociado a la unidad & I8 – -1 a 99999999\\
+    Año              & Año                                                                                               & I4 -- 20XX                    \\
+    Mes              & Mes                                                                                               & I2 -- 1 a 12                  \\
+    Día              & Día                                                                                               & I2 -- 1 a 31                  \\
+    Hora             & Hora                                                                                              & I2 -- 1 a 25                  \\
+    Código           & Código de la unidad ofertante (UFI o UP)                                                          & A7                            \\
+    Energía asignada & Energía asignada (MWh)                                                                            & F7.1 -- -99999.9 a 99999.9    \\
+    IdCBF            & Identificador del Cont. Bilateral                                                                 & I8 Vacío cuando es una oferta \\
+    Tipo de oferta   & Indicará que tipo de oferta es                                                                    & I2 -- 0 a 99                  \\
+    NumOf            & Indicará el número de oferta ó el de ejecución del contrato bilateral físico asociado a la unidad & I8 -- -1 a 99999999           \\
     \hline
   \end{tabular}
   \caption{Descripción del formato de las limitaciones técnicas.}
@@ -261,23 +265,21 @@ Para resolver este problema, se hace uso de una herramienta propietaria externa 
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/contenido-limitaciones.png}
+  \includegraphics[width=0.5\linewidth]{figures/contenido-limitaciones.png}
   \caption{Limitaciones de programa a una instalación.}
   \label{fig:contenido-limitaciones}
 \end{figure}
 
-Junto a ello, el fichero de limitaciones de programa se estructura con las columnas fecha, hora, UP, UFI y valor. La lógica es que si el campo UFI tiene un valor, la limitación aplica exclusivamente a ese activo físico. Si está vacío, la limitación se aplica a la totalidad de la unidad de programación, como se puede ver en la table~\ref{tab:descripción-limitaciones} y en la figura~\ref{fig:contenido-limitaciones}
+Todos estos archivos son transformados al formato interno de inserción y entregados al intercambiador de ficheros.
 
-Una vez los datos residen en el data warehouse, el sistema de optimización los consume mediante consultas SQL. Sin embargo, la simple consulta no es suficiente, ya que las inserciones en la base de datos están sujetas a un versionado interno, independiente del versionado de los ficheros de origen.
+Una vez los datos residen en el \gls{dw}, el sistema de optimización los consume mediante consultas SQL\@. Sin embargo, una simple consulta no es suficiente, ya que las inserciones en la base de datos están sujetas a un versionado interno, independiente del versionado de los ficheros de origen.
 
-Por esta razón, es necesario utilizar consultas analíticas de SQL que, específicamente, empleen funciones de ventana particionadas por la fecha y los periodos de mercado y las unidades de programación o físicas, si es aplicable, y las ordenen por la versión interna para garantizar que siempre se seleccione la versión más reciente de la información.
+Por esta razón, es necesario utilizar consultas analíticas de SQL que, específicamente, empleen funciones de ventana particionadas por la fecha y los periodos de mercado, y las \gls{up} o \gls{ufi}, si es aplicable. De este modo, se ordenan según la versión interna para garantizar que siempre se seleccione la versión más reciente de la información.
 
 Además, se han realizado esfuerzos extensivos para reducir significativamente la latencia de estas consultas, un factor crítico para disminuir el tiempo de respuesta del sistema al completo.
 
 El enfoque del sistema desarrollado consiste en construir consultas que filtran de manera agresiva sobre las columnas indexadas de las tablas base, asegurando que el motor de Oracle utilice planes de ejecución altamente eficientes.
 
-Este método se adopta tras constatar que varias de las vistas de base de datos existentes, que teóricamente debían facilitar el acceso a la información, presentaban un rendimiento deficiente, que precisamente revelan que estas vistas utilizan constructos SQL subóptimos que impiden el uso correcto de los índices, resultando en tiempos de consulta inaceptables. Al interactuar directamente con las tablas subyacentes de forma optimizada, se logra una reducción drástica en los tiempos de respuesta.
-
-Esta arquitectura desacoplada también facilita la gestión de incidencias. En ocasiones, OMIE o REE no publican los ficheros a tiempo. En estos casos, el proceso requiere una intervención manual en la que el agente de mercado contacta con la institución, que puede llegar a enviar el fichero por un canal alternativo como el correo electrónico.
+Esta arquitectura desacoplada también facilita la gestión de incidencias, como se ha mencionado anteriormente. En ocasiones, \gls{omie} o \gls{ree} no publican los ficheros a tiempo. En estos casos, el proceso requiere una intervención manual en la que el agente de mercado responsable contacte con la institución correspondiente, y que esta llegue a enviar el fichero ausente por un canal alternativo, como correo electrónico.
 
 Gracias al diseño, el operador puede procesar este fichero manualmente con los programas desarrollados y depositar el resultado en la ruta de intercambio, permitiendo que el flujo de datos se complete sin alterar el proceso de carga.
