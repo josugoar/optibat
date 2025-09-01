@@ -10,7 +10,7 @@ Como es entendible, el desarrollo ha hecho uso de la infraestructura operacional
 \begin{figure}
   \centering
   \includesvg[width=0.5\linewidth]{figures/diagrama-bess.svg}
-  \caption{Diagrama de un sistema de almacenamiento de energía en baterías~\cite{iberdrola2024bess}.}
+  \caption[Diagrama de un sistema de almacenamiento de energía en baterías.]{Diagrama de un sistema de almacenamiento de energía en baterías~\cite{iberdrola2024bess}.}
   \label{fig:diagrama-bess}
 \end{figure}
 
@@ -47,7 +47,7 @@ De igual manera, es necesario subrayar la relevancia de los flujos energéticos 
     ELGURKI & EBHIBHV & IBEVD24 & P.E. Elgea-Urkilla  \\
     \hline
   \end{tabular}
-  \caption{Unidades físicas, de programación y de oferta de múltiples instalaciones.}
+  \caption[Unidades físicas, de programación y de oferta.]{Unidades físicas, de programación y de oferta de múltiples instalaciones.}
   \label{tab:unidades-fisicas}
 \end{table}
 
@@ -67,7 +67,7 @@ En esta topología, la batería es el único activo energético de la instalaci�
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/topologia-aislada.png}
-  \caption{Diagrama de una instalación aislada con su activo de almacenamiento y sus correspondientes flujos energéticos~\cite{aleasoft2025la}.}
+  \caption[Diagrama de una instalación aislada.]{Diagrama de una instalación aislada con su activo de almacenamiento y sus correspondientes flujos energéticos~\cite{aleasoft2025la}.}
   \label{fig:topologia-aislada}
 \end{figure}
 
@@ -105,7 +105,7 @@ Estas topologías se definen por la llamada colocación del activo de generació
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/topologia-hibrida.png}
-  \caption{Diagrama de una instalación híbrida con sus activos de almacenamiento y generación y sus correspondientes flujos energéticos~\cite{aleasoft2025la}.}
+  \caption[Diagrama de una instalación híbrida.]{Diagrama de una instalación híbrida con sus activos de almacenamiento y generación y sus correspondientes flujos energéticos~\cite{aleasoft2025la}.}
   \label{fig:topologia-hibrida}
 \end{figure}
 
@@ -182,7 +182,7 @@ Esa es la razón de la exposición de múltiples protocolos, y es que la comunic
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/instrumentacion-de-campo.png}
-  \caption{Diagrama de la interacción entre los dispositivos y sensores físicos de campo.}
+  \caption[Diagrama de instrumentación de campo.]{Diagrama de la interacción entre los dispositivos y sensores físicos de campo.}
   \label{fig:instrumentacion-de-campo}
 \end{figure}
 
@@ -211,7 +211,7 @@ IEC 60870-5-104 también permite enviar señalizaciones de calidad correspondien
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/overflow-soc.png}
-  \caption{Los valores del estado de carga excedente con respecto al limite operativo son registrados como inválidos por el protocolo.}
+  \caption[Estado de carga excedente.]{Los valores del estado de carga excedente con respecto al limite operativo son registrados como inválidos por el protocolo.}
   \label{fig:overflow-soc}
 \end{figure}
 
@@ -238,7 +238,7 @@ Ellos detallan el uso del protocolo para garantizar la respuesta con respecto al
     182  & Petición de datos de tiempo real                          & C\_TR\_AA    & Baja     \\
     \hline
   \end{tabular}
-  \caption{Extracto de las funciones de aplicación asociadas definidas por el \gls{tso} para la comunicación del sistema con la red eléctrica, consolidadas en el llamado \gls{sceci}~\cite{ree2009protocolo}.}
+  \caption[Funciones de aplicación para la comunicación con la red eléctrica.]{Extracto de las funciones de aplicación asociadas definidas por el \gls{tso} para la comunicación del sistema con la red eléctrica, consolidadas en el llamado \gls{sceci}~\cite{ree2009protocolo}.}
   \label{tab:funciones-de-aplicación-red}
 \end{table}
 
@@ -265,7 +265,7 @@ Por lo tanto, una contribución fundamental resulta ser el diseño, la implantac
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/sistema-de-informacion-de-planta.png}
-  \caption{Arquitectura de los canales de comunicación del sistema de información de planta~\cite{aveva2025aveva}.}
+  \caption[Arquitectura del sistema de información de planta.]{Arquitectura de los canales de comunicación del sistema de información de planta~\cite{aveva2025aveva}.}
   \label{fig:sistema-de-informacion-de-planta}
 \end{figure}
 
@@ -287,7 +287,7 @@ De esta forma, se observa que, en concreto, el despliegue del conector, actuando
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/modelo-purdue.png}
-  \caption{Modelo Purdue para la seguridad de los sistemas de control industrial~\cite{zscaler2025what}.}
+  \caption[Modelo Purdue.]{Modelo Purdue para la seguridad de los sistemas de control industrial~\cite{zscaler2025what}.}
   \label{fig:modelo-purdue}
 \end{figure}
 
@@ -299,7 +299,7 @@ La parametrización del conector, junto con la especificación de parte la lógi
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/administador-del-conector.png}
-  \caption{Interfaz del administrador del conector mostrando el descubrimiento de señales del dispositivo subordinado.}
+  \caption[Interfaz del administrador del conector.]{Interfaz del administrador del conector mostrando el descubrimiento de señales del dispositivo subordinado.}
   \label{fig:administador-del-conector}
 \end{figure}
 
@@ -320,7 +320,7 @@ Finalmente, intentando asegurar la sincronización de los sensores y evitar la p
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/tiempo-mercados.png}
-  \caption{Calendario de negociación de los mercados eléctricos intradiarios y continuo~\cite{omie2025mercado}.}
+  \caption[Calendario de negociación de los mercados eléctricos.]{Calendario de negociación de los mercados eléctricos intradiarios y continuo~\cite{omie2025mercado}.}
   \label{fig:tiempo-mercados}
 \end{figure}
 
@@ -333,7 +333,7 @@ Se seleccionan únicamente las variables críticas para la operación de la bate
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/visualizacion-industrial-de-bateria.png}
-  \caption{Visualización industrial de varias señales de una instalación.}
+  \caption[Visualización industrial de señales de instalación.]{Visualización industrial de varias señales de una instalación.}
   \label{fig:visualizacion-industrial-de-bateria}
 \end{figure}
 
@@ -342,7 +342,7 @@ Como no se hace uso de PI Asset Framework para modelizar la planta de forma jer�
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/puntos-bateria.png}
-  \caption{Colección de puntos de una batería.}
+  \caption[Colección de puntos de una batería.]{Colección de puntos de una batería.}
   \label{fig:puntos-bateria}
 \end{figure}
 
@@ -353,7 +353,7 @@ Con ello, la validación del sistema se realiza comparando en tiempo real los va
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/programa-bateria.png}
-  \caption{Programa de ciclado de una batería en comparación con su evolución del estado de carga.}
+  \caption[Programa de ciclado de una batería.]{Programa de ciclado de una batería en comparación con su evolución del estado de carga.}
   \label{fig:programa-bateria}
 \end{figure}
 
@@ -382,7 +382,7 @@ Las ecuaciones de rendimiento o PI Performance Equations son una solución efica
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/ecuaciones-de-rendimiento.png}
-  \caption{Creación de una ecuación de rendimiento.}
+  \caption[Creación de una ecuación de rendimiento.]{Creación de una ecuación de rendimiento.}
   \label{fig:ecuaciones-de-rendimiento}
 \end{figure}
 
@@ -407,7 +407,7 @@ Para ello, existen múltiples enfoques que tomar, aunque el elegido a sido hacer
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/integración-programatica.png}
-  \caption{Diagrama de componentes entre plataformas.}
+  \caption[Diagrama de componentes entre plataformas.]{Diagrama de componentes entre plataformas.}
   \label{fig:integración-programatica}
 \end{figure}
 

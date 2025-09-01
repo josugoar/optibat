@@ -7,9 +7,9 @@ Una vez obtenidos tanto los datos de las señales de la infraestructura operacio
 
 Exactamente, el objetivo principal de la etapa de optimización del sistema es responder a las cuestiones de cuándo y de qué fuente ciclar energía y cuánta energía ciclar, buscando siempre los mayores ingresos.
 
-Para ello, se ha elegido pyomo como herramienta de modelización matemática en el área de investigación operacional. Pyomo es una librería de Python para formular, solucionar y analizar problemas de optimización como el presente.
+Para ello, se ha elegido Pyomo como herramienta de modelización matemática en el área de investigación operacional. Pyomo es una librería de Python para formular, solucionar y analizar problemas de optimización, como el propio.
 
-Se hace uso de una formulación de programación lineal de enteros mixtos para poder tener en cuenta condiciones más allá de la más simple programación lineal. Se ha explorado el uso de indicadores o restricciones avanzadas, como los \textit{special order sets}, los cuales han sido descartados en última instancia debido a problemas de rendimiento. Esto significa que la modelización es puramente de enteros mixtos compatible con cualquier solucionador que soporte variables binarias.
+Se hace uso de una formulación de \gls{milp} para poder tener en cuenta condiciones más allá de la más simple \gls{lp}. Se ha explorado el uso de indicadores o restricciones avanzadas, como los \textit{special order sets}, los cuales han sido descartados en última instancia debido a problemas de rendimiento. Esto significa que la modelización es puramente de enteros mixtos compatible con cualquier solucionador que soporte variables binarias.
 
 De esta forma, se detallan los parámetros de decisión en la sección~\ref{makereference5.1}, que articulan el problema de optimización, abarcando desde la definición temporal de los periodos del mercado y las variables de operación de los flujos energéticos, hasta las limitaciones impuestas por el comportamiento físico de la batería y las guías estratégicas de las indicaciones de mercado. Se procede a formular las restricciones operacionales que aseguran la viabilidad técnica de la solución en la sección~\ref{makereference5.2}, se habla de la optimización dual de la instalación al completo de la generación energética en la sección~\ref{makereference5.3}, se establece el criterio de desempeño que define la función objetivo a optimizar en la parte~\ref{makereference5.4} y, finalmente, se consideran los requisitos de la resolución numérica para cumplir con la precisión exigida por el operador del mercado en la sección~\ref{makereference5.5}.
 
@@ -21,13 +21,34 @@ Todo modelado estructural debe contar inicialmente con un conjunto de parámetro
 \subsection{Periodos del mercado}
 \label{makereference5.1.1}
 
-El mercado eléctrico peninsular opera en etapas discreta temporales con una granularidad establecida. Los mercados spot, de los que se encarga el sistema en la actualidad, disponen de una granularidad horaria para el mercado diario\footnote{La granularidad del mercado diario se encuentra en proceso de actualización a cuarto horaria} y cuarto horaria para los mercados intradiarios, tanto europeos como las sesiones del continuo. En el resto de mercados de Europa, como Nord Pool, la granularidad de los mercados spot es similar, existiendo también granularidades incluso de 30 minutos.
+El mercado eléctrico peninsular opera en etapas discreta temporales con una granularidad establecida. Los mercados spot, de los que se encarga el sistema en la actualidad, disponen de una granularidad horaria para el mercado diario\footnote{La granularidad del mercado diario se encuentra en proceso de actualización a cuartohoraria} y cuartohoraria para los mercados intradiarios y el mercado intradiario continuo. En el resto de mercados de Europa, como Nord Pool, la granularidad de los mercados spot es similar, existiendo también granularidades incluso de 30 minutos.
 
-La variabilidad de la granularidad exige representar el mercado en múltiples periodos categóricos de tamaña proporcional a ella. De esta forma, el sistema dispone por un lado de una granularidad configurable \( \Delta t \), llamada oficialmente unidad de tiempo de mercado, y el set que representa mercado mismo~\ref{eq:set-mercado}.
+La variabilidad de la granularidad exige representar el mercado en múltiples periodos categóricos de tamaño proporcional. De esta forma, el sistema representa el mercado mismo mediante la ecuación~\ref{eq:set-mercado}.
 
-\begin{equation}
-  \label{eq:set-mercado}
-\end{equation}
+\begin{samepage}
+
+  \begin{equation}
+    \label{eq:set-mercado}
+    T = \{t_{0} + k \cdot \Delta t \mid k \in \mathbb{N}_{0}, t_{0} + k \cdot \Delta t \leq H\}
+  \end{equation}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( T \) es el conjunto de todos los períodos de tiempo discretos.
+
+    \item \( t_0 \) es el tiempo inicial del conjunto.
+
+    \item \( k \) es el contador de pasos, que es un número natural (incluido el cero), \( k \in \{ 0, 1, 2, 3, \dots \} \).
+
+    \item \( \Delta t \) es la granularidad o el tamaño del paso de tiempo entre un período y el siguiente.
+
+    \item \( H \) es el horizonte de optimización, que marca el límite superior o el tiempo final de la serie temporal.
+
+  \end{itemize}
+
+\end{samepage}
 
 Es necesario tener en cuenta los usos horarios a la hora de calcular el tamaño del mercado, ya que los mercados siempre y en todo momento hacen uso del uso horario local, a diferencia de UTC. Esto significa que en los día de cambio de hora, los mercados del día tendrán más o menos periodos y el mercado intradiario continuo tendrá más o menos sesiones, dependiendo de si se añaden o restan horas. El operador del mercado lo detalla en la tabla~\ref{tab:cambio-hora}.
 
@@ -39,7 +60,7 @@ Es necesario tener en cuenta los usos horarios a la hora de calcular el tamaño 
     \hline
     \hline
   \end{tabular}
-  \caption{Ajustes del mercado en cambios de hora.}
+  \caption[Ajustes del mercado en cambios de hora.]{Ajustes del mercado en cambios de hora.}
   \label{tab:cambio-hora}
 \end{table}
 
@@ -47,8 +68,8 @@ La representación del mercado durante la optimización realmente incluye multip
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\linewidth]{figures/horizonte-de-optimizacióno.jpg}
-  \caption{Representación del horizonte de optimización.}
+  % \includegraphics[width=0.5\linewidth]{figures/horizonte-de-optimizacióno.jpg}
+  \caption[Representación del horizonte de optimización.]{Representación del horizonte de optimización.}
   \label{fig:horizonte-de-optimizacióno}
 \end{figure}
 
@@ -204,8 +225,8 @@ Representado en la figura~\ref{fig:clipping}, se puede entender como una persona
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\linewidth]{figures/clipping.jpg}
-  \caption{Clipping de la configuración topológica híbrida con carga aislada de la red.}
+  % \includegraphics[width=0.5\linewidth]{figures/clipping.jpg}
+  \caption[Clipping de configuración topológica híbrida.]{Clipping de la configuración topológica híbrida con carga aislada de la red.}
   \label{fig:clipping}
 \end{figure}
 
@@ -255,8 +276,8 @@ Los problemas de optimización degenerados son los que poseen múltiples solucio
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\linewidth]{figures/degenerada-vs-estricta.jpg}
-  \caption{Comparación entre una posición degenerada y su contraparte estricta.}
+  % \includegraphics[width=0.5\linewidth]{figures/degenerada-vs-estricta.jpg}
+  \caption[Comparación entre una posición degenerada y estricta.]{Comparación entre una posición degenerada y su contraparte estricta.}
   \label{fig:degenerada-vs-estricta}
 \end{figure}
 

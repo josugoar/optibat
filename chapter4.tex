@@ -8,7 +8,7 @@ Para que el sistema de optimización de baterías funcione de manera efectiva, n
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/esquema-mercado.jpg}
-  \caption{Esquema del funcionamiento del entorno del mercado, destacando las entidades regulatorias de las que obtener información~\cite{villagrasa2023como}.}
+  \caption[Esquema del funcionamiento del mercado.]{Esquema del funcionamiento del entorno del mercado, destacando las entidades regulatorias de las que obtener información~\cite{villagrasa2023como}.}
   \label{fig:esquema-mercado}
 \end{figure}
 
@@ -39,7 +39,7 @@ Una de las piezas de información más críticas para el sistema de optimizació
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/mercado-diario.png}
-  \caption{Precio real del mercado diario de la primera semana de agosto, del cual se debe tener disponible una previsión para operar a futuro.}
+  \caption[Precio del mercado diario de la primera semana de agosto.]{Precio real del mercado diario de la primera semana de agosto, del cual se debe tener disponible una previsión para operar a futuro.}
   \label{fig:mercado-diario}
 \end{figure}
 
@@ -117,7 +117,7 @@ Este proceso de previsión es una tarea externa al sistema desarrollado. Se basa
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/prevision-renovable.png}
-  \caption{Ejemplo de una previsión de generación de un activo de generación.}
+  \caption[Previsión de generación de un activo.]{Ejemplo de una previsión de generación de un activo de generación.}
   \label{fig:prevision-renovable}
 \end{figure}
 
@@ -150,7 +150,7 @@ Desde la perspectiva del sistema desarrollado, la fuente de datos meteorológico
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/arquitectura-mercado.png}
-  \caption{Arquitectura desacoplada del proceso de extracción, transformación y carga.}
+  \caption[Arquitectura desacoplada del proceso de datos.]{Arquitectura desacoplada del proceso de extracción, transformación y carga.}
   \label{fig:arquitectura-mercado}
 \end{figure}
 
@@ -161,7 +161,7 @@ Se han desarrollado dos programas principales en Python, uno para cada fuente de
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/horarios-publicacion.png}
-  \caption{Horarios de publicación de los mercados intradiarios.}
+  \caption[Horarios de publicación de mercados intradiarios.]{Horarios de publicación de los mercados intradiarios.}
   \label{fig:horarios-publicacion}
 \end{figure}
 
@@ -193,14 +193,14 @@ El formato de los datos de precios contiene las columnas fecha, hora y precio en
     MarginalES & Precio marginal zona Española   & F8.2 -- 0.0 a 99999.99 \\
     \hline
   \end{tabular}
-  \caption{Descripción del formato de precios~\cite{omie2025modelo}.}
+  \caption[Descripción del formato de precios.]{Descripción del formato de precios~\cite{omie2025modelo}.}
   \label{tab:descripción-precio}
 \end{table}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/contenido-precio.png}
-  \caption{Ejemplificación del contenido de los ficheros de precio.}
+  \caption[Ejemplificación del contenido de los ficheros de precio.]{Ejemplificación del contenido de los ficheros de precio.}
   \label{fig:contenido-precio}
 \end{figure}
 
@@ -225,14 +225,14 @@ El fichero de energía negociada contiene las columnas UP, fecha, hora y energí
     NumOf             & Indicará el número de oferta ó el de ejecución del contrato bilateral físico asociado a la unidad & I8 -- -1 a 99999999            \\
     \hline
   \end{tabular}
-  \caption{Descripción del formato de energía negociada~\cite{omie2025modelo}.}
+  \caption[Descripción del formato de energía negociada.]{Descripción del formato de energía negociada~\cite{omie2025modelo}.}
   \label{tab:descripción-energia}
 \end{table}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/contenido-energia.png}
-  \caption{Ejemplificación del contenido de los ficheros de energía.}
+  \caption[Ejemplificación del contenido de los ficheros de energía.]{Ejemplificación del contenido de los ficheros de energía.}
   \label{fig:contenido-energia}
 \end{figure}
 
@@ -259,14 +259,14 @@ Junto a ello, el fichero de limitaciones de programa se estructura con las colum
     NumOf            & Indicará el número de oferta ó el de ejecución del contrato bilateral físico asociado a la unidad & I8 -- -1 a 99999999           \\
     \hline
   \end{tabular}
-  \caption{Descripción del formato de las limitaciones técnicas.}
+  \caption[Descripción del formato de las limitaciones técnicas.]{Descripción del formato de las limitaciones técnicas.}
   \label{tab:descripción-limitaciones}
 \end{table}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/contenido-limitaciones.png}
-  \caption{Limitaciones de programa a una instalación.}
+  \caption[Limitaciones de programa a una instalación.]{Limitaciones de programa a una instalación.}
   \label{fig:contenido-limitaciones}
 \end{figure}
 
