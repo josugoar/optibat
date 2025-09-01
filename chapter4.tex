@@ -3,85 +3,76 @@
 \chapter{Entorno de mercado}
 \label{makereference4}
 
-Para que el sistema de optimización de baterías funcione de manera efectiva, no es suficiente con disponer de la información proveniente de la infraestructura con sus sensores y señales. Como el sistema opera directamente en el mercado eléctrico, su lógica de decisión debe ser retroalimentada por un entendimiento del entorno de mercado. Por ello, los datos de mercado son una fuente de información igualmente indispensable, ya que dictan el contexto económico y regulatorio en el que se toman todas las decisiones de arbitraje, formando parte del flujo de la figura.
+Para que el sistema de optimización de baterías funcione de manera efectiva, no es suficiente con disponer de la información proveniente de la infraestructura con sus sensores y señales. Como el sistema opera directamente en el mercado eléctrico, su lógica de decisión debe ser retroalimentada por un entendimiento del entorno de mercado. Por ello, los datos de mercado son una fuente de información igualmente indispensable, ya que dictan el contexto económico y regulatorio en el que se toman todas las decisiones de arbitraje, formando parte de los componentes destacados del flujo de la figura~\ref{fig:esquema-mercado}.
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/esquema-mercado.jpg}
-  \caption{Esquema del funcionamiento del entorno del mercado.}
+  \includegraphics[width=0.75\linewidth]{figures/esquema-mercado.jpg}
+  \caption{Esquema del funcionamiento del entorno del mercado, destacando las entidades regulatorias de las que obtener información~\cite{villagrasa2023como}.}
   \label{fig:esquema-mercado}
 \end{figure}
 
-Por tanto, se define el análisis de las fuentes de información de mercado y los procesos desarrollados para su adquisición, tratamiento e integración. Concretamente, el sistema de optimización requiere de tres categorías fundamentales de datos externos, los precios del mercado que son esenciales para formular previsiones estratégicas, la energía negociada que es clave para la liquidación de beneficios y la gestión de desvíos, y las limitaciones operativas que imponen restricciones de obligado cumplimiento.
+Por tanto, se define el análisis de las fuentes de información de mercado y los procesos desarrollados para su adquisición, tratamiento e integración. Concretamente, el sistema de optimización requiere de tres categorías fundamentales de datos externos. Los precios del mercado son esenciales para formular previsiones estratégicas. La energía negociada es clave para la liquidación de beneficios y la gestión de desvíos. Las limitaciones operativas imponen restricciones de obligado cumplimiento.
 
-De esta forma, se pretende describir el origen de estas fuentes de datos, las reglas que gobiernan su publicación y accesibilidad, y la arquitectura de software implementada para consumirlos de manera programática y robusta.
+De esta forma, se pretende describir el origen de estas fuentes de datos, las reglas que gobiernan su publicación y acceso, y la arquitectura implementada para consumirlos de manera programática y robusta.
 
-Para ello, primeramente se presenta al Operador del Mercado Ibérico de Energía como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de Red Eléctrica Española, que impone las limitaciones de programa de operación en tiempo real, como se explicará en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla cómo se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema.
+Con esto, para facilitar la comprensión de las secciones posteriores, se definen los siguientes conceptos. Las llamadas \glspl{ufi} representan las interfaces de intercambio de energía abstractas por encima de los flujos energéticos físicos, en donde las operaciones realizadas de una \gls{ufi} siempre deben poder respaldarse por un correcto flujo energético físicamente. Las \glspl{up} son los identificadores del \gls{tso} de las instalaciones al completo y resultan los activos que se arbitran en el mercado. Las \glspl{uof} son los identificadores equivalentes del \gls{mo}. Es decir, las operaciones de las \glspl{ufi} que engloba una \gls{up} o \gls{uof} se agregan a la hora de realizar la oferta.
 
-Con esto, para facilitar la comprensión de las secciones posteriores, hay que dejar claro los siguientes conceptos. Las llamadas unidades físicas o UFIs representan las interfaces de intercambio de energía abstractas por encima de los flujos energéticos físicos, en donde las operaciones relizadas de una unidad física siempre deben poder respaldarse por un correcto flujo energético físicamente. Las unidades de programación o UPs son los identificadores del operador del sistema de las instalaciones al completo, y son los activos que se arbitran en el mercado, es decir, las operaciones de las unidades físicas que engloba una unidad de programación se agregan a la hora de realizar la oferta. Las unidades de oferta o UOFs son los identificadores equivalentes a las unidades de programación del operador del mercado.
+Para ello, primeramente se presenta \gls{omie} como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de la energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de \gls{ree}, que impone las limitaciones de programa de operación en tiempo real, como se explica en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla como se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema.
 
 \section{Operador del mercado}
 \label{makereference4.1}
 
-El Operador del Mercado Ibérico de Energía, conocido como OMIE, es la institución responsable de la gestión de los mercados spot, diario e intradiarios, de electricidad en la península ibérica. Actúa como la plataforma centralizada donde los agentes de mercado presentan sus ofertas de compra y venta de energía, y cuyo proceso de casación determina los precios y las cantidades de energía transaccionadas para cada periodo de negociación.
+\Gls{omie} es la institución responsable de la gestión de los mercados spot, diario, intradiarios y continuo de electricidad en la península ibérica. Actúa como la plataforma centralizada donde los agentes de mercado presentan sus ofertas de compra y venta de energía, y cuyo proceso de casación determina los precios y las cantidades de energía negociadas para cada periodo de negociación.
 
-\begin{figure}
-  \centering
-  % \includegraphics[width=0.5\linewidth]{figures/omie.jpg}
-  \caption{Operador del Mercado Ibérico de Energía.}
-  \label{fig:omie}
-\end{figure}
+Por su rol como gestor y árbitro del mercado, \gls{omie} es la fuente oficial de toda la información relativa a los resultados económicos de la operación. Cualquier sistema que pretenda participar activamente en el arbitraje energético, como el desarrollado en este proyecto, tiene la necesidad de integrarse de forma fiable y programática con los flujos de información que esta entidad publica.
 
-Por su rol como gestor y árbitro del mercado, OMIE es la fuente oficial de toda la información relativa a los resultados económicos de la operación. Cualquier sistema que pretenda participar activamente en el arbitraje energético, como el desarrollado en este proyecto, tiene la necesidad de integrarse de forma fiable y programática con los flujos de información que esta entidad publica.
+Precisamente, \gls{omie} pone a disposición la información en forma de ficheros publicados según un horario acordado tras el cierre de cada mercado correspondiente.
 
-Precisamente, OMIE pone a disposición la información en forma de ficheros publicados según un horario acordado tras el cierre de cada mercado correspondiente.
-
-De esta forma, la información que el sistema desarrollado toma a través de OMIE se clasifica en dos categorías mayoritarias, los precios marginales de casación y la energía finalmente negociada por cada unidad de programación.
+De esta forma, la información que el sistema desarrollado toma a través de \gls{omie} se clasifica en dos categorías mayoritarias, los precios marginales de casación y la energía finalmente negociada por cada \gls{up}.
 
 \subsection{Precio marginal}
 \label{makereference4.1.1}
 
-Una de las piezas de información más críticas para el sistema de optimización es la previsión de los precios a los que se liquidará la energía en los mercados futuros. Para poder realizar un arbitraje energético efectivo, posicionando estratégicamente las ofertas de compra en periodos de bajo coste y las de venta en periodos de alto beneficio, el modelo debe operar sobre una estimación fiable de dichos precios.
+Una de las piezas de información más críticas para el sistema de optimización es la previsión de los precios a los que se liquidará la energía en los mercados futuros. Para poder realizar un arbitraje energético efectivo, posicionando estratégicamente las ofertas de compra en periodos de bajo coste y las de venta en periodos de alto beneficio, el modelo debe operar sobre una estimación fiable de dichos precios, mostrados en la figura~\ref{fig:mercado-diario}.
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/precio-casación.png}
-  \caption{Precio marginal de casación en el mercado.}
-  \label{fig:precio-casación}
+  \includegraphics[width=0.75\linewidth]{figures/mercado-diario.png}
+  \caption{Precio real del mercado diario de la primera semana de agosto, del cual se debe tener disponible una previsión para operar a futuro.}
+  \label{fig:mercado-diario}
 \end{figure}
 
-Precisamente, sin esta previsión, la operación de la batería sería puramente ciega sin ningún tipo de garantías de corrección o guiado.
+Precisamente, sin esta previsión, la operación de la batería sería puramente ciega sin ningún tipo de guiado ni garantía de corrección.
 
 Por ello, para obtener esta previsión, el sistema desarrollado adopta un enfoque triple que se aprovecha de las características temporales de cada mercado.
 
-\begin{itemize}
+\begin{description}
 
-  \item En el mercado diario, como su variabilidad de precios entre días es significativamente mayor al resto de mercados y depende de factores del entorno más complejos (como si es fin de semana), el sistema está preparado para consumir previsiones de dos orígenes distintos. Por un lado, se puede utilizar un modelo de previsión manual en el que los agentes de mercado introducen sus propias estimaciones basadas en su experiencia. Por otro, se puede integrar la salida de un modelo de aprendizaje automático, concretamente un modelo de regresión de \textit{stacking} basado en series temporales, que ofrece una predicción automatizada.
+  \item[Mercado diario] La variabilidad de precios entre días es significativamente mayor al resto de mercados y depende de factores del entorno más complejos, como falta de lluvia, negociaciones de fin de semana, capacidades de interconexión, industria, estación del año, etc. De esta manera, el sistema está preparado para consumir previsiones de dos orígenes distintos. Por un lado, se utiliza un modelo de previsión manual en el que los agentes de mercado introducen sus propias estimaciones basadas en su experiencia. Por otro, se integra con un modelo de aprendizaje automático, concretamente un modelo de regresión de \textit{stacking} basado en series temporales, que ofrece una predicción automatizada. Dependiendo de la situación, es posible hacer uso de uno u otro\footnote{Se subraya que dichos modelos son externos al desarrollo}.
 
-  \item En los mercados intradiarios europeos, se ha observado empíricamente una alta correlación y una periodicidad estable entre sesiones consecutivas correspondida por lo agentes de mercado, por lo que se utiliza una previsión simple y efectiva donde el precio de casación de una sesión de mercado se emplea como la previsión para la sesión inmediatamente posterior. Así, por ejemplo, los precios resultantes del mercado intradiario 2 sirven como la entrada de previsión para optimizar las ofertas en el mercado intradiario 3.
+  \item[Mercado intradiario] Se observa una alta correlación y una periodicidad estable entre sesiones consecutivas correspondida por lo agentes de mercado, por lo que se utiliza una previsión simple y efectiva donde el precio de casación de una sesión de mercado se emplea como la previsión para la sesión inmediatamente posterior. Así, por ejemplo, los precios resultantes del primer mercado intradiario sirven como la previsión para optimizar las ofertas del segundo, y así sucesivamente.
 
-  \item En las diferentes sesiones del mercado intradiario continuo se toma el precio de casación del último mercado disponible, sea el diario o los intradiarios. Cabe destacar que debido a la comparativamente baja liquidez del mercado continuo, la metodología de previsiones de precio descrita es la menos fiable para el mismo, aunque este aspecto negativo es contrarrestado por la suma de liquidez total de las sesiones en conjunto del mercado continuo. La razón de este comportamiento es la diferente modalidad de oferta del mercado continuo donde se ataca directamente a una oferta, por lo que no existen precios de casación globales para todas ellas.
+  \item[Mercado intradiario continuo] Se toma el precio de casación del último mercado disponible, sea el diario o intradiario. Cabe destacar que debido a la comparativamente baja liquidez del mercado continuo, la metodología de previsiones de precio descrita es la menos fiable para el mismo, aunque este aspecto negativo sea contrarrestado por la suma de liquidez total de las sesiones en conjunto del mercado continuo\footnote{Esto significa que, aunque la previsión de una de las sesiones del mercado intradiario continuo no atine, es posible recuperar los desvíos acumulando negociaciones en los mercados intradiarios continuos posteriores}. La razón de este comportamiento es la diferente modalidad de oferta del mercado, donde se ataca directamente a una oferta, por lo que no existen precios de casación globales para todas ellas, sino individuales.
 
-\end{itemize}
+\end{description}
 
-Esta necesidad de previsión se deriva directamente del funcionamiento marginalista del mercado eléctrico. En este modelo, el precio final, conocido como precio marginal, se fija en el punto de intersección de las curvas agregadas de oferta y demanda. Dado que únicamente las ofertas de las instalaciones controladas por el sistema no tiene ni la más mínima capacidad para influir en este precio, su única estrategia viable es anticiparlo.
-
-Afortunadamente, esta información de precios de casación es de carácter público. OMIE la publica en ficheros con una nomenclatura estandarizada, siendo el fichero marginal Programa Diario Básico de Casación (MARGINALPDBC) para el mercado diario y los ficheros marginales Programa Intradiario Básico de Casación Intradiario (MARGINALPIBCI) para los mercados intradiarios.
+Afortunadamente, la información de precios de casación es de carácter público. \Gls{omie} la publica en ficheros con una nomenclatura estandarizada, siendo el fichero \gls{marginalpdbc} para el mercado diario y los ficheros marginales \gls{marginalpibci} para los mercados intradiarios.
 
 \subsection{Energía negociada}
 \label{makereference4.1.2}
 
-Más allá de las previsiones de precios, el sistema necesita conocer con absoluta certeza el resultado de las ofertas que ha presentado en el mercado. Existe una diferencia fundamental entre la posición óptima calculada por el algoritmo de optimización y la posición casada, que es la cantidad de energía que la instalación se ha comprometido firmemente a comprar o vender.
+Más allá de las previsiones de precios, el sistema necesita conocer con absoluta certeza el resultado de las ofertas que ha presentado al mercado. Existe una diferencia fundamental entre la posición óptima calculada por el algoritmo de optimización y la posición casada, que es la cantidad de energía que la instalación se ha comprometido firmemente a comprar o vender.
 
-Esto se debe a que el funcionamiento del mercado eléctrico permite negocia la energía de un mismo periodo en múltiples ocasiones, por lo que hay que llevar la cuenta de la cantidad de la misma anteriormente ofertada.
+Esto se debe a que el funcionamiento del mercado eléctrico permite negocia la energía de un mismo periodo en múltiples sesiones, por lo que hay que llevar la cuenta de la cantidad de energía anteriormente ofertada.
 
-Por ello, obtener esta información de energía negociada es importante porque permite realizar la liquidación económica real de la operación, calculando el beneficio o coste exacto a partir del precio marginal y la energía efectivamente transaccionada.
+Por ello, obtener esta información de energía licitada es importante, porque permite realizar la liquidación económica real de la operación, calculando el beneficio o coste exacto a partir del precio marginal y la energía efectivamente negociada.
 
-Además, es un requisito indispensable para la gestión de los desvíos y la reoptimización en mercados subsiguientes. Al conocer la energía ya comprometida, el modelo puede ajustar su plan para las siguientes sesiones, minimizando así las más costosas penalizaciones por desvío que se producen al no cumplir con el programa de energía comprometido.
+Además, es un requisito indispensable para la gestión de los desvíos y la reoptimización en mercados subsecuentes. Al conocer la energía ya comprometida, el modelo puede ajustar su plan para las siguientes sesiones, minimizando así las más costosas penalizaciones por desvío que se producen al no cumplir con el programa de energía comprometido.
 
-Precisamente, esta discrepancia entre lo ofertado y lo casado puede deberse a múltiples factores, como que el precio de oferta no resulte competitivo y la oferta sea rechazada en su totalidad, o que se produzca una casación parcial en la que solo una fracción de la energía ofertada es aceptada por el mercado. Esta es la razón de la necesidad de tener que consultar con OMIE y no poder fiarse de la posición optima obtenida del sistema.
+Precisamente, esta discrepancia entre lo ofertado y lo casado puede deberse a múltiples factores, como que el precio de oferta no resulte competitivo y la oferta sea rechazada en su totalidad, o que se produzca una casación parcial en la que solo una fracción de la energía ofertada es aceptada por el mercado. Esta es la razón de la necesidad de tener que consultar con \gls{omie} y no poder fiarse de la posición optima obtenida del sistema.
 
-Pero, a diferencia de los precios, la información de energía casada es de naturaleza confidencial. Para proteger las estrategias comerciales de los participantes, OMIE la publica desglosada por unidad de programación, y cada agente de mercado solo tiene acceso a la información de sus propias unidades. Los ficheros que contienen esta información son el Programa Diario Básico Final (PDBF) para el mercado diario y el Programa Intradiario Base de Casación Acumulado (PIBCA) para los mercados intradiarios.
+Pero, a diferencia de los precios, la información de energía casada es de naturaleza confidencial. Para proteger las estrategias comerciales de los participantes en el mercado, \gls{omie} la publica desglosada por \gls{up}, y cada entidad solo tiene acceso a la información de sus propias unidades. Los ficheros que contienen esta información son el \gls{pdbf} para el mercado diario y el \gls{pibca} para los mercados intradiarios.
 
 \section{Operador del sistema}
 \label{makereference4.2}
