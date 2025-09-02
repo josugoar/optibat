@@ -25,11 +25,10 @@ Resulta que, al igual que todo el resto de activos energéticos, la operación d
 
 Dependiendo de la posición de arbitraje, la batería puede encontrarse en diferentes perfiles de potencia, desde la inactividad y el llamado mínimo técnico, hasta el máximo operacional. En la figura~\ref{fig:perfil-potencia} se puede observar la modulación del perfil de potencia de la batería.
 
-% TODO
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/perfil-potencia.png}
-  \caption[Modulación del perfil de potencia de una batería.]{Modulación del perfil de potencia de una batería.}
+  \includegraphics[width=0.75\linewidth]{figures/perfil-potencia.png}
+  \caption[Modulación del perfil de potencia de una batería.]{Modulación del perfil de potencia de carga una batería de \SI{5}{\mega\watt}, en donde la potencia de carga fluctúa entre el mínimo técnico y máximo operacional, hasta verse finalmente limitada a poco más de la mitad de la potencia nominal.}
   \label{fig:perfil-potencia}
 \end{figure}
 
@@ -52,7 +51,7 @@ Para transformar la posición de mercado de energía a potencia es necesario con
 
     \item \( E_{t} \) es la energía a ciclar en el periodo \( t \) en \si{{\mega\watt\hour}},
 
-    \item \( \Delta t \) es la granularidad mínima de los mercados analizados en \si{\minute}.
+    \item \( \Delta t \) es la granularidad mínima de los mercados analizados dentro del horizonte de optimización en \si{\minute}.
 
   \end{itemize}
 
@@ -97,15 +96,7 @@ Por ejemplo, una situación en la que una carga y descarga simultanea podría su
 
 Para adecuarse a dichas limitaciones físicas, se combinan las señales de carga con signo positivo y descarga con signo negativo obtenidas de la optimización y posteriormente convertidas en potencia \( P = P_{d} - P_{c} \). También se añade otra capa de prevención de desactivando previamente los periodos con carga y descarga simultanea, lo cual ciertamente puede causar desvíos en el programa, pero estos serias fácilmente solucionados en optimizaciones posteriores y nunca deberían ocurrir\footnote{Los indicadores de carga y descarga simultanea introducidos en la sección~\ref{makereference5.1.2} ya lo tienen en cuenta, pero se realiza un esfuerzo para separar las responsabilidades de los diferentes roles.}, de todos modos.
 
-Con las posiciones transformadas en potencia, solo se toman en cuenta los cambios en el perfil de potencia, ilustrados en la figura~\ref{fig:diferencia-perfil-potencia}, y se anota el tiempo de inicio de cada cambio.
-
-% TODO
-\begin{figure}
-  \centering
-  % \includegraphics[width=0.5\linewidth]{figures/diferencia-perfil-potencia.png}
-  \caption[Perfil de potencia diferencial.]{Perfil de potencia diferencial.}
-  \label{fig:diferencia-perfil-potencia}
-\end{figure}
+Con las posiciones transformadas en potencia, solo se toman en cuenta los cambios en el perfil de potencia y se anota el tiempo de inicio de cada cambio.
 
 Por último, el envio de las consignas se realiza a través de la señal o punto ofrecido por el \gls{bms} configurado en el \gls{pis}, llamado \texttt{Programa} y explicado en el apartado de infraestructura~\ref{makereference3.2}. Se hace uso del mismo flujo descrito en la sección~\ref{makereference3.5} pero, en vez de leer señales, se escriben en los tiempos correspondientes en el historiador.
 
@@ -518,11 +509,10 @@ Además, el entorno de mercado no es la única información capaz de ser exporta
 
 También se permite especificar tanto un programa, en donde se realize el seguimiento del programa mismo y la solución del modelado estructural del capítulo~\ref{makereference4} se desactive, como un objetivo de \gls{soc}, en donde el sistema cumpla con las indicaciones en los periodos determinados pero siga realizando la tarea de optimización, representado en la figura~\ref{fig:soc-manual}. Resulta crucial que todo el resto de validaciones siguan en funcionamiento, por lo que no es posible introducir un programa invalido de ningún modo. Con esto, se observa como la inclusión del objetivo de la modularización del sistema resulta más que beneficiosa ante dichas situaciones.
 
-% TODO
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/soc-manual.png}
-  \caption[Regulación manual del estado de carga.]{Regulación manual del estado de carga.}
+  \includegraphics[width=0.5\linewidth]{figures/soc-manual.png}
+  \caption[Regulación manual del estado de carga.]{Regulación manual del estado de carga, en donde se ejemplifica la introducción de un posible periodo de prueba, en el que un operador de telecontrol busque ciclar la batería completamente a medio día.}
   \label{fig:soc-manual}
 \end{figure}
 

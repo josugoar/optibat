@@ -111,14 +111,13 @@ Además de las señales económicas de \gls{omie} y las operativas de \gls{ree},
 
 La necesidad de esta información es bastante directa, facilitando al sistema de optimización la toma de decisiones informadas sobre si cargar la batería desde la red o desde la generación. Por ello debe conocer con antelación cuánta de generación estará disponible en cada periodo. Sin esta previsión, la capacidad de la batería para aprovechar la energía generada localmente, uno de los principales beneficios económicos de la hibridación, sería nula.
 
-Este proceso de previsión es una tarea externa al sistema desarrollado. Se basa en modelos especializados que toman como entrada previsiones meteorológicas (como la irradiancia solar, nubosidad, temperatura o velocidad del viento) y las traducen en una previsión de potencia para cada periodo del horizonte de optimización.
+Este proceso de previsión es una tarea externa al sistema desarrollado. Se basa en modelos especializados que toman como entrada previsiones meteorológicas (como la irradiancia solar, nubosidad, temperatura o velocidad del viento) y las traducen en una previsión de potencia para cada periodo del horizonte de optimización, cuyo resultado se muestra en la figura~\ref{fig:prevision-generacion}.
 
-% TODO
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/prevision-renovable.png}
-  \caption[Previsión de generación de un activo.]{Ejemplo de una previsión de generación de un activo de generación.}
-  \label{fig:prevision-renovable}
+  \includegraphics[width=0.75\linewidth]{figures/prevision-generacion.png}
+  \caption[Previsión de generación de un activo.]{Resultado de la previsión de generación de un activo fotovoltaico.}
+  \label{fig:prevision-generacion}
 \end{figure}
 
 El sistema de optimización consume esta previsión de generación como un dato de entrada más. Las previsiones de generación permiten al sistema tener en cuenta tres aspectos fundamentales para el funcionamiento homogéneo de la instalación al completo.
