@@ -29,7 +29,7 @@ La variabilidad de la granularidad exige representar el mercado en múltiples pe
 
   \begin{equation}
     \label{eq:set-mercado}
-    T = \{t_{1} + k \cdot \Delta t \mid k \in \mathbb{R}^{+}, t_{1} + k \cdot \Delta t \leq t_{1} + H\}
+    T = \{t_{1} + k \cdot \Delta t \mid k \in \mathbb{R}^{+}_{0}, t_{1} + k \cdot \Delta t \leq t_{1} + H\}
   \end{equation}
 
   donde
@@ -103,17 +103,17 @@ Por lo tanto, los diferentes flujos energéticos son representados de la siguien
 
 \begin{itemize}
 
-  \item \( E^{n}_{R, \text{BESS}, t} \in \mathbb{R}^{+} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
+  \item \( E^{n}_{R, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
 
   \item \( E^{b}_{R, \text{BESS}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{R, \text{BESS}, t} \in \mathbb{R}^{+} \) es la energía casada en negociaciones previas que la batería se ha comprometido a importar en \si{{\mega\watt\hour}}.
+  \item \( E^{c}_{R, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a importar en \si{{\mega\watt\hour}}.
 
-  \item \( E^{n}_{\text{BESS}, R, t} \in \mathbb{R}^{+} \) es la energía neta correspondiente al flujo energético físico exportado de la batería a la red en \si{{\mega\watt\hour}}.
+  \item \( E^{n}_{\text{BESS}, R, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico exportado de la batería a la red en \si{{\mega\watt\hour}}.
 
   \item \( E^{b}_{\text{BESS}, R, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{\text{BESS}, R, t} \in \mathbb{R}^{+} \) es la energía casada en negociaciones previas que la batería se ha comprometido a exportar en \si{{\mega\watt\hour}}.
+  \item \( E^{c}_{\text{BESS}, R, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a exportar en \si{{\mega\watt\hour}}.
 
 \end{itemize}
 
@@ -130,13 +130,13 @@ Por lo tanto, es necesario tener en cuenta la generación junto con la batería 
 
 \begin{itemize}
 
-  \item \( E_{\text{RES}, \text{BESS}, t} \in \mathbb{R}^{+} \) es la energía importada de la generación a la batería en instalaciones híbridas en \si{{\mega\watt\hour}}.
+  \item \( E_{\text{RES}, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía importada de la generación a la batería en instalaciones híbridas en \si{{\mega\watt\hour}}.
 
-  \item \( E^{n}_{\text{RES}, R} \in \mathbb{R}^{+} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
+  \item \( E^{n}_{\text{RES}, R} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
 
   \item \( E^{b}_{\text{RES}, R} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{\text{RES}, R} \in \mathbb{R}^{+} \) es la energía casada en negociaciones previas que la generación se ha comprometido a importar en \si{{\mega\watt\hour}}.
+  \item \( E^{c}_{\text{RES}, R} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la generación se ha comprometido a importar en \si{{\mega\watt\hour}}.
 
 \end{itemize}
 
@@ -145,46 +145,62 @@ Como la importación de la generación a la batería no pasa por mercado, no es 
 \subsection{Indicaciones de mercado}
 \label{makereference5.1.4}
 
-Finalmente, los previos parámetros completan la modelización de la batería, en cambio, el sistema debe ser capaz de guiar la operación de la batería. Es decir, impedir situaciones posibles físicamente realizables por la batería pero que no interesan.
+Con las representaciones de los movimientos de energía, el sistema debe ser capaz de guiar la operación de la batería. Es decir, se busca impedir posiciones que, aunque físicamente posibles, no rentabilicen la batería.
 
-Para ello, el sistema define el ingreso obtenido y los ciclos realizados como los principales indicadores de rendimiento, por lo tanto, se expresan los siguientes parámetros que los controlan.
+Para ello, se definen los parámetros relacionados con el entorno de mercado, con los que se incorporan las informaciones de las predicciones de precio de mercado anteriormente calculadas según la lógica descrita en la sección~\ref{makereference4.1.1}, las previsiones meteorológicas de la sección~\ref{makereference4.3} para las instalaciones híbridas, y las limitaciones de programa de la sección~\ref{makereference4.2.1} que limitan la potencia de los activos.
 
-% \item \( S \in \mathbb{R}^{+} \) es el \textit{spread} mínimo objetivo en \si{\text{\euro}\per\mega\watt\hour}, es decir, el mínimo beneficio a obtener por cada unidad energética negociada.
+\begin{itemize}
+
+  \item \( \lambda' \in \mathbb{R}^{+}_{0} \) es el \textit{spread} mínimo objetivo en \si{\text{\euro}\per\mega\watt\hour}, es decir, el mínimo beneficio a obtener por cada unidad energética negociada.
+
+  \item \( \lambda^{M}_{t} \in \mathbb{R} \) es el precio de mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}, incluyendo tanto precios positivos como negativos.
+
+  \item \( E_{\text{RES}, t} \in \mathbb{R}^{+}_{0} \) es la energía generada por el activo de generación en instalaciones híbridas en el periodo \( t \) en \si{{\mega\watt\hour}}.
+
+  \item \( P^{\text{lim}}_{\text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la limitación de programa de la batería en el periodo \( t \) en \si{\mega\watt}, generalmente sin acotar para representar su ausencia.
+
+  \item \( P^{\text{lim}}_{\text{RES}, t} \in \mathbb{R}^{+}_{0} \) es la limitación de programa de la generación en el periodo \( t \) en \si{\mega\watt}, generalmente sin acotar para representar su ausencia.
+
+  \item \( P^{\text{lim}}_{\text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la limitación de programa de la instalación al completo en el periodo \( t \) en \si{\mega\watt}, pueden darse múltiples limitaciones pueden en un único periodo de mercado.
+
+\end{itemize}
 
 \subsection{Comportamiento físico}
 \label{makereference5.1.5}
 
-Aunque los anteriores flujos energéticos sean dependientes de la configuración topológica, toda batería comparte unos comportamientos físicos intrínsecos. Al fin y al cabo, las baterías son sistemas de almacenamiento de energía que permiten ser cargadas para su posterior descarga, pero ¿cómo de rápido pueden ser cargadas y descargadas, cuánto, cuántas veces, etc.?
+Finalmente, toda batería comparte unos comportamientos físicos intrínsecos. Al fin y al cabo, las baterías son sistemas de almacenamiento de energía que permiten ser cargadas para su posterior descarga, pero ¿cómo de rápido pueden ser cargadas y descargadas, cuánto, cuántas veces, etc.?
 
 Precisamente, las señales propiamente configuradas en el \gls{pis}, detalladas en la sección~\ref{makereference3.2}, permite conocer los parámetros operacionales de las batería. Con ellos, es necesario es representarlos simbólicamente para su optimización operativa.
 
 \begin{itemize}
 
-  \item \( P^{c}_{n} \in \mathbb{R}^{+} \) es la potencia nominal de carga de la batería en \si{\mega\watt}.
+  \item \( P^{c}_{n} \in \mathbb{R}^{+}_{0} \) es la potencia nominal de carga de la batería en \si{\mega\watt}.
 
-  \item \( P^{d}_{n} \in \mathbb{R}^{+} \) es la potencia nominal de descarga de la batería en \si{\mega\watt}.
+  \item \( P^{d}_{n} \in \mathbb{R}^{+}_{0} \) es la potencia nominal de descarga de la batería en \si{\mega\watt}.
 
-  \item \( E_{n} \in \mathbb{R}^{+} \) es capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
+  \item \( P_{n} \in \mathbb{R}^{+}_{0} \) es la potencia nominal de la red de la instalación de la batería en \si{\mega\watt}, es decir, el valor estructural global registrada.
+
+  \item \( E_{n} \in \mathbb{R}^{+}_{0} \) es capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
 
   \item \( \eta^{c} \in [0, 1] \) es el rendimiento de carga de la batería.
 
   \item \( \eta^{d} \in [0, 1] \) es el rendimiento de descarga de la batería.
 
-  \item \( C_{t} \in \mathbb{R}^{+} \) es la energía cargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la importada.
+  \item \( C_{t} \in \mathbb{R}^{+}_{0} \) es la energía cargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la importada.
 
-  \item \( D_{t} \in \mathbb{R}^{+} \) es la energía descargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la exportada.
+  \item \( D_{t} \in \mathbb{R}^{+}_{0} \) es la energía descargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la exportada.
 
-  \item \( N_{\text{max}} \in \mathbb{R}^{+} \) es el número de ciclos máximos a realizar por la batería a lo largo del horizonte de optimización, determinado mediante la relación \( N_{\text{max}} = N_{d} \cdot H \) entre el los ciclos diarios \( N_{d} \) y la extensión del horizonte de optimización \( H \).
+  \item \( N_{\text{max}} \in \mathbb{R}^{+}_{0} \) es el número de ciclos máximos a realizar por la batería a lo largo del horizonte de optimización, determinado mediante la relación \( N_{\text{max}} = N_{d} \cdot H \) entre el los ciclos diarios \( N_{d} \) y la extensión del horizonte de optimización \( H \).
 
   \item \( \text{SoC}_{\text{min}}, \text{SoC}_{\text{max}} \in [0, 1] \) son el \gls{soc} mínimo y máximo de la batería, respectivamente.
 
-  \item \( \text{SoC}_{t} \in \mathbb{R}^{+} \) es la cantidad de energía almacenada en la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
+  \item \( \text{SoC}_{t} \in \mathbb{R}^{+}_{0} \) es la cantidad de energía almacenada en la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
+
+  \item \( \text{SoH} \in [0, 1] \) es el \gls{soh} de la batería, afectando tanto a la potencia y capacidad de almacenamiento.
 
   \item \( A \in [0, 1] \) es la disponibilidad de la batería.
 
-  \item \( N \in \mathbb{R}^{+} \) es el número de ciclos realizados por la batería a lo largo de todo el horizonte de optimización.
-
-  \item \( E_{\text{RES}, t} \in \mathbb{R}^{+} \) es la energía generada por el activo de generación en instalaciones híbridas en el periodo \( t \) en \si{{\mega\watt\hour}}.
+  \item \( N \in \mathbb{R}^{+}_{0} \) es el número de ciclos realizados por la batería a lo largo de todo el horizonte de optimización.
 
 \end{itemize}
 
@@ -388,11 +404,7 @@ donde
 
 \begin{itemize}
 
-  \item \( \lambda' \) es beneficio mínimo objetivo en \si{\text{\euro}\per\mega\watt\hour}.
-
   \item \( c \) es el peaje de la red en \si{\text{\euro}\per\mega\watt\hour}.
-
-  \item \( \lambda^{M}_{t} \) es el precio de mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
   \item \( \lambda^{n}_{\text{BESS}, R, t} \) es el precio de la exportación de la batería a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
