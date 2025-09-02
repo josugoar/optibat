@@ -3,6 +3,7 @@
         "editor.wordWrap": "wordWrapColumn"
     },
     "cSpell.language": "en,es",
+    "explorer.sortOrderLexicographicOptions": "default",
     "latex-workshop.formatting.latex": "tex-fmt",
     "latex-workshop.latex.recipes": [
         {

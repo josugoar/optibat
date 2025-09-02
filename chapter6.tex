@@ -14,7 +14,7 @@ De esta forma, el apartado~\ref{makereference6.1} describe la operación automá
 
 La consignación operativa no solo incluye la señalización del perfil de carga y descarga de las baterías y es que, si el sistema no comunica adecuadamente sus intenciones de compra y venta mediante los medios preestablecidos, la entidad energética dueña de la instalación podría incurrir severas multas por incumplir el reglamento.
 
-Con ello, el sistema debe responder a las preguntas acerca de cuándo y cuánta energía ciclar físicamente y a qué precio.
+Con ello, el sistema debe responder a las preguntas de cuándo y cuánta energía ciclar físicamente y a qué precio.
 
 \subsection{Señalización de baterías}
 \label{makereference6.1.1}
@@ -111,7 +111,7 @@ Dicha situación subraya la importancia de disponer de herramientas de observaci
 \subsection{Emisión de ofertas}
 \label{makereference6.1.2}
 
-Para emitir la oferta al mercado, es necesario calcular el precio al que ofertar la posición de la batería\footnote{La oferta del activo de generación se configura de forma manual un valor fijo \( \lambda^{O}_{\text{RES}, t} = \lambda^{O}_{\text{RES}} \), generalmente siendo \SI{0}{\text{\euro}\per\mega\watt\hour} para asegurar su casación, ya que su energía no puede ser almacenada más que en la batería misma.}. Para ello se emplea un algoritmo de desarrollo propio que permite agrupar las ofertas por ciclos.
+Para emitir la oferta al mercado, es necesario calcular el precio al que ofertar la posición de la batería\footnote{La oferta del activo de generación se configura de forma manual a un valor fijo \( \lambda^{O}_{\text{RES}, t} = \lambda^{O}_{\text{RES}} \), generalmente siendo \SI{0}{\text{\euro}\per\mega\watt\hour} para asegurar su casación, ya que su energía no puede ser almacenada más que en la batería misma.}. Para ello se emplea un algoritmo de desarrollo propio que permite agrupar las ofertas por ciclos.
 
 En un primer momento, precisamente a los inicios de desarrollo de la emisión de la oferta, el precio de oferta se correspondía directamente al precio de mercado, como en la ecuación~\ref{eq:emisión-directa}.
 
@@ -180,8 +180,8 @@ El objetivo final es agrupar los semiciclos de carga y descarga y obtener sus pr
     \label{eq:diferencia-soc}
     \Delta \mathrm{SoC}_{t} =
     \begin{cases}
-      \mathrm{SoC}_{t} - \mathrm{SoC}_{t-1} & \text{si } t > 0 \quad (\text{horizonte de optimización}) \\
-      \mathrm{SoC}_{0}                      & \text{si } t = 0 \quad (\text{periodo inicial})           \\
+      \mathrm{SoC}_{t} - \mathrm{SoC}_{t - 1} & \text{si } t > 1 \quad (\text{horizonte de optimización}) \\
+      \mathrm{SoC}_{1}                      & \text{si } t = 1 \quad (\text{periodo inicial})           \\
     \end{cases}
   \end{equation}
 
@@ -272,16 +272,16 @@ Como no se desea contar múltiples ciclos cuando sucedan múltiples periodos con
     \begin{equation}
       B_{\text{inf}, t} =
       \begin{cases}
-        0                                                & \text{si } t = 0 \\
-        B_{\text{inf}, t} \land \neg B_{\text{inf}, t+1} & \text{si } t > 0 \\
+        0                                                  & \text{si } t = 1 \\
+        B_{\text{inf}, t} \land \neg B_{\text{inf}, t + 1} & \text{si } t > 1 \\
       \end{cases}
     \end{equation}
 
     \begin{equation}
       B_{\text{sup}, t} =
       \begin{cases}
-        0                                                & \text{si } t = 0 \\
-        B_{\text{sup}, t} \land \neg B_{\text{sup}, t+1} & \text{si } t > 0 \\
+        0                                                  & \text{si } t = 1 \\
+        B_{\text{sup}, t} \land \neg B_{\text{sup}, t + 1} & \text{si } t > 1 \\
       \end{cases}
     \end{equation}
 
@@ -326,8 +326,8 @@ Junto a ello, se desplazan los puntos un periodo en el tiempo para resolver prob
     \label{eq:puntos-algidos-shift}
     B_t =
     \begin{cases}
-      0       & \text{si } t = 0 \\
-      B_{t+1} & \text{si } t > 0 \\
+      0         & \text{si } t = 1 \\
+      B_{t + 1} & \text{si } t > 1 \\
     \end{cases}
   \end{equation}
 
@@ -347,7 +347,7 @@ Con los puntos álgidos correctamente identificados, se toma una cuenta acumulat
 
   \begin{equation}
     \label{eq:conteo-ciclos}
-    N_{t} = 1 + \sum_{i=0}^{t-1} B_{i}
+    N_{t} = 1 + \sum_{i = 1}^{t - 1} B_{i}
   \end{equation}
 
   donde
@@ -485,7 +485,7 @@ De esta forma, el cuadro de mando del sistema es la pieza cable mediante la cual
 
 Cabe destacar que, más allá del cuadro de mando del comando y control orientado a los agentes de mercado y operadores de telecontrol, cada componente del sistema también es capaz de ser configurado mediante canales no interactivos si es necesario, estando estos orientadas a los operadores de telecontrol para la configuración de la infraestructura operativa, al personal de sistemas para el entorno de mercado, y a los agentes de mercado para la modelización estructural.
 
-\subsection{Funcionalidad principal}
+\subsection{Funcionalidad básica}
 \label{makereference6.2.1}
 
 El cuadro de mando ha sido desarrollado en la misma tecnología principal utilizada en la mayoria de los otros componentes, Python. Esta vez, se hace uso de Streamlit~\cite{streamlit2025faster}, un componente para construir herramientas interactivas.

@@ -28,14 +28,14 @@ De esta forma, la métrica principal a analizar resulta siempre ser el beneficio
 
 En primer lugar, es necesario conocer la información de costes para determinar si verdaderamente merece la pena la incorporación de \glspl{bess} en la red eléctrica, más allá de sus beneficios operativos.
 
-Un arquetipo de batería dimensionada en \SI{20}{\mega\watt\hour} \( E_{n} \), \SI{5}{\mega\watt} \( P_{n} \), 90\% de eficiencia \( \eta \), 2\% de degradación anual \( \delta \), una vida útil de 30 años \( H \) y 1 ciclo por día \( N \), suponiendo un \textit{spread} \( S \) estándar de \SI{60}{\text{\euro}\per\mega\watt\hour}, genera \SI{8\,958\,504}{\text{\euro}} de ingreso \( \pi \), según la ecuación~\ref{eq:beneficio-total}.
+Un arquetipo de batería dimensionada en \SI{20}{\mega\watt\hour} \( E_{n} \), \SI{5}{\mega\watt} \( P_{n} \), 90 \% de eficiencia \( \eta \), 2 \% de degradación anual \( \delta \), una vida útil de 30 años \( H \) y 1 ciclo por día \( N \), suponiendo un \textit{spread} \( S \) estándar de \SI{60}{\text{\euro}\per\mega\watt\hour}, genera \SI{8\,958\,504}{\text{\euro}} de ingreso \( \pi \), según la ecuación~\ref{eq:beneficio-total}.
 
 \begin{equation}
   \label{eq:beneficio-total}
   \pi = \eta \cdot S \cdot E_{n} \cdot N \cdot D \cdot \frac{1 - (1 - \delta)^{H}}{\delta}
 \end{equation}
 
-Con ello, se debe analizar el \gls{capex} inicial y el \gls{opex} continuado de un \gls{bess} estándar de ion-litio. Precisamente, a partir de los datos de la evolución de precio de los \glspl{bess} de la figura~\ref{fig:precio-bateria}, se estima el \gls{capex} en la figura~\ref{fig:capex-bateria}. El \gls{opex} es comúnmente fijado en el 3\% del \gls{capex}. Además, se deben tener en cuenta las ayudas del estado a las baterías, las cuales pueden cubrir hasta el 45--65\% del coste total de la batería~\cite{solfy2025subvenciones} en la actualidad.
+Con ello, se debe analizar el \gls{capex} inicial y el \gls{opex} continuado de un \gls{bess} estándar de ion-litio. Precisamente, a partir de los datos de la evolución de precio de los \glspl{bess} de la figura~\ref{fig:precio-bateria}, se estima el \gls{capex} en la figura~\ref{fig:capex-bateria}. El \gls{opex} es comúnmente fijado en el 3 \% del \gls{capex}. Además, se deben tener en cuenta las ayudas del estado a las baterías, las cuales pueden cubrir hasta el 45--65 \% del coste total de la batería~\cite{solfy2025subvenciones} en la actualidad.
 
 \begin{figure}
   \centering
@@ -66,7 +66,7 @@ La comparativa entre los resultados manuales contra el proceso del sistema desar
 
 De esta forma, sin la disposición del sistema, la estrategia de arbitraje más extendida entre los agentes de mercado es la compra y venta directa de energía en los periodos valle y pico, respectivamente. Debido a la alta complejidad del arbitraje en los mercados intradiarios, los agentes de mercado únicamente definen la posición para el mercado diario, el de mayor liquidez.
 
-Como se puede observar en la situación de mercado\footnote{Batería híbrida de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 100\% de eficiencia.}, con precio de la figura~r\ref{fig:manual-auto-precio} y posición de la figura~\ref{fig:manual-auto-posicion}, los dos principales problemas de la estrategia manual son el nulo aprovechamiento de los recursos híbridos de generación en las instalaciones que lo soportan, ya que no es posible tener en cuenta las actualizaciones de las previsiones, y la generación de desvíos ante falta de casaciones en el mercado diario, que resultan en un perdida monetaria comparativamente significativa.
+Como se puede observar en la situación de mercado\footnote{Batería híbrida de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 100 \% de eficiencia.}, con precio de la figura~r\ref{fig:manual-auto-precio} y posición de la figura~\ref{fig:manual-auto-posicion}, los dos principales problemas de la estrategia manual son el nulo aprovechamiento de los recursos híbridos de generación en las instalaciones que lo soportan, ya que no es posible tener en cuenta las actualizaciones de las previsiones, y la generación de desvíos ante falta de casaciones en el mercado diario, que resultan en un perdida monetaria comparativamente significativa.
 
 \begin{figure}
   \centering
@@ -89,7 +89,7 @@ Los resultados muestran como, en este caso, el arbitraje manual no es capaz de c
 
 Se han realizado análisis comparativos entre el rendimiento generado por cada una de las topologías, tanto aislada como híbrida, para determinar el aumento de los ingresos que sistemas de optimización de baterías en el mercado eléctrico pueden aportar, dependiendo de la configuración de la red.
 
-Se observan las diferencias de beneficio comparativos en la figura~\ref{fig:posicion-aislada} a favor de la topologías híbrida (analizada en su configuración más permisiva en la posterior sección~\ref{makereference7.4}), siendo capaz de enrutar los flujos de carga desde diferentes fuentes. De esta forma, es entendible la tendencia de la industria de aumentar el número de instalaciones de colocación híbridas renovables y de almacenamiento simultáneamente, a diferencia del uso de las topologías aisladas\footnote{Batería aislada de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5.25}{{\mega\watt}} de potencia y 87\% de eficiencia.}.
+Se observan las diferencias de beneficio comparativos en la figura~\ref{fig:posicion-aislada} a favor de la topologías híbrida (analizada en su configuración más permisiva en la posterior sección~\ref{makereference7.4}), siendo capaz de enrutar los flujos de carga desde diferentes fuentes. De esta forma, es entendible la tendencia de la industria de aumentar el número de instalaciones de colocación híbridas renovables y de almacenamiento simultáneamente, a diferencia del uso de las topologías aisladas\footnote{Batería aislada de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5.25}{{\mega\watt}} de potencia y 87 \% de eficiencia.}.
 
 La razón de la menor rentabilidad de la topología aislada viene dada porque su contraparte híbrida es capaz de cargar la batería en muchas ocasiones por precios nulos, mientras que la aislada siempre tiene que pagar por pasar por la red.
 
@@ -137,7 +137,7 @@ Aunque las tres configuraciones híbridas sean capaces de aprovechar y rentabili
   \label{fig:precios-hibridaciones}
 \end{figure}
 
-La figura~\ref{fig:hibrida-flexible} muestra la posición de mercado de la situación analizada de la configuración híbrida flexible\footnote{Batería híbrida de \SI{20}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 86\% de eficiencia.}, en comparación con la híbrida con prioridad de carga de generación\footnote{Batería híbrida de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 90\% de eficiencia.} de la figura~\ref{fig:hibrida-prioridad} y la híbrida con carga aislada de la red\footnote{Batería híbrida de \SI{9.20}{{\mega\watt\hour}} de capacidad, \SI{3}{{\mega\watt}} de potencia y 90\% de eficiencia.} de la figura~\ref{fig:hibrida-aislada}.
+La figura~\ref{fig:hibrida-flexible} muestra la posición de mercado de la situación analizada de la configuración híbrida flexible\footnote{Batería híbrida de \SI{20}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 86 \% de eficiencia.}, en comparación con la híbrida con prioridad de carga de generación\footnote{Batería híbrida de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 90 \% de eficiencia.} de la figura~\ref{fig:hibrida-prioridad} y la híbrida con carga aislada de la red\footnote{Batería híbrida de \SI{9.20}{{\mega\watt\hour}} de capacidad, \SI{3}{{\mega\watt}} de potencia y 90 \% de eficiencia.} de la figura~\ref{fig:hibrida-aislada}.
 
 \begin{figure}
   \centering
