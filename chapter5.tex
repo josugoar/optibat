@@ -29,7 +29,7 @@ La variabilidad de la granularidad exige representar el mercado en múltiples pe
 
   \begin{equation}
     \label{eq:set-mercado}
-    T = \{t_{1} + k \cdot \Delta t \mid k \in \mathbb{N}_{0}, t_{1} + k \cdot \Delta t \leq t_{1} + H\}
+    T = \{t_{1} + k \cdot \Delta t \mid k \in \mathbb{R}^{+}, t_{1} + k \cdot \Delta t \leq t_{1} + H\}
   \end{equation}
 
   donde
@@ -103,17 +103,17 @@ Por lo tanto, los diferentes flujos energéticos son representados de la siguien
 
 \begin{itemize}
 
-  \item \( E^{n}_{R, \text{BESS}, t} \in \mathbb{N}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
+  \item \( E^{n}_{R, \text{BESS}, t} \in \mathbb{R}^{+} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
 
   \item \( E^{b}_{R, \text{BESS}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{R, \text{BESS}, t} \in \mathbb{N}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a importar en \si{{\mega\watt\hour}}.
+  \item \( E^{c}_{R, \text{BESS}, t} \in \mathbb{R}^{+} \) es la energía casada en negociaciones previas que la batería se ha comprometido a importar en \si{{\mega\watt\hour}}.
 
-  \item \( E^{n}_{\text{BESS}, R, t} \in \mathbb{N}_{0} \) es la energía neta correspondiente al flujo energético físico exportado de la batería a la red en \si{{\mega\watt\hour}}.
+  \item \( E^{n}_{\text{BESS}, R, t} \in \mathbb{R}^{+} \) es la energía neta correspondiente al flujo energético físico exportado de la batería a la red en \si{{\mega\watt\hour}}.
 
   \item \( E^{b}_{\text{BESS}, R, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{\text{BESS}, R, t} \in \mathbb{N}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a exportar en \si{{\mega\watt\hour}}.
+  \item \( E^{c}_{\text{BESS}, R, t} \in \mathbb{R}^{+} \) es la energía casada en negociaciones previas que la batería se ha comprometido a exportar en \si{{\mega\watt\hour}}.
 
 \end{itemize}
 
@@ -130,26 +130,17 @@ Por lo tanto, es necesario tener en cuenta la generación junto con la batería 
 
 \begin{itemize}
 
-  \item \( E_{\text{RES}, \text{BESS}, t} \in \mathbb{N}_{0} \) es la energía importada de la generación a la batería en instalaciones híbridas en \si{{\mega\watt\hour}}.
+  \item \( E_{\text{RES}, \text{BESS}, t} \in \mathbb{R}^{+} \) es la energía importada de la generación a la batería en instalaciones híbridas en \si{{\mega\watt\hour}}.
 
-  \item \( E^{n}_{\text{RES}, R} \in \mathbb{N}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
+  \item \( E^{n}_{\text{RES}, R} \in \mathbb{R}^{+} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
 
   \item \( E^{b}_{\text{RES}, R} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{\text{RES}, R} \in \mathbb{N}_{0} \) es la energía casada en negociaciones previas que la generación se ha comprometido a importar en \si{{\mega\watt\hour}}.
+  \item \( E^{c}_{\text{RES}, R} \in \mathbb{R}^{+} \) es la energía casada en negociaciones previas que la generación se ha comprometido a importar en \si{{\mega\watt\hour}}.
 
 \end{itemize}
 
 Como la importación de la generación a la batería no pasa por mercado, no es necesario desglosarla en flujos brutos y netos para acomodar una casación inexistente.
-
-\subsection{Comportamiento físico}
-\label{makereference5.1.3}
-
-Aunque los anteriores flujos energéticos sean dependientes de la configuración topológica, toda batería comparte unos comportamientos físicos intrinsecos. Al fin y al cabo, las baterías son sistemas de almacenamiento de energía que permiten ser cargadas para su posterior descarga, pero ¿cómo de rápido pueden ser cargadas y descargadas, cuánto, cuántas veces, etc.?
-
-Precisamente, las señales configuradas propiamente en el sistema de información de planta detalladas en la sección~\ref{makereference3.2} permite conocer los parámetros operacionales de las batería. Con ellos, lo que es necesario es representarlos por el sistema para su optimización operativa.
-
-...
 
 \subsection{Indicaciones de mercado}
 \label{makereference5.1.4}
@@ -158,7 +149,44 @@ Finalmente, los previos parámetros completan la modelización de la batería, e
 
 Para ello, el sistema define el ingreso obtenido y los ciclos realizados como los principales indicadores de rendimiento, por lo tanto, se expresan los siguientes parámetros que los controlan.
 
-...
+% \item \( S \in \mathbb{R}^{+} \) es el \textit{spread} mínimo objetivo en \si{\text{\euro}\per\mega\watt\hour}, es decir, el mínimo beneficio a obtener por cada unidad energética negociada.
+
+\subsection{Comportamiento físico}
+\label{makereference5.1.5}
+
+Aunque los anteriores flujos energéticos sean dependientes de la configuración topológica, toda batería comparte unos comportamientos físicos intrínsecos. Al fin y al cabo, las baterías son sistemas de almacenamiento de energía que permiten ser cargadas para su posterior descarga, pero ¿cómo de rápido pueden ser cargadas y descargadas, cuánto, cuántas veces, etc.?
+
+Precisamente, las señales propiamente configuradas en el \gls{pis}, detalladas en la sección~\ref{makereference3.2}, permite conocer los parámetros operacionales de las batería. Con ellos, es necesario es representarlos simbólicamente para su optimización operativa.
+
+\begin{itemize}
+
+  \item \( P^{c}_{n} \in \mathbb{R}^{+} \) es la potencia nominal de carga de la batería en \si{\mega\watt}.
+
+  \item \( P^{d}_{n} \in \mathbb{R}^{+} \) es la potencia nominal de descarga de la batería en \si{\mega\watt}.
+
+  \item \( E_{n} \in \mathbb{R}^{+} \) es capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
+
+  \item \( \eta^{c} \in [0, 1] \) es el rendimiento de carga de la batería.
+
+  \item \( \eta^{d} \in [0, 1] \) es el rendimiento de descarga de la batería.
+
+  \item \( C_{t} \in \mathbb{R}^{+} \) es la energía cargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la importada.
+
+  \item \( D_{t} \in \mathbb{R}^{+} \) es la energía descargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la exportada.
+
+  \item \( N_{\text{max}} \in \mathbb{R}^{+} \) es el número de ciclos máximos a realizar por la batería a lo largo del horizonte de optimización, determinado mediante la relación \( N_{\text{max}} = N_{d} \cdot H \) entre el los ciclos diarios \( N_{d} \) y la extensión del horizonte de optimización \( H \).
+
+  \item \( \text{SoC}_{\text{min}}, \text{SoC}_{\text{max}} \in [0, 1] \) son el \gls{soc} mínimo y máximo de la batería, respectivamente.
+
+  \item \( \text{SoC}_{t} \in \mathbb{R}^{+} \) es la cantidad de energía almacenada en la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
+
+  \item \( A \in [0, 1] \) es la disponibilidad de la batería.
+
+  \item \( N \in \mathbb{R}^{+} \) es el número de ciclos realizados por la batería a lo largo de todo el horizonte de optimización.
+
+  \item \( E_{\text{RES}, t} \in \mathbb{R}^{+} \) es la energía generada por el activo de generación en instalaciones híbridas en el periodo \( t \) en \si{{\mega\watt\hour}}.
+
+\end{itemize}
 
 \section{Restricciones operacionales}
 \label{makereference5.2}
@@ -177,7 +205,7 @@ Con esto, los flujos energéticos netos están definidos como la suma del corres
   \label{eq:neto-bruto}
 \end{equation}
 
-Con respecto a los parámetros del comportamiento físico, estos limitan la potencia tanto de carga como de descarga\footnote{Aunque la potencia de carga y descarga generalmente coincida en las instalaciones para las que se ha desplegado el sistema, es importante reconocer que pueden no ser iguales} mediante la ecuación~\ref{eq:capacidad-potencia-carga} de carga y la ecuación~\ref{eq:capacidad-potencia-descarga} de descarga. La señal de disponibilidad afecta linealmente a la capacidad de potencia, para una disponibilidad de la mitad, la potencia de la batería es la mitad misma de su capacidad nominal.
+Con respecto a los parámetros del comportamiento físico, estos limitan la potencia tanto de carga como de descarga\footnote{Aunque la potencia de carga y descarga generalmente coincida en las instalaciones para las que se ha desplegado el sistema, es importante reconocer que pueden no ser iguales.} mediante la ecuación~\ref{eq:capacidad-potencia-carga} de carga y la ecuación~\ref{eq:capacidad-potencia-descarga} de descarga. La señal de disponibilidad afecta linealmente a la capacidad de potencia, para una disponibilidad de la mitad, la potencia de la batería es la mitad misma de su capacidad nominal.
 
 \begin{equation}
   \label{eq:capacidad-potencia-carga}
@@ -225,7 +253,7 @@ El indicador de mercado de ciclos máximos limita simplemente los ciclos mediant
 
 El estado de carga lo limitan las señales de la batería en la ecuación~\ref{eq:limite-soc}. Generalmente, se suele dejar una cantidad de energía disponible continuamente para evitar imprevistos.
 
-Precisamente, un efecto secundaria inmensamente beneficioso de las limitaciones de la señal del estado de carga es la posibilidad de la participación de las baterías en los mercados de disponibilidad\footnote{El sistema no soporta los mercados de disponibilidad en su estado actual, aunque sí que permite manejarlos externamente}. Como en ningún momento se llega ni al máximo ni al mínimo de la capacidad de la batería, esta puede ofertar por lo menos el rango del estado de carga a subir o bajar y generar beneficios pasivos sin afectar de ninguna forma a la operación principal en los mercados spot.
+Precisamente, un efecto secundaria inmensamente beneficioso de las limitaciones de la señal del estado de carga es la posibilidad de la participación de las baterías en los mercados de disponibilidad\footnote{El sistema no soporta los mercados de disponibilidad en su estado actual, aunque sí que permite manejarlos externamente.}. Como en ningún momento se llega ni al máximo ni al mínimo de la capacidad de la batería, esta puede ofertar por lo menos el rango del estado de carga a subir o bajar y generar beneficios pasivos sin afectar de ninguna forma a la operación principal en los mercados spot.
 
 \begin{equation}
   \label{eq:limite-soc}
@@ -273,16 +301,14 @@ Para terminar con lo relacionado con los sistemas de almacenamiento de energía 
 
 En cambio, no todas las configuraciones topológicas operan de la siguiente manera. Precisamente, la híbrida con carga aislada de la red muestra un comportamiento de \textit{clipping}, en donde existe una cantidad de energía excedente de donde la batería solo puede cargar.
 
-Representado en la figura~\ref{fig:clipping}, se puede entender como una persona que dispone de un salario fijo (generación). Cada mes debe pagar una cantidad de su salario para el alquiler (\textit{threshold} de carga). Del dinero sobrante, ahorra (carga) una porcentaje (coeficiente de \textit{clipping}), mientras que gasta el resto como le apetezca (exportación de generación).
+Representado en la figura~\ref{fig:clipping}, se puede entender como una persona que dispone de un salario fijo (generación). Cada mes debe pagar una cantidad de su salario para el alquiler (\textit{threshold} de carga). Del dinero sobrante, ahorra (carga) una porcentaje (coeficiente de \textit{clipping}), mientras que gasta el resto como le apetezca (exportación de generación). Se representa mediante la ecuación~\ref{eq:clipping}.
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/clipping.jpg}
-  \caption[Clipping de configuración topológica híbrida.]{Clipping de la configuración topológica híbrida con carga aislada de la red.}
+  \includegraphics[width=0.75\linewidth]{figures/clipping.png}
+  \caption[Clipping de configuración topológica híbrida.]{Clipping de la configuración topológica híbrida con carga aislada de la red. La batería solo es capaz de cargar del excedente porcentual de generación, dibujando una curva de carga en los picos.}
   \label{fig:clipping}
 \end{figure}
-
-El sistema lo representa mediante la ecuación~\ref{eq:clipping}.
 
 \begin{equation}
   \label{eq:clipping}
