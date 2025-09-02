@@ -1,6 +1,6 @@
-\cleardoublepage
+\cleardoublepage%
 
-\chapter{Estado de la cuestión}
+\chapter{Estado de la cuestión}%
 \label{makereference2}
 
 Contextualizando el entorno, la transición hacia un sistema energético descarbonizado, impulsada por la creciente penetración de fuentes de energía renovable, como la solar fotovoltaica y la eólica, presenta desafíos significativos para la estabilidad y gestión de la red eléctrica~\cite{carrasco2023battery}. Con ello, los \gls{bess} emergen como una tecnología clave para dotar de flexibilidad al sistema, solucionando el desacoplo entre la generación y el consumo de electricidad~\cite{gissey2018market}.
@@ -12,13 +12,13 @@ Por ello, la viabilidad económica depende intrínsecamente de la capacidad del 
 \begin{figure}
   \centering
   \includegraphics[width=0.6\linewidth]{figures/precio-casacion.png}
-  \caption[Curva de casación del mercado eléctrico.]{Curva de casación real del inicio del mes de agosto del mercado eléctrico marginalista, donde tan solo las ofertas de compra por encima y de venta por debajo del precio de casación son aceptadas.}
+  \caption[Curva de casación del mercado eléctrico.]{Curva de casación real del inicio del mes de agosto del mercado eléctrico marginalista, donde tan solo las ofertas de compra por encima y de venta por debajo del precio de casación son aceptadas.}%
   \label{fig:precio-casacion}
 \end{figure}
 
 De este modo, se analiza la situación tecnológica actual de los activos de almacenamiento desde una perspectiva de mercado multifacética en la sección~\ref{makereference2.1}, se estudian los diferentes enfoques de las estrategias de optimización concretas a lo largo de la literatura en la sección~\ref{makereference2.2}, y se detallan las soluciones comerciales existentes en relación al sistema desarrollado en la sección~\ref{makereference2.3}.
 
-\section{Situación tecnológica}
+\section{Situación tecnológica}%
 \label{makereference2.1}
 
 Los \glspl{bess} en los mercados eléctricos, aunque prometedores, se encuentran todavía en una fase temprana de desarrollo y adopción\footnote{Aunque no hayan sido históricamente populares en el mercado eléctrico, las baterías son usadas  gran escala en otras situaciones, como la carga de vehículos eléctricos.}. Esta infancia se manifiesta en la rápida evolución de los algoritmos de optimización y en la muy notable reducción de costes de la tecnología, que son características típicas de una tecnología en las primeras etapas. Dicho fenómeno se conoce como el \textit{rate of learning} e indica que ``el coste de una tecnología disminuye a medida que aumenta su producción acumulada''~\cite{mathew2021climate, louwen2018technological}, representado en la figura~\ref{fig:rate-of-learning}.
@@ -26,7 +26,7 @@ Los \glspl{bess} en los mercados eléctricos, aunque prometedores, se encuentran
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/rate-of-learning.jpg}
-  \caption[Reducción de los costes de las baterías por su uso.]{Representación de la reducción de los costes de las baterías según su uso, se observa una reducción del 10--35 \% cada vez que se dobla la producción~\cite{irena2025irena}.}
+  \caption[Reducción de los costes de las baterías por su uso.]{Representación de la reducción de los costes de las baterías según su uso, se observa una reducción del 10--35 \% cada vez que se dobla la producción~\cite{irena2025irena}.}%
   \label{fig:rate-of-learning}
 \end{figure}
 
@@ -41,14 +41,14 @@ En la actualidad, se subraya que la producción del mercado ibérico es ínfima 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/arbitraje-tecnologia.jpg}
-  \caption[Negociación por tecnologías.]{Negociación por tecnologías del inicio del mes de junio, donde las tecnologías más caras, como el ciclo combinado, abarcan la mayor parte de la generación cuando no hay tanto recurso renovable.}
+  \caption[Negociación por tecnologías.]{Negociación por tecnologías del inicio del mes de junio, donde las tecnologías más caras, como el ciclo combinado, abarcan la mayor parte de la generación cuando no hay tanto recurso renovable.}%
   \label{fig:arbitraje-tecnologia}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.4\linewidth]{figures/comparacion-energia-ciclada.png}
-  \caption[Comparación de la energía diaria arbitrada.]{Comparación entre la media de la energía diaria real arbitrada durante mes de agosto entre el bombeo y las baterías, negociada públicamente por el sistema desarrollado.}
+  \caption[Comparación de la energía diaria arbitrada.]{Comparación entre la media de la energía diaria real arbitrada durante mes de agosto entre el bombeo y las baterías, negociada públicamente por el sistema desarrollado.}%
   \label{fig:comparacion-energia-ciclada}
 \end{figure}
 
@@ -56,7 +56,7 @@ A nivel europeo, países como Alemania y Reino Unido han sido los pioneros en la
 
 De esta forma, los mercados europeos encaminan la situación futura del mercado ibérico, como se ve reflejado en la actualidad~\cite{kumar2019strategic}.
 
-\section{Estrategias de optimización}
+\section{Estrategias de optimización}%
 \label{makereference2.2}
 
 Aunque irónicamente el panorama de los \glspl{bess} en los mercados pertinentes estuviera prácticamente desierto antes de la incursión del sistema desarrollado, la literatura científica describe una variedad de enfoques de estrategias de optimización, desde la programación matemática hasta el uso de la propia inteligencia artificial.
@@ -67,12 +67,12 @@ Precisamente, la tendencia en alza de estas estrategias es la incorporación del
 
 Interesanetemente, con la creciente complejidad de los mercados y la necesidad de adaptarse a condiciones cambiantes, técnicas de inteligencia artificial han comenzado a ser investigadas~\cite{haratian2024machine, krishna2024advanced}. Resulta que algoritmos de aprendizaje por refuerzo son particularmente prometedores~\cite{dong2021strategic}, ya que permiten a un agente aprender la estrategia de operación óptima a través de la interacción directa con el entorno del mercado, sin necesidad de un modelo matemático perfecto, aunque soluciones combinando los dos aspectos hayan sido propuestas~\cite{georgiadis2025hybrid}. Estos métodos son capaces de manejar la incertidumbre y la dinámica estocástica (aleatoria) de los precios del mercado de manera más robusta que los métodos tradicionales.
 
-Incluso existen esfuerzos realizados al respecto dentro del contexto del mercado ibérico, como los centros técnológicos enfocados en el desarrollo de \glspl{bms} a través de tecnologías más heterodoxas~\cite{ikerlan2025bateria}.
+Incluso existen esfuerzos realizados al respecto dentro del contexto del mercado ibérico, como los centros tecnológicos enfocados en el desarrollo de \glspl{bms} a través de tecnologías más heterodoxas~\cite{ikerlan2025bateria}.
 
-\section{Soluciones comerciales}
+\section{Soluciones comerciales}%
 \label{makereference2.3}
 
-Empresas extranjeras fuera del mercado iberico, como Enspired~\cite{enspired2025battery} en Austria, Entelios~\cite{entelios2025cross} en Alemania y Sympower~\cite{sympower2025battery} en Países Bajos, se especializan en la comercialización y optimización de activos energéticos, incluyendo los \glspl{bess}. Precisamente, más allá de la literatura, las soluciones comerciales, al igual que el trabajo realizado, son capaces de ofrecer una visión integral de todos los aspectos relacionados con la optimización de baterías, desde la infraestructura operacional, el entorno de mercado, la modelización estructural y la consigna y control.
+Empresas extranjeras fuera del mercado ibérico, como Enspired~\cite{enspired2025battery} en Austria, Entelios~\cite{entelios2025cross} en Alemania y Sympower~\cite{sympower2025battery} en Países Bajos, se especializan en la comercialización y optimización de activos energéticos, incluyendo los \glspl{bess}. Precisamente, más allá de la literatura, las soluciones comerciales, al igual que el trabajo realizado, son capaces de ofrecer una visión integral de todos los aspectos relacionados con la optimización de baterías, desde la infraestructura operacional, el entorno de mercado, la modelización estructural y la consigna y control.
 
 Aunque sus estrategias de mercado sean propietarias, su operación se basa en los principios de licitación conocidos y, en este caso, en la participación en múltiples mercados, tanto spot como de regulación, para apilar los flujos de ingresos, realizando el llamado \textit{revenue stacking}~\cite{rancilio2022revenue}.
 

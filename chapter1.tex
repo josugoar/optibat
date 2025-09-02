@@ -1,6 +1,8 @@
-\cleardoublepage
+% chktex-file 8
 
-\chapter{Introducción}
+\cleardoublepage%
+
+\chapter{Introducción}%
 \label{makereference1}
 
 \begin{quotation}
@@ -22,7 +24,7 @@ En la actualidad, existen multitud de soluciones energéticas con las que aprovi
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/instalacion-bess.jpg}
-  \caption[Ilustración de la disposición de una instalación híbrida.]{Ilustración de la disposición de una instalación híbrida de generación y almacenamiento~\cite{deutz2023what}.}
+  \caption[Ilustración de la disposición de una instalación híbrida.]{Ilustración de la disposición de una instalación híbrida de generación y almacenamiento~\cite{deutz2023what}.}%
   \label{fig:instalacion-bess}
 \end{figure}
 
@@ -38,7 +40,7 @@ Con esto, se detallan las decisiones de diseño relacionadas con la integración
 
 De esta forma, el sistema se divide en los apartados anteriormente mencionados. La infraestructura operacional, explicada en el capítulo~\ref{makereference3}, gestiona la capa de interacción de menor nivel disponible. El entorno de mercado, especificado en el capítulo~\ref{makereference4}, determina la información extraída de las instituciones regulatorias con las que se trabaja. La modelización estructural, puntualizada en el capítulo~\ref{makereference5}, habla de la lógica de negocio de las decisiones a tomar. El comando y control, precisado en el capítulo~\ref{makereference6}, explica el flujo de vuelta a los activos físicos y la interacción de los agentes de mercado y operadores de telecontrol con el sistema. Finalmente, se describe la experimentación realizada en el capítulo~\ref{makereference7}.
 
-\section{Objetivos}
+\section{Objetivos}%
 \label{makereference1.1}
 
 El objetivo principal es el diseño, desarrollo, validación y despliegue (excluyendo la experimentación) de un sistema de arbitraje de baterías en el mercado eléctrico, garantizando su integración con la infraestructura establecida y su habilitación para operar en el mercado eléctrico. Cabe destacar que, dado que la tecnología de almacenamiento de energía en baterías apenas se encuentra aún en sus primeras etapas de desarrollo, no existe una solución fácilmente integrable o de sencilla implementación sobre la infraestructura energética existente, aunque existan esfuerzos externos para mejorar la situación. Por ello, lo que primeramente se busca es establecer dicha base.
@@ -65,7 +67,7 @@ A su vez, se definen varios objetivos secundarios complementarios al objetivo pr
 
 \end{description}
 
-\section{Alcance}
+\section{Alcance}%
 \label{makereference1.2}
 
 El proyecto se centra exclusivamente en el desarrollo de un sistema de optimización de baterías en el mercado eléctrico integral, de extremo a extremo. Se compone de la infraestructura operacional con la que interactuar con los elementos físicos que forman parte del sistema, la adquisición de la información del entorno de mercado a través de las instituciones regulatorias correspondientes, la modelización estructural de la situación del ciclado de las baterías y de la instalación al completo para la resolución de la optimalidad, y el comando y control para transmitir los resultados de vuelta a la batería y mercado e informar a los agentes de mercado que supervisan los movimientos realizados por el sistema.
@@ -76,14 +78,14 @@ Tampoco se realiza el despliegue en sí del \gls{pis} central, ya que otras tecn
 
 Finalmente, el proyecto debe considerar procesos externos del entorno en el que es desplegado, por lo que no hay otra opción que depender de la capa de indirección del almacenamiento de la información del entorno de mercado (el \gls{dw}), del desglose de las posiciones negociadas previamente consultadas en servicios internos, y de la última etapa de la realización de las ofertas de mercado, la cual debe, por consideraciones legales, realizarse por la parte confiable de la entidad energética dueña de los activos energéticos.
 
-\section{Plan de trabajo}
+\section{Plan de trabajo}%
 \label{makereference1.3}
 
 El plan de trabajo consta de la distribución en tareas del desarrollo del proyecto en su conjunto. Se constituye de la división de los apartados en concordancia con los objetivos, desde el inicio hasta el final del proyecto integrado, y de la explicación de estos.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
-  \resizebox{\textwidth}{!}{
+  \resizebox{\textwidth}{!}{%
     \begin{ganttchart}[link bulge = 1.3, link/.style={-to, rounded corners = 3pt}, milestone/.append style={xscale=5}, time slot format=isodate, time slot unit=day, x unit=1mm]{2025-02-10}{2025-09-05}
       \gantttitlecalendar{month=shortname}\\
       \ganttgroup[name=analisis]{Análisis preliminar}{2025-02-10}{2025-03-05}\\
@@ -111,9 +113,9 @@ El plan de trabajo consta de la distribución en tareas del desarrollo del proye
       \ganttbar[name=rendimiento]{Pruebas de integración de rendimiento}{2025-07-01}{2025-07-31}\\
       \ganttbar[name=comparaciones]{Análisis comparativos locales}{2025-08-01}{2025-08-17}\\
       \ganttgroup[name=redaccion]{Redacción del informe}{2025-07-01}{2025-09-05}\\
-      \ganttbar[name=estructuracion]{Estructuración de los apartados}{2025-07-01}{2025-7-21}\\
-      \ganttbar[name=typesetting]{Composición tipográfica}{2025-07-15}{2025-8-31}\\
-      \ganttbar[name=contenido]{Elaboración del contenido}{2025-07-15}{2025-8-31}\\
+      \ganttbar[name=estructuracion]{Estructuración de los apartados}{2025-07-01}{2025-07-21}\\
+      \ganttbar[name=typesetting]{Composición tipográfica}{2025-07-15}{2025-08-31}\\
+      \ganttbar[name=contenido]{Elaboración del contenido}{2025-07-15}{2025-08-31}\\
       \ganttbar[name=revision]{Revisión y edición}{2025-08-25}{2025-09-05}\\
       \ganttlink{normativa}{mercado}
       \ganttlink{mercado}{baterias}
@@ -133,7 +135,7 @@ El plan de trabajo consta de la distribución en tareas del desarrollo del proye
       \ganttlink{rendimiento}{comparaciones}
     \end{ganttchart}
   }
-  \caption{Diagrama Gantt del plan de trabajo.}
+  \caption{Diagrama Gantt del plan de trabajo.}%
   \label{fig:plan-trabajo}
 \end{figure}
 

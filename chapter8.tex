@@ -1,9 +1,9 @@
-\cleardoublepage
+\cleardoublepage%
 
-\chapter{Conclusiones y trabajo futuro}
+\chapter{Conclusiones y trabajo futuro}%
 \label{makereference8}
 
-\section{Conclusiones}
+\section{Conclusiones}%
 \label{makereference8.1}
 
 En conclusión, se ha diseñado, desarrollado, desplegado y validado satisfactoriamente un sistema de optimización de baterías a lo largo de múltiples instalaciones de la península, el cual mueve docenas de megavatios hora al día y genera millones de euros de ingresos esperados al año mediante el ciclado de \glspl{bess}, representado en la figura~\ref{fig:arquitectura-sistema} y satisfaciendo así el objetivo principal propuesto.
@@ -12,13 +12,13 @@ En conclusión, se ha diseñado, desarrollado, desplegado y validado satisfactor
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/arquitecuta-sistema.png}
-  \caption[Arquitectura del sistema.]{Arquitectura del sistema.}
+  \caption[Arquitectura del sistema.]{Arquitectura del sistema.}%
   \label{fig:arquitectura-sistema}
 \end{figure}
 
 A su vez, desde la perspectiva del cumplimiento de los objetivos secundarios, se ha buscado de la maximización de la rentabilidad mediante la optimización de las posiciones del mercado, junto con la consideración del desgaste de las baterías, ciclándolas de forma estable y controlada a través de la lógica de negocio de la modelización. Además, se han cumplido con los requisitos regulatorios, principalmente definidos por el operador del sistema en forma de límites técnicos, evitando así posibles penalizaciones económicas. Se ha garantizado la seguridad de la operación desplegando parte de la integración con la infraestructura física en una \gls{idmz}, evitando la exposición de la información de los activos energéticos a redes no autorizadas. También, el diseño mantiene una arquitectura generalizada, siendo capaz de operar en múltiples instalaciones sin modificación alguna de la lógica del sistema. Se han dado facilidades a los agentes de mercado y operadores de telecontrol para la monitorización del sistema y se ha tenido en cuenta la respuesta automática ante fallos, como la falta de disponibilidad. Finalmente, se ha efectuado un análisis de viabilidad económica donde se muestran resultados medibles.
 
-Por otro lado, según el punto de vista de la arquitectura, después de analizar las configuraciones topológicas con las que trabaja el sistema, se ha unificado e implantado la nueva infraestructura operacional para tanto la adquisición de datos de los \glspl{bess} como el control de la carga y descarga de la misma, con el resto de componentes ya existentes de la red. Concretamente, se ha hecho uso de protocolos de comunicación industriales para intercambiar información con los activos energéticos e introducir la integración de las baterías con el \gls{pis}, que realiza la labor de historiador guardando los estados de las señales físicas a lo largo del tiempo para su posterior consulta. Con ello, se ha configurado la política de obtención de datos mediante mecanismos espontáneos y de \gls{gi} y se ha facilitado su lectura. De esta forma, se dibuja una paralela con las conocidas fases de un projecto de \gls{iiot}, sensorización, procesamiento, gestión y actuación.
+Por otro lado, según el punto de vista de la arquitectura, después de analizar las configuraciones topológicas con las que trabaja el sistema, se ha unificado e implantado la nueva infraestructura operacional para tanto la adquisición de datos de los \glspl{bess} como el control de la carga y descarga de la misma, con el resto de componentes ya existentes de la red. Concretamente, se ha hecho uso de protocolos de comunicación industriales para intercambiar información con los activos energéticos e introducir la integración de las baterías con el \gls{pis}, que realiza la labor de historiador guardando los estados de las señales físicas a lo largo del tiempo para su posterior consulta. Con ello, se ha configurado la política de obtención de datos mediante mecanismos espontáneos y de \gls{gi} y se ha facilitado su lectura. De esta forma, se dibuja una paralela con las conocidas fases de un proyecto de \gls{iiot}, sensorización, procesamiento, gestión y actuación.
 
 Junto a esto, se ha obtenido la información del entorno de mercado a través de las interfaces proporcionadas por las instituciones oficiales correspondientes, el \gls{mo} y el \gls{tso}. La información se ha procesado y transformado en el formato adecuado para su almacenamiento masivo en el \gls{dw}, la cual ha tenido que ser consultada eficientemente. Para ello, se ha hecho uso de procesos periódicos temporizados según los programas de mercado.
 
@@ -30,7 +30,7 @@ De esta forma, se ha habilitado el arbitraje de energía en el mercado en las in
 
 Cabe destacar que tanto los \glspl{bess} como, por lo tanto, los sistemas de optimización de baterías en el mercado eléctrico, se encuentran todavía en su infancia, por lo menos en el territorio europeo. Precisamente, según un estudio sobre el uso de las tecnologías de almacenamiento~\cite{hu2022potential}, ``el principal sistema de almacenamiento de energía en Europa sigue siendo el bombeo hidroeléctrico''. Esto significa que, viendo como el panorama de las tecnologías eléctricas pone su foco cada vez más en estas tecnologías de almacenamiento, es probable que salgan al mercado sistemas más sofisticados de control. Aunque, actualmente, las instalaciones con \glspl{bess} sean pocas en comparación al resto, las entidades energéticas buscan implantarlas en toda las instalaciones de generación para mejorar el aprovechamiento de la energía. Por ello, si bien el sistema implantado ha sido satisfactoriamente desplegado a lo largo de todo el país, quizás sea necesario tomar nuevas consideraciones al respecto y tener en cuenta dichas alternativas cuando la energía ciclada diariamente iguale o supere las cantidades de las de otros activos energéticos ampliamente asentados.
 
-\section{Trabajo futuro}
+\section{Trabajo futuro}%
 \label{makereference8.2}
 
 En cuanto al trabajo futuro, \textsc{Optibat} se encuentra limitado al arbitraje en los mercados spot: diario, intradiarios y continuo. Aún así, existen otros mercados más o menos rentables~\cite{cnmc2024balance}, como los mercados de \gls{mfrr} y \gls{afrr} que negocian disponibilidades. Resulta interesante añadir soporte a estos mercados para completar así el perfil de arbitraje de estas tecnologías de almacenamiento, ya que las baterías también son idóneas para la operación en dichos mercados debido a sus altas capacidades de conmutación.

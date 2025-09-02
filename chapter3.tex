@@ -1,4 +1,8 @@
-\chapter{Infraestructura operacional}
+% chktex-file 44
+
+\cleardoublepage%
+
+\chapter{Infraestructura operacional}%
 \label{makereference3}
 
 El desarrollo del sistema, visto desde una perspectiva \textit{bottom-up}, comienza con la capa de abstracción más baja, correspondiente con la infraestructura operacional.
@@ -10,7 +14,7 @@ Como es entendible, el desarrollo ha hecho uso de la infraestructura operacional
 \begin{figure}
   \centering
   \includesvg[width=0.5\linewidth]{figures/diagrama-bess.svg}
-  \caption[Diagrama de un sistema de almacenamiento de energía en baterías.]{Diagrama de un sistema de almacenamiento de energía en baterías~\cite{iberdrola2024bess}.}
+  \caption[Diagrama de un sistema de almacenamiento de energía en baterías.]{Diagrama de un sistema de almacenamiento de energía en baterías~\cite{iberdrola2024bess}.}%
   \label{fig:diagrama-bess}
 \end{figure}
 
@@ -18,7 +22,7 @@ Por ello, la principal contribución del apartado de la infraestructura operacio
 
 De esta forma, es posible obtener una visión más completa a través del análisis realizado en la sección~\ref{makereference3.1}, que define la arquitectura de la disposición de los activos energéticos y las múltiples restricciones operativas fundamentales tenidas en cuenta por el desarrollo. También, se examinan los componentes físicos que forman parte de la infraestructura al completo, detallados en la sección~\ref{makereference3.2}, que actúan como la fuente primaria de la obtención de datos. Además, se explora la comunicación que unifica estos componentes en la sección~\ref{makereference3.3},  facilitando un intercambio de datos estandarizado. Con esto, se describe la gestión de la información obtenida en la sección~\ref{makereference3.4}, detallando su rol en el almacenamiento, la gestión y la validación de los datos operativos. Por último, se explica como los datos de la infraestructura obtenidos son transformados y consumidos en la sección~\ref{makereference3.5}.
 
-\section{Configuración topológica}
+\section{Configuración topológica}%
 \label{makereference3.1}
 
 Resulta que en los \glspl{bess}, la efectividad operativa y la rentabilidad, esta última sobre todo, no dependen exclusivamente de la tecnología intrínseca utilizada o de la optimalidad de su operación, sino que están condicionadas fundamentalmente por su configuración topológica.
@@ -47,7 +51,7 @@ De igual manera, es necesario subrayar la relevancia de los flujos energéticos 
     ELGURKI & EBHIBHV & IBEVD24 & P.E. Elgea-Urkilla  \\
     \hline
   \end{tabular}
-  \caption[Unidades físicas, de programación y de oferta.]{Unidades físicas, de programación y de oferta de múltiples instalaciones.}
+  \caption[Unidades físicas, de programación y de oferta.]{Unidades físicas, de programación y de oferta de múltiples instalaciones.}%
   \label{tab:unidades-fisicas}
 \end{table}
 
@@ -57,7 +61,7 @@ El sistema desarrollado, por tanto, hace uso de la configuración topológica ya
 
 De esta forma, en términos generales y en el ámbito del mercado eléctrico peninsular, como es el caso, las instalaciones que alojan baterías de escala industrial se pueden clasificar principalmente en dos grandes familias, la configuración aislada y la híbrida, basada la terminología en las definiciones oficiales del Estado~\cite{cnmc2024servicios}.
 
-\subsection{Topología aislada}
+\subsection{Topología aislada}%
 \label{makereference3.1.1}
 
 La configuración aislada o \textit{standalone} representa el arquetipo más directo de despliegue de un \gls{bess}~\cite{gallo2023stand}.
@@ -67,7 +71,7 @@ En esta topología, la batería es el único activo energético de la instalaci�
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/topologia-aislada.png}
-  \caption[Diagrama de una instalación aislada.]{Diagrama de una instalación aislada con su activo de almacenamiento y sus correspondientes flujos energéticos~\cite{aleasoft2025la}.}
+  \caption[Diagrama de una instalación aislada.]{Diagrama de una instalación aislada con su activo de almacenamiento y sus correspondientes flujos energéticos~\cite{aleasoft2025la}.}%
   \label{fig:topologia-aislada}
 \end{figure}
 
@@ -95,7 +99,7 @@ Aunque la participación en estos mercados de regulación ofrezca una remuneraci
 
 Cabe destacar que, aun teniendo una baja rentabilidad esperada, el sistema desarrollado soporta la configuración aislada sin ninguna complicación, al ser diseñado con una arquitectura modular en mente, capaz de adaptarse a, presuntamente, cualquier configuración topológica.
 
-\subsection{Topología híbrida}
+\subsection{Topología híbrida}%
 \label{makereference3.1.2}
 
 Con el propósito de superar las limitaciones del modelo aislado y maximizar el aprovechamiento de la energía, han emergido con fuerza las configuraciones híbridas~\cite{bresciani2025hybridization}, el principal enfoque del sistema.
@@ -105,7 +109,7 @@ Estas topologías se definen por la llamada colocación del activo de generació
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/topologia-hibrida.png}
-  \caption[Diagrama de una instalación híbrida.]{Diagrama de una instalación híbrida con sus activos de almacenamiento y generación y sus correspondientes flujos energéticos~\cite{aleasoft2025la}.}
+  \caption[Diagrama de una instalación híbrida.]{Diagrama de una instalación híbrida con sus activos de almacenamiento y generación y sus correspondientes flujos energéticos~\cite{aleasoft2025la}.}%
   \label{fig:topologia-hibrida}
 \end{figure}
 
@@ -135,7 +139,7 @@ Por ello, la herramienta identifica y soporta de forma genérica las siguientes 
 
 La hibridación, incluso en sus formas más restrictivas, ofrece ventajas comparativamente altamente decisivas. Resulta que permite maximizar el valor de la energía renovable, almacenando excedentes que de otro modo se verterían a coste nulo. Además, al cargar desde la fuente renovable local, se evitan los costes regulatorios asociados al uso de la red pública~\cite{mterd2024orden} (peajes y cargos como el IVPEE, el bono social o las subvenciones del operador del sistema), lo que representa un ahorro directo y sustancial que mejora drásticamente los márgenes de arbitraje.
 
-\section{Instrumentación de campo}
+\section{Instrumentación de campo}%
 \label{makereference3.2}
 
 La instrumentación de campo constituye el conjunto de dispositivos físicos que actúan como la interfaz directa entre los flujos energéticos. Por un lado, se encargan de medir con precisión las variables físicas clave (como la potencia, tensión, \gls{soc}, etc.) y por otro, son los actuadores que ejecutan las órdenes generadas por la lógica de control y optimización.
@@ -166,7 +170,7 @@ Concretamente, a partir dichos componentes, \gls{bms}, \gls{pcs}, transformador 
 
 De tal forma, estas son las señales de entrada y salida comunicadas a través de los protocolos de comunicación descritos en la siguiente sección~\ref{makereference3.3}, las cuales deparan en el sistema de información de planta de la sección~\ref{makereference3.4} tras ser adecuadamente configuradas.
 
-\section{Protocolos de comunicación}
+\section{Protocolos de comunicación}%
 \label{makereference3.3}
 
 Una vez los sensores han medido las variables físicas, los datos deben transmitirse de manera fiable y estructurada generalmente hasta la plataforma central o, en este caso, al \gls{pis}.
@@ -177,16 +181,16 @@ El principal desafío en entornos industriales es la interoperabilidad, siendo e
 
 De esta forma, el \gls{pis}, explicado más adelante en la sección~\ref{makereference3.4}, debe entablar un vínculo con el controlador de planta o \gls{rtu}, concretamente. Pero, a la misma vez, el \gls{rtu} mismo necesita interactuar con el resto de activos físicos si pretende controlarlos de forma precisa.
 
-Esa es la razón de la exposición de múltiples protocolos, y es que la comunicación entre los activos energéticos y el \gls{rtu} se realiza mediante Modbus TCP de forma agnóstica al sistema desarrollado, mientras que la comunicación entre el \gls{rtu} y el \gls{pis} es a través de IEC 60870-5-104.
+Esa es la razón de la exposición de múltiples protocolos, y es que la comunicación entre los activos energéticos y el \gls{rtu} se realiza mediante Modbus TCP de forma agnóstica al sistema desarrollado, mientras que la comunicación entre el \gls{rtu} y el \gls{pis} es a través de IEC 60870{-}5{-}104.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/instrumentacion-de-campo.png}
-  \caption[Diagrama de instrumentación de campo.]{Diagrama de la interacción entre los dispositivos y sensores físicos de campo.}
+  \caption[Diagrama de instrumentación de campo.]{Diagrama de la interacción entre los dispositivos y sensores físicos de campo.}%
   \label{fig:instrumentacion-de-campo}
 \end{figure}
 
-\subsection{Modbus TCP}
+\subsection{Modbus TCP}%
 \label{makereference3.3.1}
 
 Modbus es uno de los estándares de facto en la automatización industrial por su simplicidad. Generalmente, es considerado uno de los estándares de comunicación industrial más ampliamente soportados~\cite{swales1999open}.
@@ -197,31 +201,31 @@ Los servidores responden a estas peticiones, asegurando un intercambio de inform
 
 Dentro de la arquitectura del sistema, el protocolo Modbus TCP es utilizado para la comunicación interna entre los activos energéticos de la instalación, como los \glspl{bess} y los \glspl{pcs}, y la \gls{rtu}. Esta elección, realizada por el integrador de la infraestructura física ajeno al desarrollo, se debe a su amplia adopción por parte de los fabricantes de equipos industriales y a su facilidad de implementación.
 
-\subsection{IEC 60870-5-104}
+\subsection{IEC 60870{-}5{-}104}%
 \label{makereference3.3.2}
 
-El estándar IEC 60870-5-104 es un protocolo de comunicación diseñado específicamente para el telecontrol y la automatización de sistemas de energía eléctrica, lo que se adecúa perfectamente al caso de uso pertinente~\cite{iec2016telecontrol}.
+El estándar IEC 60870{-}5{-}104 es un protocolo de comunicación diseñado específicamente para el telecontrol y la automatización de sistemas de energía eléctrica, lo que se adecúa perfectamente al caso de uso pertinente~\cite{iec2016telecontrol}.
 
-Actúa como una extensión del protocolo IEC 60870-5-101 y lo adapta para la comunicación a través de redes TCP/IP, simplificando su despliegue.
+Actúa como una extensión del protocolo IEC 60870{-}5{-}101 y lo adapta para la comunicación a través de redes TCP/IP, simplificando su despliegue.
 
 A diferencia de Modbus, este protocolo permite una comunicación orientada a eventos y no solicitada o espontánea, donde un dispositivo subordinado (servidor) puede enviar datos al sistema de control (cliente) sin una petición previa, lo cual es crucial para la notificación inmediata de alarmas o cambios de estado.
 
-IEC 60870-5-104 también permite enviar señalizaciones de calidad correspondientes a un valor, de hecho, es relativamente común ver señales sobrepasando los limites operacionales, como el estado de carga de una batería obtenido a mediante el protocolo observado en la figura~\ref{fig:overflow-soc}. Por suerte, estas señalizaciones de calidad permiten identificarlas, junto a valores inválidos, no actualizados, manuales, bloqueados o erróneos.
+IEC 60870{-}5{-}104 también permite enviar señalizaciones de calidad correspondientes a un valor, de hecho, es relativamente común ver señales sobrepasando los limites operacionales, como el estado de carga de una batería obtenido a mediante el protocolo observado en la figura~\ref{fig:overflow-soc}. Por suerte, estas señalizaciones de calidad permiten identificarlas, junto a valores inválidos, no actualizados, manuales, bloqueados o erróneos.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/overflow-soc.png}
-  \caption[Estado de carga excedente.]{Los valores del estado de carga excedente con respecto al limite operativo son registrados como inválidos por el protocolo.}
+  \caption[Estado de carga excedente.]{Los valores del estado de carga excedente con respecto al limite operativo son registrados como inválidos por el protocolo.}%
   \label{fig:overflow-soc}
 \end{figure}
 
 Con esto, se debe mencionar que el sistema desarrollado hace uso tanto de las señales a través de \textit{polling}, como de las señales espontáneas (asíncronas), aunque de forma más reducida en el caso de estas últimas. Concretamente, estas son configuradas para dar opción a la herramienta de optimización a conocer señales relacionadas con la disponibilidad de los recursos, y es que puede que el \gls{bess} haga saltar una alarma en caso de que se pierdan suficientes módulos de carga para afectar a la disponibilidad.
 
-En el contexto del sistema desarrollado, el protocolo IEC 60870-5-104 es el canal de comunicación principal entre el \gls{rtu}, que actúa como servidor IEC 60870-5-104, y el \gls{pis}, que actúa como cliente. Esta comunicación es fundamental para transmitir los datos operativos de los activos energéticos al historiador de datos y, a su vez, para enviar las consignas de operación, los comandos de carga y descarga, desde el sistema de optimización hacia la planta.
+En el contexto del sistema desarrollado, el protocolo IEC 60870{-}5{-}104 es el canal de comunicación principal entre el \gls{rtu}, que actúa como servidor IEC 60870{-}5{-}104, y el \gls{pis}, que actúa como cliente. Esta comunicación es fundamental para transmitir los datos operativos de los activos energéticos al historiador de datos y, a su vez, para enviar las consignas de operación, los comandos de carga y descarga, desde el sistema de optimización hacia la planta.
 
-Precisamente, la elección absolutamente fundamental del uso del protocolo IEC 60870-5-104 se realiza debido no solo a la capacidad de mensajería orientada a eventos, sino, principalmente, a las consideraciones de cumplimiento con los estándares impuestos por la institución dueña de la red eléctrica pública, el \gls{tso}, parte de sus funciones detalladas según su identificador conocido como \gls{asdu} en la tabla~\ref{tab:funciones-de-aplicacion-red}.
+Precisamente, la elección absolutamente fundamental del uso del protocolo IEC 60870{-}5{-}104 se realiza debido no solo a la capacidad de mensajería orientada a eventos, sino, principalmente, a las consideraciones de cumplimiento con los estándares impuestos por la institución dueña de la red eléctrica pública, el \gls{tso}, parte de sus funciones detalladas según su identificador conocido como \gls{asdu} en la tabla~\ref{tab:funciones-de-aplicacion-red}.
 
-Ellos detallan el uso del protocolo para garantizar la respuesta con respecto al intercambio de información de la red. Por lo tanto, el sistema desarrollado se limita a seguir con la utilización de los estándares impuestos. De esta forma, se muestran para enfatizar el razonamiento industrial real por detrás de la decisión tomada del uso de IEC 60870-5-104, el cual está incluso ratificado oficialmente en España~\cite{une2017equipos}.
+Ellos detallan el uso del protocolo para garantizar la respuesta con respecto al intercambio de información de la red. Por lo tanto, el sistema desarrollado se limita a seguir con la utilización de los estándares impuestos. De esta forma, se muestran para enfatizar el razonamiento industrial real por detrás de la decisión tomada del uso de IEC 60870{-}5{-}104, el cual está incluso ratificado oficialmente en España~\cite{une2017equipos}.
 
 \begin{table}[ht]
   \centering
@@ -238,11 +242,11 @@ Ellos detallan el uso del protocolo para garantizar la respuesta con respecto al
     182  & Petición de datos de tiempo real                          & C\_TR\_AA    & Baja     \\
     \hline
   \end{tabular}
-  \caption[Funciones de aplicación para la comunicación con la red eléctrica.]{Extracto de las funciones de aplicación asociadas definidas por el operador del sistema de transporte para la comunicación del sistema con la red eléctrica, consolidadas en el llamado \gls{sceci}~\cite{ree2009protocolo}. El sistema hace uso de sus propias funciones de aplicación asociadas, comunicadas en última instancia a la red a través aquí mostrados.}
+  \caption[Funciones de aplicación para la comunicación con la red eléctrica.]{Extracto de las funciones de aplicación asociadas definidas por el operador del sistema de transporte para la comunicación del sistema con la red eléctrica, consolidadas en el llamado \gls{sceci}~\cite{ree2009protocolo}. El sistema hace uso de sus propias funciones de aplicación asociadas, comunicadas en última instancia a la red a través aquí mostrados.}%
   \label{tab:funciones-de-aplicacion-red}
 \end{table}
 
-\section{Sistema de información de planta}
+\section{Sistema de información de planta}%
 \label{makereference3.4}
 
 Conociendo ya tanto los activos físicos disponibles, de los cuales obtener los datos sensoriales, como los canales de comunicación, es necesario ofrecer una interfaz de interacción bidireccional entre la herramienta principal que realiza la optimización operativa y la infraestructura física.
@@ -251,7 +255,7 @@ Para esta función crítica, la arquitectura del sistema se apoya en parte de la
 
 Precisamente, en muchas arquitecturas de sistemas industriales reales en producción, la totalidad de la información entrante y saliente de los activos físicos pasa por el sistema SCADA\@. En cambio, aunque en la arquitectura general del desarrollo propio sí que tenga cabida uno de esos sistemas, la comunicación con los activos físicos es realizada sin ningún tipo de indirección secundaria, significando que el sistema SCADA queda fuera del alcance y no es pertinente al diseño realizado. Es decir, la información fluye directamente al \gls{pis} sin pasar por el SCADA\@, aunque exista un sistema SCADA externo.
 
-\subsection{Contextualización del sistema}
+\subsection{Contextualización del sistema}%
 \label{makereference3.4.1}
 
 De esta forma, el \gls{pis} seleccionado se trata del llamado PI System de AVEVA (antes OSIsoft), una plataforma tecnológica diseñada para la gestión de datos de operaciones en tiempo real a escala industrial, que viene como anillo al dedo al caso de uso del sistema~\cite{aveva2025aveva}.
@@ -265,13 +269,13 @@ Por lo tanto, una contribución fundamental resulta ser el diseño, la implantac
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/sistema-de-informacion-de-planta.png}
-  \caption[Arquitectura del sistema de información de planta.]{Arquitectura de los canales de comunicación del sistema de información de planta~\cite{aveva2025aveva}.}
+  \caption[Arquitectura del sistema de información de planta.]{Arquitectura de los canales de comunicación del sistema de información de planta~\cite{aveva2025aveva}.}%
   \label{fig:sistema-de-informacion-de-planta}
 \end{figure}
 
-Para ello, se ha desplegado el PI Connector para IEC 60870-5-104, un componente de software que actúa como traductor entre el protocolo de telecontrol estándar del sector eléctrico y el ecosistema del PI System, también mostrado en la figura.
+Para ello, se ha desplegado el PI Connector para IEC 60870{-}5{-}104, un componente de software que actúa como traductor entre el protocolo de telecontrol estándar del sector eléctrico y el ecosistema del PI System, también mostrado en la figura.
 
-\subsection{Consideraciones de seguridad}
+\subsection{Consideraciones de seguridad}%
 \label{makereference3.4.2}
 
 Es bien sabido que las consideraciones de seguridad no son una característica más de los sistemas críticos industriales que controlan activos energéticos, sino que deben ser tomados como requerimientos fundamentales.
@@ -280,18 +284,18 @@ Por ello, el proceso de puesta en marcha requiere de una configuración precisa 
 
 Las \gls{idmz} se encuentran entre las redes de \gls{ot} y de \gls{it} y se diferencian en que deben intentar asegurar la disponibilidad y los tiempos de respuesta de los procesos físicos industriales que alojan. Esto se traduce en que no se alojan necesariamente cerca de las fuentes de datos de campo, ni directamente junto al resto de servicios informacionales, sino que deben existir en las localizaciones relacionadas con la sala de control que supervisa el funcionamiento correcto de dichos servicios con por lo menos una seguridad mínimamente mayor.
 
-Como tanto el conector como el servidor del \gls{pis} se encuentran en la misma \gls{idmz} y no en una red \gls{ot} en contrapunto a la red \gls{it}, no es necesario introducir otra capa de indirección. Esta capa actuaría como intermediario seguro para respetar las políticas de seguridad entre las redes, pero eso significa que debe existir un control en forma de \textit{firewall} más avanzado aún entre redes para que la herramienta de optimización pueda acceder al historiador (el \gls{pis}), en forma del llamado PI Relay. Aún así, gracias a la arquitectura usada, no es necesario introducir esta complejidad añadida a costa del aisaliento total entre redes (se sigue manteniendo el aislamiento necesario).
+Como tanto el conector como el servidor del \gls{pis} se encuentran en la misma \gls{idmz} y no en una red \gls{ot} en contrapunto a la red \gls{it}, no es necesario introducir otra capa de indirección. Esta capa actuaría como intermediario seguro para respetar las políticas de seguridad entre las redes, pero eso significa que debe existir un control en forma de \textit{firewall} más avanzado aún entre redes para que la herramienta de optimización pueda acceder al historiador (el \gls{pis}), en forma del llamado PI Relay. Aún así, gracias a la arquitectura usada, no es necesario introducir esta complejidad añadida a costa del aislamiento total entre redes (se sigue manteniendo el aislamiento necesario).
 
 De esta forma, se observa que, en concreto, el despliegue del conector, actuando como \textit{gateway} entre el protocolo de comunicación y el historiador de datos, y precisamente el historiador de datos mismo, se encuentran posicionados en el nivel 3.5 de la zona desmilitarizada industrial de la \gls{pera}, el cual define un modelo estructural estandarizado para la seguridad de los sistemas de control industrial.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/modelo-purdue.png}
-  \caption[Modelo Purdue.]{Modelo Purdue para la seguridad de los sistemas de control industrial~\cite{zscaler2025what}.}
+  \caption[Modelo Purdue.]{Modelo Purdue para la seguridad de los sistemas de control industrial~\cite{zscaler2025what}.}%
   \label{fig:modelo-purdue}
 \end{figure}
 
-\subsection{Configuración funcional}
+\subsection{Configuración funcional}%
 \label{makereference3.4.3}
 
 La parametrización del conector, junto con la especificación de parte la lógica de traducción a llevar a cabo, se ha realizado mediante el administrador del conector mostrado en la figura~\ref{fig:administador-del-conector}.
@@ -299,13 +303,13 @@ La parametrización del conector, junto con la especificación de parte la lógi
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/administador-del-conector.png}
-  \caption[Interfaz del administrador del conector.]{Interfaz del administrador del conector mostrando el descubrimiento de señales del dispositivo subordinado.}
+  \caption[Interfaz del administrador del conector.]{Interfaz del administrador del conector mostrando el descubrimiento de señales del dispositivo subordinado.}%
   \label{fig:administador-del-conector}
 \end{figure}
 
 Por la parte de la selección del PI Server al cual transmitir los datos, se especifica la dirección IP y el puerto del mismo. En concreto, el tipo de servidor se debe corresponder con la tecnología de archivado del historiador usada, la cual resulta ser PI Data Archive, a diferencia de PI Asset Framework de más alto nivel.
 
-Desde la perspectiva de la fuente de datos, se requiere introducir la localización del dispositivo primario subordinado de IEC 60870-5-104.
+Desde la perspectiva de la fuente de datos, se requiere introducir la localización del dispositivo primario subordinado de IEC 60870{-}5{-}104.
 
 Junto a ello, se ajustan los parámetros clave del protocolo en sí, como las \glspl{asdu}, que identifican unívocamente a la estación. Para facilitar el descubrimiento, es posible enviar un comando de \gls{gi} utilizando la \gls{asdu} 0xFFFF que devuelva todos los canales encontrados en el dispositivo subordinado, y filtrarlos posteriormente.
 
@@ -320,7 +324,7 @@ Finalmente, intentando asegurar la sincronización de los sensores y evitar la p
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/tiempo-mercados.png}
-  \caption[Calendario de negociación de los mercados eléctricos.]{Calendario de negociación de los mercados eléctricos intradiarios y continuo~\cite{omie2025mercado}.}
+  \caption[Calendario de negociación de los mercados eléctricos.]{Calendario de negociación de los mercados eléctricos intradiarios y continuo~\cite{omie2025mercado}.}%
   \label{fig:tiempo-mercados}
 \end{figure}
 
@@ -328,12 +332,12 @@ Más allá y tal y como se ha descrito anteriormente, es posible aprovechar las 
 
 De esta forma y una vez establecido el enlace de comunicación, el conector procede al descubrimiento de las señales disponibles, interrogando al controlador de planta y presentando una lista completa de los objetos de información accesibles, cada uno identificado por su dirección de objeto de información.
 
-Se seleccionan únicamente las variables críticas para la operación de la batería y la planta de generación asociada, correspondientes a las señales de los sensores anteriormente descritos en la sección~\ref{makereference3.2}. Posteriormente, se debe realizar un mapeo explícito de cada \gls{ioa} seleccionada a un elemento de datos en el PI Server. Para cada señal, se crea un PI Point correspondiente en el PI Data Archive, definiendo sus atributos como tipo de dato (\texttt{Float32} para mediciones continuas, \texttt{Digital} para descripciones de estado), unidades de ingeniería (\si{\percent}, \si{\mega\watt}, \si{\mega\watt\hour}), un descriptor textual claro y el identificador correspondiente (\texttt{BT SOC Real}, etc.). Es posible visualizar el resultado en la figura~\ref{fig:visualizacion-industrial-de-batería}.
+Se seleccionan únicamente las variables críticas para la operación de la batería y la planta de generación asociada, correspondientes a las señales de los sensores anteriormente descritos en la sección~\ref{makereference3.2}. Posteriormente, se debe realizar un mapeo explícito de cada \gls{ioa} seleccionada a un elemento de datos en el PI Server. Para cada señal, se crea un PI Point correspondiente en el PI Data Archive, definiendo sus atributos como tipo de dato (\texttt{Float32} para mediciones continuas, \texttt{Digital} para descripciones de estado), unidades de ingeniería (\si{\percent}, \si{\mega\watt}, \si{\mega\watt\hour}), un descriptor textual claro y el identificador correspondiente (\texttt{BT SOC Real}, etc.). Es posible visualizar el resultado en la figura~\ref{fig:visualizacion-industrial-de-bateria}.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/visualizacion-industrial-de-bateria.png}
-  \caption[Visualización industrial de señales de instalación.]{Visualización industrial de varias señales de una instalación.}
+  \caption[Visualización industrial de señales de instalación.]{Visualización industrial de varias señales de una instalación.}%
   \label{fig:visualizacion-industrial-de-bateria}
 \end{figure}
 
@@ -342,7 +346,7 @@ Como no se hace uso de PI Asset Framework para modelizar la planta de forma jer�
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/puntos-bateria.png}
-  \caption[Colección de puntos de una batería.]{Colección de puntos de una batería.}
+  \caption[Colección de puntos de una batería.]{Colección de puntos de una batería.}%
   \label{fig:puntos-bateria}
 \end{figure}
 
@@ -353,7 +357,7 @@ Con ello, la validación del sistema se realiza comparando en tiempo real los va
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/programa-bateria.png}
-  \caption[Programa de ciclado de una batería.]{Programa de ciclado de una batería en comparación con su evolución del estado de carga.}
+  \caption[Programa de ciclado de una batería.]{Programa de ciclado de una batería en comparación con su evolución del estado de carga.}%
   \label{fig:programa-bateria}
 \end{figure}
 
@@ -365,14 +369,14 @@ Otra situación interesante fue dada por el método de actualización de las se�
 
 Por suerte, el sistema de control de baterías no permite el incorrecto funcionamiento de las baterías desde la perspectiva física y hace sonar la alarma ante tales situaciones, actualizando su disponibilidad, por lo que la batería no sufre ningún daño aunque no se disponga de recurso energético en periodos de carga.
 
-\section{Consumo del historiador}
+\section{Consumo del historiador}%
 \label{makereference3.5}
 
 Una vez que la infraestructura de adquisición y almacenamiento ha sido configurada y validada, y los datos operativos de los activos fluyen de manera fiable hacia el historiador, el siguiente paso es establecer los mecanismos para su consumo.
 
 Precisamente, el consumo no se limita a una simple lectura de valores brutos, sino que abarca la transformación de algunas de las métricas para la obtención de valores dependientes, como los rendimientos del ciclo, y la interfaz programática que conecte el historiador con la herramienta de optimización, intentando hacer frente a posibles incompatibilidades tecnológicas entre ambas plataformas.
 
-\subsection{Ecuaciones de rendimiento}
+\subsection{Ecuaciones de rendimiento}%
 \label{makereference3.5.1}
 
 Para representar valores dependientes con significado físico, en vez de tener que consultar múltiples puntos simultáneamente para inferir el resultado computado de los mismos, resulta más conveniente y efectivo el uso de las ecuaciones de rendimiento proporcionadas como parte del PI System.
@@ -382,7 +386,7 @@ Las ecuaciones de rendimiento o PI Performance Equations son una solución efica
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/ecuaciones-de-rendimiento.png}
-  \caption[Creación de una ecuación de rendimiento.]{Creación de una ecuación de rendimiento.}
+  \caption[Creación de una ecuación de rendimiento.]{Creación de una ecuación de rendimiento.}%
   \label{fig:ecuaciones-de-rendimiento}
 \end{figure}
 
@@ -396,7 +400,7 @@ Mediante las ecuaciones de rendimiento se detallan los siguientes puntos.
 
 \end{itemize}
 
-\subsection{Integración programática}
+\subsection{Integración programática}%
 \label{makereference3.5.2}
 
 Finalmente, teniendo los datos provenientes de tanto de los activos físicos disponibles en el historiador como de sus propias transformaciones, es necesario consumirlos por la herramienta principal de optimización con el propósito de conocer los parámetros operativos de las baterías.
@@ -407,7 +411,7 @@ Para ello, existen múltiples enfoques que tomar, aunque el elegido a sido hacer
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/integración-programatica.png}
-  \caption[Diagrama de componentes entre plataformas.]{Diagrama de componentes entre plataformas.}
+  \caption[Diagrama de componentes entre plataformas.]{Diagrama de componentes entre plataformas.}%
   \label{fig:integración-programatica}
 \end{figure}
 

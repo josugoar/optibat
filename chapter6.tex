@@ -1,6 +1,8 @@
-\cleardoublepage
+% chktex-file 44
 
-\chapter{Comando y control}
+\cleardoublepage%
+
+\chapter{Comando y control}%
 \label{makereference6}
 
 Teniendo disponible toda la información necesaria para el control de vuelta al \gls{bess}, es necesario convertirla a la señales que la batería entienda. A su vez, también se necesita comunicar las ofertas de compra y venta de energía al mercado, para garantizar la sincronía de las operaciones entre la carga y compra y descarga y venta de la energía, respectivamente.
@@ -9,14 +11,14 @@ Más allá de las operaciones mismas, en entornos industriales donde se mueven g
 
 De esta forma, el apartado~\ref{makereference6.1} describe la operación automática del control de las consignas de la batería y las ofertas de mercado, mientras que el apartado~\ref{makereference6.2} detalla la implementación del cuadro de mando con el que supervisar la operación del sistema.
 
-\section{Consignación operativa}
+\section{Consignación operativa}%
 \label{makereference6.1}
 
 La consignación operativa no solo incluye la señalización del perfil de carga y descarga de las baterías y es que, si el sistema no comunica adecuadamente sus intenciones de compra y venta mediante los medios preestablecidos, la entidad energética dueña de la instalación podría incurrir severas multas por incumplir el reglamento.
 
 Con ello, el sistema debe responder a las preguntas de cuándo y cuánta energía ciclar físicamente y a qué precio.
 
-\subsection{Señalización de baterías}
+\subsection{Señalización de baterías}%
 \label{makereference6.1.1}
 
 Las señales de los \gls{bess} se comunican en términos de energía, como se describe en la sección~\ref{makereference3.2}. Esto significa que a las baterías no se les pueden mandar consignas de cargar o descargar una cantidad determinada de energía por cada periodo de mercado, aunque este sea el formato de salida de la optimización. Precisamente, la razón de esta limitación es bastante sencilla: la energía es dependiente del tiempo. La potencia, en cambio, es instantánea.
@@ -28,7 +30,7 @@ Dependiendo de la posición de arbitraje, la batería puede encontrarse en difer
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/perfil-potencia.png}
-  \caption[Modulación del perfil de potencia de una batería.]{Modulación del perfil de potencia de carga una batería de \SI{5}{\mega\watt}, en donde la potencia de carga fluctúa entre el mínimo técnico y máximo operacional, hasta verse finalmente limitada a poco más de la mitad de la potencia nominal.}
+  \caption[Modulación del perfil de potencia de una batería.]{Modulación del perfil de potencia de carga una batería de \SI{5}{\mega\watt}, en donde la potencia de carga fluctúa entre el mínimo técnico y máximo operacional, hasta verse finalmente limitada a poco más de la mitad de la potencia nominal.}%
   \label{fig:perfil-potencia}
 \end{figure}
 
@@ -38,7 +40,7 @@ Para transformar la posición de mercado de energía a potencia es necesario con
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:energia-a-potencia}
     P_{t} = E_{t} \cdot \frac{1}{\Delta t \cdot \frac{\SI{1}{\hour}}{\SI{60}{\minute}}}
   \end{equation}
@@ -62,7 +64,7 @@ Aún habiendo convertido las unidades, se continua teniendo un problema, explica
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/carga-descarga.png}
-  \caption[Diagrama de un sistema de control de baterías.]{Diagrama de un sistema de control de baterías con señales de carga y descarga independientes~\cite{sunkko2025two}.}
+  \caption[Diagrama de un sistema de control de baterías.]{Diagrama de un sistema de control de baterías con señales de carga y descarga independientes~\cite{sunkko2025two}.}%
   \label{fig:carga-descarga}
 \end{figure}
 
@@ -90,7 +92,7 @@ Por ejemplo, una situación en la que una carga y descarga simultanea podría su
     H22Q4   & 5.5                          & 32.5                            & 32.5                             & 73.00                                           \\
     \hline
   \end{tabular}
-  \caption[Límites de programa y conflictos en la exportación.]{Límite de programa donde, desde el periodo H21Q1 al H22Q1, la exportación de la generación está limitada mientras que la batería es capaz de exportar libremente, pudiendo causar conflictos entre la carga de aprovechamiento de la generación y la descarga de la venta en precios altos.}
+  \caption[Límites de programa y conflictos en la exportación.]{Límite de programa donde, desde el periodo H21Q1 al H22Q1, la exportación de la generación está limitada mientras que la batería es capaz de exportar libremente, pudiendo causar conflictos entre la carga de aprovechamiento de la generación y la descarga de la venta en precios altos.}%
   \label{tab:carga-descarga-simultanea}
 \end{table}
 
@@ -98,9 +100,9 @@ Para adecuarse a dichas limitaciones físicas, se combinan las señales de carga
 
 Con las posiciones transformadas en potencia, solo se toman en cuenta los cambios en el perfil de potencia y se anota el tiempo de inicio de cada cambio.
 
-Por último, el envio de las consignas se realiza a través de la señal o punto ofrecido por el \gls{bms} configurado en el \gls{pis}, llamado \texttt{Programa} y explicado en el apartado de infraestructura~\ref{makereference3.2}. Se hace uso del mismo flujo descrito en la sección~\ref{makereference3.5} pero, en vez de leer señales, se escriben en los tiempos correspondientes en el historiador.
+Por último, el envío de las consignas se realiza a través de la señal o punto ofrecido por el \gls{bms} configurado en el \gls{pis}, llamado \texttt{Programa} y explicado en el apartado de infraestructura~\ref{makereference3.2}. Se hace uso del mismo flujo descrito en la sección~\ref{makereference3.5} pero, en vez de leer señales, se escriben en los tiempos correspondientes en el historiador.
 
-Cuando llegue el momento de cambio en el perfil de potencia de la batería y la señal del programa esté escrita en el historiado, este automáticamente enviará de vuelta un mensaje IEC 60870-5-104 a la estación marcando el nuevo perfil de potencia y la batería responderá correspondientemente.
+Cuando llegue el momento de cambio en el perfil de potencia de la batería y la señal del programa esté escrita en el historiado, este automáticamente enviará de vuelta un mensaje IEC 60870{-}5{-}104 a la estación marcando el nuevo perfil de potencia y la batería responderá correspondientemente.
 
 Con esto, uno de los aspectos más cruciales no resulta ser precisamente la consignación de un nuevo perfil de potencia de carga o descarga, sino la vuelta al mínimo técnico. Es decir, es una absoluta necesidad hacer que la batería vuelva a un perfil de potencia nulo cuando se haya terminado la carga o descarga, de tal forma que no continúe ciclándose.
 
@@ -108,7 +110,7 @@ Resulta interesante destacar que, durante el despliegue del sistema en una de la
 
 Dicha situación subraya la importancia de disponer de herramientas de observación y control manual del sistema, como la descrita en la próxima sección~\ref{makereference6.2}.
 
-\subsection{Emisión de ofertas}
+\subsection{Emisión de ofertas}%
 \label{makereference6.1.2}
 
 Para emitir la oferta al mercado, es necesario calcular el precio al que ofertar la posición de la batería\footnote{La oferta del activo de generación se configura de forma manual a un valor fijo \( \lambda^{O}_{\text{RES}, t} = \lambda^{O}_{\text{RES}} \), generalmente siendo \SI{0}{\text{\euro}\per\mega\watt\hour} para asegurar su casación, ya que su energía no puede ser almacenada más que en la batería misma.}. Para ello se emplea un algoritmo de desarrollo propio que permite agrupar las ofertas por ciclos.
@@ -117,7 +119,7 @@ En un primer momento, precisamente a los inicios de desarrollo de la emisión de
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:emisión-directa}
     \lambda^{O}_{\text{BESS}, t} = \lambda^{M}_{t}
   \end{equation}
@@ -140,7 +142,7 @@ Una solución sencilla al comportamiento previamente descrito, empleado como evo
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:emisión-tolerancia}
     \lambda^{O}_{\text{BESS}, t} =
     \begin{cases}
@@ -176,7 +178,7 @@ El objetivo final es agrupar los semiciclos de carga y descarga y obtener sus pr
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:diferencia-soc}
     \Delta \mathrm{SoC}_{t} =
     \begin{cases}
@@ -201,7 +203,7 @@ Con ello, es posible calcular la dirección de cambio del \gls{soc} de la bater�
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:sigma-carga}
     \sigma_{t} =
     \begin{cases}
@@ -229,7 +231,7 @@ Es extremadamente importante que el sistema se defienda ante situaciones de cicl
 
 \begin{samepage}
 
-  \begin{subequations}
+  \begin{subequations}%
     \label{eq:puntos-algidos-inf-sup}
 
     \begin{equation}
@@ -266,7 +268,7 @@ Como no se desea contar múltiples ciclos cuando sucedan múltiples periodos con
 
 \begin{samepage}
 
-  \begin{subequations}
+  \begin{subequations}%
     \label{eq:puntos-algidos-desplazados}
 
     \begin{equation}
@@ -301,7 +303,7 @@ A continuación, se toman juntan los puntos álgidos inferiores y superiores en 
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:puntos-algidos}
     B_{t} = B_{\text{inf}, t} \lor B_{\text{sup}, t}
   \end{equation}
@@ -322,7 +324,7 @@ Junto a ello, se desplazan los puntos un periodo en el tiempo para resolver prob
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:puntos-algidos-shift}
     B_t =
     \begin{cases}
@@ -345,7 +347,7 @@ Con los puntos álgidos correctamente identificados, se toma una cuenta acumulat
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:conteo-ciclos}
     N_{t} = 1 + \sum_{i = 1}^{t - 1} B_{i}
   \end{equation}
@@ -366,7 +368,7 @@ Tan solo dista multiplicar el conteo de los semiciclos, correspondiente con sus 
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:conteo-ciclos-signo}
     C_{t} = \sigma_{t} \cdot N_{t}
   \end{equation}
@@ -389,7 +391,7 @@ Finalmente, se agrupan los precios de mercado por los periodos correspondientes 
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:agrupado-periodos}
     G_{c} = \{ \lambda^{M}_{t} \mid C_{t} = c \}
   \end{equation}
@@ -445,7 +447,7 @@ Finalmente, la oferta se comunica con la herramienta externa de resolución de o
 
 \begin{table}[ht]
   \centering
-  \resizebox{\textwidth}{!}{
+  \resizebox{\textwidth}{!}{%
     \begin{tabular}{|c|c|c|c|l|S|S|S|}
       \hline
       FECHA      & PERIODO & COD\_RESOLUCION & BLOQUE & UFI   & {ENERGIA} & {POTENCIA} & {PRECIO} \\
@@ -461,11 +463,11 @@ Finalmente, la oferta se comunica con la herramienta externa de resolución de o
       \hline
     \end{tabular}
   }
-  \caption[Formato de oferta de mercado.]{Formato de oferta de mercado.}
+  \caption[Formato de oferta de mercado.]{Formato de oferta de mercado.}%
   \label{tab:formato-oferta}
 \end{table}
 
-\section{Cuadro de mando}
+\section{Cuadro de mando}%
 \label{makereference6.2}
 
 Aunque el sistema desarrollado sea completamente agnóstico de ningún tipo de intervención manual para su operación, en algunas ocasiones no es capaz de tener en cuenta todos los factores que afectan a la totalidad de los componentes involucrados, conocidos por los agentes de mercado.
@@ -477,7 +479,7 @@ Principalmente motivado por dicho propósito y con el objetivo de facilitar la o
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/cuadro-de-mando.png}
-  \caption[Cuadro de mando del sistema.]{Cuadro de mando del sistema.}
+  \caption[Cuadro de mando del sistema.]{Cuadro de mando del sistema.}%
   \label{fig:cuadro-de-mando}
 \end{figure}
 
@@ -485,10 +487,10 @@ De esta forma, el cuadro de mando del sistema es la pieza cable mediante la cual
 
 Cabe destacar que, más allá del cuadro de mando del comando y control orientado a los agentes de mercado y operadores de telecontrol, cada componente del sistema también es capaz de ser configurado mediante canales no interactivos si es necesario, estando estos orientadas a los operadores de telecontrol para la configuración de la infraestructura operativa, al personal de sistemas para el entorno de mercado, y a los agentes de mercado para la modelización estructural.
 
-\subsection{Funcionalidad básica}
+\subsection{Funcionalidad básica}%
 \label{makereference6.2.1}
 
-El cuadro de mando ha sido desarrollado en la misma tecnología principal utilizada en la mayoria de los otros componentes, Python. Esta vez, se hace uso de Streamlit~\cite{streamlit2025faster}, un componente para construir herramientas interactivas.
+El cuadro de mando ha sido desarrollado en la misma tecnología principal utilizada en la mayoría de los otros componentes, Python. Esta vez, se hace uso de Streamlit~\cite{streamlit2025faster}, un componente para construir herramientas interactivas.
 
 Tras pasar por un servicio de autenticación que únicamente permite el acceso a agentes de mercado y operadores de telecontrol designados, el usuario es presentado con la interfaz de operación principal.
 
@@ -497,7 +499,7 @@ En ella, es posible modificar la configuración operativa de cada una de las ins
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/configuracion-sistema.png}
-  \caption[Configuración del sistema.]{Configuración del sistema interactiva a través del cuadro de mandos.}
+  \caption[Configuración del sistema.]{Configuración del sistema interactiva a través del cuadro de mandos.}%
   \label{fig:configuracion-sistema}
 \end{figure}
 
@@ -507,12 +509,12 @@ Junto a ello, se permite importar datos del mercado localmente y obviar todo el 
 
 Además, el entorno de mercado no es la única información capaz de ser exportada. Los resultados del programa óptimo de la batería, obtenido tras realizar todo el proceso, pueden ser descargados en un formato CSV con el fin de inspeccionarlos detalladamente, o incluso modificarlos (aunque resulte más intuitivo realizar cualquier modificación a través del cuadro de mandos directamente).
 
-También se permite especificar tanto un programa, en donde se realize el seguimiento del programa mismo y la solución del modelado estructural del capítulo~\ref{makereference4} se desactive, como un objetivo de \gls{soc}, en donde el sistema cumpla con las indicaciones en los periodos determinados pero siga realizando la tarea de optimización, representado en la figura~\ref{fig:soc-manual}. Resulta crucial que todo el resto de validaciones siguan en funcionamiento, por lo que no es posible introducir un programa invalido de ningún modo. Con esto, se observa como la inclusión del objetivo de la modularización del sistema resulta más que beneficiosa ante dichas situaciones.
+También se permite especificar tanto un programa, en donde se realize el seguimiento del programa mismo y la solución del modelado estructural del capítulo~\ref{makereference4} se desactive, como un objetivo de \gls{soc}, en donde el sistema cumpla con las indicaciones en los periodos determinados pero siga realizando la tarea de optimización, representado en la figura~\ref{fig:soc-manual}. Resulta crucial que todo el resto de validaciones sigan en funcionamiento, por lo que no es posible introducir un programa invalido de ningún modo. Con esto, se observa como la inclusión del objetivo de la modularización del sistema resulta más que beneficiosa ante dichas situaciones.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/soc-manual.png}
-  \caption[Regulación manual del estado de carga.]{Regulación manual del estado de carga, en donde se ejemplifica la introducción de un posible periodo de prueba, en el que un operador de telecontrol busque ciclar la batería completamente a medio día.}
+  \caption[Regulación manual del estado de carga.]{Regulación manual del estado de carga, en donde se ejemplifica la introducción de un posible periodo de prueba, en el que un operador de telecontrol busque ciclar la batería completamente a medio día.}%
   \label{fig:soc-manual}
 \end{figure}
 
@@ -523,34 +525,34 @@ Finalmente, se presentan los \gls{kpi} en forma de los ingresos obtenidos por en
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/kpi-sistema.png}
-  \caption[Indicadores de rendimiento.]{Indicadores de rendimiento.}
+  \caption[Indicadores de rendimiento.]{Indicadores de rendimiento.}%
   \label{fig:kpi-sistema}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/perfil-generacion.png}
-  \caption[Perfil de generación.]{Perfil de generación.}
+  \caption[Perfil de generación.]{Perfil de generación.}%
   \label{fig:perfil-generacion}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/programa-optimo.png}
-  \caption[Programa óptimo de la batería.]{Programa óptimo de la batería.}
+  \caption[Programa óptimo de la batería.]{Programa óptimo de la batería.}%
   \label{fig:programa-optimo}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/soc-bess.png}
-  \caption[Estado de carga de la batería.]{Estado de carga de la batería.}
+  \caption[Estado de carga de la batería.]{Estado de carga de la batería.}%
   \label{fig:soc-bess}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/limitaciones-tecnicas.png}
-  \caption[Limitaciones de programa de la instalación.]{Limitaciones de programa de la instalación.}
+  \caption[Limitaciones de programa de la instalación.]{Limitaciones de programa de la instalación.}%
   \label{fig:limitaciones-tecnicas}
 \end{figure}

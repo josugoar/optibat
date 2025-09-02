@@ -1,6 +1,8 @@
-\cleardoublepage
+% chktex-file 44
 
-\chapter{Entorno de mercado}
+\cleardoublepage%
+
+\chapter{Entorno de mercado}%
 \label{makereference4}
 
 Para que el sistema de optimización de baterías funcione de manera efectiva, no es suficiente con disponer de la información proveniente de la infraestructura con sus sensores y señales. Como el sistema opera directamente en el mercado eléctrico, su lógica de decisión debe ser retroalimentada por un entendimiento del entorno de mercado. Por ello, los datos de mercado son una fuente de información igualmente indispensable, ya que dictan el contexto económico y regulatorio en el que se toman todas las decisiones de arbitraje, formando parte de los componentes destacados del flujo de la figura~\ref{fig:esquema-mercado}.
@@ -8,7 +10,7 @@ Para que el sistema de optimización de baterías funcione de manera efectiva, n
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/esquema-mercado.jpg}
-  \caption[Esquema del funcionamiento del mercado.]{Esquema del funcionamiento del entorno del mercado, destacando las entidades regulatorias de las que obtener información~\cite{villagrasa2023como}.}
+  \caption[Esquema del funcionamiento del mercado.]{Esquema del funcionamiento del entorno del mercado, destacando las entidades regulatorias de las que obtener información~\cite{villagrasa2023como}.}%
   \label{fig:esquema-mercado}
 \end{figure}
 
@@ -20,7 +22,7 @@ Con esto, para facilitar la comprensión de las secciones posteriores, se define
 
 Para ello, primeramente se presenta \gls{omie} como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de la energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de \gls{ree}, que impone las limitaciones de programa de operación en tiempo real, como se explica en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla como se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema.
 
-\section{Operador del mercado}
+\section{Operador del mercado}%
 \label{makereference4.1}
 
 \Gls{omie} es la institución responsable de la gestión de los mercados spot, diario, intradiarios y continuo de electricidad en la península ibérica. Actúa como la plataforma centralizada donde los agentes de mercado presentan sus ofertas de compra y venta de energía, y cuyo proceso de casación determina los precios y las cantidades de energía negociadas para cada periodo de negociación.
@@ -31,7 +33,7 @@ Precisamente, \gls{omie} pone a disposición la información en forma de fichero
 
 De esta forma, la información que el sistema desarrollado toma a través de \gls{omie} se clasifica en dos categorías mayoritarias, los precios marginales de casación y la energía finalmente negociada por cada \gls{up}.
 
-\subsection{Precio marginal}
+\subsection{Precio marginal}%
 \label{makereference4.1.1}
 
 Una de las piezas de información más críticas para el sistema de optimización es la previsión de los precios a los que se liquidará la energía en los mercados futuros. Para poder realizar un arbitraje energético efectivo, posicionando estratégicamente las ofertas de compra en periodos de bajo coste y las de venta en periodos de alto beneficio, el modelo debe operar sobre una estimación fiable de dichos precios, mostrados en la figura~\ref{fig:mercado-diario}.
@@ -39,7 +41,7 @@ Una de las piezas de información más críticas para el sistema de optimizació
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/mercado-diario.png}
-  \caption[Precio del mercado diario de la primera semana de agosto.]{Precio real del mercado diario de la primera semana de agosto, del cual se debe tener disponible una previsión para operar a futuro.}
+  \caption[Precio del mercado diario de la primera semana de agosto.]{Precio real del mercado diario de la primera semana de agosto, del cual se debe tener disponible una previsión para operar a futuro.}%
   \label{fig:mercado-diario}
 \end{figure}
 
@@ -59,7 +61,7 @@ Por ello, para obtener esta previsión, el sistema desarrollado adopta un enfoqu
 
 Afortunadamente, la información de precios de casación es de carácter público. \Gls{omie} la publica en ficheros con una nomenclatura estandarizada, siendo el fichero \gls{marginalpdbc} para el mercado diario y los ficheros marginales \gls{marginalpibci} para los mercados intradiarios~\cite{cnmc2025resolucion}.
 
-\subsection{Energía negociada}
+\subsection{Energía negociada}%
 \label{makereference4.1.2}
 
 Más allá de las previsiones de precios, el sistema necesita conocer con absoluta certeza el resultado de las ofertas que ha presentado al mercado. Existe una diferencia fundamental entre la posición óptima calculada por el algoritmo de optimización y la posición casada, que es la cantidad de energía que la instalación se ha comprometido firmemente a comprar o vender.
@@ -74,14 +76,14 @@ Precisamente, esta discrepancia entre lo ofertado y lo casado puede deberse a m�
 
 Pero, a diferencia de los precios, la información de energía casada es de naturaleza confidencial. Para proteger las estrategias comerciales de los participantes en el mercado, \gls{omie} la publica desglosada por \gls{up}, y cada entidad solo tiene acceso a la información de sus propias unidades. Los ficheros que contienen esta información son el \gls{pdbf} para el mercado diario y el \gls{pibca} para los mercados intradiarios~\cite{cnmc2025resolucion}.
 
-\section{Operador del sistema}
+\section{Operador del sistema}%
 \label{makereference4.2}
 
 Mientras que \gls{omie} gestiona el componente económico del mercado, la responsabilidad de garantizar la seguridad y estabilidad física del sistema eléctrico en tiempo real recae sobre \gls{ree}. Como \gls{tso}, \gls{ree} tiene el rol fundamental de balancear constantemente la generación con la demanda y de operar la red de transporte de alta tensión de manera segura, evitando sobrecargas o colapsos.
 
 Para cumplir con esta misión crítica, el resultado puramente económico de la casación del mercado gestionado por \gls{omie} debe ser supervisado y, en ocasiones, modificado por \gls{ree}. Esto se debe a que un programa de producción económicamente óptimo podría no ser físicamente viable debido a las limitaciones de la red. Por esta razón, \gls{ree} emite consignas operativas de cumplimiento necesario que se aplican sobre el resultado del mercado, conocidas como limitaciones de programa.
 
-\subsection{Limitaciones de programa}
+\subsection{Limitaciones de programa}%
 \label{makereference4.2.1}
 
 Las limitaciones de programa son limitaciones de potencia impuestas por \gls{ree} a los participantes del mercado para resolver congestiones en la red o garantizar la seguridad del suministro en tiempo real. Estas limitaciones representan un límite superior inviolable a la operación de los activos energéticos y, por tanto, constituyen una entrada fundamental para el sistema de optimización.
@@ -104,7 +106,7 @@ Las limitaciones son desglosadas según diferentes identificadores.
 
 Por tanto, el sistema de optimización desarrollado debe consultar la existencia de estas limitaciones de programa, de la misma forma que la información anterior. Si se recibe una limitación, el modelo debe considerarla como una restricción máxima en sus cálculos, ajustando la consigna de operación de la batería para asegurar que la exportación total de las unidades se mantengan siempre por debajo del límite impuesto por \gls{ree}. El fichero de limitaciones de programa se conoce como \gls{limitacionsuj}.
 
-\section{Situación meteorológica}
+\section{Situación meteorológica}%
 \label{makereference4.3}
 
 Además de las señales económicas de \gls{omie} y las operativas de \gls{ree}, existe una tercera fuente de datos externos que resulta indispensable para el sistema de optimización, concretamente en el caso de las topologías híbridas. Esta se trata de la previsión de la generación eléctrica que producen los activos de de generación (generalmente renovable) asociados a los sistemas de almacenamiento, dependientes de la situación meteorológica.
@@ -116,7 +118,7 @@ Este proceso de previsión es una tarea externa al sistema desarrollado. Se basa
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/prevision-generacion.png}
-  \caption[Previsión de generación de un activo.]{Resultado de la previsión de generación de un activo fotovoltaico.}
+  \caption[Previsión de generación de un activo.]{Resultado de la previsión de generación de un activo fotovoltaico.}%
   \label{fig:prevision-generacion}
 \end{figure}
 
@@ -134,7 +136,7 @@ El sistema de optimización consume esta previsión de generación como un dato 
 
 Por tanto, aunque el cálculo de la previsión es ajeno, su consumo es una parte relevante de la lógica del sistema, permitiendo aprovechar el potencial de las instalaciones con configuración topológica híbrida.
 
-\section{Consolidación de información}
+\section{Consolidación de información}%
 \label{makereference4.4}
 
 Una vez identificadas las fuentes de datos de mercado (\gls{omie} y \gls{ree} en este caso), el desafío fundamental reside en la adquisición programática, el procesamiento y la unificación de esta información para que pueda ser consumida por el sistema de optimización.
@@ -149,7 +151,7 @@ Desde la perspectiva del sistema desarrollado, la fuente de datos meteorológico
 \begin{figure}
   \centering
   % \includegraphics[width=0.5\linewidth]{figures/arquitectura-mercado.png}
-  \caption[Arquitectura desacoplada del proceso de datos.]{Arquitectura desacoplada del proceso de extracción, transformación y carga.}
+  \caption[Arquitectura desacoplada del proceso de datos.]{Arquitectura desacoplada del proceso de extracción, transformación y carga.}%
   \label{fig:arquitectura-mercado}
 \end{figure}
 
@@ -160,7 +162,7 @@ Se han desarrollado dos programas principales en Python, uno para cada fuente de
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/horarios-publicacion.png}
-  \caption[Horarios de publicación de mercados intradiarios.]{Horarios de publicación de los mercados intradiarios.}
+  \caption[Horarios de publicación de mercados intradiarios.]{Horarios de publicación de los mercados intradiarios.}%
   \label{fig:horarios-publicacion}
 \end{figure}
 
@@ -182,28 +184,28 @@ El formato de los datos de precios contiene las columnas fecha, hora y precio en
   \centering
   \begin{tabular}{|l|p{7.5cm}|l|}
     \hline
-    Campo      & Descripción                     & Valores válidos        \\
+    Campo      & Descripción                     & Valores válidos            \\
     \hline
-    Año        & Año                             & I4 -- 20XX             \\
-    Mes        & Mes                             & I2 -- 1 a 12           \\
-    Día        & Día                             & I2 -- 1 a 31           \\
-    Hora       & Hora                            & I2 -- 1 a 25           \\
-    MarginalPT & Precio marginal zona Portuguesa & F8.2 -- 0.0 a 99999.99 \\
-    MarginalES & Precio marginal zona Española   & F8.2 -- 0.0 a 99999.99 \\
+    Año        & Año                             & I4 {-}{-} 20XX             \\
+    Mes        & Mes                             & I2 {-}{-} 1 a 12           \\
+    Día        & Día                             & I2 {-}{-} 1 a 31           \\
+    Hora       & Hora                            & I2 {-}{-} 1 a 25           \\
+    MarginalPT & Precio marginal zona Portuguesa & F8.2 {-}{-} 0.0 a 99999.99 \\
+    MarginalES & Precio marginal zona Española   & F8.2 {-}{-} 0.0 a 99999.99 \\
     \hline
   \end{tabular}
-  \caption[Descripción del formato de precios.]{Descripción del formato de precios~\cite{omie2025modelo}.}
+  \caption[Descripción del formato de precios.]{Descripción del formato de precios~\cite{omie2025modelo}.}%
   \label{tab:descripción-precio}
 \end{table}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/contenido-precio.png}
-  \caption[Ejemplificación del contenido de los ficheros de precio.]{Ejemplificación del contenido de los ficheros de precio.}
+  \caption[Ejemplificación del contenido de los ficheros de precio.]{Ejemplificación del contenido de los ficheros de precio.}%
   \label{fig:contenido-precio}
 \end{figure}
 
-El desarrollo gestiona correctamente los hhusos horarios en horario local, ya que el mercado diario dispone de 24 periodos de granularidad horaria, pero puede tener 23 o 25 en días con cambio de hora\footnote{El mercado diario está en proceso de ser actualizado a una granularidad cuartohoraria.}. Análogamente, los mercados intradiarios, con granularidad cuartohoraria, tienen por lo general 96 periodos, con opción de 92 y 100. Esto es debido a que el funcionamiento de los mercados siempre se realiza en horario local, sin excepción, para que no existan conflictos de solapamiento entre ellos~\cite{omie2025reglas}.
+El desarrollo gestiona correctamente los husos horarios en horario local, ya que el mercado diario dispone de 24 periodos de granularidad horaria, pero puede tener 23 o 25 en días con cambio de hora\footnote{El mercado diario está en proceso de ser actualizado a una granularidad cuartohoraria.}. Análogamente, los mercados intradiarios, con granularidad cuartohoraria, tienen por lo general 96 periodos, con opción de 92 y 100. Esto es debido a que el funcionamiento de los mercados siempre se realiza en horario local, sin excepción, para que no existan conflictos de solapamiento entre ellos~\cite{omie2025reglas}.
 
 El fichero de energía negociada contiene las columnas UP, fecha, hora y energía en megavatios hora. De esta forma, la presencia de la \gls{up} es la razón fundamental del carácter confidencial de estos datos. Si un agente conociera los movimientos de las unidades que no controla, podría adaptar su estrategia en detrimento de la libre competencia, según la tabla~\ref{tab:descripción-energia} y el contenido de la figura~\ref{fig:contenido-energia}.
 
@@ -211,27 +213,27 @@ El fichero de energía negociada contiene las columnas UP, fecha, hora y energí
   \centering
   \begin{tabular}{|l|p{5cm}|l|}
     \hline
-    Campo             & Descripción                                                                                       & Valores válidos               \\
+    Campo             & Descripción                                                                                       & Valores válidos                \\
     \hline
-    Año               & Año                                                                                               & I4 -- 20XX                    \\
-    Mes               & Mes                                                                                               & I2 -- 1 a 12                  \\
-    Día               & Día                                                                                               & I2 -- 1 a 31                  \\
-    Hora              & Hora                                                                                              & I2 -- 1 a 25                  \\
-    Código            & Código de la unidad (UP) ofertante                                                                & A7                            \\
-    Energía asignada  & Energía asignada (MWh)                                                                            & F7.1 -- -99999.9 a 99999.9     \\
-    IdCBF             & Identificador del Cont. Bilateral                                                                 & I8 Vacío cuando es una oferta \\
-    Tipo de oferta    & Indicará que tipo de oferta es                                                                    & I2 -- 0 a 99                   \\
-    NumOf             & Indicará el número de oferta ó el de ejecución del contrato bilateral físico asociado a la unidad & I8 -- -1 a 99999999            \\
+    Año               & Año                                                                                               & I4 {-}{-} 20XX                 \\
+    Mes               & Mes                                                                                               & I2 {-}{-} 1 a 12               \\
+    Día               & Día                                                                                               & I2 {-}{-} 1 a 31               \\
+    Hora              & Hora                                                                                              & I2 {-}{-} 1 a 25               \\
+    Código            & Código de la unidad (UP) ofertante                                                                & A7                             \\
+    Energía asignada  & Energía asignada (MWh)                                                                            & F7.1 {-}{-} -99999.9 a 99999.9 \\
+    IdCBF             & Identificador del Cont. Bilateral                                                                 & I8 Vacío cuando es una oferta  \\
+    Tipo de oferta    & Indicará que tipo de oferta es                                                                    & I2 {-}{-} 0 a 99               \\
+    NumOf             & Indicará el número de oferta ó el de ejecución del contrato bilateral físico asociado a la unidad & I8 {-}{-} -1 a 99999999        \\
     \hline
   \end{tabular}
-  \caption[Descripción del formato de energía negociada.]{Descripción del formato de energía negociada~\cite{omie2025modelo}.}
+  \caption[Descripción del formato de energía negociada.]{Descripción del formato de energía negociada~\cite{omie2025modelo}.}%
   \label{tab:descripción-energia}
 \end{table}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/contenido-energia.png}
-  \caption[Ejemplificación del contenido de los ficheros de energía.]{Ejemplificación del contenido de los ficheros de energía.}
+  \caption[Ejemplificación del contenido de los ficheros de energía.]{Ejemplificación del contenido de los ficheros de energía.}%
   \label{fig:contenido-energia}
 \end{figure}
 
@@ -244,7 +246,7 @@ Junto a ello, el fichero de limitaciones de programa se estructura con las colum
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/contenido-limitaciones.png}
-  \caption[Limitaciones de programa a una instalación.]{Limitaciones de programa a una instalación.}
+  \caption[Limitaciones de programa a una instalación.]{Limitaciones de programa a una instalación.}%
   \label{fig:contenido-limitaciones}
 \end{figure}
 
