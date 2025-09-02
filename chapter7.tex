@@ -17,9 +17,9 @@ El apartado de infraestructura operacional~\ref{makereference3} funciona continu
 
 Con esto, para obtener los resultados experimentales, ha sido necesario realizar un trabajo previo de validación con el propósito de cerciorarse de los correctos resultados de las métricas operativas, es decir, investigar la rentabilidad del sistema.
 
-Cabe destacar que, originalmente, la entidad con la que se ha realizado el despliegue del sistema apenas disponía de una herramienta rudimentaria con un funcionamiento incorrecto únicamente enfocada en el arbitraje de topología aislada. Esto significa que, precisamente debido a la novedad de los \glspl{bess}, no es posible realizar comparaciones con soluciones similares debido a su nula existencia dentro de la entidad energética misma, por lo menos.
+Cabe destacar que, originalmente, la entidad con la que se ha realizado el despliegue del sistema apenas disponía de una herramienta rudimentaria con un funcionamiento incorrecto únicamente enfocada en el arbitraje de topología aislada. Esto significa que, precisamente debido a la novedad de los \glspl{bess}, no es posible realizar comparaciones con soluciones similares debido a su nula existencia dentro de la entidad energética misma.
 
-Aún así, se ha estudiado el rendimiento obtenido al sistema, analizando su uso no solo a lo largo del periodo de despliegue, sino realizando también simulaciones con datos de mercado y señales de la batería reales. Precisamente, facilitar el llamado \textit{backtesting} resulta ser una de las razones principales para el diseño de la arquitectura del sistema modular, con el \gls{pis} de la infraestructura operacional y el \gls{dw} del entorno de mercado.
+Aún así, se ha estudiado el rendimiento obtenido por el sistema, analizando su uso no solo a lo largo del periodo de despliegue, sino realizando también simulaciones con datos de mercado y señales de la batería reales. Precisamente, facilitar el llamado \textit{backtesting} resulta ser una de las razones principales para el diseño de la arquitectura del sistema modular, con el \gls{pis} de la infraestructura operacional y el \gls{dw} del entorno de mercado.
 
 De esta forma, la métrica principal a analizar resulta siempre ser el beneficio obtenido en euros megavatio hora. La razón del uso de un beneficio dependiente de la energía es el hecho de que no querer necesariamente vender la mayor cantidad disponible en todo momento, generando grandes ingresos puntuales pero perdiendo la capacidad de aumentarlos en un futuro. Lo que se busca, en cambio, es el \textit{spread}, siendo la diferencia entre el precio al que se ha vendido y comprado una unidad de energía.
 
@@ -28,9 +28,9 @@ Con ello, la configuración operativa del sistema se mantiene en un \textit{spre
 \section{Rentabilidad}
 \label{makereference7.1}
 
-Primeramente, es necesario conocer la información de costes para determinar si verdaderamente merece la pena la incorporación de \glspl{bess} en la red eléctrica, más allá de sus beneficios operativos.
+En primer lugar, es necesario conocer la información de costes para determinar si verdaderamente merece la pena la incorporación de \glspl{bess} en la red eléctrica, más allá de sus beneficios operativos.
 
-Una batería, similar a las usadas, de \SI{20}{\mega\watt\hour} \( E_{n} \), \SI{5}{\mega\watt} \( P_{n} \), 90\% de eficiencia \( \text{RTE} \), 2\% de degradación anual \( \delta \), una vida útil de 30 años \( H \) y 1 ciclo por día \( N \), suponiendo un \textit{spread} \( S \) de \SI{60}{\text{\euro}\per\mega\watt\hour}, genera \SI{8\,958\,504}{\text{\euro}} de ingreso \( \pi \), según la ecuación~\ref{eq:beneficio-total}.
+Una batería, similar a las usadas, de \SI{20}{\mega\watt\hour} \( E_{n} \), \SI{5}{\mega\watt} \( P_{n} \), 90\% de eficiencia \( \eta \), 2\% de degradación anual \( \delta \), una vida útil de 30 años \( H \) y 1 ciclo por día \( N \), suponiendo un \textit{spread} \( S \) de \SI{60}{\text{\euro}\per\mega\watt\hour}, genera \SI{8\,958\,504}{\text{\euro}} de ingreso \( \pi \), según la ecuación~\ref{eq:beneficio-total}.
 
 \begin{equation}
   \label{eq:beneficio-total}
