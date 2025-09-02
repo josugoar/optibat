@@ -3,7 +3,7 @@
 \chapter{Comando y control}
 \label{makereference6}
 
-Teniendo disponible toda la información necesaria para el control de vuelta al \gls{bess}, es necesario convertirla a la señales que la batería entiende. A su vez, también se necesita comunicar las ofertas de compra y venta de energía al mercado, para garantizar la sincronía de las operaciones entre la carga y compra y descarga y venta de la energía, respectivamente.
+Teniendo disponible toda la información necesaria para el control de vuelta al \gls{bess}, es necesario convertirla a la señales que la batería entienda. A su vez, también se necesita comunicar las ofertas de compra y venta de energía al mercado, para garantizar la sincronía de las operaciones entre la carga y compra y descarga y venta de la energía, respectivamente.
 
 Más allá de las operaciones mismas, en entornos industriales donde se mueven grandes cantidades de energía, como el pertinente, es altamente recomendable disponer de algún tipo de método con el que comprobar la correcta operación del sistema y modificar su comportamiento si resulta oportuno. Por ello, también se desarrolla un cuadro de mando con el que realizar las tareas de supervisión.
 
@@ -14,16 +14,16 @@ De esta forma, el apartado~\ref{makereference6.1} describe la operación automá
 
 La consignación operativa no solo incluye la señalización del perfil de carga y descarga de las baterías y es que, si el sistema no comunica adecuadamente sus intenciones de compra y venta mediante los medios preestablecidos, la entidad energética dueña de la instalación podría incurrir severas multas por incumplir el reglamento.
 
-Con ello, el sistema debe responder a las cruciales preguntas de cuándo y cuánta energía ciclar físicamente y a qué precio.
+Con ello, el sistema debe responder a las preguntas acerca de cuándo y cuánta energía ciclar físicamente y a qué precio.
 
 \subsection{Señalización de baterías}
 \label{makereference6.1.1}
 
-Las señales de los \gls{bess} se comunican en términos de energía, como se describe en la sección~\ref{makereference3.2}. Esto significa que a las baterías no se les pueden mandar consigas de cargar o descargar una cantidad determinada de energía por cada periodo de mercado, aunque este sea el formato de salida de la optimización. Precisamente, la razón de esta limitación es bastante sencilla, la energía es dependiente del tiempo. La potencia, en cambio, es instantánea.
+Las señales de los \gls{bess} se comunican en términos de energía, como se describe en la sección~\ref{makereference3.2}. Esto significa que a las baterías no se les pueden mandar consignas de cargar o descargar una cantidad determinada de energía por cada periodo de mercado, aunque este sea el formato de salida de la optimización. Precisamente, la razón de esta limitación es bastante sencilla: la energía es dependiente del tiempo. La potencia, en cambio, es instantánea.
 
-Resulta que, al igual que todo el resto de activos energéticos, la operación de los \gls{bess} es medida en potencia, representando el ritmo con el cual la batería transfiere energía.
+Resulta que, al igual que todo el resto de activos energéticos, la operación de los \gls{bess} se mide en términos de potencia, representando el ritmo con el cual la batería transfiere energía.
 
-Dependiendo de la posición de arbitraje, la batería puede encontrarse a diferentes perfiles de potencia, desde la inactividad y el llamado mínimo técnico, hasta el máximo operacional. En la figura~\ref{fig:perfil-potencia} se puede observar la modulación del perfil de potencia de la batería.
+Dependiendo de la posición de arbitraje, la batería puede encontrarse en diferentes perfiles de potencia, desde la inactividad y el llamado mínimo técnico, hasta el máximo operacional. En la figura~\ref{fig:perfil-potencia} se puede observar la modulación del perfil de potencia de la batería.
 
 % TODO
 \begin{figure}
@@ -33,7 +33,7 @@ Dependiendo de la posición de arbitraje, la batería puede encontrarse a difere
   \label{fig:perfil-potencia}
 \end{figure}
 
-Con esto, las mayores ventajas de las baterías son su capacidad de rápida conmutación o variación de su perfil de potencia y el mínimo de técnico nulo, conn el que la batería puede mantenerse inactiva sin perder capacidad de conmutación.
+Con esto, las mayores ventajas de las baterías son su capacidad de rápida conmutación o variación de su perfil de potencia y el mínimo de técnico nulo, con el que la batería puede mantenerse inactiva sin perder capacidad de conmutación.
 
 Para transformar la posición de mercado de energía a potencia es necesario conocer el periodo o granularidad del mercado y realizar la transformación a través de la simple ecuación~\ref{eq:energia-a-potencia}. Las limitaciones de potencia ya se han tenido en cuenta en las etapas anteriores.
 
@@ -69,7 +69,7 @@ Aún habiendo convertido las unidades, se continua teniendo un problema, explica
 
 ¿Qué sucede entonces cuando las dos señales se activan a la vez? La activación simultanea resulta en un bloqueo mutuo donde ocurre un cortocircuito, el cual podría causar daños físicos internos a las celdas de la batería (en la practica el \gls{bms} lo impide), por esta razón la misión del sistema de control de baterías es evitar esta situación. Para ello, limita las consignas a una única señal en donde los valores positivos indican carga, los negativos descarga y cero la inactividad.
 
-Por ejemplo, una situación en la que una carga y descarga simultanea podría suceder, de no ser por las limitaciones físicas de las baterías, es cuando existe recurso de generación limitado por los límites de programa para un periodo beneficioso de venta, en donde la batería querría tomarlo y venderlo directamente en el mismo periodo. Visualizado en la tabla~\ref{tab:carga-descarga-simultanea}.
+Por ejemplo, una situación en la que una carga y descarga simultanea podría suceder, de no ser por las limitaciones físicas de las baterías, se da cuando existe recurso de generación limitado por los límites de programa para un periodo beneficioso de venta, en donde la batería querría tomarlo y venderlo directamente en el mismo periodo. Visualizado en la tabla~\ref{tab:carga-descarga-simultanea}.
 
 \begin{table}[ht]
   \centering
@@ -107,15 +107,15 @@ Con las posiciones transformadas en potencia, solo se toman en cuenta los cambio
   \label{fig:diferencia-perfil-potencia}
 \end{figure}
 
-Por último, el envió de las consignas se realiza a través de la señal o punto ofrecido por el \gls{bms} configurado en el \gls{pis}, llamado \texttt{Programa} y explicado en el apartado de infraestructura~\ref{makereference3.2}. Se hace uso del mismo flujo descrito en la sección~\ref{makereference3.5} pero, en vez de leer señales, se escriben en los tiempos correspondientes en el historiador.
+Por último, el envio de las consignas se realiza a través de la señal o punto ofrecido por el \gls{bms} configurado en el \gls{pis}, llamado \texttt{Programa} y explicado en el apartado de infraestructura~\ref{makereference3.2}. Se hace uso del mismo flujo descrito en la sección~\ref{makereference3.5} pero, en vez de leer señales, se escriben en los tiempos correspondientes en el historiador.
 
 Cuando llegue el momento de cambio en el perfil de potencia de la batería y la señal del programa esté escrita en el historiado, este automáticamente enviará de vuelta un mensaje IEC 60870-5-104 a la estación marcando el nuevo perfil de potencia y la batería responderá correspondientemente.
 
 Con esto, uno de los aspectos más cruciales no resulta ser precisamente la consignación de un nuevo perfil de potencia de carga o descarga, sino la vuelta al mínimo técnico. Es decir, es una absoluta necesidad hacer que la batería vuelva a un perfil de potencia nulo cuando se haya terminado la carga o descarga, de tal forma que no continúe ciclándose.
 
-Interesantemente, durante el despliegue del sistema en una de las instalaciones, no se llegó a consignar correctamente la vuelta al mínimo técnico de la batería debido a un fallo lógico, por lo que esta continuó cargándose más allá del límite máximo del \( \mathrm{SoC}_{\text{max}} \) establecido y, al llegar al límite de almacenamiento, hizo saltar la alarma del \gls{bms}. El problema desplomó la disponibilidad de la batería y llegó a causar perdidas monetarias hasta rápidamente conseguir arreglarlo.
+Resulta interesante destacar que, durante el despliegue del sistema en una de las instalaciones, no se llegó a consignar correctamente la vuelta al mínimo técnico de la batería debido a un fallo lógico, por lo que esta continuó cargándose más allá del límite máximo del \( \mathrm{SoC}_{\text{max}} \) establecido y, al llegar al límite de almacenamiento, hizo saltar la alarma del \gls{bms}. El problema desplomó la disponibilidad de la batería y llegó a causar pérdidas monetarias hasta rápidamente conseguir arreglarlo.
 
-Dicha situación subraya la importancia de disponer de herramientas de observabilidad y control manual del sistema, como la descrita en la próxima sección~\ref{makereference6.2}.
+Dicha situación subraya la importancia de disponer de herramientas de observación y control manual del sistema, como la descrita en la próxima sección~\ref{makereference6.2}.
 
 \subsection{Emisión de ofertas}
 \label{makereference6.1.2}
@@ -145,7 +145,7 @@ En un primer momento, precisamente a los inicios de desarrollo de la emisión de
 
 Dicho comportamiento dispone de un fallo inaceptable en el funcionamiento del ciclado de la batería. Como el mercado eléctrico es marginalista, si existe un desvío del precio de casación a la dirección opuesta de la oferta en comparación a la predicción de precio empleada durante la operación, la oferta nunca tendrá la capacidad de casar en el mercado, resultando en un desvío de programa que, muy probablemente no podrá ser recuperado por la misma razón en los mercados posteriores.
 
-Un sencillo arreglo al previo comportamiento, empleado como evolución de la lógica de emisión de ofertas del sistema, es incluir una tolerancia de oferta en el calculo del precio. La tolerancia aumenta o disminuye el precio de oferta en la dirección opuesta al beneficio en la compra o venta, buscando la casación en el mercado, ecuación~\ref{eq:emisión-tolerancia}. Este comportamiento funciona ya que permite cubrirse ante pequeños desvíos de precio y sigue sin afectar a la disminución del beneficio si el desvío de precio es favorable. En cambio, esta solución introduce un problema doble.
+Una solución sencilla al comportamiento previamente descrito, empleado como evolución de la lógica de emisión de ofertas del sistema, es incluir una tolerancia de oferta en el calculo del precio. La tolerancia aumenta o disminuye el precio de oferta en la dirección opuesta al beneficio en la compra o venta, buscando la casación en el mercado, ecuación~\ref{eq:emisión-tolerancia}. Este comportamiento funciona ya que permite cubrirse ante pequeños desvíos de precio y sigue sin afectar a la disminución del beneficio si el desvío de precio es favorable. En cambio, esta solución introduce un problema doble.
 
 \begin{samepage}
 
@@ -175,13 +175,13 @@ Un sencillo arreglo al previo comportamiento, empleado como evolución de la ló
 
 \end{samepage}
 
-Primero, el uso de una tolerancia absoluta implica que el sistema solo puede defenderse ante desvíos de precio según su magnitud, pero, cuando mayor es el precio de mercado, mayores suelen ser los desvíos de precio\footnote{Si la predicción del precio de mercado supera los \SI{100}{\text{\euro}\per\mega\watt\hour}, es más probable que el precio de casación termine en un rango de \SI{80}{\text{\euro}\per\mega\watt\hour} a \SI{120}{\text{\euro}\per\mega\watt\hour} aproximadamente, con un desvío de precio de \SI{20}{\text{\euro}\per\mega\watt\hour}. Si la predicción es de \SI{0}{\text{\euro}\per\mega\watt\hour}, lo normal es que fluctúe en un rango de \SI{-5}{\text{\euro}\per\mega\watt\hour} a \SI{5}{\text{\euro}\per\mega\watt\hour} o menos, un desvío de precio de \SI{5}{\text{\euro}\per\mega\watt\hour}, mucho menor.}. Es complicado, por no decir imposible y poco intuitivo, seleccionar dinámicamente entre una tolerancia absoluta o relativa.
+Primero, el uso de una tolerancia absoluta implica que el sistema solo puede defenderse ante desvíos de precio según su magnitud, pero, cuanto mayor es el precio de mercado, mayores suelen ser los desvíos de precio\footnote{Si la predicción del precio de mercado supera los \SI{100}{\text{\euro}\per\mega\watt\hour}, es más probable que el precio de casación termine en un rango de \SI{80}{\text{\euro}\per\mega\watt\hour} a \SI{120}{\text{\euro}\per\mega\watt\hour} aproximadamente, con un desvío de precio de \SI{20}{\text{\euro}\per\mega\watt\hour}. Si la predicción es de \SI{0}{\text{\euro}\per\mega\watt\hour}, lo normal es que fluctúe en un rango de \SI{-5}{\text{\euro}\per\mega\watt\hour} a \SI{5}{\text{\euro}\per\mega\watt\hour} o menos, un desvío de precio de \SI{5}{\text{\euro}\per\mega\watt\hour}, mucho menor.}. Es complicado, por no decir imposible y poco intuitivo, seleccionar dinámicamente entre una tolerancia absoluta o relativa.
 
 Segundo, si una de las ofertas no casa, ocurre la llamada casación parcial~\cite{cnmc2024mercados}, en donde la batería mantiene un ciclo incompleto. Si el mercado acepta solo algunos de los periodos el estado de carga resultante puede no permitir completar el ciclo previsto o cumplir con compromisos posteriores.
 
 Para evitar estos problemas, el sistema finalmente propone y hace uso del algoritmo de emisión de oferta por semiciclo de carga.
 
-Como lo que se busca es agrupar los semiciclos de carga y descarga y obtener sus precios límites de compra y venta, inicialmente se calcula la diferencia entre el estado de carga de un periodo y el anterior en la ecuación~\ref{eq:diferencia-soc}.
+El objetivo final es agrupar los semiciclos de carga y descarga y obtener sus precios límites de compra y venta, inicialmente se calcula la diferencia entre el estado de carga de un periodo y el anterior en la ecuación~\ref{eq:diferencia-soc}.
 
 \begin{samepage}
 
@@ -206,7 +206,7 @@ Como lo que se busca es agrupar los semiciclos de carga y descarga y obtener sus
 
 \end{samepage}
 
-Con ello, es posible calcular la dirección de cambio del \gls{soc} de la batería. Es decir, determinar si la batería se esta cargando, descargando o en estado estacionario, ecuación~\ref{eq:sigma-carga}. Cabe destacar que el uso del \gls{soc} es necesario, a diferencia del resto de resultados de la optimización (como la posición), ya que, entendiblemente, este representa el \textit{source of truth} del sistema.
+Con ello, es posible calcular la dirección de cambio del \gls{soc} de la batería. Es decir, determinar si la batería se esta cargando, descargando o en estado estacionario, ecuación~\ref{eq:sigma-carga}. Cabe destacar que el uso del \gls{soc} es necesario, a diferencia del resto de resultados de la optimización (como la posición), ya que este representa el \textit{source of truth} del sistema.
 
 \begin{samepage}
 
@@ -446,9 +446,9 @@ Con ello, por cada grupo, se toma el precio más bajo entre los periodos de desc
 
 \end{samepage}
 
-La emisión de oferta por semiciclo de carga evita aceptaciones parciales e, importantemente, refleja las restricciones intertemporales y costes de oportunidad de la batería en forma de todo o nada. Es decir, se hace uso del comportamiento más agresivo en busca de la casación en todo momento, los bloques de ofertas por semiciclo casan en todos a la vez o ninguno, siendo esta la clave.
+La emisión de oferta por semiciclo de carga evita aceptaciones parciales y refleja las restricciones intertemporales y costes de oportunidad de la batería en forma de todo o nada. Es decir, se hace uso del comportamiento más agresivo en busca de la casación en todo momento, los bloques de ofertas por semiciclo casan en todos a la vez o ninguno, siendo esta la clave.
 
-Entendiblemente, es inevitable generar desvíos si el bloque no casa pero, inteligentemente, estos desvíos no se ven afectados por los subsecuentes movimientos en los mercados posteriores. Intentar solucionar el desvió no puede aumentarlo si se hace uso de esta estrategia, a diferencia de las anteriores.
+Es inevitable generar desvíos si el bloque no casa pero, inteligentemente, estos desvíos no se ven afectados por los subsecuentes movimientos en los mercados posteriores. Intentar solucionar el desvío no puede aumentarlo si se hace uso de esta estrategia, a diferencia de las anteriores.
 
 Finalmente, la oferta se comunica con la herramienta externa de resolución de ofertas de la entidad energética en el formato adecuado\footnote{La emisión de ofertas del sistema soporta múltiples formatos, pero solo se muestra el usado en producción.}, véase la tabla~\ref{tab:formato-oferta}. Si no es modificada, entrará automáticamente a mercado.
 
@@ -497,7 +497,7 @@ Cabe destacar que, más allá del cuadro de mando del comando y control orientad
 \subsection{Funcionalidad principal}
 \label{makereference6.2.1}
 
-El cuadro de mando ha sido desarrollado en la misma tecnología principal utilizada en la mayoria de los otros componentes, Python. Esta vez, se hace uso de Streamlit, un componente para construir herramientas interactivas.
+El cuadro de mando ha sido desarrollado en la misma tecnología principal utilizada en la mayoria de los otros componentes, Python. Esta vez, se hace uso de Streamlit~\cite{streamlit2025faster}, un componente para construir herramientas interactivas.
 
 Tras pasar por un servicio de autenticación que únicamente permite el acceso a agentes de mercado y operadores de telecontrol designados, el usuario es presentado con la interfaz de operación principal.
 
@@ -516,7 +516,7 @@ Junto a ello, se permite importar datos del mercado localmente y obviar todo el 
 
 Además, el entorno de mercado no es la única información capaz de ser exportada. Los resultados del programa óptimo de la batería, obtenido tras realizar todo el proceso, pueden ser descargados en un formato CSV con el fin de inspeccionarlos detalladamente, o incluso modificarlos (aunque resulte más intuitivo realizar cualquier modificación a través del cuadro de mandos directamente).
 
-También se permite especificar tanto un programa, en donde se realize el seguimiento del programa mismo y la solución del modelado estructural del capítulo~\ref{makereference4} se desactive, como un objetivo de \gls{soc}, en donde el sistema cumpla con las indicaciones en los periodos determinados pero siga realizando la tarea de optimización, representado en la figura~\ref{fig:soc-manual}. Crucialmente, todo el resto de validaciones siguen en funcionamiento, por lo que no es posible introducir un programa invalido de ningún modo. Con esto, se observa como la inclusión del objetivo de la modularización del sistema resulta más que beneficiosa ante dichas situaciones.
+También se permite especificar tanto un programa, en donde se realize el seguimiento del programa mismo y la solución del modelado estructural del capítulo~\ref{makereference4} se desactive, como un objetivo de \gls{soc}, en donde el sistema cumpla con las indicaciones en los periodos determinados pero siga realizando la tarea de optimización, representado en la figura~\ref{fig:soc-manual}. Resulta crucial que todo el resto de validaciones siguan en funcionamiento, por lo que no es posible introducir un programa invalido de ningún modo. Con esto, se observa como la inclusión del objetivo de la modularización del sistema resulta más que beneficiosa ante dichas situaciones.
 
 % TODO
 \begin{figure}

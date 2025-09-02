@@ -16,7 +16,7 @@ Por tanto, se define el análisis de las fuentes de información de mercado y lo
 
 De esta forma, se pretende describir el origen de estas fuentes de datos, las reglas que gobiernan su publicación y acceso, y la arquitectura implementada para consumirlos de manera programática y robusta.
 
-Con esto, para facilitar la comprensión de las secciones posteriores, se definen los siguientes conceptos. Las llamadas \glspl{ufi} representan las interfaces de intercambio de energía abstractas por encima de los flujos energéticos físicos, en donde las operaciones realizadas de una \gls{ufi} siempre deben poder respaldarse por un correcto flujo energético físicamente. Las \glspl{up} son los identificadores del \gls{tso} de las instalaciones al completo y resultan los activos que se arbitran en el mercado. Las \glspl{uof} son los identificadores equivalentes del \gls{mo}. Es decir, las operaciones de las \glspl{ufi} que engloba una \gls{up} o \gls{uof} se agregan a la hora de realizar la oferta.
+Con esto, para facilitar la comprensión de las secciones posteriores, se definen los siguientes conceptos. Las \glspl{ufi} son identificadores lógicos que definen los puntos de intercambio de energía. A diferencia de un punto físico en la red, una \gls{ufi} es una referencia contractual para las operaciones de mercado, con la condición indispensable de que toda transacción debe estar respaldada por un flujo de energía físicamente viable. Las \glspl{up} son los identificadores del \gls{tso} de las instalaciones al completo y resultan los activos que se arbitran en el mercado. Las \glspl{uof} son los identificadores equivalentes del \gls{mo}. Es decir, las operaciones de las \glspl{ufi} que engloba una \gls{up} o \gls{uof} se agregan a la hora de realizar la oferta.
 
 Para ello, primeramente se presenta \gls{omie} como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de la energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de \gls{ree}, que impone las limitaciones de programa de operación en tiempo real, como se explica en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla como se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema.
 
@@ -240,28 +240,7 @@ Aún con todo, existe un enorme problema que impide el uso de los resultados de 
 
 Para resolver este problema, se hace uso de una herramienta propietaria externa al desarrollo, que es capaz de calcular los desgloses de la energía, convirtiendo la energía casada por \gls{up} a energía casada por \gls{ufi}. Para llevarlo a cabo, debe hacer uso de información no disponible por el desarrollo, por lo que la existencia de una herramienta del estilo es necesaria.
 
-Junto a ello, el fichero de limitaciones de programa se estructura con las columnas fecha, hora, \gls{up}, \gls{ufi} y valor, según la tabla~\ref{tab:descripción-limitaciones} y el contenido de la figura~\ref{fig:contenido-limitaciones}. La lógica es que si el código es un \gls{ufi}, la limitación aplica exclusivamente a ese activo físico, si es un \gls{up}, se aplica a la totalidad de la instalación.
-
-\begin{table}[ht]
-  \centering
-  \begin{tabular}{|l|p{5cm}|l|}
-    \hline
-    Campo            & Descripción                                                                                       & Valores válidos               \\
-    \hline
-    Año              & Año                                                                                               & I4 -- 20XX                    \\
-    Mes              & Mes                                                                                               & I2 -- 1 a 12                  \\
-    Día              & Día                                                                                               & I2 -- 1 a 31                  \\
-    Hora             & Hora                                                                                              & I2 -- 1 a 25                  \\
-    Código           & Código de la unidad ofertante (UFI o UP)                                                          & A7                            \\
-    Energía asignada & Energía asignada (MWh)                                                                            & F7.1 -- -99999.9 a 99999.9    \\
-    IdCBF            & Identificador del Cont. Bilateral                                                                 & I8 Vacío cuando es una oferta \\
-    Tipo de oferta   & Indicará que tipo de oferta es                                                                    & I2 -- 0 a 99                  \\
-    NumOf            & Indicará el número de oferta ó el de ejecución del contrato bilateral físico asociado a la unidad & I8 -- -1 a 99999999           \\
-    \hline
-  \end{tabular}
-  \caption[Descripción del formato de las limitaciones técnicas.]{Descripción del formato de las limitaciones técnicas.}
-  \label{tab:descripción-limitaciones}
-\end{table}
+Junto a ello, el fichero de limitaciones de programa se estructura con las columnas fecha, hora, \gls{up}, \gls{ufi} y valor, según el contenido de la figura~\ref{fig:contenido-limitaciones}. La lógica es que si el código es un \gls{ufi}, la limitación aplica exclusivamente a ese activo físico, si es un \gls{up}, se aplica a la totalidad de la instalación.
 
 \begin{figure}
   \centering
