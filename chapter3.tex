@@ -219,7 +219,7 @@ Con esto, se debe mencionar que el sistema desarrollado hace uso tanto de las se
 
 En el contexto del sistema desarrollado, el protocolo IEC 60870-5-104 es el canal de comunicación principal entre el \gls{rtu}, que actúa como servidor IEC 60870-5-104, y el \gls{pis}, que actúa como cliente. Esta comunicación es fundamental para transmitir los datos operativos de los activos energéticos al historiador de datos y, a su vez, para enviar las consignas de operación, los comandos de carga y descarga, desde el sistema de optimización hacia la planta.
 
-Precisamente, la elección absolutamente fundamental del uso del protocolo IEC 60870-5-104 se realiza debido no solo a la capacidad de mensajería orientada a eventos, sino, principalmente, a las consideraciones de cumplimiento con los estándares impuestos por la institución dueña de la red eléctrica pública, el \gls{tso}, parte de sus funciones detalladas según su identificador conocido como \gls{asdu} en la tabla~\ref{tab:funciones-de-aplicación-red}.
+Precisamente, la elección absolutamente fundamental del uso del protocolo IEC 60870-5-104 se realiza debido no solo a la capacidad de mensajería orientada a eventos, sino, principalmente, a las consideraciones de cumplimiento con los estándares impuestos por la institución dueña de la red eléctrica pública, el \gls{tso}, parte de sus funciones detalladas según su identificador conocido como \gls{asdu} en la tabla~\ref{tab:funciones-de-aplicacion-red}.
 
 Ellos detallan el uso del protocolo para garantizar la respuesta con respecto al intercambio de información de la red. Por lo tanto, el sistema desarrollado se limita a seguir con la utilización de los estándares impuestos. De esta forma, se muestran para enfatizar el razonamiento industrial real por detrás de la decisión tomada del uso de IEC 60870-5-104, el cual está incluso ratificado oficialmente en España~\cite{une2017equipos}.
 
@@ -238,8 +238,8 @@ Ellos detallan el uso del protocolo para garantizar la respuesta con respecto al
     182  & Petición de datos de tiempo real                          & C\_TR\_AA    & Baja     \\
     \hline
   \end{tabular}
-  \caption[Funciones de aplicación para la comunicación con la red eléctrica.]{Extracto de las funciones de aplicación asociadas definidas por el \gls{tso} para la comunicación del sistema con la red eléctrica, consolidadas en el llamado \gls{sceci}~\cite{ree2009protocolo}.}
-  \label{tab:funciones-de-aplicación-red}
+  \caption[Funciones de aplicación para la comunicación con la red eléctrica.]{Extracto de las funciones de aplicación asociadas definidas por el operador del sistema de transporte para la comunicación del sistema con la red eléctrica, consolidadas en el llamado \gls{sceci}~\cite{ree2009protocolo}. El sistema hace uso de sus propias funciones de aplicación asociadas, comunicadas en última instancia a la red a través aquí mostrados.}
+  \label{tab:funciones-de-aplicacion-red}
 \end{table}
 
 \section{Sistema de información de planta}
