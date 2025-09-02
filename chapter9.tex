@@ -1,0 +1,121 @@
+\cleardoublepage
+
+\chapter{Introduction}
+\label{makereference9}
+
+The system behind the entirety of the electrical generation, transmission and distribution remains understandably completely transparent to the end users of said energy~\cite{garrues2009red}.
+
+On the one hand, there is a network of electrical transmission grids that combines multiple technologies to ensure its satisfactory operation, possessing a high level of complexity in order to integrate the diverse characteristics of the changing landscape of energy assets.
+
+On the other, interested parties actually buy and sell energy in bulk in the so-called electricity market, where its price is ultimately determined. This gives rise to arbitrage dynamics with the aim of generating economic profit, just as it happens with any other financial asset.
+
+Currently, there are a multitude of energy solutions with which to supply the energy grid and arbitrage in the market, such as photovoltaic, wind, hydraulic, or combined cycle generation. Although all of them play a more than fundamental role in the energy system~\cite{turkenburg2000renewable}, one of them stands out above the rest, especially for its growing popularity. These are the battery energy management systems, illustrated in Figure~\ref{fig:instalacion-bess}.
+
+Precisely, battery energy management systems are a comparatively new energy storage technology that allows, as their name suggests, storing electricity for later use. This greatly facilitates demand management and, crucially, improves the stability and efficiency of the electrical infrastructure, being able to actively regulate it thanks to the rapid switching capability of the batteries. This way, they are one of the most convenient energy technologies to avoid possible imbalances in the grid~\cite{xu2014bess}.
+
+Still, it is not enough to just have the batteries, but it is absolutely essential to control their charging and discharging carefully to prolong their lifespan and ensure their proper functionality. As batteries have a somewhat considerable initial capital expenditures, but a minimal operational expenditures~\cite{larsson2018cost}, their profitability through the generated benefit from the arbitrage in spot markets is sought.
+
+It is just then that the need for the creation of a battery optimization system in the electricity market based on the industrial internet of things arises, which would manage the operational infrastructure, market environment, structural modeling, and command and control, continuously cycling the battery indefinitely in search of the best spread. Although possible to manually manage, the complexity and speed of the markets (especially considering recent updates~\cite{cnmc2025resolucion, omie2025instruccion}) make automation highly relevant.
+
+In fact, this is how \textsc{Optibat} is born, the self developed battery optimization system in the electricity market, successfully deployed in multiple energy installations throughout the country, which cycles dozens of megawatt hours per day and generates millions of euros in projected annual revenue. It manages to solve the manual bidding work of market agents and telecommunications operators, previously necessary for incorporating the batteries' positions into the market.
+
+With this, the design decisions related to the integration of the system and the components of the existing architecture are detailed (that is, fundamental aspects of the operation that the market operator, owning the energy assets, has previously available), along the development of all the elements to be taken into account, the validation to ensure safety and correct operation, the deployment in relation to the commissioning in large scale installations, and the comparative experimentation in search of the best mode of operation.
+
+This way, the system is divided into the aforementioned sections. The operational infrastructure, explained in Chapter~\ref{makereference3}, manages the lowest level interaction layer available. The market environment, specified in Chapter~\ref{makereference4}, determines the information extracted from the regulatory institutions with which it communicates with. The structural modeling, detailed in Chapter~\ref{makereference5}, discusses the business logic of the decisions to be made. The command and control, specified in Chapter~\ref{makereference6}, explains the feedback loop to the physical assets and the interaction of market agents and telecommunications operators with the system. Finally, the carried out experiments are described in Chapter~\ref{makereference7}.
+
+\section{Objectives}
+\label{makereference9.1}
+
+The main objective is the design, development, validation, and deployment (excluding experimentation) of a cross-market battery arbitrage system, guaranteeing its integration with the established infrastructure and enabling it to operate in the electricity market. It should be noted that, since battery energy storage technology is still in its early stages of development, there is no easily ready made or simple to implement solution on the existing energy infrastructure, although external efforts are in place to improve the situation. Therefore, establishing this foundation is the top priority.
+
+In turn, several complementary secondary objectives are defined, detailed below.
+
+\begin{description}
+
+  \item[Maximize profitability] Beyond making the system itself work, obtaining the highest profitability is the most paramount. The system must be able to analyze electricity market price forecasts to optimally schedule charge and discharge cycles, ensuring the energy is purchased in periods of lower cost and sold in those of higher price, in addition to taking external market factors into account. One of the most important aspects is to separate the net profit in euros from the profitability in euros per megawatt-hour, as determined by the Comisión Nacional de los Mercados y la Competencia in the Boletín Oficial del Estado~\cite{cnmc2025resolucion}, since the latter is the metric used to ensure the correct value is actually assigned to each energy unit.
+
+  \item[Minimize battery degradation] The aim is to manage the operation of the asset in a way that does not negatively impact its lifespan and minimizes the physical degradation of the state of charge capacity. The aim is to find a balance between short term profitability and long term investment sustainability (earning a lot of money as soon as possible but wearing out the battery versus not bidding so aggressively and stabilizing the cycling to take advantage of better future opportunities). The metric used to measure degradation is the number of full charge cycles which, unlike the state of health, allows for an easier estimation of the evolution of degradation.
+
+  \item[Comply with regulatory requirements] It is highly advisable that all charging and discharging operations proposed by the system strictly adhere to the technical and regulatory requirements imposed by both the market operator and the transport system operator~\cite{crespo2004resolucion}. This includes respecting the structural power limits, the technical limits caused by unavailability, etc. Compliance is measured through the magnitude of the final deviation per market period in megawatt hours, that is, the amount of energy that the system has agreed to offer but has not been able to cover.
+
+  \item[Ensure operational safety] Multiple levels of validation must be implemented to prevent compromises to the physical integrity of the battery energy storage system or the information itself. Although low level control is the responsibility of the native battery management system, the optimization system is obligated to always operate within a predefined safe range. In addition, the information has to flow in accordance with the cybersecurity Purdue enterprise reference architecture~\cite{williams1994purdue} of an industrial environment. The safety of the operation is measured empirically taking the number of alarms caused by the storage systems and cybersecurity alerts.
+
+  \item[Generalize the design] The design of a modular and configurable architecture is key to allowing the system to be adapted to different installations with varied storage configurations. The objective is to create a scalable solution, not specific to a single installation, to facilitate its deployment in future installations with a minimal integration effort. Modularity is analyzed by means of the whole number of installations supported by the system during its deployment.
+
+  \item[Facilitate system monitoring] A command and control interface, which allows telecommunications operators and market agents to monitor the status in real time, helps increase confidence the operation. This interface must provide a clear visualization of the planned and executed operations and the economic results obtained, ensuring the transparency and traceability of the decisions. Crucially, market agents must be able to override the automatic behavior of the system with manual instructions in the light of unforeseen market scenarios, or energy asset test periods for telecommunications operators.
+
+  \item[Respond to failures] The system is equipped with fault detection and management mechanisms to ensure its robustness and high availability. This includes the ability to manage interruptions in the operational availability of physical assets or the loss or incomplete information of market data, having to explicitly adhere to such situations in a way that nothing is affected. Measured programmatically by the number of unavailabilities not caused by the system.
+
+  \item[Analyze economic viability] Using the operational data and the optimization results, a subsequent economic viability analysis is must be performed. The objective is to validate the business case, accurately quantify the profitability in spite of capital and operational expenditures, and model the financial performance of the asset under different market conditions. This analysis serves to refine operating strategies and guide future investments in battery energy storage systems, thus seeking to validate the apparent predisposition to profitability of battery energy storage systems. It is measured in euros per megawatt hour relative to the cost.
+
+\end{description}
+
+\section{Scope}
+\label{makereference9.2}
+
+The project focuses exclusively on the development of a comprehensive, end to end battery cross-market battery optimization system. It is composed of the operational infrastructure with which to interact with the physical elements that are part of the system, the acquisition of market environment information through the corresponding regulatory institutions, the structural modeling of the battery cycling situation and of the entire installation for the resolution of optimality, and the command and control to transmit the results back to the battery and market and inform the market agents and telecommunications operators who supervise the movements made by the system.
+
+In contrast, the scope does not include the physical control of the electrical level of the installations, carried out by the battery management system that is included in industrial battery energy management systems and is incorporated on a large scale by the system integrator, such as Ingeteam~\cite{ingeteam2022ingeteam}, due to obvious security and restricted physical access considerations.
+
+Nor is the deployment of the central plant information system itself relevant to the development, since other energy technologies make use of it beyond batteries. This does not mean that, while the plant control system already exists, the system does not perform the integration of the physical energy assets with the plant information system through its extension. The sole exception is the deployment of the plant information system itself.
+
+Finally, the project must consider external processes of the environment in which it is deployed, so there is no other option than to depend on the indirection layer of the market environment information storage (the data warehouse), on the breakdown of previously consulted traded positions given by internal services, and on the external market offer making process, which, for legal considerations, must be performed by the trusted party of the market operator that owns the energy assets.
+
+\section{Work plan}
+\label{makereference9.3}
+
+The work plan consists distributes the project's development into multiple time indexed tasks. It is constituted by the division of the sections in accordance with the objectives and their explanation, from the beginning to the end of the work.
+
+\begin{description}
+
+  \item[Study regulations] Research of the electricity market regulation.
+
+  \item[Training in the electricity market] Training on the operation and processes of the electricity market.
+
+  \item[Training in batteries] Study of the technical characteristics of battery energy storage systems.
+
+  \item[Evaluation of tools] Analysis of existing tools and choice of technologies.
+
+  \item[Optimizer design] Design of the optimization architecture exclusively focused on the behavior of the batteries themselves.
+
+  \item[Adaptation to quarter-hourly markets] Adaptation of the system for its operation in the new quarter-hourly, daily, intraday and continuous markets.
+
+  \item[Isolated topology] Enablement of the optimization for isolated topologies.
+
+  \item[Renewable colocation] Development of the logic to manage batteries together with a colocated renewable generation plant.
+
+  \item[Hybrid topology] Enablement of the optimization for hybrid topologies.
+
+  \item[Incorporation of the plant information system] Deployment and configuration of the connections with the energy assets of the plant information system.
+
+  \item[Signaling unit tests] Independent verification of the correct communication of reading and signaling of setpoints of the plant information system.
+
+  \item[Partial consideration of the market environment] Realization of the first partial integration with non programmatic market data.
+
+  \item[Deployment to preproduction] Deployment in a test environment without access to market bidding.
+
+  \item[Setpoint consignment and bidding] Development of the ability to send orders to the batteries and offers to the market.
+
+  \item[Obtaining data from the market operator] Automation to obtain relevant information published by the market operator.
+
+  \item[Obtaining data from the system operator] Implementation of the reception of limitations from the transport system operator.
+
+  \item[Deployment to production] Commissioning in real installations for the commercial operation.
+
+  \item[Control panel] Creation of the control panel for the monitoring and control of the system.
+
+  \item[Incident resolution] Continuous correction of errors and problems that arise during the operation of the system.
+
+  \item[Performance integration tests] Measurement of the overall performance (in monetary terms) with all its components.
+
+  \item[Local comparative analysis] Evaluation and comparison of different operating strategies.
+
+  \item[Structuring of the sections] Organization of the content and definition of the structure of the final project report.
+
+  \item[Typesetting] Layout and formatting of the document.
+
+  \item[Content drafting] Writing of the main body of the report describing all the work done.
+
+  \item[Review and edition] Realization of the final correction of the document to polish the text and squash errors.
+
+\end{description}
