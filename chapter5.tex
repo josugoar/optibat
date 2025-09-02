@@ -11,7 +11,7 @@ Para ello, se ha elegido Pyomo como herramienta de modelización matemática en 
 
 Se hace uso de una formulación de \gls{milp} para poder tener en cuenta condiciones más allá de la más simple \gls{lp}. Se ha explorado el uso de indicadores o restricciones avanzadas, como los \textit{special order sets}, los cuales han sido descartados en última instancia debido a problemas de rendimiento. Esto significa que la modelización es puramente de enteros mixtos compatible con cualquier solucionador que soporte variables binarias.
 
-De esta forma, se detallan los parámetros de decisión en la sección~\ref{makereference5.1}, que articulan el problema de optimización, abarcando desde la definición temporal de los periodos del mercado y las variables de operación de los flujos energéticos, hasta las limitaciones impuestas por el comportamiento físico de la batería y las guías estratégicas de las indicaciones de mercado. Se procede a formular las restricciones operacionales que aseguran la viabilidad técnica de la solución en la sección~\ref{makereference5.2}, se habla de la optimización dual de la instalación al completo de la generación energética en la sección~\ref{makereference5.3}, se establece el criterio de desempeño que define la función objetivo a optimizar en la parte~\ref{makereference5.4} y, finalmente, se consideran los requisitos de la resolución numérica para cumplir con la precisión exigida por el operador del mercado en la sección~\ref{makereference5.5}.
+De esta forma, se detallan los parámetros de decisión en la sección~\ref{makereference5.1}, que articulan el problema de optimización, abarcando desde la definición temporal de los periodos del mercado y las variables de operación de los flujos energéticos, hasta las limitaciones impuestas por el comportamiento físico de la batería y las guías estratégicas de las indicaciones de mercado. Se procede a formular las restricciones operacionales que aseguran la viabilidad técnica de la solución en la sección~\ref{makereference5.2}, se establece el criterio de desempeño que define la función objetivo a optimizar en la parte~\ref{makereference5.3} y, finalmente, se consideran los requisitos de la resolución numérica para cumplir con la precisión exigida por el operador del mercado en la sección~\ref{makereference5.4}.
 
 \section{Parámetros de decisión}
 \label{makereference5.1}
@@ -21,7 +21,7 @@ Todo modelado estructural debe contar inicialmente con un conjunto de parámetro
 \subsection{Periodos del mercado}
 \label{makereference5.1.1}
 
-El mercado eléctrico peninsular opera en etapas discreta temporales con una granularidad establecida. Los mercados spot, de los que se encarga el sistema en la actualidad, disponen de una granularidad horaria para el mercado diario\footnote{La granularidad del mercado diario se encuentra en proceso de actualización a cuartohoraria.} y cuartohoraria para los mercados intradiarios y el mercado intradiario continuo. En el resto de mercados de Europa, como Nord Pool, la granularidad de los mercados spot es similar, existiendo también granularidades incluso de 30 minutos.
+El mercado eléctrico peninsular opera en etapas discreta temporales con una granularidad establecida. Los mercados spot, de los que se encarga el sistema en la actualidad, disponen de una granularidad horaria para el mercado diario\footnote{La granularidad del mercado diario se encuentra en proceso de actualización a cuartohoraria.} y cuartohoraria para los mercados intradiarios y el mercado intradiario continuo. En el resto de mercados de Europa, como Nord Pool~\cite{nord2025leading}, la granularidad de los mercados spot es similar, existiendo también granularidades incluso de 30 minutos.
 
 La variabilidad de la granularidad exige representar el mercado en múltiples periodos categóricos de tamaño proporcional. De esta forma, el sistema representa el mercado mismo mediante la ecuación~\ref{eq:set-mercado}.
 
@@ -29,7 +29,7 @@ La variabilidad de la granularidad exige representar el mercado en múltiples pe
 
   \begin{equation}
     \label{eq:set-mercado}
-    T = \{t_{0} + k \cdot \Delta t \mid k \in \mathbb{N}_{0}, t_{0} + k \cdot \Delta t \leq H\}
+    T = \{t_{1} + k \cdot \Delta t \mid k \in \mathbb{N}_{0}, t_{1} + k \cdot \Delta t \leq t_{1} + H\}
   \end{equation}
 
   donde
@@ -38,11 +38,9 @@ La variabilidad de la granularidad exige representar el mercado en múltiples pe
 
     \item \( T \) es el conjunto de todos los períodos de mercado discretos.
 
-    \item \( t_{0} \) es el periodo inicial de optimización.
+    \item \( t_{1} \) es el periodo inicial de optimización\footnote{Los periodos son oficialmente representados a partir del índice 1}.
 
-    \item \( k \) es el contador de periodos de mercado.
-
-    \item \( \Delta t \) es la granularidad mínima de todos los mercados tenidos en cuenta en el horizonte de optimización.
+    \item \( \Delta t \) es la granularidad mínima de los mercados analizados dentro del horizonte de optimización en \si{\minute}.
 
     \item \( H \) es el horizonte de optimización correspondiente al número de días de mercado a tener en cuenta.
 
@@ -50,17 +48,9 @@ La variabilidad de la granularidad exige representar el mercado en múltiples pe
 
 \end{samepage}
 
-La representación del mercado durante la optimización realmente incluye multiples posibles mercados futuros más allá del más proximo, es decir, el sistema tiene en cuenta un horizonte de optimización de varios mercados y, por lo tanto, varios periodos a lo largo de múltiples días de mercado. La razón de lo cual reside en facilitar a la optimización la mayor información posible: si un día de mercado no cumple con las condiciones de actuación mientras que otro día de mercado las dobla, es posible no arbitrar uno de los días y ofertar el doble el otro, en vez de perder la oportunidad, representado en la figura~\ref{fig:horizonte-de-optimizacióno}.
+La representación del mercado durante la optimización realmente incluye multiples posibles mercados futuros más allá del más proximo, es decir, el sistema tiene en cuenta un horizonte de optimización de varios mercados y, por lo tanto, varios periodos a lo largo de múltiples días de mercado. La razón de lo cual reside en facilitar a la optimización la mayor información posible: si un día de mercado no cumple con las condiciones de actuación mientras que otro día de mercado las dobla, es posible no arbitrar uno de los días y ofertar el doble el otro, en vez de perder la oportunidad.
 
-% TODO
-\begin{figure}
-  \centering
-  % \includegraphics[width=0.5\linewidth]{figures/horizonte-de-optimizacióno.jpg}
-  \caption[Representación del horizonte de optimización.]{Representación del horizonte de optimización.}
-  \label{fig:horizonte-de-optimizacióno}
-\end{figure}
-
-Es necesario tener en cuenta los usos horarios a la hora de calcular el tamaño del mercado, ya que los mercados hacen uso del uso horario local en todo momento, a diferencia de UTC, subrayado anteriormente en la sección~\ref{makereference4.4}. Esto significa que en los días de cambio de hora, los mercados  tendrán más o menos periodos e incluso el mercado intradiario continuo tendrá más o menos sesiones, dependiendo de si se añaden o restan horas. El \gls{mo} lo detalla en verano en la tabla~\ref{tab:cambio-hora-verano} e invierno en la tabla~\ref{tab:cambio-hora-invierno}.
+También es necesario tener en cuenta los usos horarios a la hora de calcular el tamaño del mercado, ya que los mercados hacen uso del uso horario local en todo momento, a diferencia de UTC, subrayado anteriormente en la sección~\ref{makereference4.4}. Esto significa que en los días de cambio de hora, los mercados  tendrán más o menos periodos e incluso el mercado intradiario continuo tendrá más o menos sesiones, dependiendo de si se añaden o restan horas. El \gls{mo} lo detalla en verano en la tabla~\ref{tab:cambio-hora-verano} e invierno en la tabla~\ref{tab:cambio-hora-invierno}.
 
 \begin{table}[ht]
   \centering
@@ -98,22 +88,59 @@ Es necesario tener en cuenta los usos horarios a la hora de calcular el tamaño 
   \label{tab:cambio-hora-invierno}
 \end{table}
 
-\subsection{Flujos energéticos}
+\subsection{Flujos de almacenamiento}
 \label{makereference5.1.2}
 
-El mercado, precisamente, es usado para indexar los flujos energéticos explicados en la sección~\ref{makereference3.1} de infraestructura operacional. Estos flujos energéticos representan la operación y, por lo tanto, salida de la optimización. Responden a las tres preguntas planteadas anteriormente.
+De esta forma, el mercado es usado para indexar los flujos energéticos explicados en la sección~\ref{makereference3.1} de infraestructura operacional. Estos flujos energéticos representan la operación y, por lo tanto, salida de la optimización. Responden a las tres preguntas planteadas anteriormente.
 
-La configuración topológica más simple, la configuración topológica aislada, tan solo dispone de dos: el flujo de importación de la red al sistema de almacenamiento de energía en baterías y exportación del sistema de almacenamiento de energía en baterías a la red. La configuración topológica añade uno más, la importación de la generación al sistema de almacenamiento de energía en baterías.
+Aún así, ellos solos no bastan para controlar la batería correctamente como tal. Precisamente, conviene más observar estos flujos energéticos no como flujos energéticos mismos, sino como interfaces de compra y venta, correspondientes a las \gls{ufi} explicadas en el apartado~\ref{makereference4}. Realmente, el sistema se encarga de arbitrar en el mercado, por lo que debe operar no solo en la capa de abstracción de flujos energéticos físicos, sino además en la de los movimientos del mercado.
 
-Aún así, ellos solos no bastan para controlar la batería correctamente. Para ello, conviene más observar estos flujos energéticos no como flujos energéticos mismos, sino como interfaces de compra y venta, como las unidades físicas explicadas en el apartado~\ref{makereference4}. Realmente, el sistema se encarga de arbitrar en el mercado, por lo que debe operar no solo en la capa de abstracción de flujos energéticos físicos, sino además en la de los movimientos del mercado.
+Todo esto sirve para subrayar que los flujos energéticos, desde la perspectiva del mercado, no están únicamente limitados a la dirección de compra para la carga y venta para la descarga. Una \gls{ufi} correspondiente a la importación de energía también es capaz de vender y una de exportación de comprar, solo que la energía en dirección opuesta al flujo energético no puede provenir de la instalación, ya que el flujo energético fisco lo limita. En cambio, debe provenir del resto de la red eléctrica.
 
-Todo esto es para subrayar que los flujos energéticos, desde la perspectiva del mercado, no están limitados a únicamente a la dirección de compra para la carga y venta para la descarga. Una unidad física correspondiente a la importación de energía es capaz de venderla también, solo que esa energía vendida no puede provenir de la instalación perteneciente a la unidad física, ya que el flujo energético fisco limita la venta.
+Por ejemplo, como se realizan varias sesiones de mercado en un mismo día, puede que el sistema haya prometido vender una cantidad de energía en un periodo de la tarde en el mercado diario. Lamentablemente, una hora antes de tener que exportar toda esa energía casada (en la última sesión del mercado intradiario continuo antes del \textit{delivery}), resulta que las nuevas previsiones meteorológicas indica que, debido a una nube repentina, los paneles fotovoltaicos no van a ser capaces de generar la suficiente energía como para cargar la batería y exportar su energía. Esto genera un desvío en la posición de la batería: no va a ser capaz de otorgar toda la energía prometida y puede resultar penalizada. Por suerte, como se ha explicado, la solución al problema es recomprar la cantidad de energía que le falte al sistema a través de la interfaz de exportación. Como las recompras (y reventas, en el caso contrario) se realizan exclusivamente en el mismo periodo de su correspondiente posición opuesta por definición, la energía no necesita pasar por la interfaz que ha realizado la operación y la instalación puede exportar la energía tranquilamente y suplir la falta al mismo tiempo, sin tener que importan energía a la instalación. La energía que falta será suministrada entonces por el resto de la red eléctrica en nombre de la instalación.
 
-Por ejemplo, como se realizan varias sesiones de mercado en un mismo día, puede que el sistema haya prometido vender una cantidad de energía en un periodo de la tarde en el mercado diario. Lamentablemente, una hora antes de tener que exportar toda esa energía casada (en la última sesión del mercado intradiario continuo antes del \textit{delivery}), resulta que las nuevas previsiones meteorológicas indica que, debido a una nube repentina, los paneles fotovoltaicos no van a ser capaces de generar la suficiente energía como para cargar la batería y exportar su energía. Esto genera un desvío en la posición de la batería: no va a ser capaz de otorgar toda la energía prometida y puede resultar penalizada. Por suerte, como se ha explicado, la solución al problema es recomprar la cantidad de energía que le falte al sistema a través de la interfaz de exportación. Como las recompras (y reventas, en el caso contrario) se realizan exclusivamente en el mismo periodo de su correspondiente posición opuesta por definición, la energía no necesita pasar por la interfaz que ha realizado la operación y la instalación puede exportar la energía tranquilamente y suplir la falta al mismo tiempo, sin tener que importan energía a la instalación.
+Por lo tanto, los diferentes flujos energéticos son representados de la siguiente forma, correspondientes con los resultados principales de la optimización.
 
-Por lo tanto, los diferentes flujos energéticos son representados de la siguiente forma, correspondientes con los resultados principales de la optimización
+\begin{itemize}
 
-...
+  \item \( E^{n}_{R, \text{BESS}, t} \in \mathbb{N}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
+
+  \item \( E^{b}_{R, \text{BESS}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
+
+  \item \( E^{c}_{R, \text{BESS}, t} \in \mathbb{N}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a importar en \si{{\mega\watt\hour}}.
+
+  \item \( E^{n}_{\text{BESS}, R, t} \in \mathbb{N}_{0} \) es la energía neta correspondiente al flujo energético físico exportado de la batería a la red en \si{{\mega\watt\hour}}.
+
+  \item \( E^{b}_{\text{BESS}, R, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
+
+  \item \( E^{c}_{\text{BESS}, R, t} \in \mathbb{N}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a exportar en \si{{\mega\watt\hour}}.
+
+\end{itemize}
+
+Los flujos netos y casados son no negativos, ya que representan la energía que mueve la instalación, los flujos brutos, en cambio, representan las operaciones en el mercado, que incluyen recompras o reventas en la dirección opuesta a su flujo energético.
+
+\subsection{Flujos de generación}
+\label{makereference5.1.3}
+
+Aunque, la modelización anterior cubra los \glspl{bess} al completo, el sistema se topa con un problema. ¿Cómo se decide cuándo cargar de la red o de la generación?
+
+Las restricciones previas tan solo dibujan un marco aislado, que no tiene en cuenta que la energía importada de la generación es energía que la instalación, a través de la correspondiente interfaz de exportación de la generación, no es capaz de vender porque la carga de la batería se lo impide.
+
+Por lo tanto, es necesario tener en cuenta la generación junto con la batería y realizar una optimización de los flujos energéticos de la instalación conjunta. Introduciendo la generación a los flujos energéticos de la sección~\ref{makereference5.1.2}, la batería no puede ``robar'' energía a la generación, ya que debe existir una armonía conjunta en busca de la maximización del ingreso.
+
+\begin{itemize}
+
+  \item \( E_{\text{RES}, \text{BESS}, t} \in \mathbb{N}_{0} \) es la energía importada de la generación a la batería en instalaciones híbridas en \si{{\mega\watt\hour}}.
+
+  \item \( E^{n}_{\text{RES}, R} \in \mathbb{N}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
+
+  \item \( E^{b}_{\text{RES}, R} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
+
+  \item \( E^{c}_{\text{RES}, R} \in \mathbb{N}_{0} \) es la energía casada en negociaciones previas que la generación se ha comprometido a importar en \si{{\mega\watt\hour}}.
+
+\end{itemize}
+
+Como la importación de la generación a la batería no pasa por mercado, no es necesario desglosarla en flujos brutos y netos para acomodar una casación inexistente.
 
 \subsection{Comportamiento físico}
 \label{makereference5.1.3}
@@ -271,53 +298,126 @@ Dicha prioridad es definida de forma simular a previas restricciones de indicaci
 
 Como se puede observar, el sistema es completamente genérico e incorpora comportamientos, a diferencia de definir entidades separadas para cada configuración. Es decir, el sistema usado es exactamente el mismo para cualquier configuración.
 
-\section{Generación energética}
+\section{Criterio de desempeño}
 \label{makereference5.3}
 
-Aunque, la modelización anterior cubra el comportamiento de los sistemas de almacenamiento de energía en baterías al completo, al sistema le surge un pequeño problema, ¿cómo decide cuándo cargar de la red o de la generación?
+Como se ha mencionado en múltiples ocasiones, el criterio de desempeño del sistema parece ser el beneficio obtenido, es decir, que el sistema busque maximizar los ingresos, en cambio, esto no es del todo cierto.
 
-Las restricciones previas tan solo dibujan un marco general pero no tienen en cuenta que la energía importada de la generación es energía que la instalación, a través de la interfaz de exportación de la generación, no es capaz de vender, la carga de la batería lo impide.
+Inicialmente, en el beneficio toma parte cada flujo de energía. Importantemente, como el sistema asume que las recompras y reventas se realizan al mismo precio que la posible compra y venta\footnote{En realidad, las recompras y reventas, entendiblemente, se realizan al precio de casación anterior, pero no se dispone de la información necesaria para realizar el desglose entre mercados y obtener el precio.}, tan solo se tienen en cuenta las energías netas, correspondientes a los flujos físicos, para el calculo de los ingresos. Con ello, se le asigna un precio a cada uno de ellos, resultando en la ecuación~\ref{eq:beneficio}.
 
-Por lo tanto, es necesario tener en cuenta la generación junto con la batería y realizar una optimización de los flujos energéticos de la instalación al completo, incluida la generación. Si añadimos la generación al criterio de desempeño de la sección~\ref{makereference5.4}, la batería no podrá "robar" energía a la generación ya que debe existir una armonía conjunta en busca de la maximización del ingreso.
-
-Precisamente y como se ha afirmado anteriormente, uno de los propósitos principales del sistema es su uso avanzado en instalaciones híbridas, como se puede observar.
-
-...
-
-\section{Criterio de desempeño}
-\label{makereference5.4}
-
-Como se ha mencionado en múltiples ocasiones, el criterio de desempeño del sistema parece ser el beneficio obtenido, es decir, el sistema busca maximizar los ingresos, en cambio, esto no es del todo cierto.
-
-En el beneficio toma parte cada flujo de energía. Importantemente, como el sistema asume que las recompras y reventas se realizan al mismo precio que la posible compra y venta, tan solo se tienen en cuenta los flujos energéticos netos, correspondientes a los flujos físicos, para las interfaces de mercado. Con ello, se le asigna un precio a cada uno de ellos, resultando en la ecuación~\ref{eq:beneficio}.
-
-\begin{equation}
+\begin{subequations}
   \label{eq:beneficio}
+
+  \begin{equation}
+    \begin{split}
+      \pi_{t}
+      = (\lambda^{n}_{\text{BESS}, R, t} - \lambda')
+      \cdot E^{n}_{\text{BESS}, R, t}\\
+      - \lambda^{n}_{R, \text{BESS}, t}
+      \cdot E^{n}_{R, \text{BESS}, t}\\
+      - \lambda^{\text{c}}_{\text{RES}, \text{BESS}, t}
+      \cdot E^{\text{c}}_{\text{RES}, \text{BESS}, t}\\
+      - \lambda^{\text{nc}}_{\text{RES}, \text{BESS}, t}
+      \cdot E^{\text{nc}}_{\text{RES}, \text{BESS}, t}\\
+      + \lambda^{n}_{\text{RES}, R, t}
+      \cdot E^{n}_{\text{RES}, R, t}\\
+    \end{split}
+  \end{equation}
+
+  \begin{equation}
+    \pi = \sum_{t = t_{1}}^{T} \pi_{t}
+  \end{equation}
+
+  \begin{equation}
+    \lambda^{n}_{\text{BESS}, R, t} = \lambda^{M}_{t}
+  \end{equation}
+
+  \begin{equation}
+    \lambda^{n}_{R, \text{BESS}, t} = \lambda^{M}_{t} + c
+  \end{equation}
+
+  \begin{equation}
+    \lambda^{\text{c}}_{\text{RES}, \text{BESS}, t} = 0
+  \end{equation}
+
+  \begin{equation}
+    \lambda^{\text{nc}}_{\text{RES}, \text{BESS}, t} =
+    \begin{cases}
+      \lambda^{M}_{t} & \text{si } \gamma \land \lambda^{M}_{t} \ge \lambda^{O}_{\text{RES}, t} \\
+      0               & \text{sino}                                                             \\
+    \end{cases}
+  \end{equation}
+
+  \begin{equation}
+    \lambda^{n}_{\text{RES}, R, t} =
+    \begin{cases}
+      \lambda^{M}_{t} & \text{si } \lambda^{M}_{t} \ge \lambda^{O}_{\text{RES}, t} \\
+      0               & \text{sino}                                                \\
+    \end{cases}
 \end{equation}
 
-Si bien la maximización del beneficio es uno de los objetivos, el principal precisamente, el sistema debe tener en cuenta otros factores. De hecho, cuando se realiza la optimización, tener en cuenta el beneficio unicamente resulta, casi con total certeza, en un problema de optimización degenerado.
+\end{subequations}
 
-Los problemas de optimización degenerados son los que poseen múltiples soluciones para una misma formulación. El sistema, por el contrario, debe asegurar una optimización determinista (llamada estricta) para facilitar el control de las baterías, no se puede permitir que ante cualquier modificación en su configuración, por muy minúsculo que sea, la posición óptica cambie drásticamente y genere desvíos. La diferencia se observa en la figura~\ref{fig:degenerada-vs-estricta}.
+donde
+
+\begin{itemize}
+
+  \item \( \lambda' \) es beneficio mínimo objetivo en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \item \( c \) es el peaje de la red en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \item \( \lambda^{M}_{t} \) es el precio de mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \item \( \lambda^{n}_{\text{BESS}, R, t} \) es el precio de la exportación de la batería a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \item \( \lambda^{n}_{R, \text{BESS}, t}\) es el precio de la importación de la red a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \item \( \lambda^{O}_{\text{RES}, t} \) es el precio de oferta de la generación en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \item \( \lambda^{\text{c}}_{\text{RES}, \text{BESS}, t} \) es el precio de la importación de la generación excedente a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \item \( \lambda^{\text{nc}}_{\text{RES}, \text{BESS}, t} \) es el precio de la importación de la generación no excedente a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \item \( \lambda^{n}_{\text{RES}, R, t} \) es el precio de exportación de la generación a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+
+  \item \( \pi \) es el beneficio en \si{\text{\euro}}.
+
+\end{itemize}
+
+Si bien la maximización del beneficio es el objetivo principal, el sistema debe tener en cuenta otros factores. De hecho, cuando se realiza la optimización, considerar el beneficio únicamente resulta, casi con total certeza, en un problema de optimización degenerado.
+
+Los problemas de optimización degenerados son los que poseen múltiples soluciones para una misma formulación. El sistema, por el contrario, debe asegurar una optimización estricta (determinista) para facilitar el control de las baterías. No se puede permitir que, ante cualquier modificación en la configuración, por muy minúscula que sea, la posición óptima cambie drásticamente y genere desvíos. La diferencia se observa en la figura~\ref{fig:solucion-degenerada}, en la cual las operaciones de mercado se realizan en periodos incongruentes y se mezclan fuentes de carga, resultado de no acotar con exactitud la optimización\footnote{Se obtiene el mismo resultado del cálculo en múltiples soluciones, aunque verdaderamente solo una de ellas sea la correcta, por lo que el solucionador puede devolver una posición que genere desvíos innecesarios.}.
 
 \begin{figure}
   \centering
-  % \includegraphics[width=0.5\linewidth]{figures/degenerada-vs-estricta.jpg}
-  \caption[Comparación entre una posición degenerada y estricta.]{Comparación entre una posición degenerada y su contraparte estricta.}
-  \label{fig:degenerada-vs-estricta}
+  \includegraphics[width=0.75\linewidth]{figures/solucion-degenerada.png}
+  \caption[Solución degenerada.]{Solución degenerada a una posición de mercado. Las operaciones se ofertan en periodos inconsistentes, en vez de realizarlas todas en un único bloque desde el primer periodo óptimo (del D3H09Q2 al D3H13Q1 de carga y del D3H22Q4 al D4H01Q4 de descarga). Como también se llevan posiciones al mercado (periodo D3H22Q3) aun no siendo necesario, se generan desvíos.}
+  \label{fig:solucion-degenerada}
 \end{figure}
 
-Para solucionar este problema, se tiene en cuenta que las predicciones de precio de mercado y las predicciones meteorológicas, es decir, la información extraída en el apartado~\ref{makereference4} del entorno de mercado, es más precisa cuanto más cercana en el tiempo sea. En otras palabras, las previsiones para el día de mañana resultan más fiables que las de dentro de 5 días.
+Para solucionar este problema, se tiene en cuenta que las predicciones de precio de mercado y las predicciones meteorológicas, es decir, la información extraída en el apartado~\ref{makereference4} del entorno de mercado, es más precisa cuanto más cercana en el tiempo sea. En otras palabras, las previsiones para el día de mañana resultan más fiables que las de dentro de una semana.
 
-Dentro de la formulación, esta preferencia de las posiciones más cercanas en el tiempo se representa con una función de decrecimiento o \textit{decay function} exponencial, ecuación~\ref{eq:exponential-decay}. Dispone de un ratio de decrecimiento configurable dependiente del horizonte de optimización, cuanto mayor sea menor valor tendrá el ratio de decrecimiento, para evitar conflictos en donde peor posición más cercana en el tiempo sea elegido ante una mejor más lejana.
+En la formulación, esta preferencia de las posiciones más cercanas en el tiempo se representa con una función de decrecimiento o \textit{decay function} exponencial, ecuación~\ref{eq:exponential-decay}. Dispone de un ratio de decrecimiento configurable dependiente del horizonte de optimización, cuanto mayor sea, menor valor tendrá el ratio de decrecimiento, para evitar conflictos en donde peor posición más cercana en el tiempo sea elegida ante una mejor más lejana.
+
+\begin{samepage}
 
 \begin{equation}
   \label{eq:exponential-decay}
+    \sum_{t = t_{1}}^{T} e^{-\rho t} \pi_{t}
 \end{equation}
 
-De esta forma, tras realizar el llamado test de factibilidad básica e identificar las variables básicas\footnote{Las variables básicas son las que marcan los puntos extremos de las soluciones, pero no tienen por que encontrarse en su límite, lo cual resultó ser fuente de confusión en el análisis de factibilidad} y sus propiedades, se determina la estrictez de la formulación.
+  donde
+
+  \begin{itemize}
+    \item \( \rho \) es el coeficiente de decaimiento que favorece los periodos más tempranos.
+  \end{itemize}
+
+\end{samepage}
+
+De esta forma, tras realizar el llamado test de factibilidad básica e identificar las variables básicas\footnote{Las variables básicas son las que marcan los puntos extremos de las soluciones, pero no tienen por que encontrarse en su límite, lo cual resultó ser fuente de confusión en el análisis de factibilidad.} y sus propiedades, se determina que la formulación propuesta es estricta.
 
 \subsection{Optimización lexicográfica}
-\label{makereference5.4.1}
+\label{makereference5.3.1}
 
 Aunque el uso de una función de decrecimiento exponencial distinga correctamente las soluciones de forma determinista, es posible, dependiendo de los parámetros de configuración, que la solución obtenida por el solucionador sea entendiblemente la óptima según el criterio de desempeño definido, pero no la que el sistema busca. Esto sucede debido a que parámetros de decisión incorrectamente seleccionados pueden priorizar una posición que mejore el objetivo de la preferencia temporal y no el del beneficio.
 
@@ -352,7 +452,7 @@ Con esto, el objetivo principal se trata de la maximización del beneficio y el 
 Aunque se solucionen los problemas de posiciones posiblemente no óptimas, la optimización lexicográfica tiene un menor rendimiento, por lo que no es factible usarla para mercados con una granularidad muy pequeña, como los de disponibilida. En cambio, funciona adecuadamente para los mercados spot, en los que se centra el despliegue realizado del sistema.
 
 \section{Resolución numérica}
-\label{makereference5.5}
+\label{makereference5.4}
 
 Otro aspecto a tener en cuenta es la precisión numérica de los resultados. De hecho, la institución regulatoria del mercado eléctrico correspondiente, el \gls{mo} mismo, define las regulaciones de la precisión numérica aceptada para el arbitraje.
 
