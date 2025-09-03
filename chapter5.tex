@@ -67,11 +67,11 @@ También es necesario tener en cuenta los husos horarios a la hora de calcular e
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{|l|c|c|c|}
       \hline
-      & Sesión 1ª & Sesión 2ª & Sesión 3ª \\
+      & Sesión 1ª & Sesión 2ª & Sesión 3ª                                                                                \\
       \hline
-      Apertura de sesión                            & 14:00               & 21:00               & 09:00               \\
-      Cierre de sesión                              & 15:00               & 22:00               & 10:00               \\
-      Casación y publicación                        & 15:20               & 22:20               & 10:20               \\
+      Apertura de sesión                            & 14:00               & 21:00               & 09:00                  \\
+      Cierre de sesión                              & 15:00               & 22:00               & 10:00                  \\
+      Casación y publicación                        & 15:20               & 22:20               & 10:20                  \\
       Horizonte de programación (periodos horarios) & 23 horas (1--23 D+1) & 23 horas (1--23 D+1) & 12 horas (12--23 D)  \\
       \hline
     \end{tabular}
@@ -85,11 +85,11 @@ También es necesario tener en cuenta los husos horarios a la hora de calcular e
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{|l|c|c|c|}
       \hline
-      & Sesión 1ª & Sesión 2ª & Sesión 3ª \\
+      & Sesión 1ª & Sesión 2ª & Sesión 3ª                                                                                \\
       \hline
-      Apertura de sesión                            & 14:00               & 21:00               & 09:00               \\
-      Cierre de sesión                              & 15:00               & 22:00               & 10:00               \\
-      Casación y publicación                        & 15:20               & 22:20               & 10:20               \\
+      Apertura de sesión                            & 14:00               & 21:00               & 09:00                  \\
+      Cierre de sesión                              & 15:00               & 22:00               & 10:00                  \\
+      Casación y publicación                        & 15:20               & 22:20               & 10:20                  \\
       Horizonte de programación (periodos horarios) & 25 horas (1--25 D+1) & 25 horas (1--25 D+1) & 12 horas (14--25 D)  \\
       \hline
     \end{tabular}
@@ -171,7 +171,7 @@ Para ello, se definen los parámetros relacionados con el entorno de mercado, co
 
   \item \( P^{\text{lim}}_{\text{RES}, t} \) es la limitación de programa de la generación en el periodo \( t \) en \si{\mega\watt}, generalmente sin acotar para representar su ausencia.
 
-  \item \( P^{\text{lim}}_{\text{BESS}, t} \) es la limitación de programa de la instalación al completo en el periodo \( t \) en \si{\mega\watt}, pueden darse múltiples limitaciones pueden en un único periodo de mercado.
+  \item \( P^{\text{lim}}_{t} \) es la limitación de programa de la instalación al completo en el periodo \( t \) en \si{\mega\watt}, pueden darse múltiples limitaciones pueden en un único periodo de mercado.
 
 \end{itemize}
 
@@ -200,11 +200,11 @@ Precisamente, las señales propiamente configuradas en el \gls{pis}, detalladas 
 
   \item \( D_{t} \in \mathbb{R}^{+}_{0} \) es la energía descargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la exportada.
 
-  \item \( N_{\text{max}} \) es el número de ciclos máximos a realizar por la batería a lo largo del horizonte de optimización.
+  \item \( N_{\text{máx}} \) es el número de ciclos máximos a realizar por la batería a lo largo del horizonte de optimización.
 
   \item \( N \in \mathbb{R}^{+}_{0} \) es el número de ciclos realizados por la batería a lo largo de todo el horizonte de optimización.
 
-  \item \( \text{SoC}_{\text{min}}, \text{SoC}_{\text{max}} \) son el \gls{soc} mínimo y máximo de la batería, respectivamente.
+  \item \( \text{SoC}_{\text{mín}}, \text{SoC}_{\text{máx}} \) son el \gls{soc} mínimo y máximo de la batería, respectivamente.
 
   \item \( \text{SoC}_{t} \in \mathbb{R}^{+}_{0} \) es la cantidad de energía almacenada en la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
 
@@ -336,14 +336,14 @@ El parámetro de mercado de ciclos máximos limita los ciclos a realizar durante
 
 \begin{equation}%
   \label{eq:limite-ciclos}
-  N \le N_{\text{max}}
+  N \le N_{\text{máx}}
 \end{equation}
 
 \begin{samepage}
 
   \begin{equation}%
     \label{eq:limite-ciclos-dia}
-    N_{\text{max}} = N_{d} \cdot H
+    N_{\text{máx}} = N_{d} \cdot H
   \end{equation}
 
   donde
@@ -371,11 +371,11 @@ Precisamente, un efecto secundario muy beneficioso de las limitaciones de la se�
   \label{eq:limite-soc}
 
   \begin{equation}
-    \text{SoC}_{t} \ge \text{SoC}_{\text{min}} \cdot E_{n}
+    \text{SoC}_{t} \ge \text{SoC}_{\text{mín}} \cdot E_{n}
   \end{equation}
 
   \begin{equation}
-    \text{SoC}_{t} \le \text{SoC}_{\text{max}} \cdot E_{n}
+    \text{SoC}_{t} \le \text{SoC}_{\text{máx}} \cdot E_{n}
   \end{equation}
 
 \end{subequations}
@@ -401,12 +401,12 @@ Además, la modelización también debe tener en cuenta las limitaciones de prog
   \end{equation}
 
   \begin{equation}
-    E^{n}_{\text{BESS}, \text{M}, t} + E^{n}_{\text{RES}, \text{M}, t} \le P_{n} \cdot \Delta t
+    E^{n}_{\text{BESS}, \text{M}, t} + E^{n}_{\text{RES}, \text{M}, t} \le \min(P_{n}, P^{\text{lim}}_{t}) \cdot \Delta t
   \end{equation}
 
 \end{subequations}
 
-Con esto, como las limitaciones de programa son especificas del activo, estas restricciónes introducen nuevas oportunidades de arbitraje en instalaciones híbridas, resultado de que generación se vea limitada sin estarlo la exportación de la batería. Ante dicha situación, la batería es capaz de cargarse sin ningún coste.
+Con esto, como las limitaciones de programa son especificas del activo, estas restricciones introducen nuevas oportunidades de arbitraje en instalaciones híbridas, resultado de que generación se vea limitada sin estarlo la exportación de la batería. Ante dicha situación, la batería es capaz de cargarse sin ningún coste.
 
 Para mejorar el rendimiento teniendo en cuenta estas circunstancias, se introducen nuevas restricciones en forma de la ecuación~\ref{eq:curtailed-import}, que controla la importación de energía excedente y la importación de energía no excedente. Concretamente, el termino usado para referirse a la energía excedente que sobrepasa los límites de exportación se conoce como \textit{curtailment}.
 
@@ -417,7 +417,7 @@ Para mejorar el rendimiento teniendo en cuenta estas circunstancias, se introduc
     E^{\text{c}}_{\text{RES}, \text{BESS}, t} \le
     \begin{cases}
       E_{\text{RES}, t} - \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t & \text{si } E_{\text{RES}, t} > \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t \\
-      0                                                                          & \text{sino} \\
+      0                                                                          & \text{sino}                                                                           \\
     \end{cases}
   \end{equation}
 
@@ -425,7 +425,7 @@ Para mejorar el rendimiento teniendo en cuenta estas circunstancias, se introduc
     E^{\text{nc}}_{\text{RES}, \text{BESS}, t} \le
     \begin{cases}
       E_{\text{RES}, t}                                      & \text{si } E_{\text{RES}, t} \le \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t \\
-      \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t & \text{sino} \\
+      \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t & \text{sino}                                                                             \\
     \end{cases}
   \end{equation}
 
@@ -441,7 +441,7 @@ Para mejorar el rendimiento teniendo en cuenta estas circunstancias, se introduc
 
 \end{samepage}
 
-Junto a estas restricciones, se debe impedir la importación de energia no excedente cuando la excedente se encuentre disponible, lo cual puede ocurrir cuando existen limitaciones de programa o los precios de mercado sean nulos o negativos. Por ello, se añade otra restricción indicativa de enteros mixta a la formulación, ecuación~\ref{eq:indicador-curtailment}.
+Junto a estas restricciones, se debe impedir la importación de energía no excedente cuando la excedente se encuentre disponible, lo cual puede ocurrir cuando existen limitaciones de programa o los precios de mercado sean nulos o negativos. Por ello, se añade otra restricción indicativa de enteros mixta a la formulación, ecuación~\ref{eq:indicador-curtailment}.
 
 \begin{subequations}%
   \label{eq:indicador-curtailment}
@@ -466,19 +466,23 @@ Junto a estas restricciones, se debe impedir la importación de energia no exced
 
 \end{subequations}
 
-% TODO
+La introducción del desglose de la importación de la generación a la batería significa que la importación misma debe estar definida según la ecuación~\ref{eq:res-import}.
 
-% bess_res_import_rule
 \begin{equation}%
   \label{eq:res-import}
+  E_{\text{RES}, \text{BESS}, t} = E^{\text{c}}_{\text{RES}, \text{BESS}, t} + E^{\text{nc}}_{\text{RES}, \text{BESS}, t}
 \end{equation}
 
-% res_export_rule
+A su vez, se dispone de toda la información necesaria para completar el cálculo de la posición de venta de la generación, ya que, tal y como se ha descrito anteriormente, es necesario optimizar tanto el ciclado de la batería, como la venta de la generación, para obtener una visión completa del movimiento de la instalación. Con ello, la exportación de la generación en la ecuación~\ref{eq:res-export} se corresponde con la venta de todo el recurso generado del que no ha cargado la batería, limitado por los limites de programa y limitaciones estructurales.
+
 \begin{equation}%
   \label{eq:res-export}
+  E^{n}_{\text{RES}, \text{M}, t} =
+  \begin{cases}
+    E^{n}_{\text{RES}, t} - E^{\text{nc}}_{\text{RES}, \text{BESS}, t} & \text{si } E_{\text{RES}, t} \le \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) \cdot \Delta t \\
+    \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t - E^{\text{nc}}_{\text{RES}, \text{BESS}, t} & \text{sino}                                                \\
+  \end{cases}
 \end{equation}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Con esto, aunque las relaciones definidas son aplicables a la importación de la generación propia de las instalaciones híbridas, estas muestran comportamientos variados más allá de la configuración híbrida flexible, descritos en la sección~\ref{makereference3.1.2}.
 

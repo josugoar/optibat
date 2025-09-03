@@ -114,7 +114,7 @@ Cuando llegue el momento de cambio en el perfil de potencia de la batería y la 
 
 Con esto, uno de los aspectos más cruciales no resulta ser precisamente la consignación de un nuevo perfil de potencia de carga o descarga, sino la vuelta al mínimo técnico. Es decir, es una absoluta necesidad hacer que la batería vuelva a un perfil de potencia nulo cuando se haya terminado la carga o descarga, de tal forma que no continúe ciclándose.
 
-Resulta interesante destacar que, durante el despliegue del sistema en una de las instalaciones, no se llegó a consignar correctamente la vuelta al mínimo técnico de la batería debido a un fallo lógico, por lo que esta continuó cargándose más allá del límite máximo del \( \mathrm{SoC}_{\text{max}} \) establecido y, al llegar al límite de almacenamiento, hizo saltar la alarma del \gls{bms}. El problema desplomó la disponibilidad de la batería y llegó a causar pérdidas monetarias hasta rápidamente conseguir arreglarlo.
+Resulta interesante destacar que, durante el despliegue del sistema en una de las instalaciones, no se llegó a consignar correctamente la vuelta al mínimo técnico de la batería debido a un fallo lógico, por lo que esta continuó cargándose más allá del límite máximo del \( \mathrm{SoC}_{\text{máx}} \) establecido y, al llegar al límite de almacenamiento, hizo saltar la alarma del \gls{bms}. El problema desplomó la disponibilidad de la batería y llegó a causar pérdidas monetarias hasta rápidamente conseguir arreglarlo.
 
 Dicha situación subraya la importancia de disponer de herramientas de observación y control manual del sistema, como la descrita en la próxima sección~\ref{makereference6.2}.
 
@@ -154,8 +154,8 @@ Una solución sencilla al comportamiento previamente descrito, empleado como evo
     \label{eq:emisión-tolerancia}
     \lambda^{O}_{\text{BESS}, t} =
     \begin{cases}
-      \lambda^{M}_{t} + \Delta \lambda & \text{si } P_{t} < 0 \quad (\text{carga})       \\
-      \lambda^{M}_{t} - \Delta \lambda & \text{si } P_{t} > 0 \quad (\text{descarga})    \\
+      \lambda^{M}_{t} + \Delta \lambda & \text{si } P_{t} < 0 \quad (\text{carga})               \\
+      \lambda^{M}_{t} - \Delta \lambda & \text{si } P_{t} > 0 \quad (\text{descarga})            \\
       0                                & \text{si } P_{t} = 0 \quad (\text{estado estacionario}) \\
     \end{cases}
   \end{equation}
@@ -191,7 +191,7 @@ El objetivo final es agrupar los semiciclos de carga y descarga y obtener sus pr
     \Delta \mathrm{SoC}_{t} =
     \begin{cases}
       \mathrm{SoC}_{t} - \mathrm{SoC}_{t - 1} & \text{si } t > 1 \quad (\text{horizonte de optimización}) \\
-      \mathrm{SoC}_{1}                      & \text{si } t = 1 \quad (\text{periodo inicial})           \\
+      \mathrm{SoC}_{1}                      & \text{si } t = 1 \quad (\text{periodo inicial})             \\
     \end{cases}
   \end{equation}
 
@@ -243,11 +243,11 @@ Es extremadamente importante que el sistema se defienda ante situaciones de cicl
     \label{eq:puntos-algidos-inf-sup}
 
     \begin{equation}
-      B_{\text{inf}, t} = \mathrm{SoC}_{t} \le \left( \frac{\mathrm{SoC}_{\text{min}}}{100} + \frac{\mathrm{SoC}_{\text{tol}}}{100} \right) \cdot E_{\text{cap}}
+      B_{\text{inf}, t} = \mathrm{SoC}_{t} \le \left( \frac{\mathrm{SoC}_{\text{mín}}}{100} + \frac{\mathrm{SoC}_{\text{tol}}}{100} \right) \cdot E_{\text{cap}}
     \end{equation}
 
     \begin{equation}
-      B_{\text{sup}, t} = \mathrm{SoC}_{t} \ge ( \min(\frac{\mathrm{SoC}_{\text{max}}}{100}, \frac{A}{100}, \frac{\text{SoH}}{100}) - \frac{\mathrm{SoC}_{\text{tol}}}{100} ) \cdot E_{\text{cap}}
+      B_{\text{sup}, t} = \mathrm{SoC}_{t} \ge ( \min(\frac{\mathrm{SoC}_{\text{máx}}}{100}, \frac{A}{100}, \frac{\text{SoH}}{100}) - \frac{\mathrm{SoC}_{\text{tol}}}{100} ) \cdot E_{\text{cap}}
     \end{equation}
 
   \end{subequations}
@@ -258,7 +258,7 @@ Es extremadamente importante que el sistema se defienda ante situaciones de cicl
 
     \item \( \mathrm{SoC}_{t} \) es el \gls{soc} de la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
 
-    \item \( \mathrm{SoC}_{\text{min}} \) y \( \mathrm{SoC}_{\text{max}} \) son los límites mínimo y máximo del \gls{soc} de la batería.
+    \item \( \mathrm{SoC}_{\text{mín}} \) y \( \mathrm{SoC}_{\text{máx}} \) son los límites mínimo y máximo del \gls{soc} de la batería.
 
     \item \( E_{\text{cap}} \) es la capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
 
@@ -429,9 +429,9 @@ Con ello, por cada grupo, se toma el precio más bajo entre los periodos de desc
   \begin{equation}
     \lambda^{O}_{\text{BESS}, t} =
     \begin{cases}
-      \max(G_{c}) + \Delta \lambda & \text{si } c > 0 \quad (\text{carga})\\
-      \min(G_{c}) - \Delta \lambda & \text{si } c < 0 \quad (\text{descarga})\\
-      0                            & \text{si } c = 0 \quad (\text{estado estacionario})
+      \max(G_{c}) + \Delta \lambda & \text{si } c > 0 \quad (\text{carga})               \\
+      \min(G_{c}) - \Delta \lambda & \text{si } c < 0 \quad (\text{descarga})            \\
+      0                            & \text{si } c = 0 \quad (\text{estado estacionario}) \\
     \end{cases}
   \end{equation}
 
