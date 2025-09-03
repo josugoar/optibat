@@ -473,14 +473,16 @@ Junto a estas restricciones, se debe impedir la importación de energia no exced
   \label{eq:res-import}
 \end{equation}
 
-% bess_res_export_rule
+% res_export_rule
 \begin{equation}%
   \label{eq:res-export}
 \end{equation}
 
-Para terminar con lo relacionado con los sistemas de almacenamiento de energía en baterías mismos, por el momento solo se ha tenido en cuenta una configuración topológica del estilo de la aislada e híbrida flexible, ya que, según se ha descrito hasta ahora, el sistema puede importar energía de la red o de la generación libremente (bajo el resto de restricciones).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-En cambio, no todas las configuraciones topológicas operan de la siguiente manera. Precisamente, la híbrida con carga aislada de la red muestra un comportamiento de \textit{clipping}, en donde existe una cantidad de energía excedente de donde la batería solo puede cargar, representado en la figura~\ref{fig:clipping}
+Con esto, aunque las relaciones definidas son aplicables a la importación de la generación propia de las instalaciones híbridas, estas muestran comportamientos variados más allá de la configuración híbrida flexible, descritos en la sección~\ref{makereference3.1.2}.
+
+Precisamente, para adecuarse a los de la configuración híbrida con carga aislada de la red, se introduce el concepto de \textit{clipping}. El \textit{clipping} es un comportamiento en donde se restringe la carga de la batería únicamente a la generación excedente\footnote{Los coeficientes de \textit{clipping} se han calculado inicialmente con la consulta de las especificaciones de la instalación y han sido posteriormente refinados mediante \textit{backtesting}, gracias al trabajo previo realizada mediante consultas del \gls{pis}.}, representado en la figura~\ref{fig:clipping}.
 
 A modo de analogía, el \textit{clipping} se puede entender como una persona que dispone de un salario fijo (generación). Cada mes debe pagar una cantidad de su salario para el alquiler (\textit{threshold} de carga). Del dinero sobrante, ahorra (carga) una porcentaje (coeficiente de \textit{clipping}), mientras que gasta el resto como le apetezca (exportación de generación). Se representa mediante la ecuación~\ref{eq:clipping}.
 
@@ -491,15 +493,28 @@ A modo de analogía, el \textit{clipping} se puede entender como una persona que
   \label{fig:clipping}
 \end{figure}
 
-\begin{equation}%
-  \label{eq:clipping}
-\end{equation}
+\begin{samepage}
 
-donde
+  \begin{equation}%
+    \label{eq:clipping}
+    E_{\text{RES}, \text{BESS}, t} =
+    \begin{cases}
+      \gamma * (E_{\text{RES}, t} - \gamma_{\text{u}} * \Delta t) & \text{si } E_{\text{RES}, t} > \gamma_{\text{u}} * \Delta t \\
+      0                                                           & \text{sino}                                                 \\
+    \end{cases}
+  \end{equation}
 
-\( \gamma \)
+  donde
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{itemize}
+
+    \item \( \gamma \) es el coeficiente de \textit{clipping} que indica la cantidad de energía excedente con respecto a la generación total.
+
+    \item \( \gamma_{\text{u}} \) es el umbral de \textit{clipping} en \si{\mega\watt}, es decir, la cantidad mínima de energía a partir de la cual considerar excedente.
+
+  \end{itemize}
+
+\end{samepage}
 
 La última configuración topológica a tener en cuenta se trata de la híbrida con prioridad de carga de generación. Esto significa que se debe agotar completamente el recurso de generación antes de poder cargar de la red, aunque cargar de la red otorgue mayores beneficios, como es el caso con los precios de mercado negativos.
 
