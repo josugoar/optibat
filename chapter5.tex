@@ -9,9 +9,9 @@ Una vez obtenidos tanto los datos de las señales de la infraestructura operacio
 
 Exactamente, el objetivo principal de la etapa de optimización del sistema es responder a las cuestiones de cuándo y de qué fuente ciclar energía y cuánta energía ciclar, buscando siempre los mayores ingresos.
 
-Para ello, se ha elegido Pyomo~\cite{pyomo2025optimization} como herramienta de modelización matemática en el área de investigación operacional. Pyomo es una biblioteca de Python para formular, solucionar y analizar problemas de optimización, como el propio.
+Para ello, se ha elegido Pyomo\footnote{\url{https://github.com/Pyomo/pyomo} (BSD 3-Clause)} como herramienta de modelización matemática en el área de investigación operacional. Pyomo es una biblioteca de Python para formular, solucionar y analizar problemas de optimización, como el propio.
 
-Se hace uso de una formulación de \gls{milp} para poder tener en cuenta condiciones más allá de la más simple \gls{lp}. Se ha explorado el uso de indicadores o restricciones avanzadas, como los \textit{special order sets}, los cuales han sido descartados en última instancia debido a problemas de rendimiento. Esto significa que la modelización es puramente de enteros mixta compatible con cualquier resolutor que soporte variables binarias.
+Se hace uso de una formulación de \gls{milp} para poder tener en cuenta condiciones más allá de la más simple \gls{lp}. Se ha explorado el uso de indicadores o restricciones avanzadas, como los \textit{special order sets}, los cuales han sido descartados en última instancia debido a problemas de rendimiento. Esto significa que la modelización es puramente de enteros mixta compatible con cualquier resolutor que soporte variables binarias, siendo GLPK\footnote{\url{https://www.gnu.org/software/glpk/} (GPL-3.0)} el elegido.
 
 De esta forma, se detallan los parámetros de decisión en la sección~\ref{makereference5.1}, que articulan el problema de optimización, abarcando desde la definición temporal de los periodos del mercado y las variables de operación de los flujos energéticos, hasta las limitaciones impuestas por el comportamiento físico de la batería y las guías estratégicas de las indicaciones de mercado. Se procede a formular las restricciones operacionales que aseguran la viabilidad técnica de la solución en la sección~\ref{makereference5.2}, se establece el criterio de desempeño que define la función objetivo a optimizar en la parte~\ref{makereference5.3} y, finalmente, se consideran los requisitos de la resolución numérica para cumplir con la precisión exigida por el operador del mercado en la sección~\ref{makereference5.4}.
 
@@ -76,7 +76,7 @@ También es necesario tener en cuenta los husos horarios a la hora de calcular e
       \hline
     \end{tabular}
   }
-  \caption[Ajustes del mercado intradiario en cambios de hora de verano.]{Ajustes del mercado intradiario en cambios de hora de verano.}%
+  \caption[Ajustes del mercado intradiario en horario de verano.]{Ajustes del mercado intradiario en cambios de hora de verano.}%
   \label{tab:cambio-hora-verano}
 \end{table}
 
@@ -94,7 +94,7 @@ También es necesario tener en cuenta los husos horarios a la hora de calcular e
       \hline
     \end{tabular}
   }
-  \caption[Ajustes del mercado intradiario en cambios de hora de invierno.]{Ajustes del mercado intradiario en cambios de hora de invierno.}%
+  \caption[Ajustes del mercado intradiario en horario de invierno.]{Ajustes del mercado intradiario en cambios de hora de invierno.}%
   \label{tab:cambio-hora-invierno}
 \end{table}
 
@@ -113,17 +113,17 @@ Por lo tanto, los diferentes flujos energéticos son representados de la siguien
 
 \begin{itemize}
 
-  \item \( E^{n}_{\text{M}, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
+  \item \( E^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
 
-  \item \( E^{b}_{\text{M}, \text{BESS}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
+  \item \( E^{\mathrm{b}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{\text{M}, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a importar en \si{{\mega\watt\hour}}.
+  \item \( E^{\mathrm{c}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a importar en \si{{\mega\watt\hour}}.
 
-  \item \( E^{n}_{\text{BESS}, \text{M}, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico exportado de la batería a la red en \si{{\mega\watt\hour}}.
+  \item \( E^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico exportado de la batería a la red en \si{{\mega\watt\hour}}.
 
-  \item \( E^{b}_{\text{BESS}, \text{M}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
+  \item \( E^{\mathrm{b}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{\text{BESS}, \text{M}, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a exportar en \si{{\mega\watt\hour}}.
+  \item \( E^{\mathrm{c}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a exportar en \si{{\mega\watt\hour}}.
 
 \end{itemize}
 
@@ -140,13 +140,13 @@ Por lo tanto, es necesario tener en cuenta la generación junto con la batería 
 
 \begin{itemize}
 
-  \item \( E_{\text{RES}, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía importada de la generación a la batería en instalaciones híbridas en \si{{\mega\watt\hour}}.
+  \item \( E_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía importada de la generación a la batería en instalaciones híbridas en \si{{\mega\watt\hour}}.
 
-  \item \( E^{n}_{\text{RES}, R} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
+  \item \( E^{\mathrm{n}}_{\mathrm{RES} \rightarrow \mathrm{M}} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
 
-  \item \( E^{b}_{\text{RES}, R} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
+  \item \( E^{\mathrm{b}}_{\mathrm{RES} \rightarrow \mathrm{M}} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{\text{RES}, R} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la generación se ha comprometido a importar en \si{{\mega\watt\hour}}.
+  \item \( E^{\mathrm{c}}_{\mathrm{RES} \rightarrow \mathrm{M}} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la generación se ha comprometido a importar en \si{{\mega\watt\hour}}.
 
 \end{itemize}
 
@@ -163,13 +163,13 @@ Para ello, se definen los parámetros relacionados con el entorno de mercado, co
 
   \item \( \lambda' \) es el \textit{spread} mínimo objetivo en \si{\text{\euro}\per\mega\watt\hour}, es decir, el mínimo beneficio a obtener por cada unidad energética negociada.
 
-  \item \( \lambda^{M}_{t} \) es el precio de mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}, incluyendo tanto precios positivos como negativos.
+  \item \( \lambda^{\mathrm{M}}_{t} \) es el precio de mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}, incluyendo tanto precios positivos como negativos.
 
-  \item \( E_{\text{RES}, t} \) es la energía generada por el activo de generación en instalaciones híbridas en el periodo \( t \) en \si{{\mega\watt\hour}}.
+  \item \( E_{\mathrm{RES}, t} \) es la energía generada por el activo de generación en instalaciones híbridas en el periodo \( t \) en \si{{\mega\watt\hour}}.
 
-  \item \( P^{\text{lim}}_{\text{BESS}, t} \) es la limitación de programa de la batería en el periodo \( t \) en \si{\mega\watt}, generalmente sin acotar para representar su ausencia.
+  \item \( P^{\text{lim}}_{\mathrm{BESS}, t} \) es la limitación de programa de la batería en el periodo \( t \) en \si{\mega\watt}, generalmente sin acotar para representar su ausencia.
 
-  \item \( P^{\text{lim}}_{\text{RES}, t} \) es la limitación de programa de la generación en el periodo \( t \) en \si{\mega\watt}, generalmente sin acotar para representar su ausencia.
+  \item \( P^{\text{lim}}_{\mathrm{RES}, t} \) es la limitación de programa de la generación en el periodo \( t \) en \si{\mega\watt}, generalmente sin acotar para representar su ausencia.
 
   \item \( P^{\text{lim}}_{t} \) es la limitación de programa de la instalación al completo en el periodo \( t \) en \si{\mega\watt}, pueden darse múltiples limitaciones pueden en un único periodo de mercado.
 
@@ -184,40 +184,42 @@ Precisamente, las señales propiamente configuradas en el \gls{pis}, detalladas 
 
 \begin{itemize}
 
-  \item \( P^{c}_{n} \) es la potencia nominal de carga de la batería en \si{\mega\watt}.
+  \item \( P^{\mathrm{c}}_{\mathrm{n}} \) es la potencia nominal de carga de la batería en \si{\mega\watt}.
 
-  \item \( P^{d}_{n} \) es la potencia nominal de descarga de la batería en \si{\mega\watt}.
+  \item \( P^{\mathrm{d}}_{\mathrm{n}} \) es la potencia nominal de descarga de la batería en \si{\mega\watt}.
 
-  \item \( P_{n} \) es la potencia nominal de la red de la instalación de la batería en \si{\mega\watt}, es decir, el valor estructural global registrada.
+  \item \( P_{\mathrm{n}} \) es la potencia nominal de la red de la instalación de la batería en \si{\mega\watt}, es decir, el valor estructural global registrada.
 
-  \item \( E_{n} \) es capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
+  \item \( E_{\mathrm{n}} \) es capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
 
-  \item \( \eta^{c} \) es el rendimiento de carga de la batería.
+  \item \( \eta^{\mathrm{c}} \) es el rendimiento de carga de la batería.
 
-  \item \( \eta^{d} \) es el rendimiento de descarga de la batería.
+  \item \( \eta^{\mathrm{d}} \) es el rendimiento de descarga de la batería.
 
-  \item \( C_{t} \in \mathbb{R}^{+}_{0} \) es la energía cargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la importada.
+  \item \( \mathrm{SoC}_{\text{mín}} \) es la capacidad de almacenamiento mínima de la batería, respectivamente.
 
-  \item \( D_{t} \in \mathbb{R}^{+}_{0} \) es la energía descargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la exportada.
+  \item \( \mathrm{SoC}_{\text{máx}} \) es la capacidad de almacenamiento máxima de la batería, respectivamente.
+
+  \item \( \mathrm{SoC}_{t} \in \mathbb{R}^{+}_{0} \) es la cantidad de energía almacenada en la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
+
+  \item \( \mathrm{SoH} \) es la salud de la batería, afectando tanto a la potencia y capacidad de almacenamiento.
+
+  \item \( A \) es la disponibilidad de la batería, afecta tanto a la potencia como a la capacidad de almacenamiento.
 
   \item \( N_{\text{máx}} \) es el número de ciclos máximos a realizar por la batería a lo largo del horizonte de optimización.
 
   \item \( N \in \mathbb{R}^{+}_{0} \) es el número de ciclos realizados por la batería a lo largo de todo el horizonte de optimización.
 
-  \item \( \text{SoC}_{\text{mín}}, \text{SoC}_{\text{máx}} \) son el \gls{soc} mínimo y máximo de la batería, respectivamente.
+  \item \( C_{t} \in \mathbb{R}^{+}_{0} \) es la energía cargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la importada.
 
-  \item \( \text{SoC}_{t} \in \mathbb{R}^{+}_{0} \) es la cantidad de energía almacenada en la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
-
-  \item \( \text{SoH} \) es el \gls{soh} de la batería, afectando tanto a la potencia y capacidad de almacenamiento.
-
-  \item \( A \) es la disponibilidad de la batería.
+  \item \( D_{t} \in \mathbb{R}^{+}_{0} \) es la energía descargada por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}, a diferencia de la exportada.
 
 \end{itemize}
 
 \section{Restricciones operacionales}%
 \label{makereference5.2}
 
-Conociendo los parámetros con trabajar, es momento de definir las restricciones operacionales que establecen las relaciones entre ellos\footnote{Las ecuaciones mostradas se encuentran parcialmente simplificadas para facilitar la comprensión, aunque resulten más robustas en realidad. No se muestran, por ejemplo, las restricciones de consignación manual tanto de la posición como el estado de carga, explicadas en el apartado~\ref{makereference6}}.
+Conociendo los parámetros con trabajar, es momento de definir las restricciones operacionales que establecen las relaciones entre ellos\footnote{Las ecuaciones mostradas se encuentran parcialmente simplificadas para facilitar la comprensión, aunque resulten más robustas en realidad. No se muestran, por ejemplo, las restricciones de consignación manual tanto de la posición como el estado de carga, explicadas en el apartado~\ref{makereference6}.}.
 
 Como algunas configuraciones topológicas no soportan todos los flujos energéticos, véase la importación de la red en la topología híbrida con carga aislada de la red o la importación de la generación en la aislada, estas deben ser capaces de ser desactivadas a través de la relación~\ref{eq:desactivación-ufi}.
 
@@ -225,10 +227,10 @@ Como algunas configuraciones topológicas no soportan todos los flujos energéti
 
   \begin{equation}%
     \label{eq:desactivación-ufi}
-    E^{n}_{t} =
+    E^{\mathrm{n}}_{t} =
     \begin{cases}
-      E^{n}_{t} & \text{si } \exists \, \text{UFI} \\
-      0         & \text{sino}                      \\
+      E^{\mathrm{n}}_{t} & \text{si } \exists \, \mathrm{UFI} \\
+      0                  & \text{sino}                        \\
     \end{cases}
   \end{equation}
 
@@ -236,9 +238,9 @@ Como algunas configuraciones topológicas no soportan todos los flujos energéti
 
   \begin{itemize}
 
-    \item \( \text{UFI} \) determina la existencia de la \gls{ufi} correspondiente al flujo energético,  \( \text{UFI}_{\text{BESS}, R} \), \( \text{UFI}_{\text{M}, \text{BESS}} \), \( \text{UFI}_{\text{RES}, \text{BESS}} \) y \( \text{UFI}_{\text{RES}, R} \).
+    \item \( \mathrm{UFI} \) determina la existencia de la \gls{ufi} correspondiente al flujo energético,  \( \mathrm{UFI}_{\mathrm{BESS} \rightarrow \mathrm{M}} \), \( \mathrm{UFI}_{\mathrm{M} \rightarrow \mathrm{BESS}} \), \( \mathrm{UFI}_{\mathrm{RES} \rightarrow \mathrm{BESS}} \) y \( \mathrm{UFI}_{\mathrm{RES} \rightarrow \mathrm{M}} \).
 
-    \item \( E^{n}_{t} \) es la energía importada o exportada de cada flujo energético en \si{{\mega\watt\hour}}, \( E_{\text{BESS}, \text{M}, t} \), \( E_{\text{M}, \text{BESS}, t} \), \( E_{\text{RES}, \text{BESS}, t} \) y \( E_{\text{RES}, \text{M}, t} \).
+    \item \( E^{\mathrm{n}}_{t} \) es la energía importada o exportada de cada flujo energético en \si{{\mega\watt\hour}}, \( E_{\mathrm{BESS} \rightarrow \mathrm{M}, t} \), \( E_{\mathrm{M} \rightarrow \mathrm{BESS}, t} \), \( E_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \) y \( E_{\mathrm{RES} \rightarrow \mathrm{M}, t} \).
 
   \end{itemize}
 
@@ -250,14 +252,14 @@ Con esto, los flujos energéticos netos están definidos como la suma del corres
 
   \begin{equation}%
     \label{eq:neto-bruto}
-    E^{n}_{t} = E^{b}_{t} + E^{c}_{t}
+    E^{\mathrm{n}}_{t} = E^{\mathrm{b}}_{t} + E^{\mathrm{c}}_{t}
   \end{equation}
 
   donde
 
   \begin{itemize}
 
-    \item \( E_{t} \) es la energía importada o exportada de cada flujo energético desde o a la red en \si{{\mega\watt\hour}}, \( E_{\text{BESS}, \text{M}, t} \), \( E_{\text{M}, \text{BESS}, t} \) y \( E_{\text{RES}, \text{M}, t} \).
+    \item \( E_{t} \) es la energía importada o exportada de cada flujo energético desde o a la red en \si{{\mega\watt\hour}}, \( E_{\mathrm{BESS} \rightarrow \mathrm{M}, t} \), \( E_{\mathrm{M} \rightarrow \mathrm{BESS}, t} \) y \( E_{\mathrm{RES} \rightarrow \mathrm{M}, t} \).
 
   \end{itemize}
 
@@ -267,19 +269,19 @@ Con respecto a los parámetros del comportamiento físico, estos limitan la pote
 
 \begin{equation}%
   \label{eq:capacidad-potencia-carga}
-  C_{t} \le A \cdot \text{SoH} \cdot P^{c}_{n} \cdot \Delta t
+  C_{t} \le A \cdot \mathrm{SoH} \cdot P^{\mathrm{c}}_{\mathrm{n}} \cdot \Delta t
 \end{equation}
 
 \begin{equation}%
   \label{eq:capacidad-potencia-descarga}
-  D_{t} \le A \cdot \text{SoH} \cdot P^{d}_{n} \cdot \Delta t
+  D_{t} \le A \cdot \mathrm{SoH} \cdot P^{d}_{\mathrm{n}} \cdot \Delta t
 \end{equation}
 
 Junto a la potencia, la capacidad de almacenamiento la limita el correspondiente parámetro nominal de la batería en~\ref{eq:capacidad-almacenamiento}.
 
 \begin{equation}%
   \label{eq:capacidad-almacenamiento}
-  \text{SoC}_{t} \le A \cdot \text{SoH} \cdot E_{n}
+  \mathrm{SoC}_{t} \le A \cdot \mathrm{SoH} \cdot E_{\mathrm{n}}
 \end{equation}
 
 Las eficiencias de carga y descarga también afectan al ciclado, incorporadas en los respectivos cálculos de la energía cargada y descargada. Para ello, resulta absolutamente necesario separar la carga por un lado y la descarga por el otro, ya que el cálculo del número de ciclos del \gls{kpi} correspondiente requiere el uso de la descarga por separado. Como se indica oficialmente, ``se completa un ciclo de carga cuando se ha usado (descargado) una cantidad equivalente al 100 \% de la capacidad de la batería, pero no necesariamente toda con una sola carga. Por ejemplo, se puede usar el 75 \% de la capacidad de la batería un día y luego recargarla completamente durante la noche. Si se usa el 25 \% al día siguiente, se habrá descargado el 100 \% en total, y los dos días sumarán un ciclo de carga''~\cite{apple2025batteries}.
@@ -288,12 +290,12 @@ Esto significa que, si la carga y la descarga no se separasen, el número de cic
 
 \begin{equation}%
   \label{eq:eficiencia-carga}
-  C_{t} = \eta^{c} \cdot (E^{n}_{\text{M}, \text{BESS}, t} + E_{\text{RES}, \text{BESS}, t})
+  C_{t} = \eta^{\mathrm{c}} \cdot (E^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t} + E_{\mathrm{RES} \rightarrow \mathrm{BESS}, t})
 \end{equation}
 
 \begin{equation}%
   \label{eq:eficiencia-descarga}
-  D_{t} = {(\eta^{d})}^{-1} \cdot E^{n}_{\text{BESS}, \text{M}, t}
+  D_{t} = {(\eta^{\mathrm{d}})}^{-1} \cdot E^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t}
 \end{equation}
 
 Aún así, separar la carga y la descarga directamente introduce uno de los mayores posibles problemas del sistema, la carga y descarga simultanea, detallada más profundamente en la sección~\ref{makereference6.1.1}. Para evitar esta situación, se introducen variables binarias en la formulación~\ref{eq:carga-descarga-simultanea}, que indican la dirección de la operación en la que se encuentra la batería en un periodo determinado, impidiendo así el solapamiento de la carga y descarga. Con el uso de las variables binarias, se reformula la decisión no lineal en sistemas de ecuaciones lineales.
@@ -302,20 +304,20 @@ Aún así, separar la carga y la descarga directamente introduce uno de los mayo
   \label{eq:carga-descarga-simultanea}
 
   \begin{equation}
-    C_{t} \le M^{\text{c}}_{t} \cdot z^{\text{c}}_{t}
+    C_{t} \le M^{\mathrm{c}}_{t} \cdot z^{\mathrm{c}}_{t}
   \end{equation}
 
   \begin{equation}
-    D_{t} \le M^{\text{c}}_{t} \cdot (1 - z^{\text{c}}_{t})
+    D_{t} \le M^{\mathrm{c}}_{t} \cdot (1 - z^{\mathrm{c}}_{t})
   \end{equation}
 
   donde
 
   \begin{itemize}
 
-    \item \( M^{\text{c}}_{t} = E_{n} \) es la cota superior de la máxima carga o descarga permitida en el periodo \( t \) en \si{{\mega\watt\hour}}.
+    \item \( M^{\mathrm{c}}_{t} = E_{\mathrm{n}} \) es la cota superior de la máxima carga o descarga permitida en el periodo \( t \) en \si{{\mega\watt\hour}}.
 
-    \item \( z^{\text{c}}_{t} \) es la variable binaria indicador que representa la dirección de carga o descarga en el periodo \( t \).
+    \item \( z^{\mathrm{c}}_{t} \) es la variable binaria indicador que representa la dirección de carga o descarga en el periodo \( t \).
 
   \end{itemize}
 
@@ -325,7 +327,7 @@ Con ello, un aspecto a tener en cuenta es la simplificación de la formulación 
 
 \begin{equation}%
   \label{eq:carga-descarga-simultanea-sos}
-  C_{t}, D_{t} \in \text{SOS}_{1}
+  C_{t}, D_{t} \in \mathrm{SOS}_{1}
 \end{equation}
 
 Los \textit{special order sets} permiten representar condiciones de exclusión, tan solo permitiendo la activación (\( > 0 \)) de un número de variables contiguas según su orden, manteniendo el resto desactivadas (\( = 0 \)). En este caso, se pueden usan los \textit{special order sets} de orden 1 para, entre la carga y descarga, activar únicamente una de ellas.
@@ -343,14 +345,14 @@ El parámetro de mercado de ciclos máximos limita los ciclos a realizar durante
 
   \begin{equation}%
     \label{eq:limite-ciclos-dia}
-    N_{\text{máx}} = N_{d} \cdot H
+    N_{\text{máx}} = N_{\mathrm{d}} \cdot H
   \end{equation}
 
   donde
 
   \begin{itemize}
 
-    \item \( N_{d} \) es el número de ciclos máximos a realizar por la batería por día.
+    \item \( N_{\mathrm{d}} \) es el número de ciclos máximos a realizar por la batería por día.
 
   \end{itemize}
 
@@ -360,7 +362,7 @@ A su vez, el cálculo de los ciclos totales se define en la ecuación~\ref{eq:ci
 
 \begin{equation}%
   \label{eq:ciclado}
-  N = \sum_{t = 1}^{H} D_{t} \cdot E_{n}^{-1}
+  N = \sum_{t = 1}^{H} D_{t} \cdot E_{\mathrm{n}}^{-1}
 \end{equation}
 
 Por otro lado, el \gls{soc} lo limitan las señales de la batería en la ecuación~\ref{eq:limite-soc}. Generalmente, se suele reservar un margen de 5--10 \% de la capacidad de almacenamiento nominal para evitar imprevistos.
@@ -371,11 +373,11 @@ Precisamente, un efecto secundario muy beneficioso de las limitaciones de la se�
   \label{eq:limite-soc}
 
   \begin{equation}
-    \text{SoC}_{t} \ge \text{SoC}_{\text{mín}} \cdot E_{n}
+    \mathrm{SoC}_{t} \ge \mathrm{SoC}_{\text{mín}} \cdot E_{\mathrm{n}}
   \end{equation}
 
   \begin{equation}
-    \text{SoC}_{t} \le \text{SoC}_{\text{máx}} \cdot E_{n}
+    \mathrm{SoC}_{t} \le \mathrm{SoC}_{\text{máx}} \cdot E_{\mathrm{n}}
   \end{equation}
 
 \end{subequations}
@@ -384,7 +386,7 @@ De esta forma, se define la ecuación del \gls{soc}~\ref{eq:soc}, teniendo en cu
 
 \begin{equation}%
   \label{eq:soc}
-  \text{SoC}_{t} = \text{SoC}_{t - 1} + C_{t} - D_{t}
+  \mathrm{SoC}_{t} = \mathrm{SoC}_{t - 1} + C_{t} - D_{t}
 \end{equation}
 
 Además, la modelización también debe tener en cuenta las limitaciones de programa obtenidas en la sección~\ref{makereference4.2.1}. Estas limitaciones, representadas en la ecuación~\ref{eq:limite-programa}, impiden la exportación de energía de cada uno de los activos energéticos individualmente.
@@ -393,15 +395,15 @@ Además, la modelización también debe tener en cuenta las limitaciones de prog
   \label{eq:limite-programa}
 
   \begin{equation}
-    E^{n}_{\text{BESS}, \text{M}, t} \le \min(P_{n}, P^{\text{lim}}_{\text{BESS}, t}) \cdot \Delta t
+    E^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} \le \min\left(P_{\mathrm{n}}, P^{\text{lim}}_{\mathrm{BESS}, t}\right) \cdot \Delta t
   \end{equation}
 
   \begin{equation}
-    E^{n}_{\text{RES}, \text{M}, t} \le \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) \cdot \Delta t
+    E^{\mathrm{n}}_{\mathrm{RES} \rightarrow \mathrm{M}, t} \le \min\left(P_{\mathrm{n}}, P^{\text{lim}}_{\mathrm{RES}, t}\right) \cdot \Delta t
   \end{equation}
 
   \begin{equation}
-    E^{n}_{\text{BESS}, \text{M}, t} + E^{n}_{\text{RES}, \text{M}, t} \le \min(P_{n}, P^{\text{lim}}_{t}) \cdot \Delta t
+    E^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} + E^{\mathrm{n}}_{\mathrm{RES} \rightarrow \mathrm{M}, t} \le \min\left(P_{\mathrm{n}}, P^{\text{lim}}_{t}\right) \cdot \Delta t
   \end{equation}
 
 \end{subequations}
@@ -414,18 +416,18 @@ Para mejorar el rendimiento teniendo en cuenta estas circunstancias, se introduc
   \label{eq:curtailed-import}
 
   \begin{equation}%
-    E^{\text{c}}_{\text{RES}, \text{BESS}, t} \le
+    E^{\mathrm{c}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \le
     \begin{cases}
-      E_{\text{RES}, t} - \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t & \text{si } E_{\text{RES}, t} > \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t \\
-      0                                                                          & \text{sino}                                                                           \\
+      E_{\mathrm{RES}, t} - \min\left(P_{\mathrm{n}}, P^{\text{lim}}_{\mathrm{RES}, t}\right) * \Delta t & \text{si } E_{\mathrm{RES}, t} > \min\left(P_{\mathrm{n}}, P^{\text{lim}}_{\mathrm{RES}, t}\right) * \Delta t \\
+      0                                                                                                  & \text{sino}                                                                                                   \\
     \end{cases}
   \end{equation}
 
   \begin{equation}%
-    E^{\text{nc}}_{\text{RES}, \text{BESS}, t} \le
+    E^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \le
     \begin{cases}
-      E_{\text{RES}, t}                                      & \text{si } E_{\text{RES}, t} \le \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t \\
-      \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t & \text{sino}                                                                             \\
+      E_{\mathrm{RES}, t}                                                          & \text{si } E_{\mathrm{RES}, t} \le \min\left(P_{\mathrm{n}}, P^{\text{lim}}_{\mathrm{RES}, t}\right) * \Delta t \\
+      \min\left(P_{\mathrm{n}}, P^{\text{lim}}_{\mathrm{RES}, t}\right) * \Delta t & \text{sino}                                                                                                     \\
     \end{cases}
   \end{equation}
 
@@ -433,9 +435,9 @@ Para mejorar el rendimiento teniendo en cuenta estas circunstancias, se introduc
 
   \begin{itemize}
 
-    \item \( E^{\text{c}}_{\text{RES}, \text{BESS}, t} \) es la importación de la generación excedente a la batería en \si{{\mega\watt\hour}}.
+    \item \( E^{\mathrm{c}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \) es la importación de la generación excedente a la batería en \si{{\mega\watt\hour}}.
 
-    \item \( E^{\text{nc}}_{\text{RES}, \text{BESS}, t} \) es la importación de la generación no excedente a la batería en \si{{\mega\watt\hour}}.
+    \item \( E^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \) es la importación de la generación no excedente a la batería en \si{{\mega\watt\hour}}.
 
   \end{itemize}
 
@@ -447,20 +449,20 @@ Junto a estas restricciones, se debe impedir la importación de energía no exce
   \label{eq:indicador-curtailment}
 
   \begin{equation}
-    E^{\text{c}}_{\text{RES}, \text{BESS}, t} \le M^{\text{nc}}_{t} \cdot z^{\text{nc}}_{t}
+    E^{\mathrm{c}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \le M^{\mathrm{nc}}_{t} \cdot z^{\mathrm{nc}}_{t}
   \end{equation}
 
   \begin{equation}
-    E^{\text{nc}}_{\text{RES}, \text{BESS}, t} \le M^{\text{nc}}_{t} \cdot (1 - z^{\text{nc}}_{t})
+    E^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \le M^{\mathrm{nc}}_{t} \cdot (1 - z^{\mathrm{nc}}_{t})
   \end{equation}
 
   donde
 
   \begin{itemize}
 
-    \item \( M^{\text{nc}}_{t} = E_{\text{RES}, t} \) es la cota superior de la máxima importación de generación disponible en el periodo \( t \) en \si{{\mega\watt\hour}}.
+    \item \( M^{\mathrm{nc}}_{t} = E_{\mathrm{RES}, t} \) es la cota superior de la máxima importación de generación disponible en el periodo \( t \) en \si{{\mega\watt\hour}}.
 
-    \item \( z^{\text{nc}}_{t} \) es la variable binaria indicador que representa el estado de la importación excedente de la generación a la batería en el periodo \( t \), es decir, si se está cargando de la energía excedente o no.
+    \item \( z^{\mathrm{nc}}_{t} \) es la variable binaria indicador que representa el estado de la importación excedente de la generación a la batería en el periodo \( t \), es decir, si se está cargando de la energía excedente o no.
 
   \end{itemize}
 
@@ -470,17 +472,17 @@ La introducción del desglose de la importación de la generación a la batería
 
 \begin{equation}%
   \label{eq:res-import}
-  E_{\text{RES}, \text{BESS}, t} = E^{\text{c}}_{\text{RES}, \text{BESS}, t} + E^{\text{nc}}_{\text{RES}, \text{BESS}, t}
+  E_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} = E^{\mathrm{c}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} + E^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t}
 \end{equation}
 
 A su vez, se dispone de toda la información necesaria para completar el cálculo de la posición de venta de la generación, ya que, tal y como se ha descrito anteriormente, es necesario optimizar tanto el ciclado de la batería, como la venta de la generación, para obtener una visión completa del movimiento de la instalación. Con ello, la exportación de la generación en la ecuación~\ref{eq:res-export} se corresponde con la venta de todo el recurso generado del que no ha cargado la batería, limitado por los limites de programa y limitaciones estructurales.
 
 \begin{equation}%
   \label{eq:res-export}
-  E^{n}_{\text{RES}, \text{M}, t} =
+  E^{\mathrm{n}}_{\mathrm{RES} \rightarrow \mathrm{M}, t} =
   \begin{cases}
-    E^{n}_{\text{RES}, t} - E^{\text{nc}}_{\text{RES}, \text{BESS}, t} & \text{si } E_{\text{RES}, t} \le \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) \cdot \Delta t \\
-    \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t - E^{\text{nc}}_{\text{RES}, \text{BESS}, t} & \text{sino}                                                \\
+    E^{\mathrm{n}}_{\mathrm{RES}, t} - E^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t}                                             & \text{si } E_{\mathrm{RES}, t} \le \min\left(P_{\mathrm{n}}, P^{\text{lim}}_{\mathrm{RES}, t}\right) \cdot \Delta t \\
+    \min\left(P_{\mathrm{n}}, P^{\text{lim}}_{\mathrm{RES}, t}\right) * \Delta t - E^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} & \text{sino}                                                                                                         \\
   \end{cases}
 \end{equation}
 
@@ -501,10 +503,10 @@ A modo de analogía, el \textit{clipping} se puede entender como una persona que
 
   \begin{equation}%
     \label{eq:clipping}
-    E_{\text{RES}, \text{BESS}, t} =
+    E_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} =
     \begin{cases}
-      \gamma * (E_{\text{RES}, t} - \gamma_{\text{u}} * \Delta t) & \text{si } E_{\text{RES}, t} > \gamma_{\text{u}} * \Delta t \\
-      0                                                           & \text{sino}                                                 \\
+      \gamma * (E_{\mathrm{RES}, t} - \gamma_{\mathrm{u}} * \Delta t) & \text{si } E_{\mathrm{RES}, t} > \gamma_{\mathrm{u}} * \Delta t \\
+      0                                                             & \text{sino}                                                   \\
     \end{cases}
   \end{equation}
 
@@ -514,7 +516,7 @@ A modo de analogía, el \textit{clipping} se puede entender como una persona que
 
     \item \( \gamma \) es el coeficiente de \textit{clipping} que indica la cantidad de energía excedente con respecto a la generación total.
 
-    \item \( \gamma_{\text{u}} \) es el umbral de \textit{clipping} en \si{\mega\watt}, es decir, la cantidad mínima de energía a partir de la cual considerar excedente.
+    \item \( \gamma_{\mathrm{u}} \) es el umbral de \textit{clipping} en \si{\mega\watt}, es decir, la cantidad mínima de energía a partir de la cual considerar excedente.
 
   \end{itemize}
 
@@ -528,22 +530,22 @@ Dicha prioridad es definida de forma simular a previas restricciones de indicaci
   \label{eq:prioridad-hibrida}
 
   \begin{equation}
-    E^{n}_{\text{RES}, \text{M}, t} \le M^{\text{p}}_{t} \cdot z^{\text{p}}_{t}
+    E^{\mathrm{n}}_{\mathrm{RES} \rightarrow \mathrm{M}, t} \le M^{\mathrm{p}}_{t} \cdot z^{\mathrm{p}}_{t}
   \end{equation}
 
   \begin{equation}
-    E^{n}_{\text{M}, \text{BEES}, t} \le M^{\text{c}}_{t} \cdot (1 - z^{\text{p}}_{t})
+    E^{\mathrm{n}}_{\mathrm{M} \rightarrow \text{BEES}, t} \le M^{\mathrm{c}}_{t} \cdot (1 - z^{\mathrm{p}}_{t})
   \end{equation}
 
   donde
 
   \begin{itemize}
 
-    \item \( M^{\text{p}}_{t} = E_{\text{RES}, t} \) es la cota superior de la máxima exportación de generación disponible en el periodo \( t \) en \si{{\mega\watt\hour}}.
+    \item \( M^{\mathrm{p}}_{t} = E_{\mathrm{RES}, t} \) es la cota superior de la máxima exportación de generación disponible en el periodo \( t \) en \si{{\mega\watt\hour}}.
 
-    \item \( M^{\text{c}}_{t} = E_{n} \) es la cota superior de la máxima importación máxima permitida por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
+    \item \( M^{\mathrm{c}}_{t} = E_{\mathrm{n}} \) es la cota superior de la máxima importación máxima permitida por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
 
-    \item \( z^{\text{p}}_{t} \) es la variable binaria indicador que representa el estado de prioridad en el periodo \( t \), es decir, si se ha llegado a agotar el recurso de generación o si todavía está disponible.
+    \item \( z^{\mathrm{p}}_{t} \) es la variable binaria indicador que representa el estado de prioridad en el periodo \( t \), es decir, si se ha llegado a agotar el recurso de generación o si todavía está disponible.
 
   \end{itemize}
 
@@ -564,16 +566,16 @@ Inicialmente, en el beneficio toma parte cada flujo de energía. Importantemente
   \begin{equation}
     \begin{split}
       \pi_{t}
-      = (\lambda^{n}_{\text{BESS}, \text{M}, t} - \lambda')
-      \cdot E^{n}_{\text{BESS}, \text{M}, t}\\
-      - \lambda^{n}_{\text{M}, \text{BESS}, t}
-      \cdot E^{n}_{\text{M}, \text{BESS}, t}\\
-      - \lambda^{\text{c}}_{\text{RES}, \text{BESS}, t}
-      \cdot E^{\text{c}}_{\text{RES}, \text{BESS}, t}\\
-      - \lambda^{\text{nc}}_{\text{RES}, \text{BESS}, t}
-      \cdot E^{\text{nc}}_{\text{RES}, \text{BESS}, t}\\
-      + \lambda^{n}_{\text{RES}, \text{M}, t}
-      \cdot E^{n}_{\text{RES}, \text{M}, t}\\
+      = (\lambda^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} - \lambda')
+      \cdot E^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t}\\
+      - \lambda^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t}
+      \cdot E^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t}\\
+      - \lambda^{\mathrm{c}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t}
+      \cdot E^{\mathrm{c}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t}\\
+      - \lambda^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t}
+      \cdot E^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t}\\
+      + \lambda^{\mathrm{n}}_{\mathrm{RES} \rightarrow \mathrm{M}, t}
+      \cdot E^{\mathrm{n}}_{\mathrm{RES} \rightarrow \mathrm{M}, t}\\
     \end{split}
   \end{equation}
 
@@ -582,30 +584,30 @@ Inicialmente, en el beneficio toma parte cada flujo de energía. Importantemente
   \end{equation}
 
   \begin{equation}
-    \lambda^{n}_{\text{BESS}, \text{M}, t} = \lambda^{M}_{t}
+    \lambda^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} = \lambda^{\mathrm{M}}_{t}
   \end{equation}
 
   \begin{equation}
-    \lambda^{n}_{\text{M}, \text{BESS}, t} = \lambda^{M}_{t} + c
+    \lambda^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t} = \lambda^{\mathrm{M}}_{t} + c
   \end{equation}
 
   \begin{equation}
-    \lambda^{\text{c}}_{\text{RES}, \text{BESS}, t} = 0
+    \lambda^{\mathrm{c}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} = 0
   \end{equation}
 
   \begin{equation}
-    \lambda^{\text{nc}}_{\text{RES}, \text{BESS}, t} =
+    \lambda^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} =
     \begin{cases}
-      \lambda^{M}_{t} & \text{si } \exists \, \gamma \land \lambda^{M}_{t} \ge \lambda^{O}_{\text{RES}, t} \\
-      0               & \text{sino}                                                                        \\
+      \lambda^{\mathrm{M}}_{t} & \text{si } \exists \, \gamma \land \lambda^{\mathrm{M}}_{t} \ge \lambda^{\mathrm{O}}_{\mathrm{RES}, t} \\
+      0                        & \text{sino}                                                                                            \\
     \end{cases}
   \end{equation}
 
   \begin{equation}
-    \lambda^{n}_{\text{RES}, \text{M}, t} =
+    \lambda^{\mathrm{n}}_{\mathrm{RES} \rightarrow \mathrm{M}, t} =
     \begin{cases}
-      \lambda^{M}_{t} & \text{si } \lambda^{M}_{t} \ge \lambda^{O}_{\text{RES}, t} \\
-      0               & \text{sino}                                                \\
+      \lambda^{\mathrm{M}}_{t} & \text{si } \lambda^{\mathrm{M}}_{t} \ge \lambda^{\mathrm{O}}_{\mathrm{RES}, t} \\
+      0                        & \text{sino}                                                                    \\
     \end{cases}
   \end{equation}
 
@@ -617,17 +619,17 @@ donde
 
   \item \( c \) es el peaje de la red en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \lambda^{n}_{\text{BESS}, \text{M}, t} \) es el precio de la exportación de la batería a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+  \item \( \lambda^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} \) es el precio de la exportación de la batería a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \lambda^{n}_{\text{M}, \text{BESS}, t}\) es el precio de la importación de la red a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+  \item \( \lambda^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t}\) es el precio de la importación de la red a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \lambda^{O}_{\text{RES}, t} \) es el precio de oferta de la generación en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+  \item \( \lambda^{\mathrm{O}}_{\mathrm{RES}, t} \) es el precio de oferta de la generación en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \lambda^{\text{c}}_{\text{RES}, \text{BESS}, t} \) es el precio de la importación de la generación excedente a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+  \item \( \lambda^{\mathrm{c}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \) es el precio de la importación de la generación excedente a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \lambda^{\text{nc}}_{\text{RES}, \text{BESS}, t} \) es el precio de la importación de la generación no excedente a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+  \item \( \lambda^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \) es el precio de la importación de la generación no excedente a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \lambda^{n}_{\text{RES}, \text{M}, t} \) es el precio de exportación de la generación a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+  \item \( \lambda^{\mathrm{n}}_{\mathrm{RES} \rightarrow \mathrm{M}, t} \) es el precio de exportación de la generación a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
   \item \( \pi \) es el beneficio en \si{\text{\euro}}.
 
@@ -678,10 +680,10 @@ De esta forma, se desarrolla el algoritmo~\ref{alg:optimizacion-lexicografica} d
   \caption{Algoritmo de optimización lexicográfica}%
   \label{alg:optimizacion-lexicografica}
   \begin{algorithmic}
-    \Require{} Funciones objetivo \( f_{1}, \dots, f_{n} \) ordenadas por importancia decreciente.
+    \Require{} Funciones objetivo \( f_{1}, \dots, f_{\mathrm{n}} \) ordenadas por importancia decreciente.
     \Require{} Variables de decisión \( x \).
     \Require{} Conjunto de valores posibles \( X \).
-    \For{\( i \gets 1 \text{ to } n \)}
+    \For{\( i \gets 1 \text{ a } n \)}
     \State{} Resolver el problema de optimización de objetivo único \( P_{i} \):
     \Statex{} \hspace{\algorithmicindent} \( \max \quad f_{i}(x) \)
     \Statex{} \hspace{\algorithmicindent} \( \text{sujeto a} \quad x \in X \)
@@ -690,9 +692,9 @@ De esta forma, se desarrolla el algoritmo~\ref{alg:optimizacion-lexicografica} d
     \State{} \Return{} \( \emptyset \)
     \EndIf{}
     \State{} Sea \( x^{*}_{i} \) una solución óptima para \( P_{i} \).
-    \State{} \( z^{*}_{i} \gets f_t(x^{*}_{i}) \) \Comment{Se guarda el valor óptimo para la siguiente iteración.}
+    \State{} \( z^{*}_{i} \gets f_{t}(x^{*}_{i}) \) \Comment{Se guarda el valor óptimo para la siguiente iteración.}
     \EndFor{}
-    \State{} \Return{} \( x^{*}_{n} \)
+    \State{} \Return{} \( x^{*}_{\mathrm{n}} \)
   \end{algorithmic}
 \end{algorithm}
 

@@ -35,11 +35,9 @@ De esta forma, es posible obtener una visión más completa a través del análi
 
 Resulta que en los \glspl{bess}, la efectividad operativa y la rentabilidad, esta última sobre todo, no dependen exclusivamente de la tecnología intrínseca utilizada o de la optimidad de su operación, sino que están condicionadas fundamentalmente por su configuración topológica.
 
-Esta disposición es absolutamente necesaria para llegar a comprender el funcionamiento de la representación operacional de las plantas, ya que una de las principales motivaciones del desarrollo del sistema ha resultado ser la intención de aprovechar las ventajas de que brindan las topologías más avanzadas e integradas con el resto de activos, como lo es la topología híbrida aquí descrita. Posteriormente, en el apartado~\ref{makereference5} de modelización estructural se describe la implementación de la lógica topológica y en el apartado~\ref{makereference7} de resultados experimentales las diferencias en la operación de las topologías.
+Esta disposición es absolutamente necesaria para llegar a comprender el funcionamiento de la representación operacional de las plantas, ya que una de las principales motivaciones del desarrollo del sistema ha resultado ser la intención de aprovechar las ventajas que brindan las topologías más avanzadas e integradas con el resto de activos, como lo es la topología híbrida aquí descrita. Posteriormente, en el apartado~\ref{makereference5} de modelización estructural, se describe la implementación de la lógica topológica, y en el apartado~\ref{makereference7} de resultados experimentales, las diferencias en la operación de las topologías.
 
-Así, la topología de una instalación energética se refiere a la arquitectura física de conexión de los activos energéticos con la red eléctrica y otros elementos de generación o consumo dentro de la instalación misma en todo su conjunto~\cite{parlikar2019topology}.
-
-Esta define los flujos energéticos posibles y, por ello, impone las restricciones estructurales que el modelo de optimización debe considerar como premisas inviolables para garantizar la validez física y económica de las soluciones.
+Así, la topología de una instalación energética se refiere a la arquitectura física de conexión de los activos energéticos con la red eléctrica y otros elementos de generación o consumo dentro de la instalación misma en todo su conjunto~\cite{parlikar2019topology}, la cual define los flujos energéticos posibles y, por ello, impone las restricciones estructurales que el modelo de optimización debe considerar como premisas inviolables para garantizar la validez física y económica de las soluciones.
 
 Precisamente, estos flujos energéticos son los que dictan los canales de importación y exportación de energía entre la red pública de alta tensión, controlada por el \gls{tso}, y la red interna de media tensión de la entidad energética, manejadas las instalaciones de almacenamiento mismas por el control del sistema desarrollado, a través del llamado \gls{pf}.
 
@@ -63,7 +61,7 @@ De igual manera, es necesario subrayar la relevancia de los flujos energéticos 
   \label{tab:unidades-fisicas}
 \end{table}
 
-Los flujos energéticos, o, mejor expresado, las interfaces correspondientes a los mismos, son conocidos como \gls{ufi}, mientras que la interfaz que oferta a mercado y engloba las \glspl{ufi} es llamada \gls{up} desde el punto de vista del \gls{tso} y \gls{uof} desde la perspectiva del \gls{mo}.
+Los flujos energéticos, o, mejor dicho, las interfaces correspondientes a los mismos, son conocidos como \gls{ufi}, mientras que la interfaz que oferta en mercado y engloba las \glspl{ufi} es llamada \gls{up} desde el punto de vista del \gls{tso} y \gls{uof} desde la perspectiva del \gls{mo}.
 
 El sistema desarrollado, por tanto, hace uso de la configuración topológica ya existente, es decir, no se encarga de la implantación física de los activos energéticos o de la conexión de los mismos con la red física, ya que eso queda bien fuera del alcance del diseño. En cambio, sí que hace uso de los diferentes componentes mediante sus correspondientes canales.
 
@@ -87,15 +85,15 @@ Esto significa que la operación de un sistema de almacenamiento de energía en 
 
 \begin{itemize}
 
-  \item La interfaz de importación se corresponde al flujo de energía desde la red hacia el \gls{bess}. Este flujo comprende la única fuente de carga de la batería.
+  \item La interfaz de importación se corresponde al flujo de energía desde la red al \gls{bess}. Este flujo comprende la única fuente de carga de la batería.
 
-  \item  La interfaz de exportación representa el flujo de energía desde el \gls{bess} hacia la red. En contrapunto, se corresponde con la descarga de la batería.
+  \item  La interfaz de exportación representa el flujo de energía desde el \gls{bess} a la red. En contrapunto, se corresponde con la descarga de la batería.
 
 \end{itemize}
 
 De esta forma, esta topología es más común en las instalaciones energéticas principalmente dedicadas al negocio en los mercados de ajuste~\cite{carbajo2007mercados}, de tal forma que no necesiten encargarse del aprovechamiento energético de otros posibles activos energéticos dentro de la misma instalación.
 
-Precisamente, uno de los ejemplos más representativos de esta topología en la actualidad es el \gls{bess} de Abadiño, en donde el negocio principal se realiza en los mencionados mercados de ajuste (las diferencias entre la situación actual y futura de las instalaciones standalone resulta especialmente interesante y es evaluada posteriormente en la sección~\ref{makereference7.3}).
+Precisamente, uno de los ejemplos más representativos de esta topología en la actualidad es el \gls{bess} de Abadiño, en donde el negocio principal se realiza en los mencionados mercados de ajuste (las diferencias entre la situación actual y futura de las instalaciones \textit{standalone} resulta especialmente interesante y es evaluada posteriormente en la sección~\ref{makereference7.3}).
 
 A pesar de su aparente simplicidad, los análisis de mercado demuestran que la viabilidad económica de la topología aislada es limitada~\cite{azahra2020optimized, baviskar2023opportunities, kalenderova2024batery}.
 
@@ -103,7 +101,7 @@ El margen diferencial de precios, también conocido como \textit{spread}, entre 
 
 De hecho, para que estas instalaciones sean rentables, generalmente deben diversificar sus fuentes de ingresos mediante la participación activa en los dichos mercados de servicios de ajuste, como el \gls{afrr} y el \gls{mfrr}, teniendo que ofrecer disponibilidades de frecuencia y potencia.
 
-Aunque la participación en estos mercados de regulación ofrezca una remuneración por la disponibilidad de capacidad, lo que se adapta perfectamente a la rápida respuesta de conmutación de las baterías, proporciona flujos de ingreso inestables de cara al futuro. Esto es debido al enorme crecimiento de la implantación de sistemas de almacenamiento de energía en baterías esperado, aumentando la oferta de disponibilidad y, por lo tanto, reduciendo a su vez las ganancias generadas individualmente por las baterías.
+Aunque la participación en estos mercados de regulación ofrezca una remuneración por la disponibilidad de capacidad, lo que se adapta perfectamente a la rápida respuesta de conmutación de las baterías, proporciona flujos de ingreso inestables de cara al futuro. Esto es debido al enorme crecimiento de la implantación de \glspl{bess} esperado, aumentando la oferta de disponibilidad y, por lo tanto, reduciendo a su vez las ganancias generadas individualmente por las baterías.
 
 Cabe destacar que, aun teniendo una baja rentabilidad esperada, el sistema desarrollado soporta la configuración aislada sin ninguna complicación, al ser diseñado con una arquitectura modular en mente, capaz de adaptarse a, presuntamente, cualquier configuración topológica.
 
@@ -112,7 +110,7 @@ Cabe destacar que, aun teniendo una baja rentabilidad esperada, el sistema desar
 
 Con el propósito de superar las limitaciones del modelo aislado y maximizar el aprovechamiento de la energía, han emergido con fuerza las configuraciones híbridas~\cite{bresciani2025hybridization}, el principal enfoque del sistema.
 
-Estas topologías se definen por la llamada colocación del activo de generación, principalmente de generación renovable y generalmente fotovoltaica o eólica, con un \gls{bess}, como se muestra en la figura~\ref{fig:topologia-hibrida}.
+Estas topologías se definen por la llamada colocación del activo de generación, generalmente de generación renovable, fotovoltaica o eólica, con un \gls{bess}, como se muestra en la figura~\ref{fig:topologia-hibrida}.
 
 \begin{figure}
   \centering
@@ -139,7 +137,7 @@ Por ello, la herramienta identifica y soporta de forma genérica las siguientes 
 
   \item[Híbrida flexible] La configuración más versátil. El sistema de control tiene total libertad para decidir la fuente de carga (red eléctrica o generación energética) basándose exclusivamente en el criterio óptimo del algoritmo de control, que principalmente se trata de la maximización del beneficio. La instalación híbrida fotovoltaica y de almacenamiento de Puertollano es un arquetipo de este modelo.
 
-  \item[Híbrida con prioridad de carga de generación] Opera bajo una restricción no económica, es decir, debe sacrificar beneficio para cumplir con las limitaciones del funcionamiento físico de la instalación. Una norma operativa de naturaleza física, aunque también pueda ser contractual o regulatoria, obliga al \gls{bess} a absorber toda la energía generada por la planta antes de poder cargar desde la red. La planta de híbrida eólica y de almacenamiento de Urkilla ejemplifica este tipo de limitación.
+  \item[Híbrida con prioridad de carga de generación] Opera bajo una restricción no económica, es decir, debe sacrificar beneficio para cumplir con las limitaciones del funcionamiento físico de la instalación. Una norma operativa de naturaleza física, aunque también pueda ser contractual o regulatoria, obliga al \gls{bess} a absorber toda la energía generada por la planta antes de poder cargar desde la red. La planta híbrida eólica y de almacenamiento de Urkilla ejemplifica este tipo de limitación.
 
   \item[Híbrida con carga aislada de la red] Representa el escenario más restrictivo. La interfaz de importación desde la red para la carga del \gls{bess} está física o lógicamente deshabilitada, siendo la planta renovable asociada la única fuente de carga. Este modelo limita la operación a estrategias de autoconsumo de la producción renovable, donde se puede llegar a reservar parte de la generación para la batería. La instalación híbrida fotovoltaica y de almacenamiento de Campo Arañuelo es una representación de esta configuración.
 
@@ -152,7 +150,7 @@ La hibridación, incluso en sus formas más restrictivas, ofrece ventajas compar
 
 La instrumentación de campo constituye el conjunto de dispositivos físicos que actúan como la interfaz directa entre los flujos energéticos. Por un lado, se encargan de medir con precisión las variables físicas clave (como la potencia, tensión, \gls{soc}, etc.) y por otro, son los actuadores que ejecutan las órdenes generadas por la lógica de control y optimización.
 
-Concretamente, a partir dichos componentes, \gls{bms}, \gls{pcs}, transformador de medida y \gls{rtu}, ofrecidos por entidades como CATL~\cite{catl2023catl} e Ingeteam~\cite{ingeteam2025ingeteam}, el sistema extrae las siguientes señales.
+Concretamente, a partir de los componentes del \gls{bms}, \gls{pcs}, transformador de medida y \gls{rtu}, ofrecidos por entidades como CATL~\cite{catl2023catl} e Ingeteam~\cite{ingeteam2025ingeteam}, el sistema extrae las siguientes señales.
 
 \begin{description}
 
@@ -176,7 +174,7 @@ Concretamente, a partir dichos componentes, \gls{bms}, \gls{pcs}, transformador 
 
 \end{description}
 
-De tal forma, estas son las señales de entrada y salida comunicadas a través de los protocolos de comunicación descritos en la siguiente sección~\ref{makereference3.3}, las cuales deparan en el sistema de información de planta de la sección~\ref{makereference3.4} tras ser adecuadamente configuradas.
+De tal forma, estas son las señales de entrada y salida comunicadas a través de los protocolos de comunicación descritos en la siguiente sección~\ref{makereference3.3}, las cuales deparan en el \gls{pis} de la sección~\ref{makereference3.4} tras ser adecuadamente configuradas.
 
 \section{Protocolos de comunicación}%
 \label{makereference3.3}
@@ -187,9 +185,9 @@ Para ello es necesario llevar a cabo una correcta selección de los protocolos d
 
 El principal desafío en entornos industriales es la interoperabilidad, siendo esta la capacidad de los diferentes dispositivos de intercambiar información sin ambigüedades. Por eso, los protocolos de comunicación son las reglas que actúan como el formato común para lograr esta necesaria interoperabilidad.
 
-De esta forma, el \gls{pis}, explicado más adelante en la sección~\ref{makereference3.4}, debe entablar un vínculo con el controlador de planta o \gls{rtu}, concretamente. Pero, a la misma vez, el \gls{rtu} mismo necesita interactuar con el resto de activos físicos si pretende controlarlos de forma precisa.
+De esta forma, el \gls{pis}, explicado más adelante en la sección~\ref{makereference3.4}, debe entablar un vínculo con el controlador de planta o \gls{rtu}, concretamente. Pero, a la misma vez, el \gls{rtu} mismo necesita interactuar con el resto de activos físicos si se pretende controlarlos de forma precisa.
 
-Esa es la razón de la exposición de múltiples protocolos, y es que la comunicación entre los activos energéticos y el \gls{rtu} se realiza mediante Modbus TCP de forma agnóstica al sistema desarrollado, mientras que la comunicación entre el \gls{rtu} y el \gls{pis} es a través de IEC 60870{-}5{-}104.
+Esa es la razón de la exposición de múltiples protocolos, ya que la comunicación entre los activos energéticos y el \gls{rtu} se realiza mediante Modbus TCP de forma agnóstica al sistema desarrollado, mientras que la comunicación entre el \gls{rtu} y el \gls{pis} es a través de IEC 60870{-}5{-}104.
 
 \begin{figure}
   \centering
@@ -250,7 +248,7 @@ Ellos detallan el uso del protocolo para garantizar la respuesta con respecto al
     182  & Petición de datos de tiempo real                          & C\_TR\_AA    & Baja     \\
     \hline
   \end{tabular}
-  \caption[Funciones de aplicación para la comunicación con la red eléctrica.]{Extracto de las funciones de aplicación asociadas definidas por el operador del sistema de transporte para la comunicación del sistema con la red eléctrica, consolidadas en el llamado \gls{sceci}~\cite{ree2009protocolo}. El sistema hace uso de sus propias funciones de aplicación asociadas, comunicadas en última instancia a la red a través aquí mostrados.}%
+  \caption[Funciones de aplicación para la comunicación con la red eléctrica.]{Extracto de las funciones de aplicación asociadas definidas por el operador del sistema de transporte para la comunicación del sistema con la red eléctrica, consolidadas en el llamado \gls{sceci}~\cite{ree2009protocolo}. El sistema hace uso de sus propias funciones de aplicación asociadas, comunicadas en última instancia a la red a través de los aquí mostrados.}%
   \label{tab:funciones-de-aplicacion-red}
 \end{table}
 
@@ -281,7 +279,7 @@ Por lo tanto, una contribución fundamental resulta ser el diseño, la implantac
   \label{fig:sistema-de-informacion-de-planta}
 \end{figure}
 
-Para ello, se ha desplegado el PI Connector para IEC 60870{-}5{-}104, un componente de software que actúa como traductor entre el protocolo de telecontrol estándar del sector eléctrico y el ecosistema del PI System, también mostrado en la figura.
+Para ello, se ha desplegado el PI Connector para IEC 60870{-}5{-}104, un componente de software que actúa como traductor entre el protocolo de telecontrol estándar del sector eléctrico y el ecosistema del PI System, mostrado también en la figura~\ref{fig:sistema-de-informacion-de-planta}.
 
 \subsection{Consideraciones de seguridad}%
 \label{makereference3.4.2}
@@ -327,7 +325,7 @@ Como el servicio de ajuste obligatorio (no remunerado) con menor granularidad es
 
 Es importante recalcar que aunque la menor granularidad a la que deben trabajar las baterías sea tan baja, el sistema desarrollado nunca necesitará de un tiempo de respuesta tan rápido, ya que controla el arbitraje de batería en mercados de más alta granularidad (mayor o igual a 15 minutos). Tan solo se modifican los temporizadores para, de forma ajena al desarrollo, tener la opción de habilitar los sistemas de almacenamiento de energía en batería no solo para el uso del sistema propio, sino para el negocio simultaneo en los mercados auxiliares previamente descritos y servicios de regulación, que son los que disponen de esta granularidad reducida.
 
-Finalmente, intentando asegurar la sincronización de los sensores y evitar la perdida de información, la periodicidad de la \gls{gi}, comando esencial del protocolo que solicita una actualización completa de todos los puntos de datos, se define en 1 hora. Esto es debido a que este valor se corresponde con el intervalo mínimo entre la negociación de dos mercados, lo que es diferente de la granularidad del mercado. Aún así, los búferes de transmisión de las unidades remotas permiten disminuir notablemente la perdida de datos. Esto es relevante ya que el sistema de control de planta no realiza peticiones bajo demanda a los dispositivos, sino que devuelve el valor ya al almacenado.
+Finalmente, intentando asegurar la sincronización de los sensores y evitar la perdida de información, la periodicidad de la \gls{gi}, comando esencial del protocolo que solicita una actualización completa de todos los puntos de datos, se define en 1 hora. Esto es debido a que este valor se corresponde con el intervalo mínimo entre la negociación de dos mercados, mostrado en la figura~\ref{fig:tiempo-mercados}, lo que es diferente de la granularidad del mercado. Aún así, los búferes de transmisión de las unidades remotas permiten disminuir notablemente la perdida de datos. Esto es relevante ya que el sistema de control de planta no realiza peticiones bajo demanda a los dispositivos, sino que devuelve el valor ya al almacenado.
 
 \begin{figure}
   \centering
@@ -380,7 +378,7 @@ Por suerte, el sistema de control de baterías no permite el incorrecto funciona
 \section{Consumo del historiador}%
 \label{makereference3.5}
 
-Una vez que la infraestructura de adquisición y almacenamiento ha sido configurada y validada, y los datos operativos de los activos fluyen de manera fiable hacia el historiador, el siguiente paso es establecer los mecanismos para su consumo.
+Una vez que la infraestructura de adquisición y almacenamiento ha sido configurada y validada, y los datos operativos de los activos fluyen de manera fiable al historiador, el siguiente paso es establecer los mecanismos para su consumo.
 
 Precisamente, el consumo no se limita a una simple lectura de valores brutos, sino que abarca la transformación de algunas de las métricas para la obtención de valores dependientes, como los rendimientos del ciclo, y la interfaz programática que conecte el historiador con la herramienta de optimización, intentando hacer frente a posibles incompatibilidades tecnológicas entre ambas plataformas.
 
@@ -402,7 +400,7 @@ Mediante las ecuaciones de rendimiento se detallan los siguientes puntos.
 
 \begin{itemize}
 
-  \item El rendimiento de carga, que afecta a la energía importada y define la cantidad de energía perdida durante la carga de la batería. Su razón de ser es el ajuste de los posibles desvíos a la hora de comprar energía que surgirían si no se tuvieran en cuenta las perdidas. El rendimiento de carga es calculado mediante la simple relación entre la energía importada y energía cargada \( \eta_{c} = E_{\text{imp}} / E_{c} \).
+  \item El rendimiento de carga, que afecta a la energía importada y define la cantidad de energía perdida durante la carga de la batería. Su razón de ser es el ajuste de los posibles desvíos a la hora de comprar energía que surgirían si no se tuvieran en cuenta las perdidas. El rendimiento de carga es calculado mediante la simple relación entre la energía importada y energía cargada \( \eta_{\text{c}} = E_{\text{imp}} / E_{\text{c}} \).
 
   \item El rendimiento de descarga, que afecta a la energía exportada y define la cantidad de energía perdida durante la descarga de la batería. Es necesaria para el ajuste de los posibles desvíos a la hora de vender energía si no se tuvieran en cuenta las perdidas. El rendimiento de descarga es calculado mediante la simple relación entre la energía exportada y energía descargada \( \eta_{d} = E_{\text{exp}} / E_{d} \).
 
@@ -415,12 +413,12 @@ Finalmente, teniendo los datos provenientes de tanto de los activos físicos dis
 
 Para ello, existen múltiples enfoques que tomar, aunque el elegido a sido hacer uso de la interfaz de aplicación ofrecida por el PI AF SDK, la cual provee acceso estructurado a una variedad de componentes del PI System.
 
-Aún y todo, la librería expone su interfaz a través de Microsoft \.NET pero la herramienta de optimización ha sido desarrollada en Python, lo que resulta en un problema de incompatibilidad que podría no permitir el uso de PI AF SDK\@.
+Aún y todo, su interfaz es expuesta a través de Microsoft \.NET\footnote{\url{https://github.com/dotnet/runtime} (MIT)} pero la herramienta de optimización ha sido desarrollada en Python\footnote{\url{https://github.com/python/cpython} (PSF-2.0)}, lo que resulta en un problema de incompatibilidad que podría no permitir el uso de PI AF SDK\@.
 
-Para solucionar el problema principal de esta incompatibilidad, es posible utilizar la integración de Python con el \.NET Common Language Runtime, la máquina virtual que se encarga de ejecutar el código para la plataforma de \.NET\@. Esto se hace posible a través de los bindings de Python.NET\@.
+Para solucionar el problema principal de esta incompatibilidad, es posible utilizar la integración de Python con el \.NET Common Language Runtime, la máquina virtual que se encarga de ejecutar el código para la plataforma de \.NET\@. Esto se hace posible a través de los bindings de Python.NET\footnote{\url{https://github.com/pythonnet/pythonnet} (MIT)}\@.
 
 Precisamente, se hace un uso directo de la interfaz a través del lenguaje de programación elegido para el apartado de la conexión con el PI Server. Y es que, en términos de la conexión, resulta que para cumplir con los requisitos de seguridad de la comunicación entre redes, los métodos de conexión por defecto recomendados no se pueden usar. En cambio, es necesaria la autenticación con credenciales directa, aunque esto suponga la perdida de la reconexión automática ofrecida por los métodos de conexión por defecto.
 
-Junto a ello, con el propósito de aumentar la ergonomía del desarrollo, se toma la librería Piconnect, que ofrece una interfaz directa más simple y también hace uso internamente de la integración con la interfaz de \.NET\@.
+Junto a ello, con el propósito de aumentar la ergonomía del desarrollo, se toma la biblioteca Piconnect\footnote{\url{https://github.com/Hugovdberg/PIconnect} (MIT)}, que ofrece una interfaz directa más simple y también hace uso internamente de la integración con la interfaz de \.NET\@.
 
 Con todo, los puntos son consumidos mediante los llamados valores registrados, significando un valor discreto en el tiempo, y valores interpolados, para obtener la evolución de los mismos a lo largo del tiempo. La comunicación de vuelta a los activos físicos es discutida más adelante en la sección correspondiente de comando y control~\ref{makereference6.1.1}.

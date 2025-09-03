@@ -14,11 +14,11 @@ Para que el sistema de optimización de baterías funcione de manera efectiva, n
   \label{fig:esquema-mercado}
 \end{figure}
 
-Por tanto, se define el análisis de las fuentes de información de mercado y los procesos desarrollados para su adquisición, tratamiento e integración. Concretamente, el sistema de optimización requiere de tres categorías fundamentales de datos externos. Los precios del mercado son esenciales para formular previsiones estratégicas. La energía negociada es clave para la liquidación de beneficios y la gestión de desvíos. Las limitaciones operativas imponen restricciones de obligado cumplimiento.
+Por tanto, se define el análisis de las fuentes de información de mercado y los procesos desarrollados para su adquisición, tratamiento e integración. Concretamente, el sistema de optimización requiere de cuatro categorías fundamentales de datos externos. Los precios del mercado son esenciales para formular previsiones estratégicas. La energía negociada es clave para la liquidación de beneficios y la gestión de desvíos. Las limitaciones operativas imponen restricciones de obligado cumplimiento. La situción meteorológica indica las previsiones de la generación.
 
 De esta forma, se pretende describir el origen de estas fuentes de datos, las reglas que gobiernan su publicación y acceso, y la arquitectura implementada para consumirlos de manera programática y robusta.
 
-Con esto, para facilitar la comprensión de las secciones posteriores, se definen los siguientes conceptos. Las \glspl{ufi} son identificadores lógicos que definen los puntos de intercambio de energía. A diferencia de un punto físico en la red, una \gls{ufi} es una referencia contractual para las operaciones de mercado, con la condición indispensable de que toda transacción debe estar respaldada por un flujo de energía físicamente viable. Las \glspl{up} son los identificadores del \gls{tso} de las instalaciones al completo y resultan los activos que se arbitran en el mercado. Las \glspl{uof} son los identificadores equivalentes del \gls{mo}. Es decir, las operaciones de las \glspl{ufi} que engloba una \gls{up} o \gls{uof} se agregan a la hora de realizar la oferta.
+Con esto, para facilitar la comprensión de las secciones posteriores, se reiteran los siguientes conceptos. Las \glspl{ufi} son identificadores lógicos que definen los puntos de intercambio de energía. A diferencia de un punto físico en la red, una \gls{ufi} es una referencia contractual para las operaciones de mercado, con la condición indispensable de que toda transacción debe estar respaldada por un flujo de energía físicamente viable. Las \glspl{up} son los identificadores del \gls{tso} de las instalaciones al completo y resultan los activos que se arbitran en el mercado. Las \glspl{uof} son los identificadores equivalentes del \gls{mo}. Es decir, las operaciones de las \glspl{ufi} que engloba una \gls{up} o \gls{uof} se agregan a la hora de realizar la oferta.
 
 Para ello, primeramente se presenta \gls{omie} como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de la energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de \gls{ree}, que impone las limitaciones de programa de operación en tiempo real, como se explica en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla como se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema.
 
@@ -39,7 +39,7 @@ Por su rol como gestor y árbitro del mercado, \gls{omie} es la fuente oficial d
 
 Precisamente, \gls{omie} pone a disposición la información en forma de ficheros publicados según un horario acordado tras el cierre de cada mercado correspondiente.
 
-De esta forma, la información que el sistema desarrollado toma a través de \gls{omie} se clasifica en dos categorías mayoritarias, los precios marginales de casación y la energía finalmente negociada por cada \gls{up}.
+De esta forma, la información que el sistema desarrollado toma a través de \gls{omie} se clasifica en dos categorías mayoritarias, los precios marginales de casación y la energía finalmente negociada por unidad.
 
 \subsection{Precio marginal}%
 \label{makereference4.1.1}
@@ -168,15 +168,15 @@ Se han desarrollado dos programas principales en Python, uno para cada fuente de
 
 La adquisición de datos de \gls{omie}, aunque dispone de una interfaz web, no es apta para una integración automatizada. Por ello, la comunicación se realiza a través del servidor FTP que \gls{omie} proporciona a los agentes de mercado registrados, ya que la \gls{api} que la web pública~\cite{omie2025acceso} usa no ofrece los datos en tiempo real debido a un periodo de confidencialidad.
 
-El programa utiliza la librería Paramiko para establecer una conexión segura mediante SFTP con usuario y contraseña. Una vez conectado, el programa implementa una lógica para asegurar que siempre se obtiene la versión más reciente de cada fichero.
+El programa utiliza la biblioteca Paramiko\footnote{\url{https://github.com/paramiko/paramiko} (LGPL-2.1)} para establecer una conexión segura mediante SFTP con usuario y contraseña. Una vez conectado, el programa implementa una lógica para asegurar que siempre se obtiene la versión más reciente de cada fichero.
 
 \Gls{omie} utiliza la nomenclatura \texttt{xxxxx\_aaaammdd[ss].v}, donde \texttt{xxxxx} es el nombre del fichero, \texttt{aaaa} es el año, \texttt{mm} es el mes, \texttt{dd} es el día y \texttt{ss} es la sesión del mercado, si es aplicable, y \texttt{v} es la versión del fichero.
 
 Como se incluye una versión al final, el programa debe listar los ficheros para una fecha concreta, procesar los nombres para identificar las versiones y descargar únicamente la más alta, ya que \gls{omie} puede publicar correcciones o actualizaciones.
 
-Para obtener las limitaciones de programa de \gls{ree}, el enfoque es similar. Se debe utilizar la \gls{api} privada de ESIOS\footnote{\url{https://participa.esios.ree.es}}, exclusiva para agentes de mercado~\cite{red2025esios}, pues la \gls{api} pública tan solo proporciona la información tras un periodo de confidencialidad. La comunicación se realiza mediante peticiones HTTP a través de la librería Requests, utilizando autenticación OAuth con un token de acceso tipo \textit{bearer}.
+Para obtener las limitaciones de programa de \gls{ree}, el enfoque es similar. Se debe utilizar la \gls{api} privada de ESIOS\footnote{\url{https://participa.esios.ree.es}}, exclusiva para agentes de mercado~\cite{red2025esios}, pues la \gls{api} pública tan solo proporciona la información tras un periodo de confidencialidad. La comunicación se realiza mediante peticiones HTTP a través de la biblioteca Requests\footnote{\url{https://github.com/psf/requests} (Apache-2.0)}, utilizando autenticación OAuth con un token de acceso tipo \textit{bearer}.
 
-Una vez obtenidos los ficheros, que se presentan en formatos CSV específicos, la librería pandas se encarga de la transformación. El resultado es un fichero CSV cuyo formato se corresponde directamente con las filas a insertar en la base de datos de destino.
+Una vez obtenidos los ficheros, que se presentan en formatos CSV específicos, la biblioteca Pandas\footnote{\url{https://github.com/pandas-dev/pandas} (BSD-3-Clause)} se encarga de la transformación. El resultado es un fichero CSV cuyo formato se corresponde directamente con las filas a insertar en la base de datos de destino.
 
 El formato de los datos de precios contiene las columnas fecha, hora y precio en euros por megavatio hora\footnote{Es importante destacar que el campo de hora representa el periodo de mercado, porque anteriormente la granularidad de los mercados era exclusivamente horaria.}, según la tabla~\ref{tab:descripción-precio} y el contenido de la figura~\ref{fig:contenido-precio}.
 

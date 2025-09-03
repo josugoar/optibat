@@ -22,14 +22,14 @@ In fact, this is how \textsc{Optibat} is born, the self developed battery optimi
 
 With this, the design decisions related to the integration of the system and the components of the existing architecture are detailed (that is, fundamental aspects of the operation that the market operator, owning the energy assets, has previously available), along the development of all the elements to be taken into account, the validation to ensure safety and correct operation, the deployment in relation to the commissioning in large scale installations, and the comparative experimentation in search of the best mode of operation.
 
-This way, the system is divided into the aforementioned sections. The operational infrastructure, explained in Chapter~\ref{makereference3}, manages the lowest level interaction layer available. The market environment, specified in Chapter~\ref{makereference4}, determines the information extracted from the regulatory institutions with which it communicates with. The structural modeling, detailed in Chapter~\ref{makereference5}, discusses the business logic of the decisions to be made. The command and control, specified in Chapter~\ref{makereference6}, explains the feedback loop to the physical assets and the interaction of market agents and telecommunications operators with the system. Finally, the carried out experiments are described in Chapter~\ref{makereference7}.
+This way, the system is divided into the aforementioned sections. Firstly, the state of the art is introduced in Chapter~\ref{makereference2}. The operational infrastructure, explained in Chapter~\ref{makereference3}, manages the lowest level interaction layer available. The market environment, specified in Chapter~\ref{makereference4}, determines the information extracted from the regulatory institutions with which it communicates with. The structural modeling, detailed in Chapter~\ref{makereference5}, discusses the business logic of the decisions to be made. The command and control, specified in Chapter~\ref{makereference6}, explains the feedback loop to the physical assets and the interaction of market agents and telecommunications operators with the system. Finally, the carried out experiments are described in Chapter~\ref{makereference7} and the conclusions in Chapter~\ref{makereference8}.
 
 \section*{Objectives}%
 \label{makereference9.1}
 
-The main objective is the design, development, validation, and deployment (excluding experimentation) of a cross-market battery arbitrage system, guaranteeing its integration with the established infrastructure and enabling it to operate in the electricity market. It should be noted that, since battery energy storage technology is still in its early stages of development, there is no easily ready made or simple to implement solution on the existing energy infrastructure, although external efforts are in place to improve the situation. Therefore, establishing this foundation is the top priority.
+The main objective is the design, development, validation, and deployment of a cross-market battery arbitrage system, guaranteeing its integration with the established infrastructure and enabling it to operate in the electricity market. It should be noted that, since battery energy storage technology is still in its early stages of development, there is no easily ready made or simple to implement solution on the existing energy infrastructure, although external efforts are in place to improve the situation. Therefore, establishing this foundation is the top priority.
 
-In turn, several complementary secondary objectives are defined, detailed below.
+In turn, several complementary secondary objectives are defined, detailed below in order of precedence.
 
 \begin{description}
 
@@ -45,7 +45,7 @@ In turn, several complementary secondary objectives are defined, detailed below.
 
   \item[Facilitate system monitoring] A command and control interface, which allows telecommunications operators and market agents to monitor the status in real time, helps increase confidence the operation. This interface must provide a clear visualization of the planned and executed operations and the economic results obtained, ensuring the transparency and traceability of the decisions. Crucially, market agents must be able to override the automatic behavior of the system with manual instructions in the light of unforeseen market scenarios, or energy asset test periods for telecommunications operators.
 
-  \item[Respond to failures] The system is equipped with fault detection and management mechanisms to ensure its robustness and high availability. This includes the ability to manage interruptions in the operational availability of physical assets or the loss or incomplete information of market data, having to explicitly adhere to such situations in a way that nothing is affected. Measured programmatically by the number of unavailabilities not caused by the system.
+  \item[Respond to failures] The system is equipped with fault detection and management mechanisms to ensure its robustness and high availability. This includes the ability to manage interruptions in the operational availability of physical assets or the loss or incomplete information of market data, having to explicitly adhere to such situations in a way that nothing is affected. Measured programmatically by the number of unavailabilities caused by the system.
 
   \item[Analyze economic viability] Using the operational data and the optimization results, a subsequent economic viability analysis is must be performed. The objective is to validate the business case, accurately quantify the profitability in spite of capital and operational expenditures, and model the financial performance of the asset under different market conditions. This analysis serves to refine operating strategies and guide future investments in battery energy storage systems, thus seeking to validate the apparent predisposition to profitability of battery energy storage systems. It is measured in euros per megawatt hour relative to the cost.
 
@@ -81,11 +81,7 @@ The work plan consists distributes the project's development into multiple time 
 
   \item[Adaptation to quarter-hourly markets] Adaptation of the system for its operation in the new quarter-hourly, daily, intraday and continuous markets.
 
-  \item[Isolated topology] Enablement of the optimization for isolated topologies.
-
   \item[Renewable colocation] Development of the logic to manage batteries together with a colocated renewable generation plant.
-
-  \item[Hybrid topology] Enablement of the optimization for hybrid topologies.
 
   \item[Incorporation of the plant information system] Deployment and configuration of the connections with the energy assets of the plant information system.
 
@@ -93,15 +89,11 @@ The work plan consists distributes the project's development into multiple time 
 
   \item[Partial consideration of the market environment] Realization of the first partial integration with non programmatic market data.
 
-  \item[Deployment to preproduction] Deployment in a test environment without access to market bidding.
-
   \item[Setpoint consignment and bidding] Development of the ability to send orders to the batteries and offers to the market.
 
   \item[Obtaining data from the market operator] Automation to obtain relevant information published by the market operator.
 
   \item[Obtaining data from the system operator] Implementation of the reception of limitations from the transport system operator.
-
-  \item[Deployment to production] Commissioning in real installations for the commercial operation.
 
   \item[Control panel] Creation of the control panel for the monitoring and control of the system.
 

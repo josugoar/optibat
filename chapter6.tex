@@ -104,7 +104,7 @@ Por ejemplo, una situación en la que una carga y descarga simultanea podría su
   \label{tab:carga-descarga-simultanea}
 \end{table}
 
-Para adecuarse a dichas limitaciones físicas, se combinan las señales de carga con signo positivo y descarga con signo negativo obtenidas de la optimización y posteriormente convertidas en potencia \( P = P_{d} - P_{c} \). También se añade otra capa de prevención de desactivando previamente los periodos con carga y descarga simultanea, lo cual ciertamente puede causar desvíos en el programa, pero estos serias fácilmente solucionados en optimizaciones posteriores y nunca deberían ocurrir\footnote{Los indicadores de carga y descarga simultanea introducidos en la sección~\ref{makereference5.1.2} ya lo tienen en cuenta, pero se realiza un esfuerzo para separar las responsabilidades de los diferentes roles.}, de todos modos.
+Para adecuarse a dichas limitaciones físicas, se combinan las señales de carga con signo positivo y descarga con signo negativo obtenidas de la optimización y posteriormente convertidas en potencia \( P = P_{\text{d}} - P_{\mathrm{c}} \). También se añade otra capa de prevención de desactivando previamente los periodos con carga y descarga simultanea, lo cual ciertamente puede causar desvíos en el programa, pero estos serias fácilmente solucionados en optimizaciones posteriores y nunca deberían ocurrir\footnote{Los indicadores de carga y descarga simultanea introducidos en la sección~\ref{makereference5.1.2} ya lo tienen en cuenta, pero se realiza un esfuerzo para separar las responsabilidades de los diferentes roles.}, de todos modos.
 
 Con las posiciones transformadas en potencia, solo se toman en cuenta los cambios en el perfil de potencia y se anota el tiempo de inicio de cada cambio.
 
@@ -121,7 +121,7 @@ Dicha situación subraya la importancia de disponer de herramientas de observaci
 \subsection{Emisión de ofertas}%
 \label{makereference6.1.2}
 
-Para emitir la oferta al mercado, es necesario calcular el precio al que ofertar la posición de la batería\footnote{La oferta del activo de generación se configura de forma manual a un valor fijo \( \lambda^{O}_{\text{RES}, t} = \lambda^{O}_{\text{RES}} \), generalmente siendo \SI{0}{\text{\euro}\per\mega\watt\hour} para asegurar su casación, ya que su energía no puede ser almacenada más que en la batería misma.}. Para ello se emplea un algoritmo de desarrollo propio que permite agrupar las ofertas por ciclos.
+Para emitir la oferta al mercado, es necesario calcular el precio al que ofertar la posición de la batería\footnote{La oferta del activo de generación se configura de forma manual a un valor fijo \( \lambda^{\mathrm{O}}_{\text{RES}, t} = \lambda^{\mathrm{O}}_{\text{RES}} \), generalmente siendo \SI{0}{\text{\euro}\per\mega\watt\hour} para asegurar su casación, ya que su energía no puede ser almacenada más que en la batería misma.}. Para ello se emplea un algoritmo de desarrollo propio que permite agrupar las ofertas por ciclos.
 
 En un primer momento, precisamente a los inicios de desarrollo de la emisión de la oferta, el precio de oferta se correspondía directamente al precio de mercado, como en la ecuación~\ref{eq:emisión-directa}.
 
@@ -129,16 +129,16 @@ En un primer momento, precisamente a los inicios de desarrollo de la emisión de
 
   \begin{equation}%
     \label{eq:emisión-directa}
-    \lambda^{O}_{\text{BESS}, t} = \lambda^{M}_{t}
+    \lambda^{\mathrm{O}}_{\mathrm{BESS}, t} = \lambda^{\mathrm{M}}_{t}
   \end{equation}
 
   donde
 
   \begin{itemize}
 
-    \item \( \lambda^{O}_{\text{BESS}, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+    \item \( \lambda^{\mathrm{O}}_{\mathrm{BESS}, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-    \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+    \item \( \lambda^{\mathrm{M}}_{t} \) es el precio del mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
   \end{itemize}
 
@@ -152,11 +152,11 @@ Una solución sencilla al comportamiento previamente descrito, empleado como evo
 
   \begin{equation}%
     \label{eq:emisión-tolerancia}
-    \lambda^{O}_{\text{BESS}, t} =
+    \lambda^{\mathrm{O}}_{\mathrm{BESS}, t} =
     \begin{cases}
-      \lambda^{M}_{t} + \Delta \lambda & \text{si } P_{t} < 0 \quad (\text{carga})               \\
-      \lambda^{M}_{t} - \Delta \lambda & \text{si } P_{t} > 0 \quad (\text{descarga})            \\
-      0                                & \text{si } P_{t} = 0 \quad (\text{estado estacionario}) \\
+      \lambda^{\mathrm{M}}_{t} + \Delta \lambda & \text{si } P_{t} < 0 \quad (\text{carga})               \\
+      \lambda^{\mathrm{M}}_{t} - \Delta \lambda & \text{si } P_{t} > 0 \quad (\text{descarga})            \\
+      0                                         & \text{si } P_{t} = 0 \quad (\text{estado estacionario}) \\
     \end{cases}
   \end{equation}
 
@@ -164,9 +164,9 @@ Una solución sencilla al comportamiento previamente descrito, empleado como evo
 
   \begin{itemize}
 
-    \item \( \lambda^{O}_{\text{BESS}, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+    \item \( \lambda^{\mathrm{O}}_{\mathrm{BESS}, t} \) es el precio de oferta de la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-    \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+    \item \( \lambda^{\mathrm{M}}_{t} \) es el precio del mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
     \item \( P_{t} \) es la potencia a mantener durante el periodo \( t \) en \si{\mega\watt}.
 
@@ -191,7 +191,7 @@ El objetivo final es agrupar los semiciclos de carga y descarga y obtener sus pr
     \Delta \mathrm{SoC}_{t} =
     \begin{cases}
       \mathrm{SoC}_{t} - \mathrm{SoC}_{t - 1} & \text{si } t > 1 \quad (\text{horizonte de optimización}) \\
-      \mathrm{SoC}_{1}                      & \text{si } t = 1 \quad (\text{periodo inicial})             \\
+      \mathrm{SoC}_{1}                        & \text{si } t = 1 \quad (\text{periodo inicial})           \\
     \end{cases}
   \end{equation}
 
@@ -243,11 +243,11 @@ Es extremadamente importante que el sistema se defienda ante situaciones de cicl
     \label{eq:puntos-algidos-inf-sup}
 
     \begin{equation}
-      B_{\text{inf}, t} = \mathrm{SoC}_{t} \le \left( \frac{\mathrm{SoC}_{\text{mín}}}{100} + \frac{\mathrm{SoC}_{\text{tol}}}{100} \right) \cdot E_{\text{cap}}
+      B_{\text{inf}, t} = \mathrm{SoC}_{t} \le \left( \frac{\mathrm{SoC}_{\text{mín}}}{100} + \frac{\mathrm{SoC}_{\text{tol}}}{100} \right) \cdot E_{\mathrm{n}}
     \end{equation}
 
     \begin{equation}
-      B_{\text{sup}, t} = \mathrm{SoC}_{t} \ge ( \min(\frac{\mathrm{SoC}_{\text{máx}}}{100}, \frac{A}{100}, \frac{\text{SoH}}{100}) - \frac{\mathrm{SoC}_{\text{tol}}}{100} ) \cdot E_{\text{cap}}
+      B_{\text{sup}, t} = \mathrm{SoC}_{t} \ge \left( \min\left(\frac{\mathrm{SoC}_{\text{máx}}}{100}, \frac{A}{100}, \frac{\mathrm{SoH}}{100}\right) - \frac{\mathrm{SoC}_{\text{tol}}}{100} \right) \cdot E_{\mathrm{n}}
     \end{equation}
 
   \end{subequations}
@@ -260,11 +260,11 @@ Es extremadamente importante que el sistema se defienda ante situaciones de cicl
 
     \item \( \mathrm{SoC}_{\text{mín}} \) y \( \mathrm{SoC}_{\text{máx}} \) son los límites mínimo y máximo del \gls{soc} de la batería.
 
-    \item \( E_{\text{cap}} \) es la capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
+    \item \( E_{\mathrm{n}} \) es la capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
 
     \item \( A \) es la disponibilidad de la batería.
 
-    \item \( \text{SoH} \) es el \gls{soh} de la batería.
+    \item \( \mathrm{SoH} \) es el \gls{soh} de la batería.
 
     \item \( \mathrm{SoC}_{\text{tol}} \) es la tolerancia del punto álgido.
 
@@ -403,7 +403,7 @@ Finalmente, se agrupan los precios de mercado por los periodos correspondientes 
 
   \begin{equation}%
     \label{eq:agrupado-periodos}
-    G_{c} = \{ \lambda^{M}_{t} \mid C_{t} = c \}
+    G_{\mathrm{c}} = \{ \lambda^{\mathrm{M}}_{t} \mid C_{t} = c \}
   \end{equation}
 
   donde
@@ -414,9 +414,9 @@ Finalmente, se agrupan los precios de mercado por los periodos correspondientes 
 
     \item \( c \) es un identificador específico de semiciclo.
 
-    \item \( \lambda^{M}_{t} \) es el precio del mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+    \item \( \lambda^{\mathrm{M}}_{t} \) es el precio del mercado eléctrico en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-    \item \( G_{c} \) es el conjunto de todos los precios de mercado \( \lambda^{M}_{t} \) que pertenecen a un mismo semiciclo con identificador \( c \).
+    \item \( G_{\mathrm{c}} \) es el conjunto de todos los precios de mercado \( \lambda^{\mathrm{M}}_{t} \) que pertenecen a un mismo semiciclo con identificador \( c \).
 
   \end{itemize}
 
@@ -427,11 +427,11 @@ Con ello, por cada grupo, se toma el precio más bajo entre los periodos de desc
 \begin{samepage}
 
   \begin{equation}
-    \lambda^{O}_{\text{BESS}, t} =
+    \lambda^{\mathrm{O}}_{\mathrm{BESS}, t} =
     \begin{cases}
-      \max(G_{c}) + \Delta \lambda & \text{si } c > 0 \quad (\text{carga})               \\
-      \min(G_{c}) - \Delta \lambda & \text{si } c < 0 \quad (\text{descarga})            \\
-      0                            & \text{si } c = 0 \quad (\text{estado estacionario}) \\
+      \max\left(G_{\mathrm{c}}\right) + \Delta \lambda & \text{si } c > 0 \quad (\text{carga})    \\
+      \min\left(G_{\mathrm{c}}\right) - \Delta \lambda & \text{si } c < 0 \quad (\text{descarga}) \\
+      0                                     & \text{si } c = 0 \quad (\text{estado estacionario}) \\
     \end{cases}
   \end{equation}
 
@@ -439,9 +439,9 @@ Con ello, por cada grupo, se toma el precio más bajo entre los periodos de desc
 
   \begin{itemize}
 
-    \item \( G_{c} \) es el conjunto de todos los precios de mercado \( \lambda^{M}_{t} \) que pertenecen a un mismo semiciclo con identificador \( c \).
+    \item \( G_{\mathrm{c}} \) es el conjunto de todos los precios de mercado \( \lambda^{\mathrm{M}}_{t} \) que pertenecen a un mismo semiciclo con identificador \( c \).
 
-    \item \( \lambda^{O}_{\text{BESS}, t} \) es el precio de oferta de referencia calculado para el semiciclo \( c \) en \si{\text{\euro}\per\mega\watt\hour}.
+    \item \( \lambda^{\mathrm{O}}_{\mathrm{BESS}, t} \) es el precio de oferta de referencia calculado para el semiciclo \( c \) en \si{\text{\euro}\per\mega\watt\hour}.
 
     \item \( \Delta \lambda \) es la tolerancia de precio para las ofertas en \si{\text{\euro}\per\mega\watt\hour}.
 

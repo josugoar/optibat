@@ -20,11 +20,11 @@ De esta forma, la métrica principal a analizar resulta siempre ser el beneficio
 
 En primer lugar, es necesario conocer la información de costes para determinar si verdaderamente merece la pena la incorporación de \glspl{bess} en la red eléctrica, más allá de sus beneficios operativos.
 
-Un arquetipo de batería dimensionada en \SI{20}{\mega\watt\hour} \( E_{n} \), \SI{5}{\mega\watt} \( P_{n} \), 90 \% de eficiencia \( \eta \), 2 \% de degradación anual \( \delta \), una vida útil de 30 años \( H \) y 1 ciclo por día \( N \), suponiendo un \textit{spread} \( S \) estándar de \SI{60}{\text{\euro}\per\mega\watt\hour}, genera \SI{8\,958\,504}{\text{\euro}} de ingreso \( \pi \), según la ecuación~\ref{eq:beneficio-total}.
+Un arquetipo de batería dimensionada en \SI{20}{\mega\watt\hour} \( E_{\mathrm{n}} \), \SI{5}{\mega\watt} \( P_{\mathrm{n}} \), 90 \% de eficiencia \( \eta \), 2 \% de degradación anual \( \delta \), una vida útil de 30 años \( H \) y 1 ciclo por día \( N \), suponiendo un \textit{spread} \( S \) estándar de \SI{60}{\text{\euro}\per\mega\watt\hour}, genera \SI{8\,958\,504}{\text{\euro}} de ingreso \( \pi \), según la ecuación~\ref{eq:beneficio-total}.
 
 \begin{equation}%
   \label{eq:beneficio-total}
-  \pi = \eta \cdot S \cdot E_{n} \cdot N \cdot D \cdot \frac{1 - {(1 - \delta)}^{H}}{\delta}
+  \pi = \eta \cdot S \cdot E_{\mathrm{n}} \cdot N \cdot D \cdot \frac{1 - {(1 - \delta)}^{H}}{\delta}
 \end{equation}
 
 Con ello, se debe analizar el \gls{capex} inicial y el \gls{opex} continuado de un \gls{bess} estándar de ion-litio. Precisamente, a partir de los datos de la evolución de precio de los \glspl{bess} de la figura~\ref{fig:precio-bateria}, se estima el \gls{capex} en la figura~\ref{fig:capex-bateria}. El \gls{opex} es comúnmente fijado en el 3 \% del \gls{capex}. Además, se deben tener en cuenta las ayudas del estado a las baterías, las cuales pueden cubrir hasta el 45--65 \% del coste total de la batería~\cite{solfy2025subvenciones} en la actualidad.
@@ -58,7 +58,7 @@ La comparativa entre los resultados manuales contra el proceso del sistema desar
 
 De esta forma, sin la disposición del sistema, la estrategia de arbitraje más extendida entre los agentes de mercado es la compra y venta directa de energía en los periodos valle y pico, respectivamente. Debido a la alta complejidad del arbitraje en los mercados intradiarios, los agentes de mercado únicamente definen la posición para el mercado diario, el de mayor liquidez.
 
-Como se puede observar en la situación de mercado\footnote{Batería híbrida de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 100 \% de eficiencia.}, con precio de la figura~r\ref{fig:manual-auto-precio} y posición de la figura~\ref{fig:manual-auto-posicion}, los dos principales problemas de la estrategia manual son el nulo aprovechamiento de los recursos híbridos de generación en las instalaciones que lo soportan, ya que no es posible tener en cuenta las actualizaciones de las previsiones, y la generación de desvíos ante falta de casaciones en el mercado diario, que resultan en un perdida monetaria comparativamente significativa.
+Como se puede observar en la situación de mercado\footnote{Batería híbrida de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 100 \% de eficiencia.}, con precio de la figura~\ref{fig:manual-auto-precio} y posición de la figura~\ref{fig:manual-auto-posicion}, los dos principales problemas de la estrategia manual son el nulo aprovechamiento de los recursos híbridos de generación en las instalaciones que lo soportan, ya que no es posible tener en cuenta las actualizaciones de las previsiones, y la generación de desvíos ante falta de casaciones en el mercado diario, que resultan en un perdida monetaria comparativamente significativa.
 
 \begin{figure}
   \centering
