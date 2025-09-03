@@ -1,0 +1,147 @@
+default:
+  headless: false
+  current_datetime: null
+  market_date: null
+  market_timezone: Europe/Madrid
+  market_type: MIC
+  market_horizon_day: 7
+  market_history_day: 31
+  market_forecast: XXXX_XXXX
+  market_csv: null
+  market_rate: 0.001
+  market_time_unit_minute: 15
+  dim_ufi_bess_grid_import: null
+  dim_ufi_bess_res_import: null
+  dim_ufi_bess_grid_export: null
+  dim_ufi_bess_charge: null
+  dim_ufi_res_grid_export: null
+  dim_up_grid_export: null
+  dim_state_of_charge_point: null
+  dim_availability_point: null
+  bess_power_capacity_megawatt: 5.0
+  bess_energy_capacity_megawatt_hour: 5.0
+  bess_charging_efficiency_percent: 100.0
+  bess_discharging_efficiency_percent: 100.0
+  bess_maximum_cycles_count_per_day: 1.0
+  bess_profit_threshold_euro_per_megawatt_hour: 60.0
+  bess_minimum_state_of_charge_percent: 0.0
+  bess_maximum_state_of_charge_percent: 100.0
+  bess_initial_state_of_charge_percent: null
+  bess_final_state_of_charge_percent: null
+  bess_availability_percent: null
+  bess_res_import_clipping_percent: 100.0
+  bess_res_import_clipping_threshold_megawatt: 0.0
+  bess_res_import_priority: false
+  bess_state_of_charge_tolerance_percent: 0.0
+  bess_purchase_tolerance_euro_per_megawatt_hour: 5.0
+  bess_sale_tolerance_euro_per_megawatt_hour: 5.0
+  bess_grid_import_net_fixed_megawatt: {}
+  bess_res_import_fixed_megawatt: {}
+  bess_grid_export_net_fixed_megawatt: {}
+  bess_state_of_charge_fixed_percent: {}
+  res_export_price_euro_per_megawatt_hour: null
+  grid_export_limit_megawatt: .inf
+  solver: glpk
+  output_csv_path: null
+  output_XXXX_XXXX_path: Previsiones_BAT_{:%Y%m%d%H%M%S}.csv
+  output_XXXX_XXXX_path: Ofertas_BAT_HIB_{:%Y%m%d%H%M%S}.csv
+  output_block: 1
+  auto_enabled: true
+  modules: [XXXX_XXXX, XXXX_XXXX, XXXX_XXXX, XXXX_XXXX]
+  auth: { name: null }
+  market: { user: null, password: null, name: null }
+  metering: { user: null, password: null, name: null }
+
+XXXX_XXXX:
+  dim_ufi_bess_grid_import: XXXX_XXXX
+  dim_ufi_bess_res_import: XXXX_XXXX
+  dim_ufi_bess_grid_export: XXXX_XXXX
+  dim_ufi_bess_charge: XXXX_XXXX
+  dim_ufi_res_grid_export: XXXX_XXXX
+  dim_up_grid_export: XXXX_XXXX
+  dim_state_of_charge_point: M:XXXX_XXXX.AV
+  dim_state_of_health_point: M:XXXX_XXXX.AV
+  dim_charging_power_capacity_point: M:XXXX_XXXX.AV
+  dim_discharging_power_capacity_point: M:XXXX_XXXX.AV
+  dim_availability_point: M:XXXX_XXXX.AV
+  dim_charging_efficiency_point: M:XXXX_XXXX.AV
+  dim_discharging_efficiency_point: M:XXXX_XXXX.AV
+  dim_program_point: M:XXXX_XXXX.SV
+  bess_power_capacity_megawatt: 5.0
+  bess_energy_capacity_megawatt_hour: 5.0
+  bess_charging_efficiency_percent: 90.0
+  bess_discharging_efficiency_percent: 97.0
+  bess_minimum_state_of_charge_percent: 0.0
+  bess_maximum_state_of_charge_percent: 100.0
+  bess_res_import_priority: true
+  res_export_price_euro_per_megawatt_hour: 3.52
+  grid_export_limit_megawatt: 32.3
+
+XXXX_XXXX:
+  dim_ufi_bess_grid_import: XXXX_XXXX
+  dim_ufi_bess_res_import: XXXX_XXXX
+  dim_ufi_bess_grid_export: XXXX_XXXX
+  dim_ufi_bess_charge: XXXX_XXXX
+  dim_ufi_res_grid_export: XXXX_XXXX
+  dim_up_grid_export: XXXX_XXXX
+  dim_state_of_charge_point: M:XXXX_XXXX.AV
+  dim_state_of_health_point: M:XXXX_XXXX.AV
+  dim_charging_power_capacity_point: M:XXXX_XXXX.AV
+  dim_discharging_power_capacity_point: M:XXXX_XXXX.AV
+  dim_availability_point: M:XXXX_XXXX.AV
+  dim_charging_efficiency_point: M:XXXX_XXXX.AV
+  dim_discharging_efficiency_point: M:XXXX_XXXX.AV
+  dim_program_point: M:XXXX_XXXX.SV
+  bess_power_capacity_megawatt: 5.0
+  bess_energy_capacity_megawatt_hour: 20.0
+  bess_charging_efficiency_percent: 100.0
+  bess_discharging_efficiency_percent: 86.0
+  bess_minimum_state_of_charge_percent: 0.0
+  bess_maximum_state_of_charge_percent: 100.0
+  res_export_price_euro_per_megawatt_hour: 0.0
+  grid_export_limit_megawatt: 80.0
+
+XXXX_XXXX:
+  dim_ufi_bess_res_import: XXXX_XXXX
+  dim_ufi_bess_grid_export: XXXX_XXXX
+  dim_ufi_res_grid_export: XXXX_XXXX
+  dim_up_grid_export: XXXX_XXXX
+  dim_state_of_charge_point: M:XXXX_XXXX.AV
+  dim_state_of_health_point: M:XXXX_XXXX.AV
+  dim_charging_power_capacity_point: M:XXXX_XXXX.AV
+  dim_discharging_power_capacity_point: M:XXXX_XXXX.AV
+  dim_availability_point: M:XXXX_XXXX.AV
+  dim_charging_efficiency_point: M:XXXX_XXXX.AV
+  dim_discharging_efficiency_point: M:XXXX_XXXX.AV
+  dim_program_point: M:XXXX_XXXX.SV
+  bess_power_capacity_megawatt: 3.0
+  bess_energy_capacity_megawatt_hour: 9.2
+  bess_charging_efficiency_percent: 90.0
+  bess_discharging_efficiency_percent: 97.0
+  bess_minimum_state_of_charge_percent: 0.0
+  bess_maximum_state_of_charge_percent: 100.0
+  bess_availability_percent: 100.0
+  bess_profit_threshold_euro_per_megawatt_hour: 0.0
+  bess_res_import_clipping_percent: 16.4
+  bess_res_import_clipping_threshold_megawatt: 18.3
+  res_export_price_euro_per_megawatt_hour: 0.0
+  grid_export_limit_megawatt: 28.0
+
+XXXX_XXXX:
+  dim_ufi_bess_grid_import: XXXX_XXXX
+  dim_ufi_bess_grid_export: XXXX_XXXX
+  dim_up_grid_export: XXXX_XXXX
+  dim_state_of_charge_point: M:XXXX_XXXX.AV
+  dim_state_of_health_point: M:XXXX_XXXX.AV
+  dim_charging_power_capacity_point: M:XXXX_XXXX.AV
+  dim_discharging_power_capacity_point: M:XXXX_XXXX.AV
+  dim_availability_point: M:XXXX_XXXX.AV
+  dim_charging_efficiency_point: M:XXXX_XXXX.AV
+  dim_discharging_efficiency_point: M:XXXX_XXXX.AV
+  dim_program_point: M:XXXX_XXXX.SV
+  bess_power_capacity_megawatt: 5.25
+  bess_energy_capacity_megawatt_hour: 5.0
+  bess_charging_efficiency_percent: 96.2
+  bess_discharging_efficiency_percent: 87.0
+  bess_minimum_state_of_charge_percent: 0.0
+  bess_maximum_state_of_charge_percent: 100.0

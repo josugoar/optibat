@@ -1,0 +1,130 @@
+@Library('security-library@main') _
+
+pipeline {
+  agent any
+
+  options {
+    buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')
+  }
+
+  parameters {
+    //Si procede
+  }
+
+  tools {
+    //usar para las librerias de seguridad, si el aplicativo necesita otra version de node mirar documentacion
+    //nodejs '18.20.4'
+  }
+
+  environment {
+    GIT_REPO = 'XXXX_XXXX'
+    //Otras psoaibles variables de entorno
+    //Nuget = '"C:\\Software\\nuget\\nuget.exe"'
+    //MsBuild = '"D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Professional\\MSBuild\\Current\\Bin\\MSBuild.exe"'
+  }
+
+  stages {
+    stage('Git') {
+      steps {
+        script {
+          echo '------------------------------------------------'
+          echo '-------------------- Do Git --------------------'
+          echo '------------------------------------------------'
+          echo "Selected Git Branch: ${env.BRANCH_NAME}"
+          git branch: env.BRANCH_NAME,
+              url: 'https://github.com/XXXX_XXXX/' + env.GIT_REPO + '.git',
+              credentialsId: 'git'
+        }
+      }
+    }
+
+    stage('Extract Version') {
+      steps {
+        script {
+          echo '----------------------------------------------------'
+          echo '-------------------- Version -----------------------'
+          echo '----------------------------------------------------'
+          //currentBuild.displayName = "${version} - ${env.BRANCH_NAME}"
+        }
+      }
+    }
+
+    //Stage opcional
+    stage('Restore') {
+      steps {
+        echo '----------------------------------------------------'
+        echo '-------------------- Do Restore --------------------'
+        echo '----------------------------------------------------'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        script {
+          echo '---------------------------------------------------------------'
+          echo '---------------------- Building Solution ----------------------'
+          echo '---------------------------------------------------------------'
+        }
+      }
+    }
+
+    stage('SecurityChecks') {
+      parallel {
+        stage('SonarQube') {
+          steps {
+            script {
+              //Adaptar a la tecnologia, revisar documentacion para los requisitos
+              //sonarQubeInstances.sonarForNET()
+            }
+          }
+        }
+
+        stage('Dependabot') {
+          steps {
+            script {
+              //Revisar la documentacion para los requisitos
+              //scaDependabot()
+            }
+          }
+        }
+      }
+    }
+
+    stage ('Save artifact') {
+      steps {
+        script {
+          // Renombrar y nover artefactos si es necesario
+        }
+        // Limpia todo el directorio excepto las carpetas de entornos con los artefactos generados
+        //cleanWs deleteDirs: true,
+          //            notFailBuild: true,
+            //          patterns: [
+              //            [pattern: 'QA/**', type: 'EXCLUDE'],
+                //          [pattern: 'UAT/**', type: 'EXCLUDE'],
+                  //        [pattern: 'PROD/**', type: 'EXCLUDE'],
+                    //  ]
+
+        // Guarda todo el workspace (carpetas de entornos con los artefactos generados)
+        //archiveArtifacts artifacts: '**/*', onlyIfSuccessful: true
+      }
+    }
+  }
+  //Diferentes estados en los que puede acabar el pipeline, adaptar como se crea conveniente, por ejemplo usando notificaciones en funcion de la rama
+  post {
+      success {
+          script {
+              echo "Exito en el pipeline"
+          }
+      }
+
+      unstable {
+          script {
+              echo "Algo no ha salido como se esperaba"
+          }
+      }
+
+      cleanup {
+          //cleanWs()
+      }
+  }
+}

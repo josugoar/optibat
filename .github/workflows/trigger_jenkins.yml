@@ -1,0 +1,13 @@
+name: Call Jenkins from GitHub
+run-name: Trigger Jenkins on push
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - uat
+      - hotfix/*
+jobs:
+  call-jenkins:
+    uses: XXXX_XXXX/SecureJenkinsIntegration/.github/workflows/main.yml@main
+    secrets: inherit

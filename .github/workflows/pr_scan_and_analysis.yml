@@ -1,0 +1,15 @@
+name: PR Scanner
+run-name: Scan PR request Jenkins
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  call-pr-scanner:
+    uses: XXXX_XXXX/SecureJenkinsIntegration/.github/workflows/pr_review.yml@main
+    secrets: inherit
+    with:
+      pr_number: ${{ github.event.pull_request.number }}
