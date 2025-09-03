@@ -247,7 +247,7 @@ Es extremadamente importante que el sistema se defienda ante situaciones de cicl
     \end{equation}
 
     \begin{equation}
-      B_{\text{sup}, t} = \mathrm{SoC}_{t} \ge \left( \min\left(\frac{\mathrm{SoC}_{\text{max}}}{100}, \frac{A}{100}\right) - \frac{\mathrm{SoC}_{\text{tol}}}{100} \right) \cdot E_{\text{cap}}
+      B_{\text{sup}, t} = \mathrm{SoC}_{t} \ge ( \min(\frac{\mathrm{SoC}_{\text{max}}}{100}, \frac{A}{100}, \frac{\text{SoH}}{100}) - \frac{\mathrm{SoC}_{\text{tol}}}{100} ) \cdot E_{\text{cap}}
     \end{equation}
 
   \end{subequations}
@@ -263,6 +263,8 @@ Es extremadamente importante que el sistema se defienda ante situaciones de cicl
     \item \( E_{\text{cap}} \) es la capacidad de almacenamiento de la batería en \si{{\mega\watt\hour}}.
 
     \item \( A \) es la disponibilidad de la batería.
+
+    \item \( \text{SoH} \) es el \gls{soh} de la batería.
 
     \item \( \mathrm{SoC}_{\text{tol}} \) es la tolerancia del punto álgido.
 
