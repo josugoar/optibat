@@ -22,6 +22,14 @@ Por ello, la principal contribución del apartado de la infraestructura operacio
 
 De esta forma, es posible obtener una visión más completa a través del análisis realizado en la sección~\ref{makereference3.1}, que define la arquitectura de la disposición de los activos energéticos y las múltiples restricciones operativas fundamentales tenidas en cuenta por el desarrollo. También, se examinan los componentes físicos que forman parte de la infraestructura al completo, detallados en la sección~\ref{makereference3.2}, que actúan como la fuente primaria de la obtención de datos. Además, se explora la comunicación que unifica estos componentes en la sección~\ref{makereference3.3},  facilitando un intercambio de datos estandarizado. Con esto, se describe la gestión de la información obtenida en la sección~\ref{makereference3.4}, detallando su rol en el almacenamiento, la gestión y la validación de los datos operativos. Por último, se explica como los datos de la infraestructura obtenidos son transformados y consumidos en la sección~\ref{makereference3.5}.
 
+% TODO
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.5\linewidth]{figures/arquitectura-infraestructura.png}
+%   \caption[Arquitectura de la infraestructura operacional.]{Arquitectura de la infraestructura operacional.}%
+%   \label{fig:arquitectura-infraestructura}
+% \end{figure}
+
 \section{Configuración topológica}%
 \label{makereference3.1}
 
@@ -406,14 +414,6 @@ Mediante las ecuaciones de rendimiento se detallan los siguientes puntos.
 Finalmente, teniendo los datos provenientes de tanto de los activos físicos disponibles en el historiador como de sus propias transformaciones, es necesario consumirlos por la herramienta principal de optimización con el propósito de conocer los parámetros operativos de las baterías.
 
 Para ello, existen múltiples enfoques que tomar, aunque el elegido a sido hacer uso de la interfaz de aplicación ofrecida por el PI AF SDK, la cual provee acceso estructurado a una variedad de componentes del PI System.
-
-% TODO
-\begin{figure}
-  \centering
-  % \includegraphics[width=0.5\linewidth]{figures/integración-programatica.png}
-  \caption[Diagrama de componentes entre plataformas.]{Diagrama de componentes entre plataformas.}%
-  \label{fig:integración-programatica}
-\end{figure}
 
 Aún y todo, la librería expone su interfaz a través de Microsoft \.NET pero la herramienta de optimización ha sido desarrollada en Python, lo que resulta en un problema de incompatibilidad que podría no permitir el uso de PI AF SDK\@.
 

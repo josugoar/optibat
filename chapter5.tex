@@ -1,6 +1,8 @@
-\cleardoublepage
+% chktex-file 44
 
-\chapter{Modelización estructural}
+\cleardoublepage%
+
+\chapter{Modelización estructural}%
 \label{makereference5}
 
 Una vez obtenidos tanto los datos de las señales de la infraestructura operacional y la información del entorno del mercado, es necesario realizar un modelado estructural del entrono a optimizar para, tomadas las entradas, determinar la posición del mercado óptima de las baterías.
@@ -13,12 +15,20 @@ Se hace uso de una formulación de \gls{milp} para poder tener en cuenta condici
 
 De esta forma, se detallan los parámetros de decisión en la sección~\ref{makereference5.1}, que articulan el problema de optimización, abarcando desde la definición temporal de los periodos del mercado y las variables de operación de los flujos energéticos, hasta las limitaciones impuestas por el comportamiento físico de la batería y las guías estratégicas de las indicaciones de mercado. Se procede a formular las restricciones operacionales que aseguran la viabilidad técnica de la solución en la sección~\ref{makereference5.2}, se establece el criterio de desempeño que define la función objetivo a optimizar en la parte~\ref{makereference5.3} y, finalmente, se consideran los requisitos de la resolución numérica para cumplir con la precisión exigida por el operador del mercado en la sección~\ref{makereference5.4}.
 
-\section{Parámetros de decisión}
+% TODO
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.5\linewidth]{figures/arquitectura-modelizacion.png}
+%   \caption[Arquitectura de la modelización estructural.]{Arquitectura de la modelización estructural.}%
+%   \label{fig:arquitectura-modelizacion}
+% \end{figure}
+
+\section{Parámetros de decisión}%
 \label{makereference5.1}
 
 Todo modelado estructural debe contar inicialmente con un conjunto de parámetros de decisión que determinen los valores con los que trabaja el modelo. Más adelante, dichos parámetros son usados para definir las restricciones que el control de la batería debe cumplir.
 
-\subsection{Periodos del mercado}
+\subsection{Periodos del mercado}%
 \label{makereference5.1.1}
 
 El mercado eléctrico peninsular opera en etapas discretas temporales con una granularidad establecida. Los mercados spot, de los que se encarga el sistema en la actualidad, disponen de una granularidad horaria para el mercado diario\footnote{La granularidad del mercado diario se encuentra en proceso de actualización a cuartohoraria.} y cuartohoraria para los mercados intradiarios y el mercado intradiario continuo. En el resto de mercados de Europa, como Nord Pool~\cite{nord2025leading}, la granularidad de los mercados spot es similar, existiendo también granularidades incluso de 30 minutos.
@@ -27,7 +37,7 @@ La variabilidad de la granularidad exige representar el mercado en múltiples pe
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:set-mercado}
     T = \{t_{1} + k \cdot \Delta t \mid k \in \mathbb{R}^{+}_{0}, t_{1} + k \cdot \Delta t \leq t_{1} + H\}
   \end{equation}
@@ -36,13 +46,13 @@ La variabilidad de la granularidad exige representar el mercado en múltiples pe
 
   \begin{itemize}
 
-    \item \( T \) es el conjunto de todos los períodos de mercado discretos.
-
     \item \( t_{1} \) es el periodo inicial de optimización\footnote{Los periodos son oficialmente representados a partir del índice 1}.
 
     \item \( \Delta t \) es la granularidad mínima de los mercados analizados dentro del horizonte de optimización en \si{\minute}.
 
     \item \( H \) es el horizonte de optimización correspondiente al número de días de mercado a tener en cuenta.
+
+    \item \( T \) es el conjunto de todos los períodos de mercado discretos.
 
   \end{itemize}
 
@@ -54,7 +64,7 @@ También es necesario tener en cuenta los husos horarios a la hora de calcular e
 
 \begin{table}[ht]
   \centering
-  \resizebox{\textwidth}{!}{
+  \resizebox{\textwidth}{!}{%
     \begin{tabular}{|l|c|c|c|}
       \hline
       & Sesión 1ª & Sesión 2ª & Sesión 3ª \\
@@ -62,17 +72,17 @@ También es necesario tener en cuenta los husos horarios a la hora de calcular e
       Apertura de sesión                            & 14:00               & 21:00               & 09:00               \\
       Cierre de sesión                              & 15:00               & 22:00               & 10:00               \\
       Casación y publicación                        & 15:20               & 22:20               & 10:20               \\
-      Horizonte de programación (periodos horarios) & 23 horas (1-23 D+1) & 23 horas (1-23 D+1) & 12 horas (12-23 D)  \\
+      Horizonte de programación (periodos horarios) & 23 horas (1--23 D+1) & 23 horas (1--23 D+1) & 12 horas (12--23 D)  \\
       \hline
     \end{tabular}
   }
-  \caption[Ajustes del mercado intradiario en cambios de hora de verano.]{Ajustes del mercado intradiario en cambios de hora de verano.}
+  \caption[Ajustes del mercado intradiario en cambios de hora de verano.]{Ajustes del mercado intradiario en cambios de hora de verano.}%
   \label{tab:cambio-hora-verano}
 \end{table}
 
 \begin{table}[ht]
   \centering
-  \resizebox{\textwidth}{!}{
+  \resizebox{\textwidth}{!}{%
     \begin{tabular}{|l|c|c|c|}
       \hline
       & Sesión 1ª & Sesión 2ª & Sesión 3ª \\
@@ -80,15 +90,15 @@ También es necesario tener en cuenta los husos horarios a la hora de calcular e
       Apertura de sesión                            & 14:00               & 21:00               & 09:00               \\
       Cierre de sesión                              & 15:00               & 22:00               & 10:00               \\
       Casación y publicación                        & 15:20               & 22:20               & 10:20               \\
-      Horizonte de programación (periodos horarios) & 25 horas (1-25 D+1) & 25 horas (1-25 D+1) & 12 horas (14-25 D)  \\
+      Horizonte de programación (periodos horarios) & 25 horas (1--25 D+1) & 25 horas (1--25 D+1) & 12 horas (14--25 D)  \\
       \hline
     \end{tabular}
   }
-  \caption[Ajustes del mercado intradiario en cambios de hora de invierno.]{Ajustes del mercado intradiario en cambios de hora de invierno.}
+  \caption[Ajustes del mercado intradiario en cambios de hora de invierno.]{Ajustes del mercado intradiario en cambios de hora de invierno.}%
   \label{tab:cambio-hora-invierno}
 \end{table}
 
-\subsection{Flujos de almacenamiento}
+\subsection{Flujos de almacenamiento}%
 \label{makereference5.1.2}
 
 De esta forma, el mercado es usado para indexar los flujos energéticos explicados en la sección~\ref{makereference3.1} de infraestructura operacional. Estos flujos energéticos representan la operación y, por lo tanto, salida de la optimización. Responden a las preguntas de cuándo y cuánta energía ciclar.
@@ -103,23 +113,23 @@ Por lo tanto, los diferentes flujos energéticos son representados de la siguien
 
 \begin{itemize}
 
-  \item \( E^{n}_{R, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
+  \item \( E^{n}_{\text{M}, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico importado de la red a la batería en \si{{\mega\watt\hour}}.
 
-  \item \( E^{b}_{R, \text{BESS}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
+  \item \( E^{b}_{\text{M}, \text{BESS}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{R, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a importar en \si{{\mega\watt\hour}}.
+  \item \( E^{c}_{\text{M}, \text{BESS}, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a importar en \si{{\mega\watt\hour}}.
 
-  \item \( E^{n}_{\text{BESS}, R, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico exportado de la batería a la red en \si{{\mega\watt\hour}}.
+  \item \( E^{n}_{\text{BESS}, \text{M}, t} \in \mathbb{R}^{+}_{0} \) es la energía neta correspondiente al flujo energético físico exportado de la batería a la red en \si{{\mega\watt\hour}}.
 
-  \item \( E^{b}_{\text{BESS}, R, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
+  \item \( E^{b}_{\text{BESS}, \text{M}, t} \in \mathbb{R} \) es la energía bruta correspondiente a la actividad en el mercado de la interfaz en \si{{\mega\watt\hour}}.
 
-  \item \( E^{c}_{\text{BESS}, R, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a exportar en \si{{\mega\watt\hour}}.
+  \item \( E^{c}_{\text{BESS}, \text{M}, t} \in \mathbb{R}^{+}_{0} \) es la energía casada en negociaciones previas que la batería se ha comprometido a exportar en \si{{\mega\watt\hour}}.
 
 \end{itemize}
 
 Los flujos netos y casados son no negativos, ya que representan la energía que mueve la instalación, los flujos brutos, en cambio, representan las operaciones en el mercado, que incluyen recompras o reventas en la dirección opuesta a su flujo energético.
 
-\subsection{Flujos de generación}
+\subsection{Flujos de generación}%
 \label{makereference5.1.3}
 
 Aunque, la modelización anterior cubra los \glspl{bess} al completo, el sistema se topa con un problema. ¿Cómo se decide cuándo cargar de la red o de la generación?
@@ -142,7 +152,7 @@ Por lo tanto, es necesario tener en cuenta la generación junto con la batería 
 
 Como la importación de la generación a la batería no pasa por mercado, no es necesario desglosarla en flujos brutos y netos para acomodar una casación inexistente.
 
-\subsection{Indicaciones de mercado}
+\subsection{Indicaciones de mercado}%
 \label{makereference5.1.4}
 
 Con las representaciones de los movimientos de energía, el sistema debe ser capaz de guiar la operación de la batería. Es decir, se busca impedir posiciones que, aunque físicamente posibles, no rentabilicen la batería.
@@ -165,7 +175,7 @@ Para ello, se definen los parámetros relacionados con el entorno de mercado, co
 
 \end{itemize}
 
-\subsection{Comportamiento físico}
+\subsection{Comportamiento físico}%
 \label{makereference5.1.5}
 
 Finalmente, toda batería comparte unos comportamientos físicos intrínsecos. Al fin y al cabo, las baterías son sistemas de almacenamiento de energía que permiten ser cargadas para su posterior descarga, pero ¿cómo de rápido pueden ser cargadas y descargadas, cuánto, cuántas veces, etc.?
@@ -204,7 +214,7 @@ Precisamente, las señales propiamente configuradas en el \gls{pis}, detalladas 
 
 \end{itemize}
 
-\section{Restricciones operacionales}
+\section{Restricciones operacionales}%
 \label{makereference5.2}
 
 Conociendo los parámetros con trabajar, es momento de definir las restricciones operacionales que establecen las relaciones entre ellos\footnote{Las ecuaciones mostradas se encuentran parcialmente simplificadas para facilitar la comprensión, aunque resulten más robustas en realidad. No se muestran, por ejemplo, las restricciones de consignación manual tanto de la posición como el estado de carga, explicadas en el apartado~\ref{makereference6}}.
@@ -213,22 +223,22 @@ Como algunas configuraciones topológicas no soportan todos los flujos energéti
 
 \begin{samepage}
 
-\begin{equation}
-  \label{eq:desactivación-ufi}
-E^{n}_{t} =
+  \begin{equation}%
+    \label{eq:desactivación-ufi}
+    E^{n}_{t} =
     \begin{cases}
       E^{n}_{t} & \text{si } \text{UFI} \\
       0         & \text{sino}           \\
     \end{cases}
-\end{equation}
+  \end{equation}
 
-donde
+  donde
 
   \begin{itemize}
 
-    \item \( \text{UFI} \) determina la existencia de la \gls{ufi} correspondiente al flujo energético,  \( \text{UFI}_{\text{BESS}, R} \), \( \text{UFI}_{R, \text{BESS}} \), \( \text{UFI}_{\text{RES}, \text{BESS}} \) y \( \text{UFI}_{\text{RES}, R} \).
+    \item \( \text{UFI} \) determina la existencia de la \gls{ufi} correspondiente al flujo energético,  \( \text{UFI}_{\text{BESS}, R} \), \( \text{UFI}_{\text{M}, \text{BESS}} \), \( \text{UFI}_{\text{RES}, \text{BESS}} \) y \( \text{UFI}_{\text{RES}, R} \).
 
-    \item \( E^{n}_{t} \) es la energía importada o exportada de cada flujo energético en \si{{\mega\watt\hour}}, \( E_{\text{BESS}, R, t} \), \( E_{R, \text{BESS}, t} \), \( E_{\text{RES}, \text{BESS}, t} \) y \( E_{\text{RES}, R, t} \).
+    \item \( E^{n}_{t} \) es la energía importada o exportada de cada flujo energético en \si{{\mega\watt\hour}}, \( E_{\text{BESS}, \text{M}, t} \), \( E_{\text{M}, \text{BESS}, t} \), \( E_{\text{RES}, \text{BESS}, t} \) y \( E_{\text{RES}, \text{M}, t} \).
 
   \end{itemize}
 
@@ -238,16 +248,16 @@ Con esto, los flujos energéticos netos están definidos como la suma del corres
 
 \begin{samepage}
 
-\begin{equation}
-  \label{eq:neto-bruto}
-E^{n}_{t} = E^{b}_{t} + E^{c}_{t}
-\end{equation}
+  \begin{equation}%
+    \label{eq:neto-bruto}
+    E^{n}_{t} = E^{b}_{t} + E^{c}_{t}
+  \end{equation}
 
-donde
+  donde
 
   \begin{itemize}
 
-    \item \( E_{t} \) es la energía importada o exportada de cada flujo energético desde o a la red en \si{{\mega\watt\hour}}, \( E_{\text{BESS}, R, t} \), \( E_{R, \text{BESS}, t} \) y \( E_{\text{RES}, R, t} \).
+    \item \( E_{t} \) es la energía importada o exportada de cada flujo energético desde o a la red en \si{{\mega\watt\hour}}, \( E_{\text{BESS}, \text{M}, t} \), \( E_{\text{M}, \text{BESS}, t} \) y \( E_{\text{RES}, \text{M}, t} \).
 
   \end{itemize}
 
@@ -255,51 +265,51 @@ donde
 
 Con respecto a los parámetros del comportamiento físico, estos limitan la potencia tanto de carga como de descarga\footnote{Aunque la potencia de carga y descarga generalmente coincida en las instalaciones para las que se ha desplegado el sistema, es importante reconocer que pueden no ser iguales.}, mediante la ecuación~\ref{eq:capacidad-potencia-carga} de carga y la ecuación~\ref{eq:capacidad-potencia-descarga} de descarga. Las señales de disponibilidad y \gls{soh} afectan linealmente a la capacidad de potencia: para una disponibilidad o \gls{soh} de la mitad, la potencia de la batería es la mitad de su capacidad nominal.
 
-\begin{equation}
+\begin{equation}%
   \label{eq:capacidad-potencia-carga}
-C_{t} \le A \cdot \text{SoH} \cdot P^{c}_{n} \cdot \Delta t
+  C_{t} \le A \cdot \text{SoH} \cdot P^{c}_{n} \cdot \Delta t
 \end{equation}
 
-\begin{equation}
+\begin{equation}%
   \label{eq:capacidad-potencia-descarga}
-D_{t} \le A \cdot \text{SoH} \cdot P^{d}_{n} \cdot \Delta t
+  D_{t} \le A \cdot \text{SoH} \cdot P^{d}_{n} \cdot \Delta t
 \end{equation}
 
 Junto a la potencia, la capacidad de almacenamiento la limita el correspondiente parámetro nominal de la batería en~\ref{eq:capacidad-almacenamiento}.
 
-\begin{equation}
+\begin{equation}%
   \label{eq:capacidad-almacenamiento}
-\text{SoC}_{t} \le A \cdot \text{SoH} \cdot E_{n}
+  \text{SoC}_{t} \le A \cdot \text{SoH} \cdot E_{n}
 \end{equation}
 
 Las eficiencias de carga y descarga también afectan al ciclado, incorporadas en los respectivos cálculos de la energía cargada y descargada. Para ello, resulta absolutamente necesario separar la carga por un lado y la descarga por el otro, ya que el cálculo del número de ciclos del \gls{kpi} correspondiente requiere el uso de la descarga por separado. Como se indica oficialmente, ``se completa un ciclo de carga cuando se ha usado (descargado) una cantidad equivalente al 100 \% de la capacidad de la batería, pero no necesariamente toda con una sola carga. Por ejemplo, se puede usar el 75 \% de la capacidad de la batería un día y luego recargarla completamente durante la noche. Si se usa el 25 \% al día siguiente, se habrá descargado el 100 \% en total, y los dos días sumarán un ciclo de carga''~\cite{apple2025batteries}.
 
 Esto significa que, si la carga y la descarga no se separasen, el número de ciclos sería contado incorrectamente, causados por transiciones que dejasen la batería en el mismo estado. De esta forma, las ecuaciones de las eficiencias detallan la carga proveniente tanto de la importación de la red y de la importación de la generación en~\ref{eq:eficiencia-carga}, y la descarga en~\ref{eq:eficiencia-descarga}.
 
-\begin{equation}
+\begin{equation}%
   \label{eq:eficiencia-carga}
-C_{t} = \eta^{c} \cdot (E^{n}_{R, \text{BESS}, t} + E_{\text{RES}, \text{BESS}, t})
+  C_{t} = \eta^{c} \cdot (E^{n}_{\text{M}, \text{BESS}, t} + E_{\text{RES}, \text{BESS}, t})
 \end{equation}
 
-\begin{equation}
+\begin{equation}%
   \label{eq:eficiencia-descarga}
-D_{t} = (\eta^{d})^{-1} \cdot E^{n}_{\text{BESS}, R, t}
+  D_{t} = {(\eta^{d})}^{-1} \cdot E^{n}_{\text{BESS}, \text{M}, t}
 \end{equation}
 
 Aún así, separar la carga y la descarga directamente introduce uno de los mayores posibles problemas del sistema, la carga y descarga simultanea, detallada más profundamente en la sección~\ref{makereference6.1.1}. Para evitar esta situación, se introducen variables binarias en la formulación~\ref{eq:carga-descarga-simultanea}, que indican la dirección de la operación en la que se encuentra la batería en un periodo determinado, impidiendo así el solapamiento de la carga y descarga. Con el uso de las variables binarias, se reformula la decisión no lineal en sistemas de ecuaciones lineales.
 
-\begin{subequations}
+\begin{subequations}%
   \label{eq:carga-descarga-simultanea}
 
   \begin{equation}
     C_{t} \le M_{c} \cdot z^{c}_{t}
   \end{equation}
 
-\begin{equation}
-  D_{t} \le M_{c} \cdot (1 - z^{c}_{t})
-\end{equation}
+  \begin{equation}
+    D_{t} \le M_{c} \cdot (1 - z^{c}_{t})
+  \end{equation}
 
-donde
+  donde
 
   \begin{itemize}
 
@@ -313,9 +323,9 @@ donde
 
 Con ello, un aspecto a tener en cuenta es la simplificación de la formulación mediante \textit{special order sets} de orden 1, y evitar así el uso de variables binarias, como se indica en la ecuación~\ref{eq:carga-descarga-simultanea-sos}.
 
-\begin{equation}
+\begin{equation}%
   \label{eq:carga-descarga-simultanea-sos}
-C_{t}, D_{t} \in \text{SOS}_{1}
+  C_{t}, D_{t} \in \text{SOS}_{1}
 \end{equation}
 
 Los \textit{special order sets} permiten representar condiciones de exclusión, tan solo permitiendo la activación (\( > 0 \)) de un número de variables contiguas según su orden, manteniendo el resto desactivadas (\( = 0 \)). En este caso, se pueden usan los \textit{special order sets} de orden 1 para, entre la carga y descarga, activar únicamente una de ellas.
@@ -324,14 +334,14 @@ Si las variables de carga y descarga no estuvieran limitadas físicamente (cota 
 
 El parámetro de mercado de ciclos máximos limita los ciclos a realizar durante el horizonte de optimización, mediante la ecuación~\ref{eq:limite-ciclos}. Inteligentemente, con el proposition de evitar la introducción de relaciones no lineales causadas por mantener un cupo diario de ciclos, se agregan todos ellos a lo largo del horizonte de optimización, en la ecuación~\ref{eq:limite-ciclos-dia}.
 
-\begin{equation}
+\begin{equation}%
   \label{eq:limite-ciclos}
-N \le N_{\text{max}}
+  N \le N_{\text{max}}
 \end{equation}
 
 \begin{samepage}
 
-  \begin{equation}
+  \begin{equation}%
     \label{eq:limite-ciclos-dia}
     N_{\text{max}} = N_{d} \cdot H
   \end{equation}
@@ -348,7 +358,7 @@ N \le N_{\text{max}}
 
 A su vez, el cálculo de los ciclos totales se define en la ecuación~\ref{eq:ciclado}, tan solo teniendo en cuenta la energía descargada.
 
-\begin{equation}
+\begin{equation}%
   \label{eq:ciclado}
   N = \sum_{t = 1}^{H} D_{t} \cdot E_{n}^{-1}
 \end{equation}
@@ -357,114 +367,117 @@ Por otro lado, el \gls{soc} lo limitan las señales de la batería en la ecuaci�
 
 Precisamente, un efecto secundario muy beneficioso de las limitaciones de la señal del \gls{soc} es la posibilidad de la participación de las baterías en los mercados de disponibilidad\footnote{El sistema no soporta los mercados de disponibilidad en su estado actual, aunque sí que permite manejarlos externamente.}. Como en ningún momento se llega ni al máximo ni al mínimo de la capacidad de la batería, esta puede ofertar por lo menos el rango del \gls{soc} a subir o bajar y generar beneficios pasivos, sin afectar de ninguna forma a la operación principal en los mercados spot.
 
-\begin{subequations}
+\begin{subequations}%
   \label{eq:limite-soc}
 
-\begin{equation}
-  \text{SoC}_{t} \ge \text{SoC}_{\text{min}} \cdot E_{n}
-\end{equation}
+  \begin{equation}
+    \text{SoC}_{t} \ge \text{SoC}_{\text{min}} \cdot E_{n}
+  \end{equation}
 
-\begin{equation}
-  \text{SoC}_{t} \le \text{SoC}_{\text{max}} \cdot E_{n}
-\end{equation}
+  \begin{equation}
+    \text{SoC}_{t} \le \text{SoC}_{\text{max}} \cdot E_{n}
+  \end{equation}
 
 \end{subequations}
 
 De esta forma, se define la ecuación del \gls{soc}~\ref{eq:soc}, teniendo en cuenta la energía cargada y descargada.
 
-\begin{equation}
+\begin{equation}%
   \label{eq:soc}
-\text{SoC}_{t} = \text{SoC}_{t - 1} + C_{t} - D_{t}
+  \text{SoC}_{t} = \text{SoC}_{t - 1} + C_{t} - D_{t}
 \end{equation}
 
 Además, la modelización también debe tener en cuenta las limitaciones de programa obtenidas en la sección~\ref{makereference4.2.1}. Estas limitaciones, representadas en la ecuación~\ref{eq:limite-programa}, impiden la exportación de energía de cada uno de los activos energéticos individualmente.
 
-\begin{subequations}
+\begin{subequations}%
   \label{eq:limite-programa}
 
   \begin{equation}
-    E^{n}_{\text{BESS}, R, t} \le \min(P_{n}, P^{\text{lim}}_{\text{BESS}, t}) \cdot \Delta t
+    E^{n}_{\text{BESS}, \text{M}, t} \le \min(P_{n}, P^{\text{lim}}_{\text{BESS}, t}) \cdot \Delta t
   \end{equation}
 
   \begin{equation}
-    E^{n}_{\text{RES}, R, t} \le \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) \cdot \Delta t
+    E^{n}_{\text{RES}, \text{M}, t} \le \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) \cdot \Delta t
   \end{equation}
 
   \begin{equation}
-    E^{n}_{\text{BESS}, R, t} + E^{n}_{\text{RES}, R, t} \le P_{n} \cdot \Delta t
+    E^{n}_{\text{BESS}, \text{M}, t} + E^{n}_{\text{RES}, \text{M}, t} \le P_{n} \cdot \Delta t
   \end{equation}
 
 \end{subequations}
 
-% delete makereference5.3
-Esta nueva restricción, en cambio, introduce nuevas oportunidades de arbitraje ya que las limitaciones no son de la instalación al completo (también), sino individuales según el activo energético. Esto significa que puede que la generación se vea limitada (el funcionamiento de la misma es explicado en la sección~\ref{makereference5.3}) pero no la exportación de la batería. Ante dicha situación, la batería es capaz de cargarse sin ningún coste.
+% TODO
 
-Para tener mejorar el rendimiento y tener en cuenta esos escenario, se introducen nuevas restricciones en forma de la ecuación~\ref{eq:curtailed-import}, que controla la importación de energía excedente, y la ecuación~\ref{eq:uncurtailed-import}, que controla la importación de energía no excedente. De hecho, el termino usado para referirse a la energía excedente se conoce como \textit{curtailment}.
+Con esto, como las limitaciones de programa son especificas del activo, estas restricciónes introducen nuevas oportunidades de arbitraje. Esto significa que puede que la generación se vea limitada pero no la exportación de la batería. Ante dicha situación, la batería es capaz de cargarse sin ningún coste.
 
-\begin{equation}
+Para tener mejorar el rendimiento y tener en cuenta esos escenarios, se introducen nuevas restricciones en forma de la ecuación~\ref{eq:curtailed-import}, que controla la importación de energía excedente, y la ecuación~\ref{eq:uncurtailed-import}, que controla la importación de energía no excedente. De hecho, el termino usado para referirse a la energía excedente se conoce como \textit{curtailment}.
+
+\begin{equation}%
   \label{eq:curtailed-import}
 \end{equation}
 
-\begin{equation}
+\begin{equation}%
   \label{eq:uncurtailed-import}
 \end{equation}
 
-Estas nuevas restricciones, lamentablemente, introducen otro nuevo conflicto. ¿Cómo se decide si cargar de la energía excedente o de la no excedente? Entendiblemente, siempre es necesario priorizar la carga de la energía excedente, por lo que se añade otra indicación de enteros mixtos a la formulación, ecuación~\ref{eq:indicador-curtailment}. De la mismo forma que el Big M anterior, la importación tanto excedente como no excedente cuenta con un límite superior en forma de la cantidad de energía disponible, por lo que no existen problemas de estabilidad numérica directos.
+Estas nuevas restricciones, lamentablemente, introducen otro nuevo conflicto. ¿Cómo se decide si cargar de la energía excedente o de la no excedente? Entendiblemente, siempre es necesario priorizar la carga de la energía excedente, por lo que se añade otra indicación de enteros mixta a la formulación, ecuación~\ref{eq:indicador-curtailment}. De la mismo forma que el Big M anterior, la importación tanto excedente como no excedente cuenta con un límite superior en forma de la cantidad de energía disponible, por lo que no existen problemas de estabilidad numérica directos.
 
-\begin{equation}
+\begin{equation}%
   \label{eq:indicador-curtailment}
 \end{equation}
 
 Para terminar con lo relacionado con los sistemas de almacenamiento de energía en baterías mismos, por el momento solo se ha tenido en cuenta una configuración topológica del estilo de la aislada e híbrida flexible, ya que, según se ha descrito hasta ahora, el sistema puede importar energía de la red o de la generación libremente (bajo el resto de restricciones).
 
-En cambio, no todas las configuraciones topológicas operan de la siguiente manera. Precisamente, la híbrida con carga aislada de la red muestra un comportamiento de \textit{clipping}, en donde existe una cantidad de energía excedente de donde la batería solo puede cargar.
+En cambio, no todas las configuraciones topológicas operan de la siguiente manera. Precisamente, la híbrida con carga aislada de la red muestra un comportamiento de \textit{clipping}, en donde existe una cantidad de energía excedente de donde la batería solo puede cargar, representado en la figura~\ref{fig:clipping}
 
-Representado en la figura~\ref{fig:clipping}, se puede entender como una persona que dispone de un salario fijo (generación). Cada mes debe pagar una cantidad de su salario para el alquiler (\textit{threshold} de carga). Del dinero sobrante, ahorra (carga) una porcentaje (coeficiente de \textit{clipping}), mientras que gasta el resto como le apetezca (exportación de generación). Se representa mediante la ecuación~\ref{eq:clipping}.
+A modo de analogía, el \textit{clipping} se puede entender como una persona que dispone de un salario fijo (generación). Cada mes debe pagar una cantidad de su salario para el alquiler (\textit{threshold} de carga). Del dinero sobrante, ahorra (carga) una porcentaje (coeficiente de \textit{clipping}), mientras que gasta el resto como le apetezca (exportación de generación). Se representa mediante la ecuación~\ref{eq:clipping}.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/clipping.png}
-  \caption[Clipping de configuración topológica híbrida.]{Clipping de la configuración topológica híbrida con carga aislada de la red. La batería solo es capaz de cargar del excedente porcentual de generación, dibujando una curva de carga en los picos.}
+  \caption[Clipping de configuración topológica híbrida.]{Clipping de la configuración topológica híbrida con carga aislada de la red. La batería solo es capaz de cargar del excedente porcentual de generación, dibujando una curva de carga en los picos.}%
   \label{fig:clipping}
 \end{figure}
 
-\begin{equation}
+\begin{equation}%
   \label{eq:clipping}
 \end{equation}
 
 La última configuración topológica a tener en cuenta se trata de la híbrida con prioridad de carga de generación. Esto significa que se debe agotar completamente el recurso de generación antes de poder cargar de la red, aunque cargar de la red otorgue mayores beneficios, como es el caso de los precios de mercado negativos.
 
-Dicha prioridad es definida de forma simular a previas restricciones de indicación Big M con enteros mixtos en la ecuación~\ref{eq:prioridad-híbrida}.
+Dicha prioridad es definida de forma simular a previas restricciones de indicación Big M con enteros mixta en la ecuación~\ref{eq:prioridad-híbrida}.
 
-\begin{equation}
+\begin{equation}%
   \label{eq:prioridad-híbrida}
 \end{equation}
 
 Como se puede observar, el sistema es completamente genérico e incorpora comportamientos, a diferencia de definir entidades separadas para cada configuración. Es decir, el sistema usado es exactamente el mismo para cualquier configuración.
 
-\section{Criterio de desempeño}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Criterio de desempeño}%
 \label{makereference5.3}
 
 Como se ha mencionado en múltiples ocasiones, el criterio de desempeño del sistema parece ser el beneficio obtenido, es decir, que el sistema busque maximizar los ingresos, en cambio, esto no es del todo cierto.
 
 Inicialmente, en el beneficio toma parte cada flujo de energía. Importantemente, como el sistema asume que las recompras y reventas se realizan al mismo precio que la posible compra y venta\footnote{En realidad, las recompras y reventas, entendiblemente, se realizan al precio de casación anterior, pero no se dispone de la información necesaria para realizar el desglose entre mercados y obtener el precio.}, tan solo se tienen en cuenta las energías netas, correspondientes a los flujos físicos, para el calculo de los ingresos. Con ello, se le asigna un precio a cada uno de ellos, resultando en la ecuación~\ref{eq:beneficio}.
 
-\begin{subequations}
+\begin{subequations}%
   \label{eq:beneficio}
 
   \begin{equation}
     \begin{split}
       \pi_{t}
-      = (\lambda^{n}_{\text{BESS}, R, t} - \lambda')
-      \cdot E^{n}_{\text{BESS}, R, t}\\
-      - \lambda^{n}_{R, \text{BESS}, t}
-      \cdot E^{n}_{R, \text{BESS}, t}\\
+      = (\lambda^{n}_{\text{BESS}, \text{M}, t} - \lambda')
+      \cdot E^{n}_{\text{BESS}, \text{M}, t}\\
+      - \lambda^{n}_{\text{M}, \text{BESS}, t}
+      \cdot E^{n}_{\text{M}, \text{BESS}, t}\\
       - \lambda^{\text{c}}_{\text{RES}, \text{BESS}, t}
       \cdot E^{\text{c}}_{\text{RES}, \text{BESS}, t}\\
       - \lambda^{\text{nc}}_{\text{RES}, \text{BESS}, t}
       \cdot E^{\text{nc}}_{\text{RES}, \text{BESS}, t}\\
-      + \lambda^{n}_{\text{RES}, R, t}
-      \cdot E^{n}_{\text{RES}, R, t}\\
+      + \lambda^{n}_{\text{RES}, \text{M}, t}
+      \cdot E^{n}_{\text{RES}, \text{M}, t}\\
     \end{split}
   \end{equation}
 
@@ -473,11 +486,11 @@ Inicialmente, en el beneficio toma parte cada flujo de energía. Importantemente
   \end{equation}
 
   \begin{equation}
-    \lambda^{n}_{\text{BESS}, R, t} = \lambda^{M}_{t}
+    \lambda^{n}_{\text{BESS}, \text{M}, t} = \lambda^{M}_{t}
   \end{equation}
 
   \begin{equation}
-    \lambda^{n}_{R, \text{BESS}, t} = \lambda^{M}_{t} + c
+    \lambda^{n}_{\text{M}, \text{BESS}, t} = \lambda^{M}_{t} + c
   \end{equation}
 
   \begin{equation}
@@ -493,12 +506,12 @@ Inicialmente, en el beneficio toma parte cada flujo de energía. Importantemente
   \end{equation}
 
   \begin{equation}
-    \lambda^{n}_{\text{RES}, R, t} =
+    \lambda^{n}_{\text{RES}, \text{M}, t} =
     \begin{cases}
       \lambda^{M}_{t} & \text{si } \lambda^{M}_{t} \ge \lambda^{O}_{\text{RES}, t} \\
       0               & \text{sino}                                                \\
     \end{cases}
-\end{equation}
+  \end{equation}
 
 \end{subequations}
 
@@ -508,9 +521,9 @@ donde
 
   \item \( c \) es el peaje de la red en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \lambda^{n}_{\text{BESS}, R, t} \) es el precio de la exportación de la batería a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+  \item \( \lambda^{n}_{\text{BESS}, \text{M}, t} \) es el precio de la exportación de la batería a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \lambda^{n}_{R, \text{BESS}, t}\) es el precio de la importación de la red a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+  \item \( \lambda^{n}_{\text{M}, \text{BESS}, t}\) es el precio de la importación de la red a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
   \item \( \lambda^{O}_{\text{RES}, t} \) es el precio de oferta de la generación en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
@@ -518,7 +531,7 @@ donde
 
   \item \( \lambda^{\text{nc}}_{\text{RES}, \text{BESS}, t} \) es el precio de la importación de la generación no excedente a la batería en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
-  \item \( \lambda^{n}_{\text{RES}, R, t} \) es el precio de exportación de la generación a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
+  \item \( \lambda^{n}_{\text{RES}, \text{M}, t} \) es el precio de exportación de la generación a la red en el periodo \( t \) en \si{\text{\euro}\per\mega\watt\hour}.
 
   \item \( \pi \) es el beneficio en \si{\text{\euro}}.
 
@@ -531,7 +544,7 @@ Los problemas de optimización degenerados son los que poseen múltiples solucio
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/solucion-degenerada.png}
-  \caption[Solución degenerada.]{Solución degenerada a una posición de mercado. Las operaciones se ofertan en periodos inconsistentes, en vez de realizarlas todas en un único bloque desde el primer periodo óptimo (del D3H09Q2 al D3H13Q1 de carga y del D3H22Q4 al D4H01Q4 de descarga). Como también se llevan posiciones al mercado (periodo D3H22Q3) aun no siendo necesario, se generan desvíos.}
+  \caption[Solución degenerada.]{Solución degenerada a una posición de mercado. Las operaciones se ofertan en periodos inconsistentes, en vez de realizarlas todas en un único bloque desde el primer periodo óptimo (del D3H09Q2 al D3H13Q1 de carga y del D3H22Q4 al D4H01Q4 de descarga). Como también se llevan posiciones al mercado (periodo D3H22Q3) aun no siendo necesario, se generan desvíos.}%
   \label{fig:solucion-degenerada}
 \end{figure}
 
@@ -541,10 +554,10 @@ En la formulación, esta preferencia de las posiciones más cercanas en el tiemp
 
 \begin{samepage}
 
-\begin{equation}
-  \label{eq:exponential-decay}
+  \begin{equation}%
+    \label{eq:exponential-decay}
     \sum_{t = t_{1}}^{T} e^{-\rho t} \pi_{t}
-\end{equation}
+  \end{equation}
 
   donde
 
@@ -556,34 +569,34 @@ En la formulación, esta preferencia de las posiciones más cercanas en el tiemp
 
 De esta forma, tras realizar el llamado test de factibilidad básica e identificar las variables básicas\footnote{Las variables básicas son las que marcan los puntos extremos de las soluciones, pero no tienen por que encontrarse en su límite, lo cual resultó ser fuente de confusión en el análisis de factibilidad.} y sus propiedades, se determina que la formulación propuesta es estricta.
 
-\subsection{Optimización lexicográfica}
+\subsection{Optimización lexicográfica}%
 \label{makereference5.3.1}
 
-Aunque el uso de una función de decrecimiento exponencial distinga correctamente las soluciones de forma determinista, es posible, dependiendo de los parámetros de configuración, que la solución obtenida por el resolutor sea entendiblemente la óptima según el criterio de desempeño definido, pero no la que el sistema busca. Esto sucede debido a que parámetros de decisión incorrectamente seleccionados pueden priorizar una posición que mejore el objetivo de la preferencia temporal y no el del beneficio.
+Aunque el uso de una función de decrecimiento exponencial distinga correctamente las soluciones de forma determinista, es posible, dependiendo de los parámetros de configuración, que la solución obtenida por el resolutor sea la óptima según el criterio de desempeño definido, pero no la que el sistema busca. Esto sucede debido a que parámetros de decisión incorrectamente seleccionados pueden priorizar una posición que mejore el objetivo de la preferencia temporal y no el del beneficio.
 
 La metodología anterior de juntar los dos objetivos se conoce como optimización multiobjetivo ponderada, donde el coeficiente de ponderación es el calculado mediante la \textit{decay function} exponencial. Aún así, existe una técnica de optimización multiobjetivo más avanzada que evita conflictos entre ellos gracias a una metodología de priorización de objetivos, llamada optimización lexicográfica. Resulta usada esporádicamente incluso en el contexto de los \gls{bess}~\cite{karimi2019multi}.
 
 De esta forma, se desarrolla el algoritmo~\ref{alg:optimizacion-lexicografica} de optimización lexicográfica multiobjetivo por encima del lenguaje de modelado abstracto para asegurar la priorización de los objetivos de la modelización, ya que la herramienta de modelado utilizada no soporta solucionar múltiples objetivos al mismo tiempo.
 
 \begin{algorithm}
-  \caption{Algoritmo de optimización lexicográfica}
+  \caption{Algoritmo de optimización lexicográfica}%
   \label{alg:optimizacion-lexicografica}
   \begin{algorithmic}
-    \Require Funciones objetivo \( f_{1}, \dots, f_{n} \) ordenadas por importancia decreciente.
-    \Require Variables de decisión \( x \).
-    \Require Conjunto de valores posibles \( X \).
+    \Require{} Funciones objetivo \( f_{1}, \dots, f_{n} \) ordenadas por importancia decreciente.
+    \Require{} Variables de decisión \( x \).
+    \Require{} Conjunto de valores posibles \( X \).
     \For{\( i \gets 1 \text{ to } n \)}
-    \State Resolver el problema de optimización de objetivo único \( P_{i} \):
-    \Statex \hspace{\algorithmicindent} \( \max \quad f_{i}(x) \)
-    \Statex \hspace{\algorithmicindent} \( \text{sujeto a} \quad x \in X \)
-    \Statex \hspace{\algorithmicindent} \( \phantom{\text{sujeto a} \quad} f_{j}(x) \geq z_k^* \quad \forall j \in \{1, \dots, i - 1\} \)
+    \State{} Resolver el problema de optimización de objetivo único \( P_{i} \):
+    \Statex{} \hspace{\algorithmicindent} \( \max \quad f_{i}(x) \)
+    \Statex{} \hspace{\algorithmicindent} \( \text{sujeto a} \quad x \in X \)
+    \Statex{} \hspace{\algorithmicindent} \( \phantom{\text{sujeto a} \quad} f_{j}(x) \geq z_k^* \quad \forall j \in \{1, \dots, i - 1\} \)
     \If{la solución no es factible}
-    \State \Return \( \emptyset \)
-    \EndIf
-    \State Sea \( x^{*}_{i} \) una solución óptima para \( P_{i} \).
-    \State \( z^{*}_{i} \gets f_t(x^{*}_{i}) \) \Comment{Se guarda el valor óptimo para la siguiente iteración.}
-    \EndFor
-    \State \Return \( x^{*}_{n} \)
+    \State{} \Return{} \( \emptyset \)
+    \EndIf{}
+    \State{} Sea \( x^{*}_{i} \) una solución óptima para \( P_{i} \).
+    \State{} \( z^{*}_{i} \gets f_t(x^{*}_{i}) \) \Comment{Se guarda el valor óptimo para la siguiente iteración.}
+    \EndFor{}
+    \State{} \Return{} \( x^{*}_{n} \)
   \end{algorithmic}
 \end{algorithm}
 
@@ -591,7 +604,7 @@ Con esto, el objetivo principal se trata de la maximización del beneficio y el 
 
 Aunque se solucionen los problemas de posiciones posiblemente no óptimas, la optimización lexicográfica tiene un menor rendimiento, por lo que no es factible usarla para mercados con una granularidad muy pequeña, como los de disponibilidad. En cambio, funciona adecuadamente para los mercados spot, en los que se centra el despliegue realizado del sistema.
 
-\section{Resolución numérica}
+\section{Resolución numérica}%
 \label{makereference5.4}
 
 Otro aspecto a tener en cuenta es la precisión numérica de los resultados. De hecho, la institución regulatoria del mercado eléctrico correspondiente, el \gls{mo} mismo, define las regulaciones de la precisión numérica aceptada para el arbitraje.

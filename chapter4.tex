@@ -22,6 +22,14 @@ Con esto, para facilitar la comprensión de las secciones posteriores, se define
 
 Para ello, primeramente se presenta \gls{omie} como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de la energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de \gls{ree}, que impone las limitaciones de programa de operación en tiempo real, como se explica en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla como se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema.
 
+% TODO
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.5\linewidth]{figures/arquitectura-mercado.png}
+%   \caption[Arquitectura del entorno de mercado.]{Arquitectura del entorno de mercado.}%
+%   \label{fig:arquitectura-mercado}
+% \end{figure}
+
 \section{Operador del mercado}%
 \label{makereference4.1}
 
@@ -146,14 +154,6 @@ De esta forma, la contribución principal del sistema desarrollado en este ámbi
 Por lo tanto, la arquitectura elegida para esta integración es desacoplada. Los programas desarrollados se encargan de obtener los ficheros brutos, procesarlos y generar ficheros CSV estandarizados que se depositan en una ruta de intercambio de ficheros. Posteriormente, un programa externo y preexistente, ajeno a este desarrollo y equivalente a una herramienta de integración de datos como Talend~\cite{talend2025modern}, monitoriza los eventos de escritura en dicha ruta y es el responsable de ejecutar la carga final de los datos en el \gls{dw} utilizado, basado en tecnología Oracle.
 
 Desde la perspectiva del sistema desarrollado, la fuente de datos meteorológicos es la única ya disponible directamente en la base de datos, a diferencia de la información resultante proveniente del operador del mercado y del operador del sistema que debe ser introducida en ella.
-
-% TODO
-\begin{figure}
-  \centering
-  % \includegraphics[width=0.5\linewidth]{figures/arquitectura-mercado.png}
-  \caption[Arquitectura desacoplada del proceso de datos.]{Arquitectura desacoplada del proceso de extracción, transformación y carga.}%
-  \label{fig:arquitectura-mercado}
-\end{figure}
 
 Esta arquitectura resulta ser un requisito para integrarse con herramientas internas ya existentes y, como ventaja adicional, proporciona una gran robustez frente a incidencias por parte de las fuentes de datos.
 
