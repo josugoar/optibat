@@ -6,13 +6,12 @@
 \section{Conclusiones}%
 \label{makereference8.1}
 
-En conclusión, se ha diseñado, desarrollado, desplegado y validado satisfactoriamente un sistema de optimización de baterías a lo largo de múltiples instalaciones vinculadas a la entidad energética pertinente en la península, el cual mueve docenas de megavatios hora al día y genera millones de euros de ingresos esperados al año mediante el ciclado de \glspl{bess}, satisfaciendo así el objetivo principal propuesto.
+En conclusión, se ha diseñado, desarrollado, desplegado y validado satisfactoriamente un sistema de optimización de baterías a lo largo de múltiples instalaciones vinculadas a la entidad energética pertinente en la península, el cual mueve docenas de megavatios hora al día y genera millones de euros de ingresos esperados al año mediante el ciclado de \glspl{bess}, satisfaciendo así el objetivo principal propuesto. El flujo de información del sistema se representa en la figura~\ref{fig:arquitectura-control}.
 
-% TODO
 \begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{figures/arquitectura.png}
-  \caption[Arquitectura del sistema.]{Arquitectura del sistema.}%
+  \includegraphics[width=0.9\linewidth]{figures/arquitectura.png}
+  \caption[Arquitectura del sistema.]{Arquitectura del flujo de información del sistema, diferenciando los elementos pertinentes al proyecto. En términos generales, los datos de las señales de los activos son obtenidos a través de la comunicación del \gls{pis} con la red operativa, mientras que la información de mercado es extraída de las instituciones regualtorias por tareas temporizadas y depositada en ficheros a insertar en el \gls{dw}. El optimizador consulta las dos fuentes según la session de mercado y calcula los flujos de energía óptimos a realizar por los activos energéticos. Con ellos, el controlador los transforma en consignas mandadas de vuelta al \gls{pis} y ofertas a licitar. A su vez, los agentes de mercado y operadores de telecontrol son capaces de interactuar con el sistema a través del cuadro de mandos, informando al optimizador de las operaciones a realizar.}%
   \label{fig:arquitectura}
 \end{figure}
 

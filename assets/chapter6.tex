@@ -9,13 +9,12 @@ Teniendo disponible toda la información necesaria para el control de vuelta al 
 
 Más allá de las operaciones mismas, en entornos industriales donde se mueven grandes cantidades de energía, como el pertinente, es altamente recomendable disponer de algún tipo de método con el que comprobar la correcta operación del sistema y modificar su comportamiento si resulta oportuno. Por ello, también se desarrolla un cuadro de mando con el que realizar las tareas de supervisión.
 
-De esta forma, el apartado~\ref{makereference6.1} describe la operación automática del control de las consignas de la batería y las ofertas de mercado, mientras que el apartado~\ref{makereference6.2} detalla la implementación del cuadro de mando con el que supervisar la operación del sistema.
+De esta forma, el apartado~\ref{makereference6.1} describe la operación automática del control de las consignas de la batería y las ofertas de mercado, mientras que el apartado~\ref{makereference6.2} detalla la implementación del cuadro de mando con el que supervisar la operación del sistema. El flujo de información del comando y control se representa en la figura~\ref{fig:arquitectura-control}.
 
-% TODO
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figures/arquitectura-control.png}
-  \caption[Arquitectura del comando y control.]{Arquitectura del comando y control.}%
+  \caption[Arquitectura del comando y control.]{Arquitectura del flujo de información del comando y control, diferenciando los elementos pertinentes al proyecto. Una vez recibe el controlador los flujos energéticos por parte del optimizador, se convierten apropiadamente a consignas físicas de potencia y se calculan las ofertas de mercado según semiciclos de carga. Las consignas son comunicadas de vuelta al \gls{pis}, mientras que las ofertas se mandan a un licitador confiable a través de un formato interno. En última instancia, las posiciones acaban en \gls{ree} y \gls{omie}. A su vez, los agentes de mercado y operadores de telecontrol son capaces de interactuar con el controlador a través del cuadro de mandos, informando al optimizador de las operaciones a realizar.}%
   \label{fig:arquitectura-control}
 \end{figure}
 
@@ -500,7 +499,7 @@ Cabe destacar que, más allá del cuadro de mando del comando y control orientad
 \subsection{Funcionalidad básica}%
 \label{makereference6.2.1}
 
-El cuadro de mando ha sido desarrollado en la misma tecnología principal utilizada en la mayoría de los otros componentes, Python. Esta vez, se hace uso de Streamlit~\cite{streamlit2025faster}, un componente para construir herramientas interactivas.
+El cuadro de mando ha sido desarrollado en la misma tecnología principal utilizada en la mayoría de los otros componentes, Python. Esta vez, se hace uso de Streamlit\footnote{\url{https://github.com/streamlit/streamlit} (Apache-2.0)}, un componente para construir herramientas interactivas.
 
 Tras pasar por un servicio de autenticación que únicamente permite el acceso a agentes de mercado y operadores de telecontrol designados, el usuario es presentado con la interfaz de operación principal.
 
