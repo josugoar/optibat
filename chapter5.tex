@@ -227,7 +227,7 @@ Como algunas configuraciones topológicas no soportan todos los flujos energéti
     \label{eq:desactivación-ufi}
     E^{n}_{t} =
     \begin{cases}
-      E^{n}_{t} & \text{si } \text{UFI} \\
+      E^{n}_{t} & \text{si } \exists \, \text{UFI} \\
       0         & \text{sino}           \\
     \end{cases}
   \end{equation}
@@ -302,20 +302,20 @@ Aún así, separar la carga y la descarga directamente introduce uno de los mayo
   \label{eq:carga-descarga-simultanea}
 
   \begin{equation}
-    C_{t} \le M_{c} \cdot z^{c}_{t}
+    C_{t} \le M^{\text{c}}_{t} \cdot z^{\text{c}}_{t}
   \end{equation}
 
   \begin{equation}
-    D_{t} \le M_{c} \cdot (1 - z^{c}_{t})
+    D_{t} \le M^{\text{c}}_{t} \cdot (1 - z^{\text{c}}_{t})
   \end{equation}
 
   donde
 
   \begin{itemize}
 
-    \item \( M_{c} = E_{n} \) es la cota superior de la máxima carga o descarga máxima permitida en \si{{\mega\watt\hour}}.
+    \item \( M^{\text{c}}_{t} = E_{n} \) es la cota superior de la máxima carga o descarga permitida en el periodo \( t \) en \si{{\mega\watt\hour}}.
 
-    \item \( z^{c}_{t} \) es la variable binaria indicador que representa la dirección de carga o descarga en el periodo \( t \).
+    \item \( z^{\text{c}}_{t} \) es la variable binaria indicador que representa la dirección de carga o descarga en el periodo \( t \).
 
   \end{itemize}
 
@@ -406,24 +406,76 @@ Además, la modelización también debe tener en cuenta las limitaciones de prog
 
 \end{subequations}
 
+Con esto, como las limitaciones de programa son especificas del activo, estas restricciónes introducen nuevas oportunidades de arbitraje en instalaciones híbridas, resultado de que generación se vea limitada sin estarlo la exportación de la batería. Ante dicha situación, la batería es capaz de cargarse sin ningún coste.
+
+Para mejorar el rendimiento teniendo en cuenta estas circunstancias, se introducen nuevas restricciones en forma de la ecuación~\ref{eq:curtailed-import}, que controla la importación de energía excedente y la importación de energía no excedente. Concretamente, el termino usado para referirse a la energía excedente que sobrepasa los límites de exportación se conoce como \textit{curtailment}.
+
+\begin{samepage}%
+  \label{eq:curtailed-import}
+
+  \begin{equation}%
+    E^{\text{c}}_{\text{RES}, \text{BESS}, t} \le
+    \begin{cases}
+      E_{\text{RES}, t} - \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t & \text{si } E_{\text{RES}, t} > \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t \\
+      0                                                                          & \text{sino} \\
+    \end{cases}
+  \end{equation}
+
+  \begin{equation}%
+    E^{\text{nc}}_{\text{RES}, \text{BESS}, t} \le
+    \begin{cases}
+      E_{\text{RES}, t}                                      & \text{si } E_{\text{RES}, t} \le \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t \\
+      \min(P_{n}, P^{\text{lim}}_{\text{RES}, t}) * \Delta t & \text{sino} \\
+    \end{cases}
+  \end{equation}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( E^{\text{c}}_{\text{RES}, \text{BESS}, t} \) es la importación de la generación excedente a la batería en \si{{\mega\watt\hour}}.
+
+    \item \( E^{\text{nc}}_{\text{RES}, \text{BESS}, t} \) es la importación de la generación no excedente a la batería en \si{{\mega\watt\hour}}.
+
+  \end{itemize}
+
+\end{samepage}
+
+Junto a estas restricciones, se debe impedir la importación de energia no excedente cuando la excedente se encuentre disponible, lo cual puede ocurrir cuando existen limitaciones de programa o los precios de mercado sean nulos o negativos. Por ello, se añade otra restricción indicativa de enteros mixta a la formulación, ecuación~\ref{eq:indicador-curtailment}.
+
+\begin{subequations}%
+  \label{eq:indicador-curtailment}
+
+  \begin{equation}
+    E^{\text{c}}_{\text{RES}, \text{BESS}, t} \le M^{\text{nc}}_{t} \cdot z^{\text{nc}}_{t}
+  \end{equation}
+
+  \begin{equation}
+    E^{\text{nc}}_{\text{RES}, \text{BESS}, t} \le M^{\text{nc}}_{t} \cdot (1 - z^{\text{nc}}_{t})
+  \end{equation}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( M^{\text{nc}}_{t} = E_{\text{RES}, t} \) es la cota superior de la máxima importación de generación disponible en el periodo \( t \) en \si{{\mega\watt\hour}}.
+
+    \item \( z^{\text{nc}}_{t} \) es la variable binaria indicador que representa el estado de la importación excedente de la generación a la batería en el periodo \( t \), es decir, si se está cargando de la energía excedente o no.
+
+  \end{itemize}
+
+\end{subequations}
+
 % TODO
 
-Con esto, como las limitaciones de programa son especificas del activo, estas restricciónes introducen nuevas oportunidades de arbitraje. Esto significa que puede que la generación se vea limitada pero no la exportación de la batería. Ante dicha situación, la batería es capaz de cargarse sin ningún coste.
-
-Para tener mejorar el rendimiento y tener en cuenta esos escenarios, se introducen nuevas restricciones en forma de la ecuación~\ref{eq:curtailed-import}, que controla la importación de energía excedente, y la ecuación~\ref{eq:uncurtailed-import}, que controla la importación de energía no excedente. De hecho, el termino usado para referirse a la energía excedente se conoce como \textit{curtailment}.
-
+% bess_res_import_rule
 \begin{equation}%
-  \label{eq:curtailed-import}
+  \label{eq:res-import}
 \end{equation}
 
+% bess_res_export_rule
 \begin{equation}%
-  \label{eq:uncurtailed-import}
-\end{equation}
-
-Estas nuevas restricciones, lamentablemente, introducen otro nuevo conflicto. ¿Cómo se decide si cargar de la energía excedente o de la no excedente? Entendiblemente, siempre es necesario priorizar la carga de la energía excedente, por lo que se añade otra indicación de enteros mixta a la formulación, ecuación~\ref{eq:indicador-curtailment}. De la mismo forma que el Big M anterior, la importación tanto excedente como no excedente cuenta con un límite superior en forma de la cantidad de energía disponible, por lo que no existen problemas de estabilidad numérica directos.
-
-\begin{equation}%
-  \label{eq:indicador-curtailment}
+  \label{eq:res-export}
 \end{equation}
 
 Para terminar con lo relacionado con los sistemas de almacenamiento de energía en baterías mismos, por el momento solo se ha tenido en cuenta una configuración topológica del estilo de la aislada e híbrida flexible, ya que, según se ha descrito hasta ahora, el sistema puede importar energía de la red o de la generación libremente (bajo el resto de restricciones).
@@ -443,17 +495,42 @@ A modo de analogía, el \textit{clipping} se puede entender como una persona que
   \label{eq:clipping}
 \end{equation}
 
-La última configuración topológica a tener en cuenta se trata de la híbrida con prioridad de carga de generación. Esto significa que se debe agotar completamente el recurso de generación antes de poder cargar de la red, aunque cargar de la red otorgue mayores beneficios, como es el caso de los precios de mercado negativos.
+donde
 
-Dicha prioridad es definida de forma simular a previas restricciones de indicación Big M con enteros mixta en la ecuación~\ref{eq:prioridad-híbrida}.
-
-\begin{equation}%
-  \label{eq:prioridad-híbrida}
-\end{equation}
-
-Como se puede observar, el sistema es completamente genérico e incorpora comportamientos, a diferencia de definir entidades separadas para cada configuración. Es decir, el sistema usado es exactamente el mismo para cualquier configuración.
+\( \gamma \)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+La última configuración topológica a tener en cuenta se trata de la híbrida con prioridad de carga de generación. Esto significa que se debe agotar completamente el recurso de generación antes de poder cargar de la red, aunque cargar de la red otorgue mayores beneficios, como es el caso con los precios de mercado negativos.
+
+Dicha prioridad es definida de forma simular a previas restricciones de indicación con una formulación de enteros mixta en la ecuación~\ref{eq:prioridad-hibrida}. La restricción permanece inactiva si la topología de la instalación (a través de la \gls{ufi}) no se adecua con la híbrida con prioridad de carga de generación.
+
+\begin{subequations}%
+  \label{eq:prioridad-hibrida}
+
+  \begin{equation}
+    E^{n}_{\text{RES}, \text{M}, t} \le M^{\text{p}}_{t} \cdot z^{\text{p}}_{t}
+  \end{equation}
+
+  \begin{equation}
+    E^{n}_{\text{M}, \text{BEES}, t} \le M^{\text{c}}_{t} \cdot (1 - z^{\text{p}}_{t})
+  \end{equation}
+
+  donde
+
+  \begin{itemize}
+
+    \item \( M^{\text{p}}_{t} = E_{\text{RES}, t} \) es la cota superior de la máxima exportación de generación disponible en el periodo \( t \) en \si{{\mega\watt\hour}}.
+
+    \item \( M^{\text{c}}_{t} = E_{n} \) es la cota superior de la máxima importación máxima permitida por la batería en el periodo \( t \) en \si{{\mega\watt\hour}}.
+
+    \item \( z^{\text{p}}_{t} \) es la variable binaria indicador que representa el estado de prioridad en el periodo \( t \), es decir, si se ha llegado a agotar el recurso de generación o si todavía está disponible.
+
+  \end{itemize}
+
+\end{subequations}
+
+Como se puede observar, el sistema es completamente genérico e incorpora comportamientos generales, a diferencia de definir entidades separadas para cada configuración. Es decir, la lógica base de la optimización no varía segun la configuración.
 
 \section{Criterio de desempeño}%
 \label{makereference5.3}
@@ -500,8 +577,8 @@ Inicialmente, en el beneficio toma parte cada flujo de energía. Importantemente
   \begin{equation}
     \lambda^{\text{nc}}_{\text{RES}, \text{BESS}, t} =
     \begin{cases}
-      \lambda^{M}_{t} & \text{si } \gamma \land \lambda^{M}_{t} \ge \lambda^{O}_{\text{RES}, t} \\
-      0               & \text{sino}                                                             \\
+      \lambda^{M}_{t} & \text{si } \exists \, \gamma \land \lambda^{M}_{t} \ge \lambda^{O}_{\text{RES}, t} \\
+      0               & \text{sino}                                                                     \\
     \end{cases}
   \end{equation}
 
