@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "Clean up auxiliary files",
-            "command": "rm -fr assets/*.acn assets/*.acr assets/*.alg assets/*.aux assets/*.bbl assets/*.blg assets/*.fdb_latexmk *fls assets/*.glg assets/*.glo assets/*.gls assets/*.ist assets/*.lof assets/*.log assets/*.lot assets/*.out assets/*.pdf assets/*.synctex\\(busy\\) assets/*.synctex.gz assets/*.toc assets/svg-inkscape/",
+            "command": "rm -fr assets/*.acn assets/*.acr assets/*.alg assets/*.aux assets/*.bbl assets/*.blg assets/*.fdb_latexmk *fls assets/*.glg assets/*.glo assets/*.gls assets/*.ist assets/*.lof assets/*.log assets/*.lot assets/*.out assets/*.pdf assets/*.pygtex assets/*.pygstyle assets/*.synctex\\(busy\\) assets/*.synctex.gz assets/*.toc assets/svg-inkscape/",
             "type": "shell",
             "problemMatcher": [],
             "presentation": {

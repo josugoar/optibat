@@ -16,6 +16,8 @@
 *.lot
 *.out
 *.pdf
+*.pygtex
+*.pygstyle
 *.synctex(busy)
 *.synctex.gz
 *.toc

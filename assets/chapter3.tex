@@ -18,7 +18,7 @@ Como es entendible, el desarrollo ha hecho uso de la infraestructura operacional
   \label{fig:diagrama-bess}
 \end{figure}
 
-Por ello, la principal contribución del apartado de la infraestructura operacional se ve reflejada en la configuración, securización, despliegue y validación de la herramienta de conexión entre los activos físicos y del historiador del \gls{pis}, a través de los correspondientes protocolos de comunicación posteriormente descritos. Se busca la integración estandarizada con los componentes ya existentes, para el correcto funcionamiento de las instalaciones que alojan los \glspl{bess}, mientras se tiene en cuenta que los sistemas de almacenamiento apenas son una pequeña parte de la red al completo.
+Por ello, la principal contribución del apartado de la infraestructura operacional se ve reflejada en la configuración, securización, despliegue y validación de la herramienta de conexión entre los activos físicos y del historiador del \gls{pis}, a través de los correspondientes protocolos de comunicación posteriormente descritos. Se busca la integración estandarizada con los componentes ya existentes, para el correcto funcionamiento de las instalaciones que alojan los \glspl{bess}, mientras se tiene en cuenta que los sistemas de almacenamiento apenas son una pequeña parte de la red al completo. Se desarrolla en colaboración con el departamento de telecontrol de la entidad energética correspondiente.
 
 De esta forma, es posible obtener una visión más completa a través del análisis realizado en la sección~\ref{makereference3.1}, que define la arquitectura de la disposición de los activos energéticos y las múltiples restricciones operativas fundamentales tenidas en cuenta por el desarrollo. También, se examinan los componentes físicos que forman parte de la infraestructura al completo, detallados en la sección~\ref{makereference3.2}, que actúan como la fuente primaria de la obtención de datos. Además, se explora la comunicación que unifica estos componentes en la sección~\ref{makereference3.3},  facilitando un intercambio de datos estandarizado. Con esto, se describe la gestión de la información obtenida en la sección~\ref{makereference3.4}, detallando su rol en el almacenamiento, la gestión y la validación de los datos operativos. Por último, se explica como los datos de la infraestructura obtenidos son transformados y consumidos en la sección~\ref{makereference3.5}. El flujo de información de la infraestructura operacional se representa en la figura~\ref{fig:arquitectura-infraestructura}.
 
@@ -40,8 +40,6 @@ Así, la topología de una instalación energética se refiere a la arquitectura
 
 Precisamente, estos flujos energéticos son los que dictan los canales de importación y exportación de energía entre la red pública de alta tensión, controlada por el \gls{tso}, y la red interna de media tensión de la entidad energética, manejadas las instalaciones de almacenamiento mismas por el control del sistema desarrollado, a través del llamado \gls{pf}.
 
-De igual manera, es necesario subrayar la relevancia de los flujos energéticos nuevamente, ya que todas y cada una de las operaciones en el mercado se realizan a través ellos, cada uno poseyendo una identificación correspondiente al flujo energético pertinente, como se muestra en la tabla~\ref{tab:unidades-fisicas}.
-
 \begin{table}[ht]
   \centering
   \begin{tabular}{|l|l|l|l|}
@@ -60,7 +58,7 @@ De igual manera, es necesario subrayar la relevancia de los flujos energéticos 
   \label{tab:unidades-fisicas}
 \end{table}
 
-Los flujos energéticos, o, mejor dicho, las interfaces correspondientes a los mismos, son conocidos como \gls{ufi}, mientras que la interfaz que oferta en mercado y engloba las \glspl{ufi} es llamada \gls{up} desde el punto de vista del \gls{tso} y \gls{uof} desde la perspectiva del \gls{mo}.
+Los flujos energéticos individuales, o, mejor dicho, las interfaces correspondientes a los mismos, son conocidos como \gls{ufi}, mientras que la interfaz que oferta en mercado y engloba las \glspl{ufi} es llamada \gls{up} desde el punto de vista del \gls{tso} y \gls{uof} desde la perspectiva del \gls{mo}, como se muestra en la tabla~\ref{tab:unidades-fisicas}..
 
 El sistema desarrollado, por tanto, hace uso de la configuración topológica ya existente, es decir, no se encarga de la implantación física de los activos energéticos o de la conexión de los mismos con la red física, ya que eso queda bien fuera del alcance del diseño. En cambio, sí que hace uso de los diferentes componentes mediante sus correspondientes canales.
 
@@ -90,7 +88,7 @@ Esto significa que la operación de un sistema de almacenamiento de energía en 
 
 \end{itemize}
 
-De esta forma, esta topología es más común en las instalaciones energéticas principalmente dedicadas al negocio en los mercados de ajuste~\cite{carbajo2007mercados}, de tal forma que no necesiten encargarse del aprovechamiento energético de otros posibles activos energéticos dentro de la misma instalación.
+Con ello, esta topología es más común en las instalaciones energéticas principalmente dedicadas al negocio en los mercados de ajuste~\cite{carbajo2007mercados}, de tal forma que no necesiten encargarse del aprovechamiento energético de otros posibles activos energéticos dentro de la misma instalación.
 
 Precisamente, uno de los ejemplos más representativos de esta topología en la actualidad es el \gls{bess} de Abadiño, en donde el negocio principal se realiza en los mencionados mercados de ajuste (las diferencias entre la situación actual y futura de las instalaciones \textit{standalone} resulta especialmente interesante y es evaluada posteriormente en la sección~\ref{makereference7.3}).
 
@@ -98,9 +96,7 @@ A pesar de su aparente simplicidad, los análisis de mercado demuestran que la v
 
 El margen diferencial de precios, también conocido como \textit{spread}, entre las horas de bajo coste (valle) y alto coste (pico), a menudo resulta insuficiente para generar los ingresos necesarios que permitan amortizar la elevada inversión de capital y cubrir el \gls{capex} y \gls{opex}, incluyendo la degradación.
 
-De hecho, para que estas instalaciones sean rentables, generalmente deben diversificar sus fuentes de ingresos mediante la participación activa en los dichos mercados de servicios de ajuste, como el \gls{afrr} y el \gls{mfrr}, teniendo que ofrecer disponibilidades de frecuencia y potencia.
-
-Aunque la participación en estos mercados de regulación ofrezca una remuneración por la disponibilidad de capacidad, lo que se adapta perfectamente a la rápida respuesta de conmutación de las baterías, proporciona flujos de ingreso inestables de cara al futuro. Esto es debido al enorme crecimiento de la implantación de \glspl{bess} esperado, aumentando la oferta de disponibilidad y, por lo tanto, reduciendo a su vez las ganancias generadas individualmente por las baterías.
+De hecho, para que estas instalaciones sean rentables, generalmente deben diversificar sus fuentes de ingresos mediante la participación activa en los dichos mercados de servicios de ajuste, como el \gls{afrr} y el \gls{mfrr}, teniendo que ofrecer disponibilidades de frecuencia y potencia. Aunque la participación en estos mercados de regulación ofrezca una remuneración por la disponibilidad de capacidad, lo que se adapta perfectamente a la rápida respuesta de conmutación de las baterías, proporciona flujos de ingreso inestables de cara al futuro. Esto es debido al enorme crecimiento de la implantación de \glspl{bess} esperado, aumentando la oferta de disponibilidad y, por lo tanto, reduciendo a su vez las ganancias generadas individualmente por las baterías.
 
 Cabe destacar que, aun teniendo una baja rentabilidad esperada, el sistema desarrollado soporta la configuración aislada sin ninguna complicación, al ser diseñado con una arquitectura modular en mente, capaz de adaptarse a, presuntamente, cualquier configuración topológica.
 
@@ -128,9 +124,7 @@ Aunque los activos energéticos compartan ambos el mismo \gls{pf}, desde donde i
 
 \end{itemize}
 
-Esta capacidad de carga interna transforma bastante notablemente el modelo operativo. Sin embargo, el término de hibridación mismo no describe un modelo único, ya que las restricciones operativas varían entre instalaciones, lo cual exige una flexibilidad muy grande por parte del funcionamiento del sistema desarrollado.
-
-Por ello, la herramienta identifica y soporta de forma genérica las siguientes operaciones de la topología híbrida.
+Esta capacidad de carga interna transforma bastante notablemente el modelo operativo. Sin embargo, el término de hibridación mismo no describe un modelo único, ya que las restricciones operativas varían entre instalaciones, lo cual exige una flexibilidad muy grande por parte del funcionamiento del sistema desarrollado. Por ello, la herramienta identifica y soporta de forma genérica las siguientes operaciones de la topología híbrida.
 
 \begin{description}
 

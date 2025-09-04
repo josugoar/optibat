@@ -156,7 +156,7 @@ Como la importación de la generación a la batería no pasa por mercado, no es 
 
 Con las representaciones de los movimientos de energía, el sistema debe ser capaz de guiar la operación de la batería. Es decir, se busca impedir posiciones que, aunque físicamente posibles, no rentabilicen la batería.
 
-Para ello, se definen los parámetros relacionados con el entorno de mercado, con los que se incorporan las informaciones de las predicciones de precio de mercado anteriormente calculadas según la lógica descrita en la sección~\ref{makereference4.1.1}, las previsiones meteorológicas de la sección~\ref{makereference4.3} para las instalaciones híbridas, y las limitaciones de programa de la sección~\ref{makereference4.2.1} que limitan la potencia de los activos.
+Para ello, se definen los parámetros relacionados con el entorno de mercado, con los que se incorporan las informaciones de las predicciones de precio de mercado anteriormente calculadas según la lógica descrita en la sección~\ref{makereference4.1.1}, las previsiones meteorológicas de la sección~\ref{makereference4.3} para las instalaciones híbridas, y las limitaciones por seguridad de la sección~\ref{makereference4.2.1} que limitan la potencia de los activos.
 
 \begin{itemize}
 
@@ -289,12 +289,12 @@ Esto significa que, si la carga y la descarga no se separasen, el número de cic
 
 \begin{equation}%
   \label{eq:eficiencia-carga}
-  C_{t} = \eta^{\mathrm{c}} \cdot (E^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t} + E_{\mathrm{RES} \rightarrow \mathrm{BESS}, t})
+  C_{t} = \eta^{\mathrm{c}} \cdot \left(E^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t} + E_{\mathrm{RES} \rightarrow \mathrm{BESS}, t}\right)
 \end{equation}
 
 \begin{equation}%
   \label{eq:eficiencia-descarga}
-  D_{t} = {(\eta^{\mathrm{d}})}^{-1} \cdot E^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t}
+  D_{t} = {\left(\eta^{\mathrm{d}}\right)}^{-1} \cdot E^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t}
 \end{equation}
 
 Aún así, separar la carga y la descarga directamente introduce uno de los mayores posibles problemas del sistema, la carga y descarga simultanea, detallada más profundamente en la sección~\ref{makereference6.1.1}. Para evitar esta situación, se introducen variables binarias en la formulación~\ref{eq:carga-descarga-simultanea}, que indican la dirección de la operación en la que se encuentra la batería en un periodo determinado, impidiendo así el solapamiento de la carga y descarga. Con el uso de las variables binarias, se reformula la decisión no lineal en sistemas de ecuaciones lineales.
@@ -307,7 +307,7 @@ Aún así, separar la carga y la descarga directamente introduce uno de los mayo
   \end{equation}
 
   \begin{equation}
-    D_{t} \le M^{\mathrm{c}}_{t} \cdot (1 - z^{\mathrm{c}}_{t})
+    D_{t} \le M^{\mathrm{c}}_{t} \cdot \left(1 - z^{\mathrm{c}}_{t}\right)
   \end{equation}
 
   donde
@@ -388,7 +388,7 @@ De esta forma, se define la ecuación del \gls{soc}~\ref{eq:soc}, teniendo en cu
   \mathrm{SoC}_{t} = \mathrm{SoC}_{t - 1} + C_{t} - D_{t}
 \end{equation}
 
-Además, la modelización también debe tener en cuenta las limitaciones de programa obtenidas en la sección~\ref{makereference4.2.1}. Estas limitaciones, representadas en la ecuación~\ref{eq:limite-programa}, impiden la exportación de energía de cada uno de los activos energéticos individualmente.
+Además, la modelización también debe tener en cuenta las limitaciones por seguridad obtenidas en la sección~\ref{makereference4.2.1}. Estas limitaciones, representadas en la ecuación~\ref{eq:limite-programa}, impiden la exportación de energía de cada uno de los activos energéticos individualmente.
 
 \begin{subequations}%
   \label{eq:limite-programa}
@@ -407,7 +407,7 @@ Además, la modelización también debe tener en cuenta las limitaciones de prog
 
 \end{subequations}
 
-Con esto, como las limitaciones de programa son especificas del activo, estas restricciones introducen nuevas oportunidades de arbitraje en instalaciones híbridas, resultado de que generación se vea limitada sin estarlo la exportación de la batería. Ante dicha situación, la batería es capaz de cargarse sin ningún coste.
+Con esto, como las limitaciones por seguridad son especificas del activo, estas restricciones introducen nuevas oportunidades de arbitraje en instalaciones híbridas, resultado de que generación se vea limitada sin estarlo la exportación de la batería. Ante dicha situación, la batería es capaz de cargarse sin ningún coste.
 
 Para mejorar el rendimiento teniendo en cuenta estas circunstancias, se introducen nuevas restricciones en forma de la ecuación~\ref{eq:curtailed-import}, que controla la importación de energía excedente y la importación de energía no excedente. Concretamente, el termino usado para referirse a la energía excedente que sobrepasa los límites de exportación se conoce como \textit{curtailment}.
 
@@ -442,7 +442,7 @@ Para mejorar el rendimiento teniendo en cuenta estas circunstancias, se introduc
 
 \end{samepage}
 
-Junto a estas restricciones, se debe impedir la importación de energía no excedente cuando la excedente se encuentre disponible, lo cual puede ocurrir cuando existen limitaciones de programa o los precios de mercado sean nulos o negativos. Por ello, se añade otra restricción indicativa de enteros mixta a la formulación, ecuación~\ref{eq:indicador-curtailment}.
+Junto a estas restricciones, se debe impedir la importación de energía no excedente cuando la excedente se encuentre disponible, lo cual puede ocurrir cuando existen limitaciones por seguridad o los precios de mercado sean nulos o negativos. Por ello, se añade otra restricción indicativa de enteros mixta a la formulación, ecuación~\ref{eq:indicador-curtailment}.
 
 \begin{subequations}%
   \label{eq:indicador-curtailment}
@@ -452,7 +452,7 @@ Junto a estas restricciones, se debe impedir la importación de energía no exce
   \end{equation}
 
   \begin{equation}
-    E^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \le M^{\mathrm{nc}}_{t} \cdot (1 - z^{\mathrm{nc}}_{t})
+    E^{\mathrm{nc}}_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} \le M^{\mathrm{nc}}_{t} \cdot \left(1 - z^{\mathrm{nc}}_{t}\right)
   \end{equation}
 
   donde
@@ -504,8 +504,8 @@ A modo de analogía, el \textit{clipping} se puede entender como una persona que
     \label{eq:clipping}
     E_{\mathrm{RES} \rightarrow \mathrm{BESS}, t} =
     \begin{cases}
-      \gamma * (E_{\mathrm{RES}, t} - \gamma_{\mathrm{u}} * \Delta t) & \text{si } E_{\mathrm{RES}, t} > \gamma_{\mathrm{u}} * \Delta t \\
-      0                                                             & \text{sino}                                                   \\
+      \gamma * \left(E_{\mathrm{RES}, t} - \gamma_{\mathrm{u}} * \Delta t\right) & \text{si } E_{\mathrm{RES}, t} > \gamma_{\mathrm{u}} * \Delta t \\
+      0                                                                          & \text{sino}                                                     \\
     \end{cases}
   \end{equation}
 
@@ -533,7 +533,7 @@ Dicha prioridad es definida de forma simular a previas restricciones de indicaci
   \end{equation}
 
   \begin{equation}
-    E^{\mathrm{n}}_{\mathrm{M} \rightarrow \text{BEES}, t} \le M^{\mathrm{c}}_{t} \cdot (1 - z^{\mathrm{p}}_{t})
+    E^{\mathrm{n}}_{\mathrm{M} \rightarrow \text{BEES}, t} \le M^{\mathrm{c}}_{t} \cdot \left(1 - z^{\mathrm{p}}_{t}\right)
   \end{equation}
 
   donde
@@ -565,7 +565,7 @@ Inicialmente, en el beneficio toma parte cada flujo de energía. Importantemente
   \begin{equation}
     \begin{split}
       \pi_{t}
-      = (\lambda^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} - \lambda')
+      = \left(\lambda^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t} - \lambda'\right)
       \cdot E^{\mathrm{n}}_{\mathrm{BESS} \rightarrow \mathrm{M}, t}\\
       - \lambda^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t}
       \cdot E^{\mathrm{n}}_{\mathrm{M} \rightarrow \mathrm{BESS}, t}\\

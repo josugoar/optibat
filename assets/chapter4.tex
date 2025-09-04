@@ -16,16 +16,16 @@ Para que el sistema de optimización de baterías funcione de manera efectiva, n
 
 Por tanto, se define el análisis de las fuentes de información de mercado y los procesos desarrollados para su adquisición, tratamiento e integración. Concretamente, el sistema de optimización requiere de cuatro categorías fundamentales de datos externos. Los precios del mercado son esenciales para formular previsiones estratégicas. La energía negociada es clave para la liquidación de beneficios y la gestión de desvíos. Las limitaciones operativas imponen restricciones de obligado cumplimiento. La situación meteorológica indica las previsiones de la generación.
 
-De esta forma, se pretende describir el origen de estas fuentes de datos, las reglas que gobiernan su publicación y acceso, y la arquitectura implementada para consumirlos de manera programática y robusta.
+De esta forma, se pretende describir el origen de estas fuentes de datos, las reglas que gobiernan su publicación y acceso, y la arquitectura implementada para consumirlos de manera programática\footnote{El desarrollo del entorno de mercado se trata de una solución \textit{ad-hoc}, necesaria para cumplimentar con las restricciones corporativas de la entidad energética, a diferencia de la calidad profesional superior del resto de componentes.}. Se desarrolla en colaboración con los agentes de mercado de la entidad energética correspondiente.
 
 Con esto, para facilitar la comprensión de las secciones posteriores, se reiteran los siguientes conceptos. Las \glspl{ufi} son identificadores lógicos que definen los puntos de intercambio de energía. A diferencia de un punto físico en la red, una \gls{ufi} es una referencia contractual para las operaciones de mercado, con la condición indispensable de que toda transacción debe estar respaldada por un flujo de energía físicamente viable. Las \glspl{up} son los identificadores del \gls{tso} de las instalaciones al completo y resultan los activos que se arbitran en el mercado. Las \glspl{uof} son los identificadores equivalentes del \gls{mo}. Es decir, las operaciones de las \glspl{ufi} que engloba una \gls{up} o \gls{uof} se agregan a la hora de realizar la oferta.
 
-Para ello, primeramente se presenta \gls{omie} como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de la energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de \gls{ree}, que impone las limitaciones de programa de operación en tiempo real, como se explica en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla como se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema. El flujo de información del entorno de mercado se representa en la figura~\ref{fig:arquitectura-mercado}.
+Para ello, primeramente se presenta \gls{omie} como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de la energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de \gls{ree}, que impone las limitaciones por seguridad de operación en tiempo real, como se explica en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla como se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema. El flujo de información del entorno de mercado se representa en la figura~\ref{fig:arquitectura-mercado}.
 
 \begin{figure}
   \centering
   \includegraphics[height=0.7\textheight]{figures/arquitectura-mercado.png}
-  \caption[Arquitectura del entorno de mercado.]{Arquitectura del flujo de información del entorno de mercado, diferenciando los elementos pertinentes al proyecto. Las tareas temporizadas según el horario de mercado de la obtención de datos de \gls{omie} y \gls{ree} obtienen los ficheros de precios marginales, energía negociada y limitaciones de programa a través de la plataforma FTP del \gls{mo} y ESIOS del \gls{tso}. Una vez se han consultado los desgloses de programa para transformar las unidades de \gls{up} a \gls{ufi}, se procesan las entradas y se depositan los resultados de las inserciones al \gls{dw} en el intercambiador de ficheros en formato CSV\@. Después de que un proceso \gls{etl} externo termine cargándolos en base de datos, estos son consultados por el optimizador mediante SQL, junto con la situación meteorológica. Se tiene en cuenta también la posibilidad de introducir información manualmente a las tareas de mercado, ante posibles contratiempos en las fuentes de información.}%
+  \caption[Arquitectura del entorno de mercado.]{Arquitectura del flujo de información del entorno de mercado, diferenciando los elementos pertinentes al proyecto. Las tareas temporizadas según el horario de mercado de la obtención de datos de \gls{omie} y \gls{ree} obtienen los ficheros de precios marginales, energía negociada y limitaciones por seguridad a través de la plataforma FTP del \gls{mo} y ESIOS del \gls{tso}. Una vez se han consultado los desgloses de programa para transformar las unidades de \gls{up} a \gls{ufi}, se procesan las entradas y se depositan los resultados de las inserciones al \gls{dw} en el intercambiador de ficheros en formato CSV\@. Después de que un proceso \gls{etl} externo termine cargándolos en base de datos, estos son consultados por el optimizador mediante SQL, junto con la situación meteorológica. Se tiene en cuenta también la posibilidad de introducir información manualmente a las tareas de mercado, ante posibles contratiempos en las fuentes de información.}%
   \label{fig:arquitectura-mercado}
 \end{figure}
 
@@ -88,20 +88,20 @@ Pero, a diferencia de los precios, la información de energía casada es de natu
 
 Mientras que \gls{omie} gestiona el componente económico del mercado, la responsabilidad de garantizar la seguridad y estabilidad física del sistema eléctrico en tiempo real recae sobre \gls{ree}. Como \gls{tso}, \gls{ree} tiene el rol fundamental de balancear constantemente la generación con la demanda y de operar la red de transporte de alta tensión de manera segura, evitando sobrecargas o colapsos.
 
-Para cumplir con esta misión crítica, el resultado puramente económico de la casación del mercado gestionado por \gls{omie} debe ser supervisado y, en ocasiones, modificado por \gls{ree}. Esto se debe a que un programa de producción económicamente óptimo podría no ser físicamente viable debido a las limitaciones de la red. Por esta razón, \gls{ree} emite consignas operativas de cumplimiento necesario que se aplican sobre el resultado del mercado, conocidas como limitaciones de programa.
+Para cumplir con esta misión crítica, el resultado puramente económico de la casación del mercado gestionado por \gls{omie} debe ser supervisado y, en ocasiones, modificado por \gls{ree}. Esto se debe a que un programa de producción económicamente óptimo podría no ser físicamente viable debido a las limitaciones de la red. Por esta razón, \gls{ree} emite consignas operativas de cumplimiento necesario que se aplican sobre el resultado del mercado, conocidas como limitaciones por seguridad.
 
-\subsection{Limitaciones de programa}%
+\subsection{Limitaciones por seguridad}%
 \label{makereference4.2.1}
 
-Las limitaciones de programa son limitaciones de potencia impuestas por \gls{ree} a los participantes del mercado para resolver congestiones en la red o garantizar la seguridad del suministro en tiempo real. Estas limitaciones representan un límite superior inviolable a la operación de los activos energéticos y, por tanto, constituyen una entrada fundamental para el sistema de optimización.
+Las limitaciones por seguridad son limitaciones de potencia impuestas por \gls{ree} a los participantes del mercado para resolver congestiones en la red o garantizar la seguridad del suministro en tiempo real. Estas limitaciones representan un límite superior inviolable a la operación de los activos energéticos y, por tanto, constituyen una entrada fundamental para el sistema de optimización.
 
 La necesidad de estas limitaciones surge cuando el programa de energía resultante del mercado provocaría una sobrecarga en alguna línea de la red de transporte o comprometería la estabilidad del sistema. En tales casos, \gls{ree} interviene emitiendo una consigna que reduce la potencia máxima que una o varias instalaciones pueden exportar a la red.
 
-Es importante tener en cuenta que, si bien las restricciones de las limitaciones de programa son altamente criticas, existen medios externos para garantizar que no se sobrepasan si ocurre algún error en la operación del sistema desarrollado, por lo que la estabilidad de la red nunca podrá verse afectada por un simple incumplimiento de las consignas por parte del sistema.
+Es importante tener en cuenta que, si bien las restricciones de las limitaciones por seguridad son altamente criticas, existen medios externos para garantizar que no se sobrepasan si ocurre algún error en la operación del sistema desarrollado, por lo que la estabilidad de la red nunca podrá verse afectada por un simple incumplimiento de las consignas por parte del sistema.
 
-Con esto, la información de estas limitaciones se publica (o no) con ``antelación suficiente al cierre de mercado''~\cite{mte2019resolucion}. Como entre sesiones de mercado apenas existe una diferencia de una hora, no es estrictamente necesario consultar las limitaciones constantemente, sino tan solo antes de realizar la optimización.
+Con esto, la información de estas limitaciones se publica ``3 horas posteriores al periodo actual hasta el final del día actual (D), o del día siguiente (D+1)''~\cite{mte2019resolucion}. Como entre sesiones de mercado apenas existe una diferencia de una hora, no es estrictamente necesario consultar las limitaciones constantemente, sino tan solo antes de realizar la optimización.
 
-Las limitaciones son desglosadas según diferentes identificadores.
+Las limitaciones, visualizadas en la figura~\ref{fig:limitaciones-unidad}, son desglosadas según diferentes identificadores.
 
 \begin{itemize}
 
@@ -111,7 +111,14 @@ Las limitaciones son desglosadas según diferentes identificadores.
 
 \end{itemize}
 
-Por tanto, el sistema de optimización desarrollado debe consultar la existencia de estas limitaciones de programa, de la misma forma que la información anterior. Si se recibe una limitación, el modelo debe considerarla como una restricción máxima en sus cálculos, ajustando la consigna de operación de la batería para asegurar que la exportación total de las unidades se mantengan siempre por debajo del límite impuesto por \gls{ree}. El fichero de limitaciones de programa se conoce como \gls{limitacionsuj}.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\linewidth]{figures/limitaciones-unidad.png}
+  \caption[Visualización del desglose de las limitaciones.]{Visualización del desglose de las limitaciones, en donde se obtiene una limitación por cada telemedida, más allá del \gls{pf}~\cite{cnmc2025procedimientos}.}%
+  \label{fig:limitaciones-unidad}
+\end{figure}
+
+Por tanto, el sistema de optimización desarrollado debe consultar la existencia de estas limitaciones por seguridad, de la misma forma que la información anterior. Si se recibe una limitación, el modelo debe considerarla como una restricción máxima en sus cálculos, ajustando la consigna de operación de la batería para asegurar que la exportación total de las unidades se mantengan siempre por debajo del límite impuesto por \gls{ree}. La información de limitaciones por seguridad se conoce como \gls{limitacionsuj}.
 
 \section{Situación meteorológica}%
 \label{makereference4.3}
@@ -148,7 +155,7 @@ Por tanto, aunque el cálculo de la previsión es ajeno, su consumo es una parte
 
 Una vez identificadas las fuentes de datos de mercado (\gls{omie} y \gls{ree} en este caso), el desafío fundamental reside en la adquisición programática, el procesamiento y la unificación de esta información para que pueda ser consumida por el sistema de optimización.
 
-De esta forma, la contribución principal del sistema desarrollado en este ámbito es el diseño y la implementación de las herramientas que actúan como el puente entre estas fuentes de datos heterogéneas y la lógica de negocio, de forma paralela a las fases de extracción y transformación de un \textit{pipeline} de datos \gls{etl}.
+De esta forma, la contribución principal del sistema desarrollado en este ámbito es el diseño y la implementación de las herramientas que actúan como el puente entre estas fuentes de datos heterogéneas y la lógica de negocio, de forma paralela a las fases de extracción y transformación de un \textit{pipeline} de datos.
 
 Por lo tanto, la arquitectura elegida para esta integración es desacoplada. Los programas desarrollados se encargan de obtener los ficheros brutos, procesarlos y generar ficheros CSV estandarizados que se depositan en una ruta de intercambio de ficheros. Posteriormente, un programa externo y preexistente, ajeno a este desarrollo y equivalente a una herramienta de integración de datos como Talend~\cite{talend2025modern}, monitoriza los eventos de escritura en dicha ruta y es el responsable de ejecutar la carga final de los datos en el \gls{dw} utilizado, basado en tecnología Oracle.
 
@@ -165,15 +172,15 @@ Se han desarrollado dos programas principales en Python, uno para cada fuente de
   \label{fig:horarios-publicacion}
 \end{figure}
 
-La adquisición de datos de \gls{omie}, aunque dispone de una interfaz web, no es apta para una integración automatizada. Por ello, la comunicación se realiza a través del servidor FTP que \gls{omie} proporciona a los agentes de mercado registrados, ya que la \gls{api} que la web pública~\cite{omie2025acceso} usa no ofrece los datos en tiempo real debido a un periodo de confidencialidad.
+La adquisición de datos de \gls{omie}, aunque dispone de una interfaz web, no es apta para una integración automatizada. Por ello, la comunicación se realiza a través del servidor FTP que \gls{omie} proporciona a los agentes de mercado registrados, ya que la \gls{api} que la web pública~\cite{omie2025acceso} usa no ofrece los datos en tiempo real debido a un periodo de confidencialidad\footnote{\Gls{omie} también proporciona el cliente y aplicación de escritorio SIOM capaz de realizar descargas automáticas, pero está orientada al uso local individual de los agentes de mercado.}.
 
-El programa utiliza la biblioteca Paramiko\footnote{\url{https://github.com/paramiko/paramiko} (LGPL-2.1)} para establecer una conexión segura mediante SFTP con usuario y contraseña. Una vez conectado, el programa implementa una lógica para asegurar que siempre se obtiene la versión más reciente de cada fichero.
+El programa utiliza la biblioteca Paramiko\footnote{\url{https://github.com/paramiko/paramiko} (LGPL-2.1)} para establecer una conexión segura (siendo necesario ser agente de mercado) mediante FTP\footnote{\url{ftp://ftp.omip.pt:8021}}. Una vez conectado, el programa implementa una lógica para asegurar que siempre se obtiene la versión más reciente de cada fichero.
 
 \Gls{omie} utiliza la nomenclatura \texttt{xxxxx\_aaaammdd[ss].v}, donde \texttt{xxxxx} es el nombre del fichero, \texttt{aaaa} es el año, \texttt{mm} es el mes, \texttt{dd} es el día y \texttt{ss} es la sesión del mercado, si es aplicable, y \texttt{v} es la versión del fichero.
 
 Como se incluye una versión al final, el programa debe listar los ficheros para una fecha concreta, procesar los nombres para identificar las versiones y descargar únicamente la más alta, ya que \gls{omie} puede publicar correcciones o actualizaciones.
 
-Para obtener las limitaciones de programa de \gls{ree}, el enfoque es similar. Se debe utilizar la \gls{api} privada de ESIOS\footnote{\url{https://participa.esios.ree.es}}, exclusiva para agentes de mercado~\cite{red2025esios}, pues la \gls{api} pública tan solo proporciona la información tras un periodo de confidencialidad. La comunicación se realiza mediante peticiones HTTP a través de la biblioteca Requests\footnote{\url{https://github.com/psf/requests} (Apache-2.0)}, utilizando autenticación OAuth con un token de acceso tipo \textit{bearer}.
+Para obtener las limitaciones por seguridad de \gls{ree}, el enfoque es similar. Se debe utilizar la \gls{api} privada de ESIOS\footnote{\url{https://participa.esios.ree.es/ServicioSM/ServiceEME}}, exclusiva para agentes de mercado~\cite{red2025esios}, pues la \gls{api} pública tan solo proporciona la información tras un periodo de confidencialidad. La comunicación se realiza mediante SOAP a través \textit{web services} simplificados usando la biblioteca Requests\footnote{\url{https://github.com/psf/requests} (Apache-2.0)}, autenticación PKI con un certificado firmado por la autoridad certificadora OmieCA\@ e introduciendo el xsd correspondiente, basado en el código de ejemplo proporcionado por \gls{ree}\footnote{\url{https://bitbucket.org/smree/workspace/projects/EEMWS} (GPL-3.0)}.
 
 Una vez obtenidos los ficheros, que se presentan en formatos CSV específicos, la biblioteca Pandas\footnote{\url{https://github.com/pandas-dev/pandas} (BSD-3-Clause)} se encarga de la transformación. El resultado es un fichero CSV cuyo formato se corresponde directamente con las filas a insertar en la base de datos de destino.
 
@@ -238,18 +245,55 @@ El fichero de energía negociada contiene las columnas UP, fecha, hora y energí
 
 Aún con todo, existe un enorme problema que impide el uso de los resultados de la energía casada de forma directa. Esto se debe a que el sistema desarrollado necesita la información de la energía casada no por \gls{up}, sino por \gls{ufi}, de tal forma que se pueda arbitrar de forma independiente.
 
-Para resolver este problema, se hace uso de una herramienta propietaria externa al desarrollo, que es capaz de calcular los desgloses de la energía, convirtiendo la energía casada por \gls{up} a energía casada por \gls{ufi}. Para llevarlo a cabo, debe hacer uso de información no disponible por el desarrollo, por lo que la existencia de una herramienta del estilo es necesaria.
+Para resolver este problema, se hace uso de una herramienta propietaria propia de la entidad energética pertinente, que es capaz de calcular los desgloses de la energía, convirtiendo la energía casada por \gls{up} a energía casada por \gls{ufi}. Para llevarlo a cabo, debe hacer uso de información no disponible por el desarrollo, por lo que la existencia de una herramienta del estilo es necesaria.
 
-Junto a ello, el fichero de limitaciones de programa se estructura con las columnas fecha, hora, \gls{up}, \gls{ufi} y valor, según el contenido de la figura~\ref{fig:contenido-limitaciones}. La lógica es que si el código es un \gls{ufi}, la limitación aplica exclusivamente a ese activo físico, si es un \gls{up}, se aplica a la totalidad de la instalación.
+Junto a ello, la información de limitaciones por seguridad\footnote{La información de limitaciones por seguridad es confidencial, en cambio, la información pública agregada puede ser consultada en el fichero \gls{i90dia} publicado por \gls{ree}.} se estructura en mensajes XML con las respectivas \glspl{up} y \glspl{ufi} e intervalos temporales minutales durante los cuales está vigente la limitación, necesitando transformarlos a periodos de mercado cuartohorarios, según el diagrama de la figura~\ref{fig:contenido-limitaciones} y la siguiente ejemplificación del contenido.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\linewidth]{figures/contenido-limitaciones.png}
-  \caption[Limitaciones de programa a una instalación.]{Limitaciones de programa a una instalación.}%
+  \includegraphics[height=0.5\textheight]{figures/contenido-limitaciones.png}
+  \caption[Limitaciones por seguridad de la instalación.]{Limitaciones por seguridad de la instalación.}%
   \label{fig:contenido-limitaciones}
 \end{figure}
 
-Todos estos archivos son transformados al formato interno de inserción y entregados al intercambiador de ficheros.
+\begin{samepage}
+  \begin{minted}[fontsize=\scriptsize, breaklines]{xml}
+    <?xml version="1.0"?>
+    <LimitacionesSujeto xmlns="urn:sios.ree.es:limitacionessujeto:1:0">
+      <IdentificacionMensaje v="limitacionessm_20251001"/>
+      <VersionMensaje v="6"/>
+      <TipoMensaje v="Z20"/>
+      <TipoProceso v="Z13"/>
+      <TipoClasificacion v="A01"/>
+      <IdentificacionRemitente codificacion="A01" v="10XES-REE------E"/>
+      <FuncionRemitente v="A04"/>
+      <IdentificacionDestinatario codificacion="A01" v="DESTINATARIO"/>
+      <FuncionDestinatario v="A08"/>
+      <FechaHoraMensaje v="2025-09-30T16:27:59Z"/>
+      <Horizonte v="2025-09-30T16:00Z/2025-10-01T22:00Z"/>
+      <SeriesTemporales>
+        <IdentificacionSeriesTemporales v="STP1"/>
+        <TipoNegocio v="Z10"/>
+        <UP codificacion="NES" v="FBHIBHV"/>
+        <UF codificacion="NES" v="PLLANO" />
+        <UnidadMedida v="MAW"/>
+        <Periodo>
+          <IntervaloTiempo v="2025-09-30T16:00Z/2025-09-30T17:00Z"/>
+          <Intervalo>
+            <TipoCategoriaRestriccion v="Z05"/>
+            <Descripcion v="Programa 24.5"/>
+            <SubIntervalo>
+              <TipoLimitacion v="Z02"/>
+              <PotenciaLimite v="24.5"/>
+            </SubIntervalo>
+          </Intervalo>
+        </Periodo>
+      </SeriesTemporales>
+    </LimitacionesSujeto>
+  \end{minted}
+\end{samepage}
+
+Todos estos archivos son transformados al formato interno de inserción y entregados al intercambiador de ficheros, para ser insertados directamente en base de datos.
 
 Una vez los datos residen en el \gls{dw}, el sistema de optimización los consume mediante consultas SQL\@. Sin embargo, una simple consulta no es suficiente, ya que las inserciones en la base de datos están sujetas a un versionado interno, independiente del versionado de los ficheros de origen.
 
