@@ -16,9 +16,8 @@
 *.lot
 *.out
 *.pdf
-*.pygtex
-*.pygstyle
 *.synctex(busy)
 *.synctex.gz
 *.toc
+_minted-principal/
 svg-inkscape/
