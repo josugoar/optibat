@@ -1,3 +1,14 @@
+"""
+Output generation for setpoints and offers.
+
+It serializes and exports results from the optimization pipeline to various formats,
+including PI System modules, custom local files and XXXX_XXXX specific formats for bidding with XXXX_XXXX.
+It ensures outputs are consistent, well formatted and ready for integration with downstream
+systems or regulatory reporting.
+
+Author: Josu Gomez Arana (XXXX_XXXX)
+"""
+
 import tempfile
 from contextlib import nullcontext
 from datetime import datetime
@@ -12,6 +23,21 @@ from optibat.metering import write_module
 
 
 def write_output(data: Box) -> Box:
+    """
+    Generate and export all configured outputs.
+
+    This function writes results to PI System modules, custom local files, and market specific templates
+    as required by the configuration. File locking is used in headless mode to prevent concurrent
+    writes.
+
+    Args:
+        data (Box): Input data and configuration, including output paths and flags.
+
+    Returns:
+        Box: The merged data and output references.
+    """
+    # MUST lock file before writing, otherwise XXXX_XXXX WILL have conflicts and bids will be lost,
+    # while the battery still cycles, wasting money and energy.
     with (
         FileLock(Path(tempfile.gettempdir(), ".optibat.lock"), timeout=60)
         if data.headless
@@ -29,7 +55,14 @@ def write_output(data: Box) -> Box:
         return data | output
 
 
-def _to_module(data: Box) -> str | None:
+def _to_module(data: Box) -> None:
+    """
+    Write BESS charge and discharge results to the PI System.
+
+    This function prepares and formats the output DataFrame, rounds values for reporting,
+    and delegates the actual write to the metering integration.
+    """
+    # Not everything is actually needed.
     bess_charge_output_module = pd.DataFrame(
         data={
             "FECHA": data.market_dates,
@@ -60,9 +93,19 @@ def _to_module(data: Box) -> str | None:
 
 
 def _to_XXXX_XXXX(data: Box) -> str | None:
+    """
+    Export results to a XXXX_XXXX.
+
+    This function prepares and formats the output DataFrame for market integration,
+    rounds values, and writes to the configured path if in headless mode. Returns the data
+    to be given XXXX_XXXX.
+    """
     if data.output_XXXX_XXXX_path is None:
         output_XXXX_XXXX = None
         return output_XXXX_XXXX
+
+    # XXXX_XXXX DOES NOT KNOW ABOUT RECOMPRAS Y REVENTAS! For that use XXXX_XXXX when
+    # XXXX_XXXX is ready.
 
     bess_grid_import_output_XXXX_XXXX = pd.DataFrame(
         data={
@@ -138,6 +181,8 @@ def _to_XXXX_XXXX(data: Box) -> str | None:
         }
     )
 
+    # Recommended to bunch all UFIs together, so that XXXX_XXXX distinguishes between
+    # runs instead of the UFIs themselves.
     output_XXXX_XXXX = pd.concat(
         [
             bess_grid_import_output_XXXX_XXXX,
@@ -147,12 +192,16 @@ def _to_XXXX_XXXX(data: Box) -> str | None:
         ],
     )
 
+    # DO NOT erase previouse results.
     output_XXXX_XXXX = output_XXXX_XXXX.dropna()
 
+    # Rounding values will generate desvíos, but they are so small that XXXX_XXXX will
+    # supposedly sort them out. The resolution is the official one anyway, so it's fine.
     output_XXXX_XXXX["ENERGIA"] = output_XXXX_XXXX["ENERGIA"].round(decimals=1)
     output_XXXX_XXXX["POTENCIA"] = output_XXXX_XXXX["POTENCIA"].round(decimals=1)
     output_XXXX_XXXX["PRECIO"] = output_XXXX_XXXX["PRECIO"].round(decimals=2)
 
+    # If the format changes, consult with XXXX_XXXX.
     output_XXXX_XXXX = output_XXXX_XXXX.to_csv(
         path_or_buf=data.output_XXXX_XXXX_path.format(datetime.now(tz=ZoneInfo(data.market_timezone)))
         if data.headless
@@ -171,6 +220,9 @@ def _to_XXXX_XXXX(data: Box) -> str | None:
     if data.output_XXXX_XXXX_path is None:
         output_XXXX_XXXX = None
         return output_XXXX_XXXX
+
+    # Similar to XXXX_XXXX data, BUT IT SUPPORTS RECOMPRAS Y REVENTAS, so the
+    # direction (TIPO_OFERTA) FOR EACH UFI is important.
 
     bess_grid_import_output_XXXX_XXXX = pd.DataFrame(
         data={
@@ -284,6 +336,13 @@ def _to_XXXX_XXXX(data: Box) -> str | None:
 
 
 def _to_csv(data: Box) -> str | None:
+    """
+    Export the raw market input to a local CSV file for download.
+
+    This function writes the market input DataFrame to the configured path if
+    in headless mode, or returns the CSV string for further processing. It is
+    useful for drilling down the results.
+    """
     if data.output_csv_path is None:
         output_csv = None
         return output_csv

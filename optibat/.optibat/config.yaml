@@ -1,23 +1,33 @@
+
 default:
-  headless: false
-  current_datetime: null
-  market_date: null
-  market_timezone: Europe/Madrid
-  market_type: MIC
-  market_horizon_day: 7
-  market_history_day: 31
-  market_forecast: XXXX_XXXX
-  market_csv: null
-  market_rate: 0.001
-  market_time_unit_minute: 15
+  headless: false  # Run in non interactive mode (no control panel)
+  current_datetime: null  # Override for current datetime (for backtesting)
+  market_date: null  # Override for market date (for scenario analysis)
+  market_timezone: Europe/Madrid  # Timezone for all datetime operations
+  market_type: MIC  # Market type (e.g., MIC, MD, MI1, etc.)
+  market_horizon_day: 7  # Days to optimize for
+  market_history_day: 31  # Days of historical data to use (improves performance heavily)
+  market_forecast: XXXX_XXXX  # Forecast scenario identifier (XXXX_XXXX or XXXX_XXXX, better to use XXXX_XXXX)
+  market_csv: null  # Path to CSV for offline market data (null for live DW)
+  market_rate: 0.001  # How much to prioritize current positions
+  market_time_unit_minute: 15  # Market time unit in minutes (MTU)
+  # UFIs
   dim_ufi_bess_grid_import: null
   dim_ufi_bess_res_import: null
   dim_ufi_bess_grid_export: null
   dim_ufi_bess_charge: null
   dim_ufi_res_grid_export: null
   dim_up_grid_export: null
+  # PIS points, use the ones defined in XXXX_XXXX (to know which ones to use, consult with the XXXX_XXXX department)
   dim_state_of_charge_point: null
+  dim_state_of_health_point: null
+  dim_charging_power_capacity_point: null
+  dim_discharging_power_capacity_point: null
   dim_availability_point: null
+  dim_charging_efficiency_point: null
+  dim_discharging_efficiency_point: null
+  dim_program_point: null
+  # Battery system parameters
   bess_power_capacity_megawatt: 5.0
   bess_energy_capacity_megawatt_hour: 5.0
   bess_charging_efficiency_percent: 100.0
@@ -35,22 +45,27 @@ default:
   bess_state_of_charge_tolerance_percent: 0.0
   bess_purchase_tolerance_euro_per_megawatt_hour: 5.0
   bess_sale_tolerance_euro_per_megawatt_hour: 5.0
+  # Fixed schedules for simulation
   bess_grid_import_net_fixed_megawatt: {}
   bess_res_import_fixed_megawatt: {}
   bess_grid_export_net_fixed_megawatt: {}
   bess_state_of_charge_fixed_percent: {}
+  # Renewable export and grid export
   res_export_price_euro_per_megawatt_hour: null
   grid_export_limit_megawatt: .inf
-  solver: glpk
-  output_csv_path: null
-  output_XXXX_XXXX_path: Previsiones_BAT_{:%Y%m%d%H%M%S}.csv
-  output_XXXX_XXXX_path: Ofertas_BAT_HIB_{:%Y%m%d%H%M%S}.csv
-  output_block: 1
-  auto_enabled: true
-  modules: [XXXX_XXXX, XXXX_XXXX, XXXX_XXXX, XXXX_XXXX]
+  solver: glpk  # Optimization solver (cbc or glpk recommended, not ipopt)
+  output_csv_path: null  # Path for raw market output for testing
+  output_XXXX_XXXX_path: XXXX_XXXX/Previsiones_BAT_{:%Y%m%d%H%M%S}.csv  # Output for XXXX_XXXX bidding
+  output_XXXX_XXXX_path: XXXX_XXXX/Ofertas_BAT_HIB_{:%Y%m%d%H%M%S}.csv  # Output for future XXXX_XXXX bidding
+  output_block: 1  # Output block identifier (always 1?)
+  auto_enabled: true  # Enable automation features (enable for production)
+  modules: [XXXX_XXXX, XXXX_XXXX, XXXX_XXXX, XXXX_XXXX]  # List of installations
+  # Use .secrets.yaml
   auth: { name: null }
   market: { user: null, password: null, name: null }
   metering: { user: null, password: null, name: null }
+
+# Add XXXX_XXXX with its parameters here when XXXX_XXXX is ready.
 
 XXXX_XXXX:
   dim_ufi_bess_grid_import: XXXX_XXXX
@@ -73,7 +88,7 @@ XXXX_XXXX:
   bess_discharging_efficiency_percent: 97.0
   bess_minimum_state_of_charge_percent: 0.0
   bess_maximum_state_of_charge_percent: 100.0
-  bess_res_import_priority: true
+  bess_res_import_priority: true # When XXXX_XXXX changes to flex hybrid, set to false
   res_export_price_euro_per_megawatt_hour: 3.52
   grid_export_limit_megawatt: 32.3
 
@@ -122,6 +137,7 @@ XXXX_XXXX:
   bess_maximum_state_of_charge_percent: 100.0
   bess_availability_percent: 100.0
   bess_profit_threshold_euro_per_megawatt_hour: 0.0
+  # From clipping calculations using XXXX_XXXX model.
   bess_res_import_clipping_percent: 16.4
   bess_res_import_clipping_threshold_megawatt: 18.3
   res_export_price_euro_per_megawatt_hour: 0.0

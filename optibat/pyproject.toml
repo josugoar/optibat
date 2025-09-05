@@ -4,12 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "optibat"
+# Try to follow (pride) semver. Yes... I know.
 version = "5.0.0"
+# XXXX_XXXX version, so use it.
 requires-python = ">=3.11"
 dependencies = [
     "dynaconf>=3.2.10",
     "filelock>=3.18.0",
     "numpy>=2.2.6",
+    # Do not use cx_Oracle
     "oracledb>=3.1.0",
     "pandas>=2.2.3",
     "PIconnect>=0.12.4",
@@ -17,6 +20,7 @@ dependencies = [
     "python-box>=7.3.2",
     "SQLAlchemy>=2.0.40",
     "streamlit>=1.45.0",
+    # Must have this, or there might be a Windows server without timezone data.
     "tzdata>=2025.2",
 ]
 

@@ -1,3 +1,11 @@
+"""
+Optibat modeling and control subsystems entrypoint.
+
+It runs the automatic operation or control panel for XXXX_XXXX and XXXX_XXXX,
+as either a headless batch process or a web application. It handles configuration loading,
+user authentication, session state management and rendering. The design allows for both automated
+and interactive workflows, supporting real-time operation, scenario analysis across-markets and manual overrides.
+"""
 import logging
 import math
 import runpy
@@ -23,7 +31,15 @@ logger = logging.getLogger(name=__name__)
 
 
 def main() -> None:
+    """
+    Main entrypoint.
+
+    Runs in headless mode for automation or as the control panel for interactive use.
+    Handles configuration, authentication, session state and interface.
+    """
+    # Headless mode, run as a scheduled process.
     if optibat.settings.headless:
+        # DO NOT override program if manual mode is enabled.
         if not optibat.settings.auto_enabled:
             logger.info("Automatic execution is disabled, aborting scheduled run")
             return
@@ -35,18 +51,24 @@ def main() -> None:
         finally:
             return
 
+    # If not running inside context, launch it.
+    # This is needed because a single entrypoint is used.
     if not runtime.exists():
         with _read_main_path() as main_path:
             sys.argv = [
                 "streamlit",
                 "run",
                 str(main_path),
+                # Errors are maintainers responsibility, XXXX_XXXX do not care.
                 "--client.showErrorDetails",
                 "none",
+                # Do not send anonymous usage stats.
                 "--browser.gatherUsageStats",
                 "False",
+                # Do not launch browser, obviously.
                 "--server.headless",
                 "True",
+                # Use corporate colors.
                 "--theme.primaryColor",
                 "#00a443",
             ]
@@ -63,6 +85,7 @@ def main() -> None:
     if "login" not in ss:
         ss.login = False if optibat.settings.auth is not None else True
 
+    # Show login if not authenticated, must use database credentials unfortunately.
     if not ss.login:
         with st.form("login_form"):
             st.header("Iniciar Sesión")
@@ -104,7 +127,10 @@ def main() -> None:
         ss.login = login
         st.rerun()
 
+    # State logic goes at the top.
+
     if "modules" not in ss:
+        # When reloading page, must also reload modules so that it makes sense.
         optibat.settings.reload()
         optibat.settings.validators.validate_all()
         ss.modules = {
@@ -113,6 +139,7 @@ def main() -> None:
         }
 
     if "module" not in ss:
+        # Use first installation if available
         ss.module = (
             optibat.settings.current_env
             if optibat.settings.current_env in ss.modules
@@ -165,9 +192,11 @@ def main() -> None:
         ss.manual_state_of_charge_megawatt_hour_changed = False
 
     if "market_date" not in ss:
+        # Daily market is the default
         ss.market_date = date.today() + timedelta(days=1)
 
     if "market_type" not in ss:
+        # Daily market is the default
         ss.market_type = "MD"
 
     if "market_horizon_day" not in ss:
@@ -247,6 +276,7 @@ def main() -> None:
             "Configuración",
             disabled=manual_changed,
         ):
+            # Only put configuration requested by XXXX_XXXX.
             with st.container(height=185):
                 settings_left_column, settings_right_column = st.columns(2)
 
@@ -271,6 +301,8 @@ def main() -> None:
                         max_value=None,
                         key="bess_maximum_cycles_count_per_day",
                     )
+
+                    # SoC changes affect dependant parameters.
 
                     st.number_input(
                         "Estado de Carga Mínimo (%)",
@@ -376,6 +408,7 @@ def main() -> None:
         st.button(
             "Ejecutar",
             on_click=_on_click_run,
+            # When something is changed, lit up the button.
             type="primary" if not ss.run else "secondary",
             disabled=ss.settings.market is None and ss.settings.market_csv is None,
         )
@@ -494,6 +527,7 @@ def main() -> None:
                 st.rerun()
 
     if ss.data is not None:
+        # KPIs.
         (
             profit_euro_per_megawatt_hour_tab,
             profit_euro_per_megawatt_tab,
@@ -722,6 +756,7 @@ def main() -> None:
 
         # fmt: off
         price_euro_per_megawatt_hour = {
+            # Use slanted display.
             "Compra": (
                 ss.data.bess_price_euro_per_megawatt_hour
                 .where(ss.data.bess_discharge_megawatt_hour - ss.data.bess_charge_megawatt_hour < 0.0)
@@ -741,6 +776,7 @@ def main() -> None:
         price_euro_per_megawatt_hour_color = {
             "Compra": "#ff9c1a55",
             "Venta": "#0da9ff55",
+            # Mercado goes last with a leading invisible space.
             "​Mercado": "#00a443aa",
         }
 
@@ -1279,6 +1315,9 @@ def main() -> None:
                 column_config={"_index": "Límites de Exportación"},
             )
 
+    # Handle manual positions and state of charge for each unit, consider refactor.
+    # This is done because XXXX_XXXX want power and XXXX_XXXX want energy, understandably.
+
     if ss.manual_positions_megawatt_changed:
         # fmt: off
         if ss.data.dim_ufi_bess_grid_import is not None:
@@ -1342,6 +1381,7 @@ def main() -> None:
 
 
 def _on_click_run() -> None:
+    # If using manual overrides, apply them but do not modify rest of config.
     if (
         ss.bess_grid_import_net_fixed_megawatt is not None
         or ss.bess_res_import_fixed_megawatt is not None
@@ -1372,6 +1412,7 @@ def _on_click_run() -> None:
 def _on_click_save() -> None:
     with FileLock(Path(tempfile.gettempdir(), ".optibat.lock"), timeout=60):
         # fmt: off
+        # Files MUST be saved in UTF-8 encoding, otherwise XXXX_XXXX will not understand them.
         if ss.data.output_XXXX_XXXX_path is not None:
             output_XXXX_XXXX_path = Path(ss.data.output_XXXX_XXXX_path.format(ss.data.current_datetime))
             output_XXXX_XXXX_path.write_text(ss.data.output_XXXX_XXXX, encoding="utf-8", newline="\n")
@@ -1456,6 +1497,8 @@ def _on_change_input_csv() -> None:
 
 def _on_change_auto_enabled():
     with FileLock(ss.settings.path_for("config.local.yaml.lock"), timeout=60):
+        # Override auto mode because both prod and control panel use it so that
+        # they are in sync.
         loader.write(
             ss.settings.path_for("config.local.yaml"),
             {"default": {"auto_enabled": ss.auto_enabled}},
@@ -1504,17 +1547,17 @@ def _read_main_path() -> ContextManager[Path]:
 
 
 def _read_favicon_path() -> ContextManager[Path]:
-    favicon_path = as_file(files("optibat").joinpath("static/favicon.ico"))
+    favicon_path = as_file(files("optibat").joinpath("static/XXXX_XXXX"))
     return favicon_path
 
 
 def _read_icon_path() -> ContextManager[Path]:
-    icon_path = as_file(files("optibat").joinpath("static/icon.png"))
+    icon_path = as_file(files("optibat").joinpath("static/XXXX_XXXX"))
     return icon_path
 
 
 def _read_logo_path() -> ContextManager[Path]:
-    logo_path = as_file(files("optibat").joinpath("static/logo.svg"))
+    logo_path = as_file(files("optibat").joinpath("static/XXXX_XXXX"))
     return logo_path
 
 

@@ -1,10 +1,14 @@
 with market as (
+   -- Generate a series of the entire optimization horizon taking daylight saving
+   -- into account and having both the date and the period identifier, so that
+   -- it's easier to integrate them with XXXX_XXXX.
    select trunc(from_tz(cast(trunc(:market_datetime, 'DD') as timestamp), 'Europe/Madrid') + (level - 1) * interval '15' minute, 'DD') as market_dates,
           extract(day from 96 * (from_tz(cast(trunc(:market_datetime, 'DD') as timestamp), 'Europe/Madrid') + level * interval '15' minute - from_tz(cast(trunc(from_tz(cast(trunc(:market_datetime, 'DD') as timestamp), 'Europe/Madrid') + (level - 1) * interval '15' minute, 'DD') as timestamp), 'Europe/Madrid'))) as market_periods
      from dual
   connect by
      level <= extract(day from 96 * (from_tz(cast(trunc(:market_datetime, 'DD') + :market_horizon_day * interval '1' day as timestamp), 'Europe/Madrid') - from_tz(cast(trunc(:market_datetime, 'DD') as timestamp), 'Europe/Madrid')))
 ), XXXX_XXXX as (
+   -- Quite slow because XXXX_XXXX does not have indices...
    select XXXX_XXXX.fecha as market_dates,
           XXXX_XXXX.hora as market_periods,
           case :market_type when 'MIC' then 'MIC' else 'MD' end as market_types,
@@ -24,6 +28,7 @@ with market as (
           case :market_type when 'MIC' then extract(hour from from_tz(cast(:market_datetime as timestamp), 'Europe/Madrid') - from_tz(cast(trunc(:market_datetime, 'DD') as timestamp), 'Europe/Madrid')) + 1 else 0 end as market_sessions,
           any_value(XXXX_XXXX.valor) keep(dense_rank first order by fc.version desc nulls last) as price_euro_per_megawatt_hour
      from XXXX_XXXX XXXX_XXXX
+    --- Interesting trick to join with XXXX_XXXX to improve performance.
     inner join XXXX_XXXX fc
        on XXXX_XXXX.fk_id_fichero_cargado = fc.id_fichero_cargado
     where XXXX_XXXX.fk_id_descriptor in (595, 596)
@@ -50,9 +55,11 @@ with market as (
       and pdbc.fec_pdbc < trunc(:market_datetime, 'DD') + :market_horizon_day * interval '1' day
       and pdbc.hora_ini_utc >= cast(from_tz(cast(trunc(:market_datetime, 'DD') as timestamp), 'Europe/Madrid') at time zone 'UTC' as date)
       and pdbc.hora_ini_utc < cast(from_tz(cast(trunc(:market_datetime, 'DD') + :market_horizon_day * interval '1' day as timestamp), 'Europe/Madrid') at time zone 'UTC' as date)
+      -- WHEN DAILY MARKET CHANGES TO CUARTOHORARIO, CHANGE THIS TO PT15M.
       and pdbc.resolucion = 'PT60M'
     group by pdbc.fec_pdbc,
              round((pdbc.hora_ini_utc - cast(from_tz(cast(pdbc.fec_pdbc as timestamp), 'Europe/Madrid') at time zone 'UTC' as date)) / (pdbc.fec_pdbc + interval '1' hour - pdbc.fec_pdbc) + 1)
+-- Query each one separately to improve performance and distinguish their prices for the forecast.
 ), pibc1 as (
    select pibc1.fec_pibc as market_dates,
           round((pibc1.hora_ini_utc - cast(from_tz(cast(pibc1.fec_pibc as timestamp), 'Europe/Madrid') at time zone 'UTC' as date)) / (pibc1.fec_pibc + interval '15' minute - pibc1.fec_pibc) + 1) as market_periods,
@@ -110,6 +117,7 @@ with market as (
 ), prices as (
    select market.market_dates,
           market.market_periods,
+          -- Price priority scheme. For each market, take the latest price available and treat it as the forecast.
           coalesce(pibc3.market_types, pibc2.market_types, pibc1.market_types, pdbc.market_types, XXXX_XXXX.market_types, XXXX_XXXX.market_types) as market_types,
           coalesce(pibc3.market_sessions, pibc2.market_sessions, pibc1.market_sessions, pdbc.market_sessions, XXXX_XXXX.market_sessions, XXXX_XXXX.market_sessions) as market_sessions,
           coalesce(pibc3.price_euro_per_megawatt_hour, pibc2.price_euro_per_megawatt_hour, pibc1.price_euro_per_megawatt_hour, pdbc.price_euro_per_megawatt_hour, XXXX_XXXX.price_euro_per_megawatt_hour, XXXX_XXXX.price_euro_per_megawatt_hour) as price_euro_per_megawatt_hour
@@ -146,6 +154,7 @@ with market as (
           any_value(energies.energia) keep(dense_rank first order by energies.fechapublicacion desc nulls last) as energy_megawatt_hour
      from XXXX_XXXX energies
     where energies.cdcilxxx = :dim_ufi_res_grid_export
+      -- MASSIVE performance improvement with fechapublicacion, entire bottleneck reduced.
       and energies.fechapublicacion > :market_datetime - :market_history_day * interval '1' day
       and energies.fechapublicacion <= :market_datetime
       and energies.fechainicio >= cast(from_tz(cast(trunc(:market_datetime, 'DD') as timestamp), 'Europe/Madrid') at time zone 'UTC' as date)
@@ -237,6 +246,8 @@ with market as (
              pibca3.id_hora,
              pibca3.cod_entidad
 ), positions as (
+   -- Cannot take matched price for the positions using marketx, so it does
+   -- not exist here. It should not be a problem.
    select market.market_dates,
           market.market_periods,
           coalesce(pibca3.ufi, pibca2.ufi, pibca1.ufi, pdbf.ufi) as ufi,
@@ -262,6 +273,7 @@ with market as (
              market.market_periods,
              coalesce(pibca3.ufi, pibca2.ufi, pibca1.ufi, pdbf.ufi)
 ), limits as (
+   -- XXXX_XXXX is mainly interested in the limits.
    select limits.fec_limitacionsuj as market_dates,
           4 * (extract(hour from cast(limits.hora_ini as timestamp)) + 1) + ceil(extract(minute from cast(limits.hora_ini as timestamp)) / 15) + 1 as market_periods,
           limits.cod_ufi as ufi,
