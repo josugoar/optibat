@@ -1,3 +1,15 @@
+"""
+Defines and solves the core optimization model for battery and renewable energy operation.
+
+It builds a Pyomo based mathematical model to optimize the operation of a
+standalone and hybrid installations and its interaction with the electricity market.
+The model incorporates market prices, technical constraints and operational strategies,
+supporting both grid and renewable imports and exports, clipping, cycling and state of charge management
+for every hybrid and colocated installation topology.
+
+Author: Josu Gomez Arana (XXXX_XXXX)
+"""
+
 from __future__ import annotations
 
 import math
@@ -9,12 +21,27 @@ import pandas as pd
 import pyomo.environ as pyo
 from box import Box
 from pandas import Series
-from pyomo.common.modeling import NOTSET
+from pyomo.common.modeling import NOTSET, unique_component_name
+from pyomo.core.base import BlockData
 from pyomo.core.base.indexed_component import IndexedComponent
 from pyomo.environ import ConcreteModel, Model
+from pyomo.opt import OptSolver, SolverResults
 
 
 def run_model(data: Box) -> Box:
+    """
+    Build, solve, and process the battery optimization model.
+
+    It, constructs the optimization model with all technical and market constraints, solves it using the configured solver
+    and merges the results with the input data. It supports both standard and hybrid topologies, and all the
+    corresponding hybrid configurations. For more information, consult XXXX_XXXX.
+
+    Args:
+        data (Box): Input data and configuration for the optimization.
+
+    Returns:
+        Box: The merged input data and optimization results.
+    """
     with _disable_index_checking():
         model = _create_model(data)
         optimal = _apply_optimizer(model, data)
@@ -25,15 +52,25 @@ def run_model(data: Box) -> Box:
 
 @contextmanager
 def _disable_index_checking() -> Iterator[None]:
+    """
+    Context manager to temporarily disable Pyomo's index checking so that
+    intraday markets do not need to be manually modified for their starting
+    period during model construction.
+    """
     index_checking_enabled = IndexedComponent._DEFAULT_INDEX_CHECKING_ENABLED
     IndexedComponent._DEFAULT_INDEX_CHECKING_ENABLED = False
     try:
         yield
     finally:
+        # Remember to reenable index checking afterwards as it is a global resource.
         IndexedComponent._DEFAULT_INDEX_CHECKING_ENABLED = index_checking_enabled
 
 
 def _create_model(data: Box) -> ConcreteModel:
+    """
+    Constructs the optimization model using the provided data.
+    For more information, consult the equations in XXXX_XXXX.
+    """
     model = pyo.ConcreteModel()
 
     model.market = pyo.Set(
@@ -892,13 +929,74 @@ def _create_model(data: Box) -> ConcreteModel:
 
 
 def _apply_optimizer(model: Model, data: Box) -> bool:
+    """
+    Solves the model using the specified solver. Returns whether optimal termination is achieved.
+    """
     with pyo.SolverFactory(data.solver) as opt:
-        results = opt.solve(model)
+        results = _lexisolve(opt, model)
         optimal = pyo.check_optimal_termination(results)
         return optimal
 
 
+def _lexisolve(opt: OptSolver, model: BlockData) -> SolverResults:
+    """
+    Sequentially solves multiple objectives in lexicographic order (lexicographic optimization).
+
+    For models with more than one active objective:
+    1. Deactivates all objectives.
+    2. For each objective (in order):
+        a. Activates the current objective and solves the model.
+        b. If optimal, adds a constraint to fix the value of this objective for subsequent solves.
+        c. Deactivates the current objective before moving to the next.
+    3. Reactivates all objectives and removes temporary constraints.
+
+    This ensures that the first objective is optimized, then the second is optimized without degrading the first, and so on.
+    Returns the final solver results.
+    """
+    objectives = tuple(model.component_objects(ctype=pyo.Objective, active=True))
+    if not objectives:
+        results = SolverResults()
+        return results
+
+    constraints = []
+
+    for objective in objectives:
+        objective.deactivate()
+
+    for objective in objectives:
+        objective.activate()
+
+        results = opt.solve(model)
+        if not pyo.check_optimal_termination(results):
+            break
+
+        def lexisolve_rule(model):
+            return (
+                int(objective.sense) * objective <= int(objective.sense) * objective()
+            )
+
+        block = objective.parent_block()
+        name = unique_component_name(block, f"_lexisolve_{objective.local_name}")
+        constraint = pyo.Constraint(rule=lexisolve_rule)
+        block.add_component(name, constraint)
+        constraints.append(constraint)
+
+        objective.deactivate()
+
+    for objective in objectives:
+        objective.activate()
+
+    for constraint in constraints:
+        block = constraint.parent_block()
+        block.del_component(constraint)
+
+    return results
+
+
 def _process_results(model: Model, data: Box) -> dict[str, float | Series[float]]:
+    """
+    Extracts variable values from the solved model, aligns them with the input index and returns them in the correct format.
+    """
     values = {}
     for component in model.component_objects(ctype=pyo.Var):
         value = pd.Series(data=component.extract_values(), dtype=float)

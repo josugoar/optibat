@@ -9,7 +9,7 @@ Indexing logic uses the market operator's official nomenclature.
 Author: Josu Gomez Arana (XXXX_XXXX)
 """
 
-# When marketx (???) is XXXX_XXXX, port it here.
+# When marketx is XXXX_XXXX, port it here.
 
 from datetime import datetime, timedelta
 from importlib.resources import files
