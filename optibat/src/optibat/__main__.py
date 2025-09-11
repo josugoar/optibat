@@ -5,7 +5,10 @@ It runs the automatic operation or control panel for XXXX_XXXX and XXXX_XXXX,
 as either a headless batch process or a web application. It handles configuration loading,
 user authentication, session state management and rendering. The design allows for both automated
 and interactive workflows, supporting real-time operation, scenario analysis across-markets and manual overrides.
+
+Author: Josu Gomez Arana (XXXX_XXXX)
 """
+
 import logging
 import math
 import runpy
