@@ -8,15 +8,15 @@ the XXXX_XXXX side steps required to assign a program to a battery.
 Author: Josu Gomez Arana (XXXX_XXXX)
 """
 
-from box import Box
-
-
 # Importing modules at the top level intentionally immediately triggers
 # the configuration loading side effects for the global settings and
 # environments, ensuring that any code using this package, whether as a library
 # or as an application, operates in the correct context. This guarantees that
 # settings for XXXX_XXXX are always loaded and available, because XXXX_XXXX
 # might change them whenever.
+
+from box import Box
+
 from optibat.auth import login  # noqa: F401
 from optibat.config import settings, update_config  # noqa: F401
 from optibat.market import query_market
