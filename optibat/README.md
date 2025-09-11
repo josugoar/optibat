@@ -72,7 +72,7 @@ En cada sección (`XXXX_XXXX`, `XXXX_XXXX`, `XXXX_XXXX`, ...) se pueden sobrescr
 
 ## Authors
 
-- Josu Gomez Arana (XXXX_XXXX) ~~<XXXX_XXXX@XXXX_XXXX>~~ - Developer and Infrastructure
+- Josu Gomez Arana (XXXX_XXXX) ~~<XXXX_XXXX@XXXX_XXXX>~~ - Development and Infrastructure
 - XXXX_XXXX - Maintainers
 - XXXX_XXXX XXXX_XXXX XXXX_XXXX (XXXX_XXXX) <XXXX_XXXX@XXXX_XXXX> - Supervisor
 - XXXX_XXXX XXXX_XXXX XXXX_XXXX (XXXX_XXXX) <XXXX_XXXX@XXXX_XXXX> - Project Manager
