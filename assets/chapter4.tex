@@ -16,11 +16,11 @@ Para que el sistema de optimización de baterías funcione de manera efectiva, n
 
 Por tanto, se define el análisis de las fuentes de información de mercado y los procesos desarrollados para su adquisición, tratamiento e integración. Concretamente, el sistema de optimización requiere de cuatro categorías fundamentales de datos externos. Los precios del mercado son esenciales para formular previsiones estratégicas. La energía negociada es clave para la liquidación de beneficios y la gestión de desvíos. Las limitaciones operativas imponen restricciones de obligado cumplimiento. La situación meteorológica indica las previsiones de la generación.
 
-De esta forma, se pretende describir el origen de estas fuentes de datos, las reglas que gobiernan su publicación y acceso, y la arquitectura implementada para consumirlos de manera programática\footnote{El desarrollo del entorno de mercado se trata de una solución \textit{ad-hoc}, necesaria para cumplimentar con las restricciones corporativas de la entidad energética, a diferencia de la calidad profesional superior del resto de componentes.}. Se desarrolla en colaboración con los agentes de mercado de la entidad energética correspondiente.
+De esta forma, se pretende describir el origen de estas fuentes de datos, las reglas que gobiernan su publicación y acceso, y la arquitectura implementada para consumirlos de manera programática\footnote{El desarrollo del entorno de mercado se trata de una solución \textit{ad-hoc}, necesaria para cumplir con las restricciones corporativas de la entidad energética, a diferencia de la calidad profesional superior del resto de componentes.}. Se desarrolla en colaboración con los agentes de mercado de la entidad energética correspondiente.
 
 Con esto, para facilitar la comprensión de las secciones posteriores, se reiteran los siguientes conceptos. Las \glspl{ufi} son identificadores lógicos que definen los puntos de intercambio de energía. A diferencia de un punto físico en la red, una \gls{ufi} es una referencia contractual para las operaciones de mercado, con la condición indispensable de que toda transacción debe estar respaldada por un flujo de energía físicamente viable. Las \glspl{up} son los identificadores del \gls{tso} de las instalaciones al completo y resultan los activos que se arbitran en el mercado. Las \glspl{uof} son los identificadores equivalentes del \gls{mo}. Es decir, las operaciones de las \glspl{ufi} que engloba una \gls{up} o \gls{uof} se agregan a la hora de realizar la oferta.
 
-Para ello, primeramente se presenta \gls{omie} como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de la energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de \gls{ree}, que impone las limitaciones por seguridad de operación en tiempo real, como se explica en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla como se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema. El flujo de información del entorno de mercado se representa en la figura~\ref{fig:arquitectura-mercado}.
+Para ello, primeramente se presenta \gls{omie} como la fuente primordial de datos de mercado, detallando los mecanismos de obtención de precios y la naturaleza de la información de la energía negociada, como se describe en el apartado~\ref{makereference4.1}. A continuación, se habla de la información proveniente de \gls{ree}, que impone las limitaciones por seguridad de operación en tiempo real, como se explica en la sección~\ref{makereference4.2}. Finalmente, el apartado~\ref{makereference4.3} detalla cómo se consolidan estas diversas fuentes de datos para formar una visión unificada que sirva de entrada al sistema. El flujo de información del entorno de mercado se representa en la figura~\ref{fig:arquitectura-mercado}.
 
 \begin{figure}
   \centering
@@ -60,7 +60,7 @@ Por ello, para obtener esta previsión, el sistema desarrollado adopta un enfoqu
 
   \item[Mercado diario] La variabilidad de precios entre días es significativamente mayor al resto de mercados y depende de factores del entorno más complejos, como falta de lluvia, negociaciones de fin de semana, capacidades de interconexión, industria, estación del año, etc. De esta manera, el sistema está preparado para consumir previsiones de dos orígenes distintos. Por un lado, se utiliza un modelo de previsión manual en el que los agentes de mercado introducen sus propias estimaciones basadas en su experiencia. Por otro, se integra con un modelo de aprendizaje automático, concretamente un modelo de regresión de \textit{stacking} basado en series temporales, que ofrece una predicción automatizada. Dependiendo de la situación, es posible hacer uso de uno u otro\footnote{Se subraya que dichos modelos son externos al desarrollo.}.
 
-  \item[Mercado intradiario] Se observa una alta correlación y una periodicidad estable entre sesiones consecutivas correspondida por lo agentes de mercado, por lo que se utiliza una previsión simple y efectiva donde el precio de casación de una sesión de mercado se emplea como la previsión para la sesión inmediatamente posterior. Así, por ejemplo, los precios resultantes del primer mercado intradiario sirven como la previsión para optimizar las ofertas del segundo, y así sucesivamente.
+  \item[Mercado intradiario] Se observa una alta correlación y una periodicidad estable entre sesiones consecutivas correspondida por los agentes de mercado, por lo que se utiliza una previsión simple y efectiva donde el precio de casación de una sesión de mercado se emplea como la previsión para la sesión inmediatamente posterior. Así, por ejemplo, los precios resultantes del primer mercado intradiario sirven como la previsión para optimizar las ofertas del segundo, y así sucesivamente.
 
   \item[Mercado intradiario continuo] Se toma el precio de casación del último mercado disponible, sea el diario o intradiario. Cabe destacar que debido a la comparativamente baja liquidez del mercado continuo, la metodología de previsiones de precio descrita es la menos fiable para el mismo, aunque este aspecto negativo sea contrarrestado por la suma de liquidez total de las sesiones en conjunto del mercado continuo\footnote{Esto significa que, aunque la previsión de una de las sesiones del mercado intradiario continuo no atine, es posible recuperar los desvíos acumulando negociaciones en los mercados intradiarios continuos posteriores.}. La razón de este comportamiento es la diferente modalidad de oferta del mercado, donde se ataca directamente a una oferta, por lo que no existen precios de casación globales para todas ellas, sino individuales.
 
@@ -73,13 +73,13 @@ Afortunadamente, la información de precios de casación es de carácter públic
 
 Más allá de las previsiones de precios, el sistema necesita conocer con absoluta certeza el resultado de las ofertas que ha presentado al mercado. Existe una diferencia fundamental entre la posición óptima calculada por el algoritmo de optimización y la posición casada, que es la cantidad de energía que la instalación se ha comprometido firmemente a comprar o vender.
 
-Esto se debe a que el funcionamiento del mercado eléctrico permite negocia la energía de un mismo periodo en múltiples sesiones, por lo que hay que llevar la cuenta de la cantidad de energía anteriormente ofertada.
+Esto se debe a que el funcionamiento del mercado eléctrico permite negociar la energía de un mismo periodo en múltiples sesiones, por lo que hay que llevar la cuenta de la cantidad de energía anteriormente ofertada.
 
 Por ello, obtener esta información de energía licitada es importante, porque permite realizar la liquidación económica real de la operación, calculando el beneficio o coste exacto a partir del precio marginal y la energía efectivamente negociada.
 
 Además, es un requisito indispensable para la gestión de los desvíos y la reoptimización en mercados subsecuentes. Al conocer la energía ya comprometida, el modelo puede ajustar su plan para las siguientes sesiones, minimizando así las más costosas penalizaciones por desvío que se producen al no cumplir con el programa de energía comprometido.
 
-Precisamente, esta discrepancia entre lo ofertado y lo casado puede deberse a múltiples factores, como que el precio de oferta no resulte competitivo y la oferta sea rechazada en su totalidad, o que se produzca una casación parcial en la que solo una fracción de la energía ofertada es aceptada por el mercado. Esta es la razón de la necesidad de tener que consultar con \gls{omie} y no poder fiarse de la posición optima obtenida del sistema.
+Precisamente, esta discrepancia entre lo ofertado y lo casado puede deberse a múltiples factores, como que el precio de oferta no resulte competitivo y la oferta sea rechazada en su totalidad, o que se produzca una casación parcial en la que solo una fracción de la energía ofertada es aceptada por el mercado. Esta es la razón de la necesidad de tener que consultar con \gls{omie} y no poder fiarse de la posición óptima obtenida del sistema.
 
 Pero, a diferencia de los precios, la información de energía casada es de naturaleza confidencial. Para proteger las estrategias comerciales de los participantes en el mercado, \gls{omie} la publica desglosada por \gls{up}, y cada entidad solo tiene acceso a la información de sus propias unidades. Los ficheros que contienen esta información son el \gls{pdbf} para el mercado diario y el \gls{pibca} para los mercados intradiarios~\cite{cnmc2025resolucion}.
 
@@ -97,7 +97,7 @@ Las limitaciones por seguridad son limitaciones de potencia impuestas por \gls{r
 
 La necesidad de estas limitaciones surge cuando el programa de energía resultante del mercado provocaría una sobrecarga en alguna línea de la red de transporte o comprometería la estabilidad del sistema. En tales casos, \gls{ree} interviene emitiendo una consigna que reduce la potencia máxima que una o varias instalaciones pueden exportar a la red.
 
-Es importante tener en cuenta que, si bien las restricciones de las limitaciones por seguridad son altamente criticas, existen medios externos para garantizar que no se sobrepasan si ocurre algún error en la operación del sistema desarrollado, por lo que la estabilidad de la red nunca podrá verse afectada por un simple incumplimiento de las consignas por parte del sistema.
+Es importante tener en cuenta que, si bien las restricciones de las limitaciones por seguridad son altamente críticas, existen medios externos para garantizar que no se sobrepasan si ocurre algún error en la operación del sistema desarrollado, por lo que la estabilidad de la red nunca podrá verse afectada por un simple incumplimiento de las consignas por parte del sistema.
 
 Con esto, la información de estas limitaciones se publica ``3 horas posteriores al periodo actual hasta el final del día actual (D), o del día siguiente (D+1)''~\cite{mte2019resolucion}. Como entre sesiones de mercado apenas existe una diferencia de una hora, no es estrictamente necesario consultar las limitaciones constantemente, sino tan solo antes de realizar la optimización.
 
@@ -105,7 +105,7 @@ Las limitaciones, visualizadas en la figura~\ref{fig:limitaciones-unidad}, son d
 
 \begin{itemize}
 
-  \item Una limitación a nivel de \gls{ufi} de ls instalación aplica un límite de exportación de potencia a un activo de generación o almacenamiento específico e individual. Por ejemplo, podría limitar la producción de una planta fotovoltaica concreta dentro de un complejo más grande.
+  \item Una limitación a nivel de \gls{ufi} de la instalación aplica un límite de exportación de potencia a un activo de generación o almacenamiento específico e individual. Por ejemplo, podría limitar la producción de una planta fotovoltaica concreta dentro de un complejo más grande.
 
   \item Una limitación a nivel de \gls{up} impone un límite de exportación al conjunto de activos que conforman dicha \gls{up}. En una instalación híbrida, esto significa que la suma de la potencia neta exportada por la planta de generación y el \gls{bess} no puede superar el umbral dictado.
 
@@ -118,12 +118,12 @@ Las limitaciones, visualizadas en la figura~\ref{fig:limitaciones-unidad}, son d
   \label{fig:limitaciones-unidad}
 \end{figure}
 
-Por tanto, el sistema de optimización desarrollado debe consultar la existencia de estas limitaciones por seguridad, de la misma forma que la información anterior. Si se recibe una limitación, el modelo debe considerarla como una restricción máxima en sus cálculos, ajustando la consigna de operación de la batería para asegurar que la exportación total de las unidades se mantengan siempre por debajo del límite impuesto por \gls{ree}. La información de limitaciones por seguridad se conoce como \gls{limitacionsuj}.
+Por tanto, el sistema de optimización desarrollado debe consultar la existencia de estas limitaciones por seguridad, de la misma forma que la información anterior. Si se recibe una limitación, el modelo debe considerarla como una restricción máxima en sus cálculos, ajustando la consigna de operación de la batería para asegurar que la exportación total de las unidades se mantenga siempre por debajo del límite impuesto por \gls{ree}. La información de limitaciones por seguridad se conoce como \gls{limitacionsuj}.
 
 \section{Situación meteorológica}%
 \label{makereference4.3}
 
-Además de las señales económicas de \gls{omie} y las operativas de \gls{ree}, existe una tercera fuente de datos externos que resulta indispensable para el sistema de optimización, concretamente en el caso de las topologías híbridas. Esta se trata de la previsión de la generación eléctrica que producen los activos de de generación (generalmente renovable) asociados a los sistemas de almacenamiento, dependientes de la situación meteorológica.
+Además de las señales económicas de \gls{omie} y las operativas de \gls{ree}, existe una tercera fuente de datos externos que resulta indispensable para el sistema de optimización, concretamente en el caso de las topologías híbridas. Esta se trata de la previsión de la generación eléctrica que producen los activos de generación (generalmente renovable) asociados a los sistemas de almacenamiento, dependientes de la situación meteorológica.
 
 La necesidad de esta información es bastante directa, facilitando al sistema de optimización la toma de decisiones informadas sobre si cargar la batería desde la red o desde la generación. Por ello debe conocer con antelación cuánta de generación estará disponible en cada periodo. Sin esta previsión, la capacidad de la batería para aprovechar la energía generada localmente, uno de los principales beneficios económicos de la hibridación, sería nula.
 
@@ -163,7 +163,7 @@ Desde la perspectiva del sistema desarrollado, la fuente de datos meteorológico
 
 Esta arquitectura resulta ser un requisito para integrarse con herramientas internas ya existentes y, como ventaja adicional, proporciona una gran robustez frente a incidencias por parte de las fuentes de datos.
 
-Se han desarrollado dos programas principales en Python, uno para cada fuente de datos, que se ejecutan de forma periódica según los horarios de publicación de los ficheros de cada mercado con respecto al el cierre de los mismos, si es aplicable, representado en la figura~\ref{fig:horarios-publicacion}.
+Se han desarrollado dos programas principales en Python, uno para cada fuente de datos, que se ejecutan de forma periódica según los horarios de publicación de los ficheros de cada mercado con respecto al cierre de los mismos, si es aplicable, representado en la figura~\ref{fig:horarios-publicacion}.
 
 \begin{figure}
   \centering
@@ -243,7 +243,7 @@ El fichero de energía negociada contiene las columnas UP, fecha, hora y energí
   \label{fig:contenido-energia}
 \end{figure}
 
-Aún con todo, existe un enorme problema que impide el uso de los resultados de la energía casada de forma directa. Esto se debe a que el sistema desarrollado necesita la información de la energía casada no por \gls{up}, sino por \gls{ufi}, de tal forma que se pueda arbitrar de forma independiente.
+Aun con todo, existe un enorme problema que impide el uso de los resultados de la energía casada de forma directa. Esto se debe a que el sistema desarrollado necesita la información de la energía casada no por \gls{up}, sino por \gls{ufi}, de tal forma que se pueda arbitrar de forma independiente.
 
 Para resolver este problema, se hace uso de una herramienta propietaria propia de la entidad energética pertinente, que es capaz de calcular los desgloses de la energía, convirtiendo la energía casada por \gls{up} a energía casada por \gls{ufi}. Para llevarlo a cabo, debe hacer uso de información no disponible por el desarrollo, por lo que la existencia de una herramienta del estilo es necesaria.
 

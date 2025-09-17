@@ -11,7 +11,7 @@ Con esto, para obtener los resultados experimentales, ha sido necesario realizar
 
 Cabe destacar que, originalmente, la entidad con la que se ha realizado el despliegue del sistema apenas disponía de una herramienta rudimentaria con un funcionamiento incorrecto únicamente enfocada en el arbitraje de topología aislada. Esto significa que, precisamente debido a la novedad de los \glspl{bess}, no es posible realizar comparaciones con soluciones similares debido a su nula existencia dentro de la entidad energética misma.
 
-Aún así, se ha estudiado el rendimiento obtenido por el sistema, analizando su uso no solo a lo largo del periodo de despliegue, sino realizando también simulaciones con datos de mercado y señales de la batería reales. Precisamente, facilitar el llamado \textit{backtesting} resulta ser una de las razones principales para el diseño de la arquitectura del sistema modular, con el \gls{pis} de la infraestructura operacional y el \gls{dw} del entorno de mercado.
+Aun así, se ha estudiado el rendimiento obtenido por el sistema, analizando su uso no solo a lo largo del periodo de despliegue, sino realizando también simulaciones con datos de mercado y señales de la batería reales. Precisamente, facilitar el llamado \textit{backtesting} resulta ser una de las razones principales para el diseño de la arquitectura del sistema modular, con el \gls{pis} de la infraestructura operacional y el \gls{dw} del entorno de mercado.
 
 De esta forma, la métrica principal a analizar resulta siempre ser el beneficio obtenido en euros megavatio hora. La razón del uso de un beneficio dependiente de la energía es el hecho de que no querer necesariamente vender la mayor cantidad disponible en todo momento, generando grandes ingresos puntuales pero perdiendo la capacidad de aumentarlos en un futuro. Lo que se busca, en cambio, es el \textit{spread}, siendo la diferencia entre el precio al que se ha vendido y comprado una unidad de energía.
 
@@ -43,9 +43,9 @@ Con ello, se debe analizar el \gls{capex} inicial y el \gls{opex} continuado de 
   \label{fig:capex-bateria}
 \end{figure}
 
-De esta forma, con la batería a analizar y tomando el \gls{capex} como \SI{3\,842\,000}{\text{\euro}} y reducido a \SI{1\,921\,000}{\text{\euro}} por las ayudas, el \gls{opex} anual resulta en \SI{115\,260}{\text{\euro}} y \SI{57\,630}{\text{\euro}}, respectivamente\footnote{Convertido de dolares a euros.}. A lo largo de la vida útil de la batería, el coste suma \SI{7\,299\,800}{\text{\euro}} y \SI{5\,570\,900}{\text{\euro}} con ayudas.
+De esta forma, con la batería a analizar y tomando el \gls{capex} como \SI{3\,842\,000}{\text{\euro}} y reducido a \SI{1\,921\,000}{\text{\euro}} por las ayudas, el \gls{opex} anual resulta en \SI{115\,260}{\text{\euro}} y \SI{57\,630}{\text{\euro}}, respectivamente\footnote{Convertido de dólares a euros.}. A lo largo de la vida útil de la batería, el coste suma \SI{7\,299\,800}{\text{\euro}} y \SI{5\,570\,900}{\text{\euro}} con ayudas.
 
-Los resultados obtenidos indican, al igual que lo hacen autoridades pertinentes~\cite{gadvisory2025technical}, que resulta complicado rentabilizar las baterías únicamente a través la participación en los mercados spot. En la actualidad, como las ayudas a los \glspl{bess} son prominentes, las baterías gozan de una más que favorable situación de mercado de cara al futuro, en cambio, es conveniente que los sistemas de optimización de baterías en el mercado eléctrico incorporen estrategias de \textit{revenue stacking} y también oferten disponibilidades en los mercados de regulación.
+Los resultados obtenidos indican, al igual que lo hacen autoridades pertinentes~\cite{gadvisory2025technical}, que resulta complicado rentabilizar las baterías únicamente a través de la participación en los mercados spot. En la actualidad, como las ayudas a los \glspl{bess} son prominentes, las baterías gozan de una más que favorable situación de mercado de cara al futuro, en cambio, es conveniente que los sistemas de optimización de baterías en el mercado eléctrico incorporen estrategias de \textit{revenue stacking} y también oferten disponibilidades en los mercados de regulación.
 
 \section{Operación manual}%
 \label{makereference7.2}
@@ -54,11 +54,11 @@ Pruebas empíricas con participación de agentes de mercado en diversas instalac
 
 Agentes de mercado subrayan tener que realizar sesiones de dos horas diarias con el único propósito de introducir las posiciones de mercado manualmente y comunicárselas a los operadores de telecomunicaciones para mandar las consignas\footnote{Aunque no se cuente con el flujo desarrollado del sistema en el que las señales son comunicadas al \gls{pis}, existe un flujo alternativo a través de SCADA para operaciones manuales, como ya se ha descrito anteriormente.}. Este trabajo de consignación manual es extremadamente propenso a errores y completa o difícilmente incapaz de aprovechar la totalidad del proceso de optimización, debido a la cantidad de combinaciones exponenciales de las posiciones de mercado, cuanto mayor es el horizonte de optimización.
 
-La comparativa entre los resultados manuales contra el proceso del sistema desarrollado favorecen el uso de un sistema automatizado que no solo mejore de forma directa las ganancias generadas, sino que tenga en cuenta el entorno al completo y modifique su comportamiento según el mismo.
+La comparativa entre los resultados manuales contra el proceso del sistema desarrollado favorece el uso de un sistema automatizado que no solo mejore de forma directa las ganancias generadas, sino que tenga en cuenta el entorno al completo y modifique su comportamiento según el mismo.
 
 De esta forma, sin la disposición del sistema, la estrategia de arbitraje más extendida entre los agentes de mercado es la compra y venta directa de energía en los periodos valle y pico, respectivamente. Debido a la alta complejidad del arbitraje en los mercados intradiarios, los agentes de mercado únicamente definen la posición para el mercado diario, el de mayor liquidez.
 
-Como se puede observar en la situación de mercado\footnote{Batería híbrida de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 100 \% de eficiencia.}, con precio de la figura~\ref{fig:manual-auto-precio} y posición de la figura~\ref{fig:manual-auto-posicion}, los dos principales problemas de la estrategia manual son el nulo aprovechamiento de los recursos híbridos de generación en las instalaciones que lo soportan, ya que no es posible tener en cuenta las actualizaciones de las previsiones, y la generación de desvíos ante falta de casaciones en el mercado diario, que resultan en un perdida monetaria comparativamente significativa.
+Como se puede observar en la situación de mercado\footnote{Batería híbrida de \SI{5}{{\mega\watt\hour}} de capacidad, \SI{5}{{\mega\watt}} de potencia y 100 \% de eficiencia.}, con precio de la figura~\ref{fig:manual-auto-precio} y posición de la figura~\ref{fig:manual-auto-posicion}, los dos principales problemas de la estrategia manual son el nulo aprovechamiento de los recursos híbridos de generación en las instalaciones que lo soportan, ya que no es posible tener en cuenta las actualizaciones de las previsiones, y la generación de desvíos ante falta de casaciones en el mercado diario, que resultan en una pérdida monetaria comparativamente significativa.
 
 \begin{figure}
   \centering
@@ -74,7 +74,7 @@ Como se puede observar en la situación de mercado\footnote{Batería híbrida de
   \label{fig:manual-auto-posicion}
 \end{figure}
 
-Los resultados muestran como, en este caso, el arbitraje manual no es capaz de captar las variaciones de precio en los mercados intradiarios e intradiario continuo. Determinar periodos incorrectos de valle y pico, si no se disponen de estrategias de resolución de desvíos como las que aporta el sistema desarrollado, causan perdidas de \( (\SI{90.92}{\text{\euro}\per\mega\watt\hour} \cdot \SI{5}{{\mega\watt\hour}} - \SI{1.72}{\text{\euro}\per\mega\watt\hour} \cdot \SI{3.7}{{\mega\watt\hour}} ) - (\SI{50.00}{\text{\euro}\per\mega\watt\hour} \cdot \SI{5}{{\mega\watt\hour}} - \SI{6.72}{\text{\euro}\per\mega\watt\hour} \cdot \SI{5}{{\mega\watt\hour}}) = \SI{233.04}{\text{\euro}} \) para un ciclo de la batería.
+Los resultados muestran como, en este caso, el arbitraje manual no es capaz de captar las variaciones de precio en los mercados intradiarios e intradiario continuo. Determinar periodos incorrectos de valle y pico, si no se disponen de estrategias de resolución de desvíos como las que aporta el sistema desarrollado, causan pérdidas de \( (\SI{90.92}{\text{\euro}\per\mega\watt\hour} \cdot \SI{5}{{\mega\watt\hour}} - \SI{1.72}{\text{\euro}\per\mega\watt\hour} \cdot \SI{3.7}{{\mega\watt\hour}} ) - (\SI{50.00}{\text{\euro}\per\mega\watt\hour} \cdot \SI{5}{{\mega\watt\hour}} - \SI{6.72}{\text{\euro}\per\mega\watt\hour} \cdot \SI{5}{{\mega\watt\hour}}) = \SI{233.04}{\text{\euro}} \) para un ciclo de la batería.
 
 \section{Configuración topológica}%
 \label{makereference7.3}
@@ -106,7 +106,7 @@ La razón de la menor rentabilidad de la topología aislada viene dada porque su
   \label{tab:comparacion-aislada-hibrida}
 \end{table}
 
-Aún así, es importante mencionar que, aunque sea un hecho que las topologías aisladas no sean las más rentables, es posible usarlas para los mercados de disponibilidad, que están experimentando actualmente picos altísimos nunca antes vistos. Con ello, aunque sea posible obtener beneficios desorbitados regulando disponibilidades con una topología aislada (o híbrida), la incorporación de un mayor número de baterías en la red está causando la saturación del mercado de regulación, visualizada en la figura~\ref{fig:fcr-price}. Por lo tanto, resulta recomendable invertir en hibridaciones, ya que las topologías aisladas continúan perdiendo valor con el paso del tiempo. De este modo, ``aunque los mercados de ajuste todavía ofrezcan picos ocasionales que vale la pena aprovechar, las configuraciones aisladas ya no son suficientes como estrategia independiente''~\cite{leal2025case}.
+Aun así, es importante mencionar que, aunque sea un hecho que las topologías aisladas no sean las más rentables, es posible usarlas para los mercados de disponibilidad, que están experimentando actualmente picos altísimos nunca antes vistos. Con ello, aunque sea posible obtener beneficios desorbitados regulando disponibilidades con una topología aislada (o híbrida), la incorporación de un mayor número de baterías en la red está causando la saturación del mercado de regulación, visualizada en la figura~\ref{fig:fcr-price}. Por lo tanto, resulta recomendable invertir en hibridaciones, ya que las topologías aisladas continúan perdiendo valor con el paso del tiempo. De este modo, ``aunque los mercados de ajuste todavía ofrezcan picos ocasionales que vale la pena aprovechar, las configuraciones aisladas ya no son suficientes como estrategia independiente''~\cite{leal2025case}.
 
 \begin{figure}
   \centering
@@ -118,9 +118,9 @@ Aún así, es importante mencionar que, aunque sea un hecho que las topologías 
 \section{Topología híbrida}%
 \label{makereference7.4}
 
-Una vez comprobada la mejora del uso de instalaciones de topología híbrida, resulta interesante desglosar su operación en los tres modos de operación principales observados en la practica, el híbrido flexible, el híbrido con prioridad de carga de generación y el híbrido con carga aislada de la red.
+Una vez comprobada la mejora del uso de instalaciones de topología híbrida, resulta interesante desglosar su operación en los tres modos de operación principales observados en la práctica, el híbrido flexible, el híbrido con prioridad de carga de generación y el híbrido con carga aislada de la red.
 
-Aunque las tres configuraciones híbridas sean capaces de aprovechar y rentabilizar la energía generada, es interesante comprobar cual de ellas es capaz de generar la mayor rentabilidad en una situación de mercado mostrada en la figura~\ref{fig:precios-hibridaciones}, con el propósito de priorizar su instalación.
+Aunque las tres configuraciones híbridas sean capaces de aprovechar y rentabilizar la energía generada, es interesante comprobar cuál de ellas es capaz de generar la mayor rentabilidad en una situación de mercado mostrada en la figura~\ref{fig:precios-hibridaciones}, con el propósito de priorizar su instalación.
 
 \begin{figure}
   \centering
@@ -148,7 +148,7 @@ La figura~\ref{fig:hibrida-flexible} muestra la posición de mercado de la situa
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/hibrida-aislada.png}
-  \caption[Programa de la topología híbrida con carga aislada de la red.]{Programa de la topología híbrida con carga aislada de la red, en donde la batería solo en capaz de cargar cuando hay recurso de generación excedente. Como la carga es dependiente del recurso de generación, puede que la batería no sea capaz de ciclar completamente}%
+  \caption[Programa de la topología híbrida con carga aislada de la red.]{Programa de la topología híbrida con carga aislada de la red, en donde la batería solo es capaz de cargar cuando hay recurso de generación excedente. Como la carga es dependiente del recurso de generación, puede que la batería no sea capaz de ciclar completamente}%
   \label{fig:hibrida-aislada}
 \end{figure}
 
@@ -156,7 +156,7 @@ En vista de los resultados obtenidos en la tabla~\ref{tab:comparacion-hibridacio
 
 La configuración híbrida con prioridad de carga de generación, en cambio, no permite el aprovechamiento de los precios negativos ya que, irónicamente, debe priorizar la carga híbrida precisamente en los periodos de mayor generación, los cuales se corresponden con los de menor precio. Es decir, la topología está perdiendo ingresos significativos por no poder cargar fácilmente durante precios negativos.
 
-Por otro lado, la híbrida con carga aislada de la red es directamente incapaz de cargar de la red. Aunque con ella se asegure un \textit{lower bound} nulo del precio de compra, no se es capaz de aprovechar la generación al máximo debido a las restricciones de carga parcial de la generación, por lo que no realiza todos los ciclos asignados. También sucede una situación similar a la configuración topológica anterior en comparando el beneficio neto y por unidad de energía.
+Por otro lado, la híbrida con carga aislada de la red es directamente incapaz de cargar de la red. Aunque con ella se asegure un \textit{lower bound} nulo del precio de compra, no se es capaz de aprovechar la generación al máximo debido a las restricciones de carga parcial de la generación, por lo que no realiza todos los ciclos asignados. También sucede una situación similar a la configuración topológica anterior comparando el beneficio neto y por unidad de energía.
 
 \begin{table}[ht]
   \centering

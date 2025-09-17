@@ -20,7 +20,7 @@ Como es entendible, el desarrollo ha hecho uso de la infraestructura operacional
 
 Por ello, la principal contribución del apartado de la infraestructura operacional se ve reflejada en la configuración, securización, despliegue y validación de la herramienta de conexión entre los activos físicos y del historiador del \gls{pis}, a través de los correspondientes protocolos de comunicación posteriormente descritos. Se busca la integración estandarizada con los componentes ya existentes, para el correcto funcionamiento de las instalaciones que alojan los \glspl{bess}, mientras se tiene en cuenta que los sistemas de almacenamiento apenas son una pequeña parte de la red al completo. Se desarrolla en colaboración con el departamento de telecontrol de la entidad energética correspondiente.
 
-De esta forma, es posible obtener una visión más completa a través del análisis realizado en la sección~\ref{makereference3.1}, que define la arquitectura de la disposición de los activos energéticos y las múltiples restricciones operativas fundamentales tenidas en cuenta por el desarrollo. También, se examinan los componentes físicos que forman parte de la infraestructura al completo, detallados en la sección~\ref{makereference3.2}, que actúan como la fuente primaria de la obtención de datos. Además, se explora la comunicación que unifica estos componentes en la sección~\ref{makereference3.3},  facilitando un intercambio de datos estandarizado. Con esto, se describe la gestión de la información obtenida en la sección~\ref{makereference3.4}, detallando su rol en el almacenamiento, la gestión y la validación de los datos operativos. Por último, se explica como los datos de la infraestructura obtenidos son transformados y consumidos en la sección~\ref{makereference3.5}. El flujo de información de la infraestructura operacional se representa en la figura~\ref{fig:arquitectura-infraestructura}.
+De esta forma, es posible obtener una visión más completa a través del análisis realizado en la sección~\ref{makereference3.1}, que define la arquitectura de la disposición de los activos energéticos y las múltiples restricciones operativas fundamentales tenidas en cuenta por el desarrollo. También, se examinan los componentes físicos que forman parte de la infraestructura al completo, detallados en la sección~\ref{makereference3.2}, que actúan como la fuente primaria de la obtención de datos. Además, se explora la comunicación que unifica estos componentes en la sección~\ref{makereference3.3},  facilitando un intercambio de datos estandarizado. Con esto, se describe la gestión de la información obtenida en la sección~\ref{makereference3.4}, detallando su rol en el almacenamiento, la gestión y la validación de los datos operativos. Por último, se explica cómo los datos de la infraestructura obtenidos son transformados y consumidos en la sección~\ref{makereference3.5}. El flujo de información de la infraestructura operacional se representa en la figura~\ref{fig:arquitectura-infraestructura}.
 
 \begin{figure}
   \centering
@@ -58,7 +58,7 @@ Precisamente, estos flujos energéticos son los que dictan los canales de import
   \label{tab:unidades-fisicas}
 \end{table}
 
-Los flujos energéticos individuales, o, mejor dicho, las interfaces correspondientes a los mismos, son conocidos como \gls{ufi}, mientras que la interfaz que oferta en mercado y engloba las \glspl{ufi} es llamada \gls{up} desde el punto de vista del \gls{tso} y \gls{uof} desde la perspectiva del \gls{mo}, como se muestra en la tabla~\ref{tab:unidades-fisicas}..
+Los flujos energéticos individuales, o, mejor dicho, las interfaces correspondientes a los mismos, son conocidos como \gls{ufi}, mientras que la interfaz que oferta en mercado y engloba las \glspl{ufi} es llamada \gls{up} desde el punto de vista del \gls{tso} y \gls{uof} desde la perspectiva del \gls{mo}, como se muestra en la tabla~\ref{tab:unidades-fisicas}.
 
 El sistema desarrollado, por tanto, hace uso de la configuración topológica ya existente, es decir, no se encarga de la implantación física de los activos energéticos o de la conexión de los mismos con la red física, ya que eso queda bien fuera del alcance del diseño. En cambio, sí que hace uso de los diferentes componentes mediante sus correspondientes canales.
 
@@ -92,7 +92,7 @@ Con ello, esta topología es más común en las instalaciones energéticas princ
 
 Precisamente, uno de los ejemplos más representativos de esta topología en la actualidad es el \gls{bess} de Abadiño, en donde el negocio principal se realiza en los mencionados mercados de ajuste (las diferencias entre la situación actual y futura de las instalaciones \textit{standalone} resulta especialmente interesante y es evaluada posteriormente en la sección~\ref{makereference7.3}).
 
-A pesar de su aparente simplicidad, los análisis de mercado demuestran que la viabilidad económica de la topología aislada es limitada~\cite{azahra2020optimized, baviskar2023opportunities, kalenderova2024batery}.
+A pesar de su aparente simplicidad, los análisis de mercado demuestran que la viabilidad económica de la topología aislada es limitada~\cite{azahra2020optimized, baviskar2023opportunities, kalenderova2024battery}.
 
 El margen diferencial de precios, también conocido como \textit{spread}, entre las horas de bajo coste (valle) y alto coste (pico), a menudo resulta insuficiente para generar los ingresos necesarios que permitan amortizar la elevada inversión de capital y cubrir el \gls{capex} y \gls{opex}, incluyendo la degradación.
 
@@ -147,7 +147,7 @@ Concretamente, a partir de los componentes del \gls{bms}, \gls{pcs}, transformad
 
 \begin{description}
 
-  \item[Estado de carga] Indica el porcentaje de energía en la batería. Es la variable más crítica para la toma de decisiones de carga y descarga. Expresado en porcentaje y megavatios hora\footnote{Dependiendo de la batería, aún todas siendo del mismo fabricante, es expresado de un modo u otro, por alguna razón.} y ofrecido por el \gls{bms}.
+  \item[Estado de carga] Indica el porcentaje de energía en la batería. Es la variable más crítica para la toma de decisiones de carga y descarga. Expresado en porcentaje y megavatios hora\footnote{Dependiendo de la batería, aun todas siendo del mismo fabricante, es expresado de un modo u otro, por alguna razón.} y ofrecido por el \gls{bms}.
 
   \item[Estado de salud] Representa la capacidad actual de la batería en comparación con su capacidad nominal, reflejando su nivel de degradación a lo largo del tiempo. Expresado en porcentaje y megavatios hora\footnotemark[\value{footnote}] y ofrecido por el \gls{bms}.
 
@@ -163,7 +163,7 @@ Concretamente, a partir de los componentes del \gls{bms}, \gls{pcs}, transformad
 
   \item[Límites de potencia de descarga global] La máxima potencia de descarga que la planta puede ofrecer en su conjunto, la también llamada potencia estructural, que debe ser comunicada previamente al \gls{tso} por consideraciones legales. Expresados en megavatios y ofrecido por el \gls{rtu}.
 
-  \item[Modo de control actual] Indica si la planta opera siguiendo las consignas externas señalizadas por el sistema a través del programa, o automáticamente por su cuenta según modos de funcionamientos internos no usados en el proyecto. Ofrecido por el \gls{rtu} y se fija en el seguimiento del programa.
+  \item[Modo de control actual] Indica si la planta opera siguiendo las consignas externas señalizadas por el sistema a través del programa, o automáticamente por su cuenta según modos de funcionamiento internos no usados en el proyecto. Ofrecido por el \gls{rtu} y se fija en el seguimiento del programa.
 
 \end{description}
 
@@ -209,12 +209,12 @@ Actúa como una extensión del protocolo IEC 60870{-}5{-}101 y lo adapta para la
 
 A diferencia de Modbus, este protocolo permite una comunicación orientada a eventos y no solicitada o espontánea, donde un dispositivo subordinado (servidor) puede enviar datos al sistema de control (cliente) sin una petición previa, lo cual es crucial para la notificación inmediata de alarmas o cambios de estado.
 
-IEC 60870{-}5{-}104 también permite enviar señalizaciones de calidad correspondientes a un valor, de hecho, es relativamente común ver señales sobrepasando los limites operacionales, como el estado de carga de una batería obtenido a mediante el protocolo observado en la figura~\ref{fig:overflow-soc}. Por suerte, estas señalizaciones de calidad permiten identificarlas, junto a valores inválidos, no actualizados, manuales, bloqueados o erróneos.
+IEC 60870{-}5{-}104 también permite enviar señalizaciones de calidad correspondientes a un valor, de hecho, es relativamente común ver señales sobrepasando los límites operacionales, como el estado de carga de una batería obtenido mediante el protocolo observado en la figura~\ref{fig:overflow-soc}. Por suerte, estas señalizaciones de calidad permiten identificarlas, junto a valores inválidos, no actualizados, manuales, bloqueados o erróneos.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{figures/overflow-soc.png}
-  \caption[Estado de carga excedente.]{Los valores del estado de carga excedente con respecto al limite operativo son registrados como inválidos por el protocolo.}%
+  \caption[Estado de carga excedente.]{Los valores del estado de carga excedente con respecto al límite operativo son registrados como inválidos por el protocolo.}%
   \label{fig:overflow-soc}
 \end{figure}
 
@@ -283,7 +283,7 @@ Por ello, el proceso de puesta en marcha requiere de una configuración precisa 
 
 Las \gls{idmz} se encuentran entre las redes de \gls{ot} y de \gls{it} y se diferencian en que deben intentar asegurar la disponibilidad y los tiempos de respuesta de los procesos físicos industriales que alojan. Esto se traduce en que no se alojan necesariamente cerca de las fuentes de datos de campo, ni directamente junto al resto de servicios informacionales, sino que deben existir en las localizaciones relacionadas con la sala de control que supervisa el funcionamiento correcto de dichos servicios con por lo menos una seguridad mínimamente mayor.
 
-Como tanto el conector como el servidor del \gls{pis} se encuentran en la misma \gls{idmz} y no en una red \gls{ot} en contrapunto a la red \gls{it}, no es necesario introducir otra capa de indirección. Esta capa actuaría como intermediario seguro para respetar las políticas de seguridad entre las redes, pero eso significa que debe existir un control en forma de \textit{firewall} más avanzado aún entre redes para que la herramienta de optimización pueda acceder al historiador (el \gls{pis}), en forma del llamado PI Relay. Aún así, gracias a la arquitectura usada, no es necesario introducir esta complejidad añadida a costa del aislamiento total entre redes (se sigue manteniendo el aislamiento necesario).
+Como tanto el conector como el servidor del \gls{pis} se encuentran en la misma \gls{idmz} y no en una red \gls{ot} en contrapunto a la red \gls{it}, no es necesario introducir otra capa de indirección. Esta capa actuaría como intermediario seguro para respetar las políticas de seguridad entre las redes, pero eso significa que debe existir un control en forma de \textit{firewall} más avanzado aún entre redes para que la herramienta de optimización pueda acceder al historiador (el \gls{pis}), en forma del llamado PI Relay. Aun así, gracias a la arquitectura usada, no es necesario introducir esta complejidad añadida a costa del aislamiento total entre redes (se sigue manteniendo el aislamiento necesario).
 
 De esta forma, se observa que, en concreto, el despliegue del conector, actuando como \textit{gateway} entre el protocolo de comunicación y el historiador de datos, y precisamente el historiador de datos mismo, se encuentran posicionados en el nivel 3.5 de la zona desmilitarizada industrial de la \gls{pera}, el cual define un modelo estructural estandarizado para la seguridad de los sistemas de control industrial.
 
@@ -297,13 +297,13 @@ De esta forma, se observa que, en concreto, el despliegue del conector, actuando
 \subsection{Configuración funcional}%
 \label{makereference3.4.3}
 
-La parametrización del conector, junto con la especificación de parte la lógica de traducción a llevar a cabo, se ha realizado mediante el administrador del conector mostrado en la figura~\ref{fig:administador-del-conector}.
+La parametrización del conector, junto con la especificación de parte la lógica de traducción a llevar a cabo, se ha realizado mediante el administrador del conector mostrado en la figura~\ref{fig:administrador-del-conector}.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.75\linewidth]{figures/administador-del-conector.png}
+  \includegraphics[width=0.75\linewidth]{figures/administrador-del-conector.png}
   \caption[Interfaz del administrador del conector.]{Interfaz del administrador del conector mostrando el descubrimiento de señales del dispositivo subordinado.}%
-  \label{fig:administador-del-conector}
+  \label{fig:administrador-del-conector}
 \end{figure}
 
 Por la parte de la selección del PI Server al cual transmitir los datos, se especifica la dirección IP y el puerto del mismo. En concreto, el tipo de servidor se debe corresponder con la tecnología de archivado del historiador usada, la cual resulta ser PI Data Archive, a diferencia de PI Asset Framework de más alto nivel.
@@ -316,9 +316,9 @@ A su vez, para garantizar un tiempo de respuesta razonable, se configuran tambi�
 
 Como el servicio de ajuste obligatorio (no remunerado) con menor granularidad es de 30 segundos máximo, es decir, se deben enviar pulsos que cubran el 50 \% de la regulación en menos de 15 segundos y el 100 \% en menos de 30 segundos para controlar la batería~\cite{cnmc2024balance}, es necesario aplicar valores menores o iguales a dichos tiempos a los temporizadores \( t_1 \) y \( t_2 \), 4 segundos según recomendaciones, concretamente.
 
-Es importante recalcar que aunque la menor granularidad a la que deben trabajar las baterías sea tan baja, el sistema desarrollado nunca necesitará de un tiempo de respuesta tan rápido, ya que controla el arbitraje de batería en mercados de más alta granularidad (mayor o igual a 15 minutos). Tan solo se modifican los temporizadores para, de forma ajena al desarrollo, tener la opción de habilitar los sistemas de almacenamiento de energía en batería no solo para el uso del sistema propio, sino para el negocio simultaneo en los mercados auxiliares previamente descritos y servicios de regulación, que son los que disponen de esta granularidad reducida.
+Es importante recalcar que aunque la menor granularidad a la que deben trabajar las baterías sea tan baja, el sistema desarrollado nunca necesitará de un tiempo de respuesta tan rápido, ya que controla el arbitraje de batería en mercados de más alta granularidad (mayor o igual a 15 minutos). Tan solo se modifican los temporizadores para, de forma ajena al desarrollo, tener la opción de habilitar los sistemas de almacenamiento de energía en batería no solo para el uso del sistema propio, sino para el negocio simultáneo en los mercados auxiliares previamente descritos y servicios de regulación, que son los que disponen de esta granularidad reducida.
 
-Finalmente, intentando asegurar la sincronización de los sensores y evitar la perdida de información, la periodicidad de la \gls{gi}, comando esencial del protocolo que solicita una actualización completa de todos los puntos de datos, se define en 1 hora. Esto es debido a que este valor se corresponde con el intervalo mínimo entre la negociación de dos mercados, mostrado en la figura~\ref{fig:tiempo-mercados}, lo que es diferente de la granularidad del mercado. Aún así, los búferes de transmisión de las unidades remotas permiten disminuir notablemente la perdida de datos. Esto es relevante ya que el sistema de control de planta no realiza peticiones bajo demanda a los dispositivos, sino que devuelve el valor ya al almacenado.
+Finalmente, intentando asegurar la sincronización de los sensores y evitar la pérdida de información, la periodicidad de la \gls{gi}, comando esencial del protocolo que solicita una actualización completa de todos los puntos de datos, se define en 1 hora. Esto es debido a que este valor se corresponde con el intervalo mínimo entre la negociación de dos mercados, mostrado en la figura~\ref{fig:tiempo-mercados}, lo que es diferente de la granularidad del mercado. Aun así, los búferes de transmisión de las unidades remotas permiten disminuir notablemente la pérdida de datos. Esto es relevante ya que el sistema de control de planta no realiza peticiones bajo demanda a los dispositivos, sino que devuelve el valor ya almacenado.
 
 \begin{figure}
   \centering
@@ -327,7 +327,7 @@ Finalmente, intentando asegurar la sincronización de los sensores y evitar la p
   \label{fig:tiempo-mercados}
 \end{figure}
 
-Más allá y tal y como se ha descrito anteriormente, es posible aprovechar las capacidades de mensajería orientadas a eventos del protocolo para no tener que enviar comandos de \gls{gi} continuamente. No importa no tener datos estrictamente actualizados para las señales relacionadas con los parámetros operativos del \gls{bess}, pero sí que importa no estar actualizados en cuanto a su disponibilidad estructural. Es decir, parámetros como el \gls{soc}, la energía almacenada, la potencia de carga o descarga, etc.\ son modelados intrínsecamente en el funcionamiento de la instalación, en cambio, los fallos estructurales no lo son (pueden ocurrir en cualquier momento, el resto tienen comportamientos predecibles). Por suerte, una vez configurada la relación con los puntos de la conexión, el conector es capaz de recibir estas señales espontaneas automáticamente aprovechando el funcionamiento del protocolo.
+Más allá y tal y como se ha descrito anteriormente, es posible aprovechar las capacidades de mensajería orientadas a eventos del protocolo para no tener que enviar comandos de \gls{gi} continuamente. No importa no tener datos estrictamente actualizados para las señales relacionadas con los parámetros operativos del \gls{bess}, pero sí que importa no estar actualizados en cuanto a su disponibilidad estructural. Es decir, parámetros como el \gls{soc}, la energía almacenada, la potencia de carga o descarga, etc.\ son modelados intrínsecamente en el funcionamiento de la instalación, en cambio, los fallos estructurales no lo son (pueden ocurrir en cualquier momento, el resto tienen comportamientos predecibles). Por suerte, una vez configurada la relación con los puntos de la conexión, el conector es capaz de recibir estas señales espontáneas automáticamente aprovechando el funcionamiento del protocolo.
 
 De esta forma y una vez establecido el enlace de comunicación, el conector procede al descubrimiento de las señales disponibles, interrogando al controlador de planta y presentando una lista completa de los objetos de información accesibles, cada uno identificado por su dirección de objeto de información.
 
@@ -349,9 +349,9 @@ Como no se hace uso de PI Asset Framework para modelizar la planta de forma jer�
   \label{fig:puntos-bateria}
 \end{figure}
 
-Los valores, como su nombre indica, se corresponden con el contenido de las señales, sean continuas o no. Las calidades, en cambio, representan la salud de las señales definido por el protocolo y son usadas para filtrar malas señales.
+Los valores, como su nombre indica, se corresponden con el contenido de las señales, sean continuas o no. Las calidades, en cambio, representan la salud de las señales definidas por el protocolo y son usadas para filtrar malas señales.
 
-Con ello, la validación del sistema se realiza comparando en tiempo real los valores registrados en el PI Data Archive con las lecturas directas en la interfaz SCADA de los controlador de planta en la respectiva sala de control securizada, y forzando cambios en los activos para verificar la correcta transmisión y registro de eventos. De esta forma, es posible comparar el programa de carga y descarga de las baterías con los movimientos verdaderamente efectuados y comprobar su corrección, como se muestra en la figura~\ref{fig:programa-bateria}.
+Con ello, la validación del sistema se realiza comparando en tiempo real los valores registrados en el PI Data Archive con las lecturas directas en la interfaz SCADA de los controladores de planta en la respectiva sala de control securizada, y forzando cambios en los activos para verificar la correcta transmisión y registro de eventos. De esta forma, es posible comparar el programa de carga y descarga de las baterías con los movimientos verdaderamente efectuados y comprobar su corrección, como se muestra en la figura~\ref{fig:programa-bateria}.
 
 \begin{figure}
   \centering
@@ -360,13 +360,13 @@ Con ello, la validación del sistema se realiza comparando en tiempo real los va
   \label{fig:programa-bateria}
 \end{figure}
 
-Precisamente, esta validación permite determinar múltiples errores en la lógica de consignación, De hecho, durante la validación se consiguieron corregir múltiples fallos más o menos críticos.
+Precisamente, esta validación permite determinar múltiples errores en la lógica de consignación. De hecho, durante la validación se consiguieron corregir múltiples fallos más o menos críticos.
 
-Uno de ellos, el hecho de olvidarse bajar la potencia de las baterías al mínimo técnico tras el mandato de una señal de carga, error que precisamente causa una carga excedente de la baterías durante el periodo de pruebas correspondiente a una perdida monetaria puntual del calibre de miles de euros netos.
+Uno de ellos, el hecho de olvidarse bajar la potencia de las baterías al mínimo técnico tras el mandato de una señal de carga, error que precisamente causa una carga excedente de las baterías durante el periodo de pruebas correspondiente a una pérdida monetaria puntual del calibre de miles de euros netos.
 
-Otra situación interesante fue dada por el método de actualización de las señales de \textit{polling} y las espontaneas, como la disponibilidad. Como la disponibilidad es actualizada nada más cambiar, por consideraciones de reporte, puede que no se encuentren sincronizadas con las otras señales. Para resolverlo, se ponen en acuerdo la disponibilidad y el resto de señales relacionadas con la misma una vez se haya realizado la petición.
+Otra situación interesante fue dada por el método de actualización de las señales de \textit{polling} y las espontáneas, como la disponibilidad. Como la disponibilidad es actualizada nada más cambiar, por consideraciones de reporte, puede que no se encuentren sincronizadas con las otras señales. Para resolverlo, se ponen en acuerdo la disponibilidad y el resto de señales relacionadas con la misma una vez se haya realizado la petición.
 
-Por suerte, el sistema de control de baterías no permite el incorrecto funcionamiento de las baterías desde la perspectiva física y hace sonar la alarma ante tales situaciones, actualizando su disponibilidad, por lo que la batería no sufre ningún daño aunque no se disponga de recurso energético en periodos de carga.
+Por suerte, el sistema de control de baterías no permite el incorrecto funcionamiento de las baterías desde la perspectiva física y hace sonar la alarma ante tales situaciones, actualizando su disponibilidad, por lo que la batería no sufre ningún daño aunque no se disponga de recurso energético en períodos de carga.
 
 \section{Consumo del historiador}%
 \label{makereference3.5}
@@ -380,7 +380,7 @@ Precisamente, el consumo no se limita a una simple lectura de valores brutos, si
 
 Para representar valores dependientes con significado físico, en vez de tener que consultar múltiples puntos simultáneamente para inferir el resultado computado de los mismos, resulta más conveniente y efectivo el uso de las ecuaciones de rendimiento proporcionadas como parte del PI System.
 
-Las ecuaciones de rendimiento o PI Performance Equations son una solución eficaz para detallar la lógica de señales calculadas de forma similar a la definición previa de los puntos. Precisamente, la diferencia principal es la introducción de la ecuación misma y el evento de actualización, ya que se requiere conocer de que puntos depende la ecuación para poder recomputarla cuando estos cambien.
+Las ecuaciones de rendimiento o PI Performance Equations son una solución eficaz para detallar la lógica de señales calculadas de forma similar a la definición previa de los puntos. Precisamente, la diferencia principal es la introducción de la ecuación misma y el evento de actualización, ya que se requiere conocer de qué puntos depende la ecuación para poder recomputarla cuando estos cambien.
 
 \begin{figure}
   \centering
@@ -393,9 +393,9 @@ Mediante las ecuaciones de rendimiento se detallan los siguientes puntos.
 
 \begin{itemize}
 
-  \item El rendimiento de carga, que afecta a la energía importada y define la cantidad de energía perdida durante la carga de la batería. Su razón de ser es el ajuste de los posibles desvíos a la hora de comprar energía que surgirían si no se tuvieran en cuenta las perdidas. El rendimiento de carga es calculado mediante la simple relación entre la energía importada y energía cargada \( \eta_{\text{c}} = E_{\text{imp}} / E_{\text{c}} \).
+  \item El rendimiento de carga, que afecta a la energía importada y define la cantidad de energía perdida durante la carga de la batería. Su razón de ser es el ajuste de los posibles desvíos a la hora de comprar energía que surgirían si no se tuvieran en cuenta las pérdidas. El rendimiento de carga es calculado mediante la simple relación entre la energía importada y energía cargada \( \eta_{\text{c}} = E_{\text{imp}} / E_{\text{c}} \).
 
-  \item El rendimiento de descarga, que afecta a la energía exportada y define la cantidad de energía perdida durante la descarga de la batería. Es necesaria para el ajuste de los posibles desvíos a la hora de vender energía si no se tuvieran en cuenta las perdidas. El rendimiento de descarga es calculado mediante la simple relación entre la energía exportada y energía descargada \( \eta_{d} = E_{\text{exp}} / E_{d} \).
+  \item El rendimiento de descarga, que afecta a la energía exportada y define la cantidad de energía perdida durante la descarga de la batería. Es necesaria para el ajuste de los posibles desvíos a la hora de vender energía si no se tuvieran en cuenta las pérdidas. El rendimiento de descarga es calculado mediante la simple relación entre la energía exportada y energía descargada \( \eta_{d} = E_{\text{exp}} / E_{d} \).
 
 \end{itemize}
 
@@ -404,13 +404,13 @@ Mediante las ecuaciones de rendimiento se detallan los siguientes puntos.
 
 Finalmente, teniendo los datos provenientes de tanto de los activos físicos disponibles en el historiador como de sus propias transformaciones, es necesario consumirlos por la herramienta principal de optimización con el propósito de conocer los parámetros operativos de las baterías.
 
-Para ello, existen múltiples enfoques que tomar, aunque el elegido a sido hacer uso de la interfaz de aplicación ofrecida por el PI AF SDK, la cual provee acceso estructurado a una variedad de componentes del PI System.
+Para ello, existen múltiples enfoques que tomar, aunque el elegido ha sido hacer uso de la interfaz de aplicación ofrecida por el PI AF SDK, la cual provee acceso estructurado a una variedad de componentes del PI System.
 
-Aún y todo, su interfaz es expuesta a través de Microsoft \.NET\footnote{\url{https://github.com/dotnet/runtime} (MIT)} pero la herramienta de optimización ha sido desarrollada en Python\footnote{\url{https://github.com/python/cpython} (PSF-2.0)}, lo que resulta en un problema de incompatibilidad que podría no permitir el uso de PI AF SDK\@.
+Aun y todo, su interfaz es expuesta a través de Microsoft \.NET\footnote{\url{https://github.com/dotnet/runtime} (MIT)} pero la herramienta de optimización ha sido desarrollada en Python\footnote{\url{https://github.com/python/cpython} (PSF-2.0)}, lo que resulta en un problema de incompatibilidad que podría no permitir el uso de PI AF SDK\@.
 
 Para solucionar el problema principal de esta incompatibilidad, es posible utilizar la integración de Python con el \.NET Common Language Runtime, la máquina virtual que se encarga de ejecutar el código para la plataforma de \.NET\@. Esto se hace posible a través de los bindings de Python.NET\footnote{\url{https://github.com/pythonnet/pythonnet} (MIT)}\@.
 
-Precisamente, se hace un uso directo de la interfaz a través del lenguaje de programación elegido para el apartado de la conexión con el PI Server. Y es que, en términos de la conexión, resulta que para cumplir con los requisitos de seguridad de la comunicación entre redes, los métodos de conexión por defecto recomendados no se pueden usar. En cambio, es necesaria la autenticación con credenciales directa, aunque esto suponga la perdida de la reconexión automática ofrecida por los métodos de conexión por defecto.
+Precisamente, se hace un uso directo de la interfaz a través del lenguaje de programación elegido para el apartado de la conexión con el PI Server. Y es que, en términos de la conexión, resulta que para cumplir con los requisitos de seguridad de la comunicación entre redes, los métodos de conexión por defecto recomendados no se pueden usar. En cambio, es necesaria la autenticación con credenciales directa, aunque esto suponga la pérdida de la reconexión automática ofrecida por los métodos de conexión por defecto.
 
 Junto a ello, con el propósito de aumentar la ergonomía del desarrollo, se toma la biblioteca Piconnect\footnote{\url{https://github.com/Hugovdberg/PIconnect} (MIT)}, que ofrece una interfaz directa más simple y también hace uso internamente de la integración con la interfaz de \.NET\@.
 

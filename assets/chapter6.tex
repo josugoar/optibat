@@ -5,7 +5,7 @@
 \chapter{Comando y control}%
 \label{makereference6}
 
-Teniendo disponible toda la información necesaria para el control de vuelta al \gls{bess}, es necesario convertirla a la señales que la batería entienda. A su vez, también se necesita comunicar las ofertas de compra y venta de energía al mercado, para garantizar la sincronía de las operaciones entre la carga y compra y descarga y venta de la energía, respectivamente.
+Teniendo disponible toda la información necesaria para el control de vuelta al \gls{bess}, es necesario convertirla a las señales que la batería entienda. A su vez, también se necesita comunicar las ofertas de compra y venta de energía al mercado, para garantizar la sincronía de las operaciones entre la carga y compra y descarga y venta de la energía, respectivamente.
 
 Más allá de las operaciones mismas, en entornos industriales donde se mueven grandes cantidades de energía, como el pertinente, es altamente recomendable disponer de algún tipo de método con el que comprobar la correcta operación del sistema y modificar su comportamiento si resulta oportuno. Por ello, también se desarrolla un cuadro de mando con el que realizar las tareas de supervisión.
 
@@ -21,7 +21,7 @@ De esta forma, el apartado~\ref{makereference6.1} describe la operación automá
 \section{Consignación operativa}%
 \label{makereference6.1}
 
-La consignación operativa no solo incluye la señalización del perfil de carga y descarga de las baterías y es que, si el sistema no comunica adecuadamente sus intenciones de compra y venta mediante los medios preestablecidos, la entidad energética dueña de la instalación podría incurrir severas multas por incumplir el reglamento.
+La consignación operativa no solo incluye la señalización del perfil de carga y descarga de las baterías y es que, si el sistema no comunica adecuadamente sus intenciones de compra y venta mediante los medios preestablecidos, la entidad energética dueña de la instalación podría incurrir en severas multas por incumplir el reglamento.
 
 Con ello, el sistema debe responder a las preguntas de cuándo y cuánta energía ciclar físicamente y a qué precio.
 
@@ -37,11 +37,11 @@ Dependiendo de la posición de arbitraje, la batería puede encontrarse en difer
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/perfil-potencia.png}
-  \caption[Modulación del perfil de potencia de una batería.]{Modulación del perfil de potencia de carga una batería de \SI{5}{\mega\watt}, en donde la potencia de carga fluctúa entre el mínimo técnico y máximo operacional, hasta verse finalmente limitada a poco más de la mitad de la potencia nominal.}%
+  \caption[Modulación del perfil de potencia de una batería.]{Modulación del perfil de potencia de carga de una batería de \SI{5}{\mega\watt}, en donde la potencia de carga fluctúa entre el mínimo técnico y máximo operacional, hasta verse finalmente limitada a poco más de la mitad de la potencia nominal.}%
   \label{fig:perfil-potencia}
 \end{figure}
 
-Con esto, las mayores ventajas de las baterías son su capacidad de rápida conmutación o variación de su perfil de potencia y el mínimo de técnico nulo, con el que la batería puede mantenerse inactiva sin perder capacidad de conmutación.
+Con esto, las mayores ventajas de las baterías son su capacidad de rápida conmutación o variación de su perfil de potencia y el mínimo técnico nulo, con el que la batería puede mantenerse inactiva sin perder capacidad de conmutación.
 
 Para transformar la posición de mercado de energía a potencia es necesario conocer el periodo o granularidad del mercado y realizar la transformación a través de la simple ecuación~\ref{eq:energia-a-potencia}. Las limitaciones de potencia ya se han tenido en cuenta en las etapas anteriores.
 
@@ -66,7 +66,7 @@ Para transformar la posición de mercado de energía a potencia es necesario con
 
 \end{samepage}
 
-Aún habiendo convertido las unidades, se continua teniendo un problema, explicado por el ciclado de la batería a nivel físico. El ciclado de la batería, en su formato más reductivo, está controlado por dos señales correspondientes a las fuentes de carga y descarga por el \gls{bms}, como se observa en la figura~\ref{fig:carga-descarga}. Cuando una de las señales esta activa el circuito de carga se abre, cuando la otra está activa es el de descarga el que se activa y cuando no está activa ninguna no hay flujo energético\footnote{Existen otros tipos de \gls{bms} en donde los puertos de carga y descarga son comunes, pero la restricción del control de la carga y descarga se sigue aplicando de igual manera por razones físicas para manejar la batería de ion-litio en sí, que solo observa la conexión de energía de entrada o de salida, al fin y al cabo.}.
+Aun habiendo convertido las unidades, se continúa teniendo un problema, explicado por el ciclado de la batería a nivel físico. El ciclado de la batería, en su formato más reductivo, está controlado por dos señales correspondientes a las fuentes de carga y descarga por el \gls{bms}, como se observa en la figura~\ref{fig:carga-descarga}. Cuando una de las señales está activa el circuito de carga se abre, cuando la otra está activa es el de descarga el que se activa y cuando no está activa ninguna no hay flujo energético\footnote{Existen otros tipos de \gls{bms} en donde los puertos de carga y descarga son comunes, pero la restricción del control de la carga y descarga se sigue aplicando de igual manera por razones físicas para manejar la batería de ion-litio en sí, que solo observa la conexión de energía de entrada o de salida, al fin y al cabo.}.
 
 \begin{figure}
   \centering
@@ -75,9 +75,9 @@ Aún habiendo convertido las unidades, se continua teniendo un problema, explica
   \label{fig:carga-descarga}
 \end{figure}
 
-¿Qué sucede entonces cuando las dos señales se activan a la vez? La activación simultanea resulta en un bloqueo mutuo donde ocurre un cortocircuito, el cual podría causar daños físicos internos a las celdas de la batería (en la practica el \gls{bms} lo impide), por esta razón la misión del sistema de control de baterías es evitar esta situación. Para ello, limita las consignas a una única señal en donde los valores positivos indican carga, los negativos descarga y cero la inactividad.
+¿Qué sucede entonces cuando las dos señales se activan a la vez? La activación simultánea resulta en un bloqueo mutuo donde ocurre un cortocircuito, el cual podría causar daños físicos internos a las celdas de la batería (en la práctica el \gls{bms} lo impide), por esta razón la misión del sistema de control de baterías es evitar esta situación. Para ello, limita las consignas a una única señal en donde los valores positivos indican carga, los negativos descarga y cero la inactividad.
 
-Por ejemplo, una situación en la que una carga y descarga simultanea podría suceder, de no ser por las limitaciones físicas de las baterías, se da cuando existe recurso de generación limitado por los límites de programa para un periodo beneficioso de venta, en donde la batería querría tomarlo y venderlo directamente en el mismo periodo. Visualizado en la tabla~\ref{tab:carga-descarga-simultanea}.
+Por ejemplo, una situación en la que una carga y descarga simultánea podría suceder, de no ser por las limitaciones físicas de las baterías, se da cuando existe recurso de generación limitado por los límites de programa para un periodo beneficioso de venta, en donde la batería querría tomarlo y venderlo directamente en el mismo periodo. Visualizado en la tabla~\ref{tab:carga-descarga-simultanea}.
 
 \begin{table}[ht]
   \centering
@@ -103,13 +103,13 @@ Por ejemplo, una situación en la que una carga y descarga simultanea podría su
   \label{tab:carga-descarga-simultanea}
 \end{table}
 
-Para adecuarse a dichas limitaciones físicas, se combinan las señales de carga con signo positivo y descarga con signo negativo obtenidas de la optimización y posteriormente convertidas en potencia \( P = P_{\text{d}} - P_{\mathrm{c}} \). También se añade otra capa de prevención de desactivando previamente los periodos con carga y descarga simultanea, lo cual ciertamente puede causar desvíos en el programa, pero estos serias fácilmente solucionados en optimizaciones posteriores y nunca deberían ocurrir\footnote{Los indicadores de carga y descarga simultanea introducidos en la sección~\ref{makereference5.1.2} ya lo tienen en cuenta, pero se realiza un esfuerzo para separar las responsabilidades de los diferentes roles.}, de todos modos.
+Para adecuarse a dichas limitaciones físicas, se combinan las señales de carga con signo positivo y descarga con signo negativo obtenidas de la optimización y posteriormente convertidas en potencia \( P = P_{\text{d}} - P_{\mathrm{c}} \). También se añade otra capa de prevención de desactivando previamente los periodos con carga y descarga simultánea, lo cual ciertamente puede causar desvíos en el programa, pero estos serían fácilmente solucionados en optimizaciones posteriores y nunca deberían ocurrir\footnote{Los indicadores de carga y descarga simultánea introducidos en la sección~\ref{makereference5.1.2} ya lo tienen en cuenta, pero se realiza un esfuerzo para separar las responsabilidades de los diferentes roles.}, de todos modos.
 
 Con las posiciones transformadas en potencia, solo se toman en cuenta los cambios en el perfil de potencia y se anota el tiempo de inicio de cada cambio.
 
 Por último, el envío de las consignas se realiza a través de la señal o punto ofrecido por el \gls{bms} configurado en el \gls{pis}, llamado \texttt{Programa} y explicado en el apartado de infraestructura~\ref{makereference3.2}. Se hace uso del mismo flujo descrito en la sección~\ref{makereference3.5} pero, en vez de leer señales, se escriben en los tiempos correspondientes en el historiador.
 
-Cuando llegue el momento de cambio en el perfil de potencia de la batería y la señal del programa esté escrita en el historiado, este automáticamente enviará de vuelta un mensaje IEC 60870{-}5{-}104 a la estación marcando el nuevo perfil de potencia y la batería responderá correspondientemente.
+Cuando llegue el momento de cambio en el perfil de potencia de la batería y la señal del programa esté escrita en el historiador, este automáticamente enviará de vuelta un mensaje IEC 60870{-}5{-}104 a la estación marcando el nuevo perfil de potencia y la batería responderá correspondientemente.
 
 Con esto, uno de los aspectos más cruciales no resulta ser precisamente la consignación de un nuevo perfil de potencia de carga o descarga, sino la vuelta al mínimo técnico. Es decir, es una absoluta necesidad hacer que la batería vuelva a un perfil de potencia nulo cuando se haya terminado la carga o descarga, de tal forma que no continúe ciclándose.
 
@@ -145,7 +145,7 @@ En un primer momento, precisamente a los inicios de desarrollo de la emisión de
 
 Dicho comportamiento dispone de un fallo inaceptable en el funcionamiento del ciclado de la batería. Como el mercado eléctrico es marginalista, si existe un desvío del precio de casación a la dirección opuesta de la oferta en comparación a la predicción de precio empleada durante la operación, la oferta nunca tendrá la capacidad de casar en el mercado, resultando en un desvío de programa que, muy probablemente no podrá ser recuperado por la misma razón en los mercados posteriores.
 
-Una solución sencilla al comportamiento previamente descrito, empleado como evolución de la lógica de emisión de ofertas del sistema, es incluir una tolerancia de oferta en el calculo del precio. La tolerancia aumenta o disminuye el precio de oferta en la dirección opuesta al beneficio en la compra o venta, buscando la casación en el mercado, ecuación~\ref{eq:emisión-tolerancia}. Este comportamiento funciona ya que permite cubrirse ante pequeños desvíos de precio y sigue sin afectar a la disminución del beneficio si el desvío de precio es favorable. En cambio, esta solución introduce un problema doble.
+Una solución sencilla al comportamiento previamente descrito, empleado como evolución de la lógica de emisión de ofertas del sistema, es incluir una tolerancia de oferta en el cálculo del precio. La tolerancia aumenta o disminuye el precio de oferta en la dirección opuesta al beneficio en la compra o venta, buscando la casación en el mercado, ecuación~\ref{eq:emisión-tolerancia}. Este comportamiento funciona ya que permite cubrirse ante pequeños desvíos de precio y sigue sin afectar a la disminución del beneficio si el desvío de precio es favorable. En cambio, esta solución introduce un problema doble.
 
 \begin{samepage}
 
@@ -206,7 +206,7 @@ El objetivo final es agrupar los semiciclos de carga y descarga y obtener sus pr
 
 \end{samepage}
 
-Con ello, es posible calcular la dirección de cambio del \gls{soc} de la batería. Es decir, determinar si la batería se esta cargando, descargando o en estado estacionario, ecuación~\ref{eq:sigma-carga}. Cabe destacar que el uso del \gls{soc} es necesario, a diferencia del resto de resultados de la optimización (como la posición), ya que este representa el \textit{source of truth} del sistema.
+Con ello, es posible calcular la dirección de cambio del \gls{soc} de la batería. Es decir, determinar si la batería se está cargando, descargando o en estado estacionario, ecuación~\ref{eq:sigma-carga}. Cabe destacar que el uso del \gls{soc} es necesario, a diferencia del resto de resultados de la optimización (como la posición), ya que este representa el \textit{source of truth} del sistema.
 
 \begin{samepage}
 
@@ -232,7 +232,7 @@ Con ello, es posible calcular la dirección de cambio del \gls{soc} de la bater�
 
 \end{samepage}
 
-A continuación, se calculan los llamados puntos álgidos en la ecuación~\ref{eq:puntos-algidos-inf-sup}, tanto para el \gls{soc} límite superior o inferior. Los puntos álgidos representan los baremos de consideración de los semiciclos. La razón de su existencia es simple, y es que es relativamente común encontrarse con situaciones en las que la batería realiza un semiciclo sin llegar marcar un valor exactamente correspondiente con el \gls{soc} límite.
+A continuación, se calculan los llamados puntos álgidos en la ecuación~\ref{eq:puntos-algidos-inf-sup}, tanto para el \gls{soc} límite superior o inferior. Los puntos álgidos representan los baremos de consideración de los semiciclos. La razón de su existencia es simple, y es que es relativamente común encontrarse con situaciones en las que la batería realiza un semiciclo sin llegar a marcar un valor exactamente correspondiente con el \gls{soc} límite.
 
 Es extremadamente importante que el sistema se defienda ante situaciones de ciclado apenas completo, ya que puede que existan parámetros que no se correspondan estrictamente al comportamiento físico de la instalación, debido a diferencias en los decimales\footnote{En la sección~\ref{makereference5.4} se detalla el ajuste de la resolución numérica, lo que comúnmente genera ciclados incompletos, aunque la diferencia sea mínima.}. Además, permite aumentar el control de la consideración de los ciclos desde el punto de vista de los operarios de telecontrol.
 
@@ -267,13 +267,13 @@ Es extremadamente importante que el sistema se defienda ante situaciones de cicl
 
     \item \( \mathrm{SoC}_{\text{tol}} \) es la tolerancia del punto álgido.
 
-    \item \( B_{\text{inf}, t} \) y \( B_{\text{sup}, t} \) son los indicadores de los punto álgidos inferior y superiores en el periodo \( t \).
+    \item \( B_{\text{inf}, t} \) y \( B_{\text{sup}, t} \) son los indicadores de los puntos álgidos inferior y superiores en el periodo \( t \).
 
   \end{itemize}
 
 \end{samepage}
 
-Como no se desea contar múltiples ciclos cuando sucedan múltiples periodos contiguos que sobrepasen un punto álgido, solo se tienen en cuenta las entradas para cada la carga y descarga. Todo ello se encuentra representado en la ecuación~\ref{eq:puntos-algidos-desplazados}.
+Como no se desea contar múltiples ciclos cuando sucedan múltiples periodos contiguos que sobrepasen un punto álgido, solo se tienen en cuenta las entradas para cada carga y descarga. Todo ello se encuentra representado en la ecuación~\ref{eq:puntos-algidos-desplazados}.
 
 \begin{samepage}
 
@@ -308,7 +308,7 @@ Como no se desea contar múltiples ciclos cuando sucedan múltiples periodos con
 
 \end{samepage}
 
-A continuación, se toman juntan los puntos álgidos inferiores y superiores en la ecuación~\ref{eq:puntos-algidos}. La razón de realizar las operaciones por separado es impedir situaciones de cargas o descargas muy rápidas, donde se sobrepasen puntos álgidos distintos (a diferencia de la ecuación~\ref{eq:puntos-algidos-desplazados}) en periodos contiguos. Dentro del funcionamiento normal de las baterías, no es precisamente una situación que ocurra muy a menudo, pero es técnicamente posible que suceda, sobre todo en mercados de menor granularidad.
+A continuación, se juntan los puntos álgidos inferiores y superiores en la ecuación~\ref{eq:puntos-algidos}. La razón de realizar las operaciones por separado es impedir situaciones de cargas o descargas muy rápidas, donde se sobrepasen puntos álgidos distintos (a diferencia de la ecuación~\ref{eq:puntos-algidos-desplazados}) en periodos contiguos. Dentro del funcionamiento normal de las baterías, no es precisamente una situación que ocurra muy a menudo, pero es técnicamente posible que suceda, sobre todo en mercados de menor granularidad.
 
 \begin{samepage}
 
@@ -421,7 +421,7 @@ Finalmente, se agrupan los precios de mercado por los periodos correspondientes 
 
 \end{samepage}
 
-Con ello, por cada grupo, se toma el precio más bajo entre los periodos de descarga y el más alto entre los de carga, añadiendo una tolerancia absoluta en la dirección opuesta al beneficio de la oferta. Esto significa que todos los periodos de un mismo semiciclo de descarga tendrán el precio menor de venta del mercado durante dicho semiciclo, mientra que exactamente lo opuesto para la carga.
+Con ello, por cada grupo, se toma el precio más bajo entre los periodos de descarga y el más alto entre los de carga, añadiendo una tolerancia absoluta en la dirección opuesta al beneficio de la oferta. Esto significa que todos los periodos de un mismo semiciclo de descarga tendrán el precio menor de venta del mercado durante dicho semiciclo, mientras que exactamente lo opuesto para la carga.
 
 \begin{samepage}
 
@@ -481,7 +481,7 @@ Finalmente, la oferta se comunica con la herramienta externa de resolución de o
 
 Aunque el sistema desarrollado sea completamente agnóstico de ningún tipo de intervención manual para su operación, en algunas ocasiones no es capaz de tener en cuenta todos los factores que afectan a la totalidad de los componentes involucrados, conocidos por los agentes de mercado.
 
-Además, una de las situaciones problemáticas más comunes, encontradas a la hora de realizar el despliegue, se corresponde con las indisponibilidades manuales o programadas de la batería. Estas indiponibilidades no son causadas precisamente por las señales integradas de disponibilidad de los \glspl{bess}, descritas anteriormente en la sección~\ref{makereference3.2}, sino por pruebas de integración del sistema. Por ello, los operadores de telecontrol necesitan cerciorarse de algún modo que la batería siga las consignas dadas.
+Además, una de las situaciones problemáticas más comunes, encontradas a la hora de realizar el despliegue, se corresponde con las indisponibilidades manuales o programadas de la batería. Estas indisponibilidades no son causadas precisamente por las señales integradas de disponibilidad de los \glspl{bess}, descritas anteriormente en la sección~\ref{makereference3.2}, sino por pruebas de integración del sistema. Por ello, los operadores de telecontrol necesitan cerciorarse de algún modo que la batería siga las consignas dadas.
 
 Principalmente motivado por dicho propósito y con el objetivo de facilitar la observabilidad de la infraestructura, se desarrolla un cuadro de mando, como se ve en la figura~\ref{fig:cuadro-de-mando}, para la unificación completa del control de la operación del sistema, desde la simulación de las operaciones, la consignación manual y asistida, la modificación de los parámetros operativos y la priorización de programas.
 
@@ -492,16 +492,16 @@ Principalmente motivado por dicho propósito y con el objetivo de facilitar la o
   \label{fig:cuadro-de-mando}
 \end{figure}
 
-De esta forma, el cuadro de mando del sistema es la pieza cable mediante la cual los agentes de mercado y operadores de telecontrol son capaces de interactuar con las baterías, en tiempo real, con el objeto de modificar su comportamiento como les convenga. A los agentes de mercado se les da la posibilidad de cambiar las posiciones en busca de una mejor oportunidad de arbitraje, impulsada por factores externos que escapen al control del sistema, y los operadores de telecontrol pueden realizar pruebas de ciclado de las baterías, sin tener que interactuar con el \gls{rtu} y los protocolos de comunicación correspondientes. En ello reside el valor principal del desarrollo del cuadro de mandos.
+De esta forma, el cuadro de mando del sistema es la pieza clave mediante la cual los agentes de mercado y operadores de telecontrol son capaces de interactuar con las baterías, en tiempo real, con el objeto de modificar su comportamiento como les convenga. A los agentes de mercado se les da la posibilidad de cambiar las posiciones en busca de una mejor oportunidad de arbitraje, impulsada por factores externos que escapen al control del sistema, y los operadores de telecontrol pueden realizar pruebas de ciclado de las baterías, sin tener que interactuar con el \gls{rtu} y los protocolos de comunicación correspondientes. En ello reside el valor principal del desarrollo del cuadro de mandos.
 
-Cabe destacar que, más allá del cuadro de mando del comando y control orientado a los agentes de mercado y operadores de telecontrol, cada componente del sistema también es capaz de ser configurado mediante canales no interactivos si es necesario, estando estos orientadas a los operadores de telecontrol para la configuración de la infraestructura operativa, al personal de sistemas para el entorno de mercado, y a los agentes de mercado para la modelización estructural.
+Cabe destacar que, más allá del cuadro de mando del comando y control orientado a los agentes de mercado y operadores de telecontrol, cada componente del sistema también es capaz de ser configurado mediante canales no interactivos si es necesario, estando estos orientados a los operadores de telecontrol para la configuración de la infraestructura operativa, al personal de sistemas para el entorno de mercado, y a los agentes de mercado para la modelización estructural.
 
 \subsection{Funcionalidad básica}%
 \label{makereference6.2.1}
 
 El cuadro de mando ha sido desarrollado en la misma tecnología principal utilizada en la mayoría de los otros componentes, Python. Esta vez, se hace uso de Streamlit\footnote{\url{https://github.com/streamlit/streamlit} (Apache-2.0)}, un componente para construir herramientas interactivas.
 
-Tras pasar por un servicio de autenticación que únicamente permite el acceso a agentes de mercado y operadores de telecontrol designados, el usuario es presentado con la interfaz de operación principal.
+Tras pasar por un servicio de autenticación que únicamente permite el acceso a agentes de mercado y operadores de telecontrol designados, se le presenta al usuario la interfaz de operación principal.
 
 En ella, es posible modificar la configuración operativa de cada una de las instalaciones, establecer la situación de mercado concreta a tener en cuenta y cambiar la fuente de los precios marginales explicados en la sección~\ref{makereference4.1.1}, entre otras acciones mostradas en la figura~\ref{fig:configuracion-sistema}.
 
@@ -512,13 +512,13 @@ En ella, es posible modificar la configuración operativa de cada una de las ins
   \label{fig:configuracion-sistema}
 \end{figure}
 
-Todo esto permite realizar simulaciones tanto a pasado y a futuro del comportamiento del sistema y de la evolución del mismo a lo largo del ciclo de vida de los mercados. Es decir, un agente de mercado es capaz de comprender fácilmente no solo lo que va a suceder el día de mañana en el mercado diario, sino también en los subsecuentes mercado intradiarios e incluso en las sesiones del mercado intradiario continuo, y ver la evolución de las posiciones.
+Todo esto permite realizar simulaciones tanto a pasado como a futuro del comportamiento del sistema y de la evolución del mismo a lo largo del ciclo de vida de los mercados. Es decir, un agente de mercado es capaz de comprender fácilmente no solo lo que va a suceder el día de mañana en el mercado diario, sino también en los subsecuentes mercado intradiarios e incluso en las sesiones del mercado intradiario continuo, y ver la evolución de las posiciones.
 
-Junto a ello, se permite importar datos del mercado localmente y obviar todo el capítulo~\ref{makereference3} del entorno de mercado, con el propósito de permitir el uso del cuadro de mandos en situaciones en donde la información no esté disponible o se quiera modificar manualmente. Precisamente, en sinergia con la característica de exportar la información del entorno de mercado una vez obtenida, es posible realizar simulaciones más avanzadas donde todos los aspectos de entrada al sistema (incluso las señales de la infraestructura a través de la configuración de las instalaciones) sean capaces de ser modificadas.
+Junto a ello, se permite importar datos del mercado localmente y obviar todo el capítulo~\ref{makereference3} del entorno de mercado, con el propósito de permitir el uso del cuadro de mandos en situaciones donde la información no esté disponible o se quiera modificar manualmente. Precisamente, en sinergia con la característica de exportar la información del entorno de mercado una vez obtenida, es posible realizar simulaciones más avanzadas donde todos los aspectos de entrada al sistema (incluso las señales de la infraestructura a través de la configuración de las instalaciones) sean capaces de ser modificadas.
 
 Además, el entorno de mercado no es la única información capaz de ser exportada. Los resultados del programa óptimo de la batería, obtenido tras realizar todo el proceso, pueden ser descargados en un formato CSV con el fin de inspeccionarlos detalladamente, o incluso modificarlos (aunque resulte más intuitivo realizar cualquier modificación a través del cuadro de mandos directamente).
 
-También se permite especificar tanto un programa, en donde se realize el seguimiento del programa mismo y la solución del modelado estructural del capítulo~\ref{makereference4} se desactive, como un objetivo de \gls{soc}, en donde el sistema cumpla con las indicaciones en los periodos determinados pero siga realizando la tarea de optimización, representado en la figura~\ref{fig:soc-manual}. Resulta crucial que todo el resto de validaciones sigan en funcionamiento, por lo que no es posible introducir un programa invalido de ningún modo. Con esto, se observa como la inclusión del objetivo de la modularización del sistema resulta más que beneficiosa ante dichas situaciones.
+También se permite especificar tanto un programa, en donde se realice el seguimiento del programa mismo y la solución del modelado estructural del capítulo~\ref{makereference4} se desactive, como un objetivo de \gls{soc}, en donde el sistema cumpla con las indicaciones en los periodos determinados pero siga realizando la tarea de optimización, representado en la figura~\ref{fig:soc-manual}. Resulta crucial que todo el resto de validaciones sigan en funcionamiento, por lo que no es posible introducir un programa inválido de ningún modo. Con esto, se observa como la inclusión del objetivo de la modularización del sistema resulta más que beneficiosa ante dichas situaciones.
 
 \begin{figure}
   \centering
@@ -529,7 +529,7 @@ También se permite especificar tanto un programa, en donde se realize el seguim
 
 En colación, es posible activar o desactivar el modo de funcionamiento automático y sustituirlo por un modo de funcionamiento manual, característica más que relevante para asegurar el cumplimiento de un programa concreto ante fallos o pruebas. Desactivado, el sistema hace caso de los programas manuales obtenidos mediante el cuadro de mandos, activado en cambio, lo sobrescribe.
 
-Finalmente, se presentan los \gls{kpi} en forma de los ingresos obtenidos por energía vendida, los ingresos totales y los ciclos realizado en diferentes unidades, dirigidos a los agentes de mercado, figura~\ref{fig:kpi-sistema}. También se muestra el perfil de generación para las instalaciones híbridas, figura~\ref{fig:perfil-generacion}, junto al programa óptimo de la batería, figura~\ref{fig:programa-optimo}, su \gls{soc} a lo largo del horizonte de optimización, figura~\ref{fig:soc-bess}, y las limitaciones técnicas si son aplicables, figura~\ref{fig:limitaciones-tecnicas}.
+Finalmente, se presentan los \gls{kpi} en forma de los ingresos obtenidos por energía vendida, los ingresos totales y los ciclos realizados en diferentes unidades, dirigidos a los agentes de mercado, figura~\ref{fig:kpi-sistema}. También se muestra el perfil de generación para las instalaciones híbridas, figura~\ref{fig:perfil-generacion}, junto al programa óptimo de la batería, figura~\ref{fig:programa-optimo}, su \gls{soc} a lo largo del horizonte de optimización, figura~\ref{fig:soc-bess}, y las limitaciones técnicas si son aplicables, figura~\ref{fig:limitaciones-tecnicas}.
 
 \begin{figure}
   \centering
@@ -562,6 +562,6 @@ Finalmente, se presentan los \gls{kpi} en forma de los ingresos obtenidos por en
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/limitaciones-tecnicas.png}
-  \caption[limitaciones por seguridad de la instalación.]{limitaciones por seguridad de la instalación.}%
+  \caption[Limitaciones por seguridad de la instalación.]{limitaciones por seguridad de la instalación.}%
   \label{fig:limitaciones-tecnicas}
 \end{figure}
